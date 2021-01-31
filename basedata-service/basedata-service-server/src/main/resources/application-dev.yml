@@ -1,0 +1,24 @@
+app:
+  version: 1.0.0
+server:
+  port: 8080
+  servlet:
+    context-path: /nontax/basedata
+spring:
+  datasource:
+    url: jdbc:mysql://114.55.137.13:9000/nontax?useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 114.55.137.13:9003
+  application:
+    name: basedata-service-server
+swagger:
+  title: nontax-basedata
+  description: api for nontax-basedata
+  version: 0.0.1
+  apiBasePackage: com.hyd.basedata.web
+
