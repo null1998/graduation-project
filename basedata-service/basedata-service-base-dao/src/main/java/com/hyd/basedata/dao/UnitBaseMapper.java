@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface UnitBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, parentUnit, name, code, unitSort, parentDepartment, unitType, printStatus, mnemonicCode, master, tax, fax, tel, address, email, website, remark, tenantId, zoneId, createdBy, creator, createdTime, updatedBy, modifier, updatedTime, status, version);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, code, mnemonic, master, taxNumber, faxNumber, telNumber, address, email, website, zoneId, parentId, version);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -57,31 +57,18 @@ public interface UnitBaseMapper {
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="UnitResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="parent_unit", property="parentUnit", jdbcType=JdbcType.BIGINT),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="code", property="code", jdbcType=JdbcType.VARCHAR),
-        @Result(column="unit_sort", property="unitSort", jdbcType=JdbcType.VARCHAR),
-        @Result(column="parent_department", property="parentDepartment", jdbcType=JdbcType.VARCHAR),
-        @Result(column="unit_type", property="unitType", jdbcType=JdbcType.VARCHAR),
-        @Result(column="print_status", property="printStatus", jdbcType=JdbcType.TINYINT),
-        @Result(column="mnemonic_code", property="mnemonicCode", jdbcType=JdbcType.VARCHAR),
+        @Result(column="mnemonic", property="mnemonic", jdbcType=JdbcType.VARCHAR),
         @Result(column="master", property="master", jdbcType=JdbcType.VARCHAR),
-        @Result(column="tax", property="tax", jdbcType=JdbcType.VARCHAR),
-        @Result(column="fax", property="fax", jdbcType=JdbcType.VARCHAR),
-        @Result(column="tel", property="tel", jdbcType=JdbcType.VARCHAR),
+        @Result(column="tax_number", property="taxNumber", jdbcType=JdbcType.VARCHAR),
+        @Result(column="fax_number", property="faxNumber", jdbcType=JdbcType.VARCHAR),
+        @Result(column="tel_number", property="telNumber", jdbcType=JdbcType.VARCHAR),
         @Result(column="address", property="address", jdbcType=JdbcType.VARCHAR),
         @Result(column="email", property="email", jdbcType=JdbcType.VARCHAR),
         @Result(column="website", property="website", jdbcType=JdbcType.VARCHAR),
-        @Result(column="remark", property="remark", jdbcType=JdbcType.VARCHAR),
-        @Result(column="tenant_id", property="tenantId", jdbcType=JdbcType.BIGINT),
         @Result(column="zone_id", property="zoneId", jdbcType=JdbcType.BIGINT),
-        @Result(column="created_by", property="createdBy", jdbcType=JdbcType.BIGINT),
-        @Result(column="creator", property="creator", jdbcType=JdbcType.VARCHAR),
-        @Result(column="created_time", property="createdTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="updated_by", property="updatedBy", jdbcType=JdbcType.BIGINT),
-        @Result(column="modifier", property="modifier", jdbcType=JdbcType.VARCHAR),
-        @Result(column="updated_time", property="updatedTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="status", property="status", jdbcType=JdbcType.TINYINT),
+        @Result(column="parent_id", property="parentId", jdbcType=JdbcType.BIGINT),
         @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
     })
     List<Unit> selectMany(SelectStatementProvider selectStatement);
@@ -116,31 +103,18 @@ public interface UnitBaseMapper {
     default int insert(Unit record) {
         return MyBatis3Utils.insert(this::insert, record, unit, c ->
             c.map(id).toProperty("id")
-            .map(parentUnit).toProperty("parentUnit")
             .map(name).toProperty("name")
             .map(code).toProperty("code")
-            .map(unitSort).toProperty("unitSort")
-            .map(parentDepartment).toProperty("parentDepartment")
-            .map(unitType).toProperty("unitType")
-            .map(printStatus).toProperty("printStatus")
-            .map(mnemonicCode).toProperty("mnemonicCode")
+            .map(mnemonic).toProperty("mnemonic")
             .map(master).toProperty("master")
-            .map(tax).toProperty("tax")
-            .map(fax).toProperty("fax")
-            .map(tel).toProperty("tel")
+            .map(taxNumber).toProperty("taxNumber")
+            .map(faxNumber).toProperty("faxNumber")
+            .map(telNumber).toProperty("telNumber")
             .map(address).toProperty("address")
             .map(email).toProperty("email")
             .map(website).toProperty("website")
-            .map(remark).toProperty("remark")
-            .map(tenantId).toProperty("tenantId")
             .map(zoneId).toProperty("zoneId")
-            .map(createdBy).toProperty("createdBy")
-            .map(creator).toProperty("creator")
-            .map(createdTime).toProperty("createdTime")
-            .map(updatedBy).toProperty("updatedBy")
-            .map(modifier).toProperty("modifier")
-            .map(updatedTime).toProperty("updatedTime")
-            .map(status).toProperty("status")
+            .map(parentId).toProperty("parentId")
             .map(version).toProperty("version")
         );
     }
@@ -149,31 +123,18 @@ public interface UnitBaseMapper {
     default int insertMultiple(Collection<Unit> records) {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, unit, c ->
             c.map(id).toProperty("id")
-            .map(parentUnit).toProperty("parentUnit")
             .map(name).toProperty("name")
             .map(code).toProperty("code")
-            .map(unitSort).toProperty("unitSort")
-            .map(parentDepartment).toProperty("parentDepartment")
-            .map(unitType).toProperty("unitType")
-            .map(printStatus).toProperty("printStatus")
-            .map(mnemonicCode).toProperty("mnemonicCode")
+            .map(mnemonic).toProperty("mnemonic")
             .map(master).toProperty("master")
-            .map(tax).toProperty("tax")
-            .map(fax).toProperty("fax")
-            .map(tel).toProperty("tel")
+            .map(taxNumber).toProperty("taxNumber")
+            .map(faxNumber).toProperty("faxNumber")
+            .map(telNumber).toProperty("telNumber")
             .map(address).toProperty("address")
             .map(email).toProperty("email")
             .map(website).toProperty("website")
-            .map(remark).toProperty("remark")
-            .map(tenantId).toProperty("tenantId")
             .map(zoneId).toProperty("zoneId")
-            .map(createdBy).toProperty("createdBy")
-            .map(creator).toProperty("creator")
-            .map(createdTime).toProperty("createdTime")
-            .map(updatedBy).toProperty("updatedBy")
-            .map(modifier).toProperty("modifier")
-            .map(updatedTime).toProperty("updatedTime")
-            .map(status).toProperty("status")
+            .map(parentId).toProperty("parentId")
             .map(version).toProperty("version")
         );
     }
@@ -182,31 +143,18 @@ public interface UnitBaseMapper {
     default int insertSelective(Unit record) {
         return MyBatis3Utils.insert(this::insert, record, unit, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
-            .map(parentUnit).toPropertyWhenPresent("parentUnit", record::getParentUnit)
             .map(name).toPropertyWhenPresent("name", record::getName)
             .map(code).toPropertyWhenPresent("code", record::getCode)
-            .map(unitSort).toPropertyWhenPresent("unitSort", record::getUnitSort)
-            .map(parentDepartment).toPropertyWhenPresent("parentDepartment", record::getParentDepartment)
-            .map(unitType).toPropertyWhenPresent("unitType", record::getUnitType)
-            .map(printStatus).toPropertyWhenPresent("printStatus", record::getPrintStatus)
-            .map(mnemonicCode).toPropertyWhenPresent("mnemonicCode", record::getMnemonicCode)
+            .map(mnemonic).toPropertyWhenPresent("mnemonic", record::getMnemonic)
             .map(master).toPropertyWhenPresent("master", record::getMaster)
-            .map(tax).toPropertyWhenPresent("tax", record::getTax)
-            .map(fax).toPropertyWhenPresent("fax", record::getFax)
-            .map(tel).toPropertyWhenPresent("tel", record::getTel)
+            .map(taxNumber).toPropertyWhenPresent("taxNumber", record::getTaxNumber)
+            .map(faxNumber).toPropertyWhenPresent("faxNumber", record::getFaxNumber)
+            .map(telNumber).toPropertyWhenPresent("telNumber", record::getTelNumber)
             .map(address).toPropertyWhenPresent("address", record::getAddress)
             .map(email).toPropertyWhenPresent("email", record::getEmail)
             .map(website).toPropertyWhenPresent("website", record::getWebsite)
-            .map(remark).toPropertyWhenPresent("remark", record::getRemark)
-            .map(tenantId).toPropertyWhenPresent("tenantId", record::getTenantId)
             .map(zoneId).toPropertyWhenPresent("zoneId", record::getZoneId)
-            .map(createdBy).toPropertyWhenPresent("createdBy", record::getCreatedBy)
-            .map(creator).toPropertyWhenPresent("creator", record::getCreator)
-            .map(createdTime).toPropertyWhenPresent("createdTime", record::getCreatedTime)
-            .map(updatedBy).toPropertyWhenPresent("updatedBy", record::getUpdatedBy)
-            .map(modifier).toPropertyWhenPresent("modifier", record::getModifier)
-            .map(updatedTime).toPropertyWhenPresent("updatedTime", record::getUpdatedTime)
-            .map(status).toPropertyWhenPresent("status", record::getStatus)
+            .map(parentId).toPropertyWhenPresent("parentId", record::getParentId)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
         );
     }
@@ -241,93 +189,54 @@ public interface UnitBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateAllColumns(Unit record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
-                .set(parentUnit).equalTo(record::getParentUnit)
                 .set(name).equalTo(record::getName)
                 .set(code).equalTo(record::getCode)
-                .set(unitSort).equalTo(record::getUnitSort)
-                .set(parentDepartment).equalTo(record::getParentDepartment)
-                .set(unitType).equalTo(record::getUnitType)
-                .set(printStatus).equalTo(record::getPrintStatus)
-                .set(mnemonicCode).equalTo(record::getMnemonicCode)
+                .set(mnemonic).equalTo(record::getMnemonic)
                 .set(master).equalTo(record::getMaster)
-                .set(tax).equalTo(record::getTax)
-                .set(fax).equalTo(record::getFax)
-                .set(tel).equalTo(record::getTel)
+                .set(taxNumber).equalTo(record::getTaxNumber)
+                .set(faxNumber).equalTo(record::getFaxNumber)
+                .set(telNumber).equalTo(record::getTelNumber)
                 .set(address).equalTo(record::getAddress)
                 .set(email).equalTo(record::getEmail)
                 .set(website).equalTo(record::getWebsite)
-                .set(remark).equalTo(record::getRemark)
-                .set(tenantId).equalTo(record::getTenantId)
                 .set(zoneId).equalTo(record::getZoneId)
-                .set(createdBy).equalTo(record::getCreatedBy)
-                .set(creator).equalTo(record::getCreator)
-                .set(createdTime).equalTo(record::getCreatedTime)
-                .set(updatedBy).equalTo(record::getUpdatedBy)
-                .set(modifier).equalTo(record::getModifier)
-                .set(updatedTime).equalTo(record::getUpdatedTime)
-                .set(status).equalTo(record::getStatus)
+                .set(parentId).equalTo(record::getParentId)
                 .set(version).equalTo(record::getVersion);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateSelectiveColumns(Unit record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
-                .set(parentUnit).equalToWhenPresent(record::getParentUnit)
                 .set(name).equalToWhenPresent(record::getName)
                 .set(code).equalToWhenPresent(record::getCode)
-                .set(unitSort).equalToWhenPresent(record::getUnitSort)
-                .set(parentDepartment).equalToWhenPresent(record::getParentDepartment)
-                .set(unitType).equalToWhenPresent(record::getUnitType)
-                .set(printStatus).equalToWhenPresent(record::getPrintStatus)
-                .set(mnemonicCode).equalToWhenPresent(record::getMnemonicCode)
+                .set(mnemonic).equalToWhenPresent(record::getMnemonic)
                 .set(master).equalToWhenPresent(record::getMaster)
-                .set(tax).equalToWhenPresent(record::getTax)
-                .set(fax).equalToWhenPresent(record::getFax)
-                .set(tel).equalToWhenPresent(record::getTel)
+                .set(taxNumber).equalToWhenPresent(record::getTaxNumber)
+                .set(faxNumber).equalToWhenPresent(record::getFaxNumber)
+                .set(telNumber).equalToWhenPresent(record::getTelNumber)
                 .set(address).equalToWhenPresent(record::getAddress)
                 .set(email).equalToWhenPresent(record::getEmail)
                 .set(website).equalToWhenPresent(record::getWebsite)
-                .set(remark).equalToWhenPresent(record::getRemark)
-                .set(tenantId).equalToWhenPresent(record::getTenantId)
                 .set(zoneId).equalToWhenPresent(record::getZoneId)
-                .set(createdBy).equalToWhenPresent(record::getCreatedBy)
-                .set(creator).equalToWhenPresent(record::getCreator)
-                .set(createdTime).equalToWhenPresent(record::getCreatedTime)
-                .set(updatedBy).equalToWhenPresent(record::getUpdatedBy)
-                .set(modifier).equalToWhenPresent(record::getModifier)
-                .set(updatedTime).equalToWhenPresent(record::getUpdatedTime)
-                .set(status).equalToWhenPresent(record::getStatus)
+                .set(parentId).equalToWhenPresent(record::getParentId)
                 .set(version).equalToWhenPresent(record::getVersion);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKey(Unit record) {
         return update(c ->
-            c.set(parentUnit).equalTo(record::getParentUnit)
-            .set(name).equalTo(record::getName)
+            c.set(name).equalTo(record::getName)
             .set(code).equalTo(record::getCode)
-            .set(unitSort).equalTo(record::getUnitSort)
-            .set(parentDepartment).equalTo(record::getParentDepartment)
-            .set(unitType).equalTo(record::getUnitType)
-            .set(printStatus).equalTo(record::getPrintStatus)
-            .set(mnemonicCode).equalTo(record::getMnemonicCode)
+            .set(mnemonic).equalTo(record::getMnemonic)
             .set(master).equalTo(record::getMaster)
-            .set(tax).equalTo(record::getTax)
-            .set(fax).equalTo(record::getFax)
-            .set(tel).equalTo(record::getTel)
+            .set(taxNumber).equalTo(record::getTaxNumber)
+            .set(faxNumber).equalTo(record::getFaxNumber)
+            .set(telNumber).equalTo(record::getTelNumber)
             .set(address).equalTo(record::getAddress)
             .set(email).equalTo(record::getEmail)
             .set(website).equalTo(record::getWebsite)
-            .set(remark).equalTo(record::getRemark)
-            .set(tenantId).equalTo(record::getTenantId)
             .set(zoneId).equalTo(record::getZoneId)
-            .set(createdBy).equalTo(record::getCreatedBy)
-            .set(creator).equalTo(record::getCreator)
-            .set(createdTime).equalTo(record::getCreatedTime)
-            .set(updatedBy).equalTo(record::getUpdatedBy)
-            .set(modifier).equalTo(record::getModifier)
-            .set(updatedTime).equalTo(record::getUpdatedTime)
-            .set(status).equalTo(record::getStatus)
+            .set(parentId).equalTo(record::getParentId)
             .set(version).equalTo(record::getVersion)
             .where(id, isEqualTo(record::getId))
         );
@@ -336,31 +245,18 @@ public interface UnitBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKeySelective(Unit record) {
         return update(c ->
-            c.set(parentUnit).equalToWhenPresent(record::getParentUnit)
-            .set(name).equalToWhenPresent(record::getName)
+            c.set(name).equalToWhenPresent(record::getName)
             .set(code).equalToWhenPresent(record::getCode)
-            .set(unitSort).equalToWhenPresent(record::getUnitSort)
-            .set(parentDepartment).equalToWhenPresent(record::getParentDepartment)
-            .set(unitType).equalToWhenPresent(record::getUnitType)
-            .set(printStatus).equalToWhenPresent(record::getPrintStatus)
-            .set(mnemonicCode).equalToWhenPresent(record::getMnemonicCode)
+            .set(mnemonic).equalToWhenPresent(record::getMnemonic)
             .set(master).equalToWhenPresent(record::getMaster)
-            .set(tax).equalToWhenPresent(record::getTax)
-            .set(fax).equalToWhenPresent(record::getFax)
-            .set(tel).equalToWhenPresent(record::getTel)
+            .set(taxNumber).equalToWhenPresent(record::getTaxNumber)
+            .set(faxNumber).equalToWhenPresent(record::getFaxNumber)
+            .set(telNumber).equalToWhenPresent(record::getTelNumber)
             .set(address).equalToWhenPresent(record::getAddress)
             .set(email).equalToWhenPresent(record::getEmail)
             .set(website).equalToWhenPresent(record::getWebsite)
-            .set(remark).equalToWhenPresent(record::getRemark)
-            .set(tenantId).equalToWhenPresent(record::getTenantId)
             .set(zoneId).equalToWhenPresent(record::getZoneId)
-            .set(createdBy).equalToWhenPresent(record::getCreatedBy)
-            .set(creator).equalToWhenPresent(record::getCreator)
-            .set(createdTime).equalToWhenPresent(record::getCreatedTime)
-            .set(updatedBy).equalToWhenPresent(record::getUpdatedBy)
-            .set(modifier).equalToWhenPresent(record::getModifier)
-            .set(updatedTime).equalToWhenPresent(record::getUpdatedTime)
-            .set(status).equalToWhenPresent(record::getStatus)
+            .set(parentId).equalToWhenPresent(record::getParentId)
             .set(version).equalToWhenPresent(record::getVersion)
             .where(id, isEqualTo(record::getId))
         );

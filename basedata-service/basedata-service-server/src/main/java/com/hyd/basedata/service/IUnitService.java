@@ -26,10 +26,10 @@ public interface IUnitService {
 
     /**
      * 根据父单位ID查询
-     * @param parentUnitId 父单位ID
+     * @param parentId 父单位ID
      * @return 单位列表
      */
-    List<Unit> listUnit(Long parentUnitId);
+    List<Unit> listUnitByParentId(Long parentId);
 
     /**
      * 根据ID删除

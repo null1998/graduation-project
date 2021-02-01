@@ -30,11 +30,8 @@ public class UnitService implements IUnitService {
         if (unit == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位为空"));
         }
-        LocalDateTime now = LocalDateTime.now();
         long uid = idGenerator.snowflakeId();
         unit.setId(uid);
-        unit.setCreatedTime(now);
-        unit.setUpdatedTime(now);
         unitBaseMapper.insertSelective(unit);
         return uid;
     }
@@ -46,17 +43,17 @@ public class UnitService implements IUnitService {
         }
         Optional<Unit> optional = unitBaseMapper.selectByPrimaryKey(id);
         if (!optional.isPresent()) {
-            throw new RuntimeException("未查询到相应的单位记录");
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("未查询到相应的单位记录"));
         }
         return optional.get();
     }
 
     @Override
-    public List<Unit> listUnit(Long parentUnitId) {
-        if (parentUnitId == null) {
+    public List<Unit> listUnitByParentId(Long parentId) {
+        if (parentId == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("父单位ID为空"));
         }
-        return unitBaseMapper.select(c -> c.where(UnitDynamicSqlSupport.parentUnit, SqlBuilder.isEqualTo(parentUnitId)));
+        return unitBaseMapper.select(c -> c.where(UnitDynamicSqlSupport.parentId, SqlBuilder.isEqualTo(parentId)));
     }
 
     @Override
@@ -72,7 +69,7 @@ public class UnitService implements IUnitService {
         if (unit == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位为空"));
         }
-        unit.setUpdatedTime(LocalDateTime.now());
         return unitBaseMapper.updateByPrimaryKeySelective(unit);
     }
+
 }

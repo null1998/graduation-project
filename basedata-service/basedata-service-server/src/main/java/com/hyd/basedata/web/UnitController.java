@@ -2,6 +2,7 @@ package com.hyd.basedata.web;
 
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.entity.vo.UnitVO;
+import com.hyd.basedata.service.IUnitService;
 import com.hyd.basedata.service.impl.UnitService;
 import com.hyd.basedata.web.dto.UnitDTO;
 import com.sd365.common.log.api.annotation.ApiLog;
@@ -19,7 +20,7 @@ import java.util.List;
 @RequestMapping(value = "/unit")
 public class UnitController {
     @Autowired
-    private UnitService unitService;
+    private IUnitService unitService;
     @ApiLog
     @PostMapping
     public Long save(@RequestBody UnitDTO unitDTO) {
@@ -33,9 +34,9 @@ public class UnitController {
         return BeanUtil.copy(unit, UnitVO.class);
     }
     @ApiLog
-    @GetMapping(value = "/list/{parentUnitId}")
-    public List<UnitVO> listUnit(@PathVariable(name = "parentUnitId") Long parentUnitId) {
-        List<Unit> unitList = unitService.listUnit(parentUnitId);
+    @GetMapping(value = "/children/{parentUnitId}")
+    public List<UnitVO> listUnitByParentId(@PathVariable(name = "parentUnitId") Long parentUnitId) {
+        List<Unit> unitList = unitService.listUnitByParentId(parentUnitId);
         return BeanUtil.copyList(unitList, UnitVO.class);
     }
     @ApiLog
