@@ -27,13 +27,16 @@
 <!--        <table tableName="basedata_zone" mapperName="ZoneBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>-->
 <!--        </table>-->
-        <table tableName="basedata_ticket" mapperName="TicketBaseMapper">
-            <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>
-        </table>
-        <table tableName="basedata_dictionary" mapperName="DictionaryBaseMapper">
-            <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>
-        </table>
-        <table tableName="basedata_dictionary_category" mapperName="DictionaryCategoryBaseMapper">
+<!--        <table tableName="basedata_ticket" mapperName="TicketBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>-->
+<!--        </table>-->
+<!--        <table tableName="basedata_dictionary" mapperName="DictionaryBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>-->
+<!--        </table>-->
+<!--        <table tableName="basedata_dictionary_category" mapperName="DictionaryCategoryBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>-->
+<!--        </table>-->
+        <table tableName="basedata_warehouse" mapperName="WarehouseBaseMapper">
             <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>
         </table>
 

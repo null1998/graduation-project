@@ -23,7 +23,7 @@ public class UnitService implements IUnitService {
     @Autowired
     private UnitBaseMapper unitBaseMapper;
     @Autowired
-    IdGenerator idGenerator;
+    private IdGenerator idGenerator;
     @Override
     public Long save(Unit unit) {
         if (unit == null) {

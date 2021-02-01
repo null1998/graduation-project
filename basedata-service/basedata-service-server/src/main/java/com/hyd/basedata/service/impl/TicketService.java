@@ -21,7 +21,7 @@ public class TicketService implements ITicketService {
     @Autowired
     private TicketBaseMapper ticketBaseMapper;
     @Autowired
-    IdGenerator idGenerator;
+    private IdGenerator idGenerator;
     @Override
     public Long save(Ticket ticket) {
         if (ticket == null) {

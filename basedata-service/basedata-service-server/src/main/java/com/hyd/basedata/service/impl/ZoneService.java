@@ -36,7 +36,7 @@ public class ZoneService implements IZoneService {
     @Autowired
     private UnitBaseMapper unitBaseMapper;
     @Autowired
-    IdGenerator idGenerator;
+    private IdGenerator idGenerator;
 
     @Override
     public Zone getUnitById(Long id) {

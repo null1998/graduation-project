@@ -20,7 +20,7 @@ public class DictionaryService implements IDictionaryService {
     @Autowired
     private DictionaryBaseMapper dictionaryBaseMapper;
     @Autowired
-    IdGenerator idGenerator;
+    private IdGenerator idGenerator;
     @Override
     public Long save(Dictionary dictionary) {
         if (dictionary == null) {

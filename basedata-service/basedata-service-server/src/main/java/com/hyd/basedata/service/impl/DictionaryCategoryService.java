@@ -18,7 +18,7 @@ public class DictionaryCategoryService implements IDictionaryCategoryService {
     @Autowired
     private DictionaryCategoryBaseMapper dictionaryCategoryBaseMapper;
     @Autowired
-    IdGenerator idGenerator;
+    private IdGenerator idGenerator;
     @Override
     public Long save(DictionaryCategory dictionaryCategory) {
         if (dictionaryCategory == null) {
