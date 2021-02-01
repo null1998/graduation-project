@@ -1,6 +1,5 @@
 package com.hyd.basedata.entity.vo;
 
-import javax.annotation.Generated;
 
 /**
  * @author yanduohuang

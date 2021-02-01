@@ -3,7 +3,6 @@ package com.hyd.basedata.web;
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.entity.vo.UnitVO;
 import com.hyd.basedata.service.IUnitService;
-import com.hyd.basedata.service.impl.UnitService;
 import com.hyd.basedata.web.dto.UnitDTO;
 import com.sd365.common.log.api.annotation.ApiLog;
 import com.sd365.common.util.BeanUtil;

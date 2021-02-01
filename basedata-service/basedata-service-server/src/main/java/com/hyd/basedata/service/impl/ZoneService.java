@@ -1,26 +1,25 @@
 package com.hyd.basedata.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hyd.basedata.dao.UnitBaseMapper;
-import com.hyd.basedata.dao.UnitDynamicSqlSupport;
 import com.hyd.basedata.dao.ZoneBaseMapper;
 import com.hyd.basedata.dao.ZoneDynamicSqlSupport;
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.entity.Zone;
 import com.hyd.basedata.service.IZoneService;
+import com.hyd.basedata.util.MnemonicUtil;
 import com.sd365.common.core.annotation.stuffer.IdGenerator;
 import com.sd365.common.core.common.exception.BusinessException;
 import com.sd365.common.core.common.exception.code.BusinessErrorCode;
 import lombok.extern.slf4j.Slf4j;
-import net.sourceforge.pinyin4j.PinyinHelper;
 import org.mybatis.dynamic.sql.SqlBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 import java.util.Optional;
@@ -78,7 +77,7 @@ public class ZoneService implements IZoneService {
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }
-            JSONArray jsonArray = JSONObject.parseArray(stringBuilder.toString());
+            JSONArray jsonArray = JSON.parseArray(stringBuilder.toString());
             recursion(jsonArray, null, null,1);
         }catch (Exception e) {
             log.info(e.getMessage());
@@ -105,16 +104,7 @@ public class ZoneService implements IZoneService {
             unit.setName(unitName);
             unit.setZoneId(zoneId);
             unit.setParentId(parentUnitId);
-            StringBuilder mnemonicBuilder = new StringBuilder();
-            for (char c : unitName.toCharArray()) {
-                String[] array = PinyinHelper.toHanyuPinyinStringArray(c);
-                if (array != null) {
-                    mnemonicBuilder.append(array[0].charAt(0));
-                } else {
-                    mnemonicBuilder.append(c);
-                }
-            }
-            unit.setMnemonic(mnemonicBuilder.toString().toUpperCase());
+            unit.setMnemonic(MnemonicUtil.buildMnemonic(unitName));
             unitBaseMapper.insertSelective(unit);
 
             if (jsonObject.getJSONArray("children") != null) {
