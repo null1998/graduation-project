@@ -72,7 +72,7 @@ public class UnitService implements IUnitService {
         return unitBaseMapper.deleteByPrimaryKey(id) == 1;
     }
     @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById"}, key="#unit.id"),
-            @CacheEvict(value = {"UnitService::listUnitByParentId"}, key="#unit.parentId")})
+            @CacheEvict(value = {"UnitService::listUnitByParentId"}, allEntries = true)})
     @Override
     public Integer update(Unit unit) {
         if (unit == null) {

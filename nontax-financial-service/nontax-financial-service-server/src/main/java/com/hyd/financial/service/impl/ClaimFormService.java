@@ -58,7 +58,7 @@ public class ClaimFormService implements IClaimFormService {
         }
         return claimFormBaseMapper.deleteByPrimaryKey(id) == 1;
     }
-    @Caching(evict = {@CacheEvict(value = {"ClaimFormService::listByClaimUnitId"},key="#claimForm.claimUnitId")
+    @Caching(evict = {@CacheEvict(value = {"ClaimFormService::listByClaimUnitId"},allEntries = true)
     ,@CacheEvict(value = {"ClaimFormService::listChildClaimFormByParentUnitId"},allEntries = true)})
     @Override
     public Integer update(ClaimForm claimForm) {

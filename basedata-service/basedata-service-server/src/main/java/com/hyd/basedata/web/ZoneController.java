@@ -3,6 +3,7 @@ package com.hyd.basedata.web;
 import com.hyd.basedata.entity.Zone;
 import com.hyd.basedata.entity.vo.ZoneVO;
 import com.hyd.basedata.service.IZoneService;
+import com.hyd.basedata.web.dto.ZoneDTO;
 import com.sd365.common.log.api.annotation.ApiLog;
 import com.sd365.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,23 @@ public class ZoneController {
         List<Zone> zoneList = zoneService.listZoneByParentId(parentUnitId);
         return BeanUtil.copyList(zoneList, ZoneVO.class);
     }
-
+    @ApiLog
+    @PostMapping
+    public Long save(ZoneDTO zoneDTO) {
+        Zone zone = BeanUtil.copy(zoneDTO, Zone.class);
+        return zoneService.save(zone);
+    }
+    @ApiLog
+    @DeleteMapping
+    public Boolean remove(Long id) {
+        return zoneService.remove(id);
+    }
+    @ApiLog
+    @PutMapping
+    public Integer update(ZoneDTO zoneDTO) {
+        Zone zone = BeanUtil.copy(zoneDTO, Zone.class);
+        return zoneService.update(zone);
+    }
     /**
      * 初始化数据
      */

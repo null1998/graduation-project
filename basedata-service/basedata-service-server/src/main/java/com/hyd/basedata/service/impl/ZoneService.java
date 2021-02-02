@@ -72,6 +72,26 @@ public class ZoneService implements IZoneService {
         zoneBaseMapper.insertSelective(zone);
         return id;
     }
+    @Caching(evict = {@CacheEvict(value = {"ZoneService::getZoneById"}, key = "#id"),
+            @CacheEvict(value = {"ZoneService::listZoneByParentId"}, allEntries = true)})
+    @Override
+    public Boolean remove(Long id) {
+        if (id == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
+        }
+        return zoneBaseMapper.deleteByPrimaryKey(id) == 1;
+    }
+    @Caching(evict = {@CacheEvict(value = {"ZoneService::getZoneById"}, key = "#zone.id"),
+            @CacheEvict(value = {"ZoneService::listZoneByParentId"}, allEntries = true)})
+    @Override
+    public Integer update(Zone zone) {
+        if (zone == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("行政区划为空"));
+        }
+        return zoneBaseMapper.updateByPrimaryKeySelective(zone);
+    }
+
+
     @Override
     public void importData() {
         File file = new File("C:\\Users\\test\\Desktop\\pcas-code.json");
