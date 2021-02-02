@@ -13,7 +13,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("com.sd365.common")
 @ComponentScan("com.sd365.common.api.version")
 @ComponentScan("com.hyd.financial.dao")
-@MapperScan(basePackages = {"com.hyd.financial.dao"})
+@ComponentScan("com.hyd.basedata.service")
+@MapperScan(basePackages = {"com.hyd.financial.dao","com.hyd.basedata.dao"})
 public class FinancialApplication {
     public static void main(String[] args) {
         SpringApplication.run(FinancialApplication.class, args);

@@ -2,6 +2,7 @@ package com.hyd.basedata.service.impl;
 
 import com.hyd.basedata.dao.UnitBaseMapper;
 import com.hyd.basedata.dao.UnitDynamicSqlSupport;
+import com.hyd.basedata.dao.UnitMapper;
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.service.IUnitService;
 import com.sd365.common.core.annotation.stuffer.IdGenerator;
@@ -22,6 +23,8 @@ import java.util.Optional;
 public class UnitService implements IUnitService {
     @Autowired
     private UnitBaseMapper unitBaseMapper;
+    @Autowired
+    private UnitMapper unitMapper;
     @Autowired
     private IdGenerator idGenerator;
     @Override
@@ -52,7 +55,7 @@ public class UnitService implements IUnitService {
         if (parentId == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("父单位ID为空"));
         }
-        return unitBaseMapper.select(c -> c.where(UnitDynamicSqlSupport.parentId, SqlBuilder.isEqualTo(parentId)));
+        return unitMapper.listUnitByParentId(parentId);
     }
 
     @Override

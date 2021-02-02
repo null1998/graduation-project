@@ -21,7 +21,10 @@
         </javaTypeResolver>
         <javaModelGenerator targetPackage="com.hyd.financial.entity" targetProject="src/main/java"/>
         <javaClientGenerator targetPackage="com.hyd.financial.dao" targetProject="src/main/java"/>
-        <table tableName="financial_warehouse_inventory" mapperName="WarehouseInventoryBaseMapper">
+<!--        <table tableName="financial_warehouse_inventory" mapperName="WarehouseInventoryBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
+<!--        </table>-->
+        <table tableName="financial_claim_form" mapperName="ClaimFormBaseMapper">
             <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
         </table>
 
