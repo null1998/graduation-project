@@ -26,13 +26,16 @@ public final class WarehouseInventoryDynamicSqlSupport {
     public static final SqlColumn<BigDecimal> price = warehouseInventory.price;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> start = warehouseInventory.start;
+    public static final SqlColumn<String> start = warehouseInventory.start;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> end = warehouseInventory.end;
+    public static final SqlColumn<String> end = warehouseInventory.end;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Long> version = warehouseInventory.version;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> status = warehouseInventory.status;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class WarehouseInventory extends SqlTable {
@@ -46,11 +49,13 @@ public final class WarehouseInventoryDynamicSqlSupport {
 
         public final SqlColumn<BigDecimal> price = column("price", JDBCType.DECIMAL);
 
-        public final SqlColumn<Long> start = column("start", JDBCType.BIGINT);
+        public final SqlColumn<String> start = column("start", JDBCType.VARCHAR);
 
-        public final SqlColumn<Long> end = column("end", JDBCType.BIGINT);
+        public final SqlColumn<String> end = column("end", JDBCType.VARCHAR);
 
         public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
+
+        public final SqlColumn<Integer> status = column("status", JDBCType.INTEGER);
 
         public WarehouseInventory() {
             super("financial_warehouse_inventory");

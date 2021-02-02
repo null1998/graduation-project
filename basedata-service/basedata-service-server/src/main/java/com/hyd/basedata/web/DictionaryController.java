@@ -22,12 +22,23 @@ import java.util.List;
 public class DictionaryController {
     @Autowired
     private IDictionaryService dictionaryService;
+
+    /**
+     * 保存字典
+     * @param dictionaryDTO 字典
+     * @return 字典ID
+     */
     @ApiLog
     @PostMapping
     public Long save(@RequestBody DictionaryDTO dictionaryDTO) {
         Dictionary dictionary = BeanUtil.copy(dictionaryDTO, Dictionary.class);
         return dictionaryService.save(dictionary);
     }
+
+    /**
+     * 批量保存字典
+     * @param dictionaryDTOList 字典列表
+     */
     @ApiLog
     @PostMapping(value = "/list")
     public void saveList(@RequestBody List<DictionaryDTO> dictionaryDTOList) {

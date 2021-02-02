@@ -19,18 +19,34 @@ import java.util.List;
 public class ZoneController {
     @Autowired
     private IZoneService zoneService;
+
+    /**
+     * 根据ID查询行政区划
+     * @param id
+     * @return 行政区划
+     */
     @ApiLog
     @GetMapping(value = "/{id}")
     public ZoneVO getZoneById(@PathVariable(name = "id") Long id) {
         Zone zone = zoneService.getUnitById(id);
         return BeanUtil.copy(zone, ZoneVO.class);
     }
+
+    /**
+     * 根据父级行政区划ID查询
+     * @param parentUnitId 父级行政区划ID
+     * @return 行政区划列表
+     */
     @ApiLog
     @GetMapping(value = "/children/{parentUnitId}")
     public List<ZoneVO> listZoneByParentId(@PathVariable(name = "parentUnitId") Long parentUnitId) {
         List<Zone> zoneList = zoneService.listZoneByParentId(parentUnitId);
         return BeanUtil.copyList(zoneList, ZoneVO.class);
     }
+
+    /**
+     * 初始化数据
+     */
     @PostMapping
     public void importData() {
         zoneService.importData();

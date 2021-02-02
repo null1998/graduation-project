@@ -1,10 +1,10 @@
-package com.hyd.financial.entity;
+package com.hyd.financial.web.dto;
 
+import javax.annotation.Generated;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.annotation.Generated;
 
-public class WarehouseInventory implements Serializable {
+public class WarehouseInventoryDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
@@ -137,7 +137,7 @@ public class WarehouseInventory implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        WarehouseInventory other = (WarehouseInventory) that;
+        WarehouseInventoryDTO other = (WarehouseInventoryDTO) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getWarehouseId() == null ? other.getWarehouseId() == null : this.getWarehouseId().equals(other.getWarehouseId()))
             && (this.getTicketId() == null ? other.getTicketId() == null : this.getTicketId().equals(other.getTicketId()))

@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface WarehouseInventoryBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, warehouseId, ticketId, number, price, start, end, version);
+    BasicColumn[] selectList = BasicColumn.columnList(id, warehouseId, ticketId, number, price, start, end, version, status);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -61,9 +61,10 @@ public interface WarehouseInventoryBaseMapper {
         @Result(column="ticket_id", property="ticketId", jdbcType=JdbcType.BIGINT),
         @Result(column="number", property="number", jdbcType=JdbcType.BIGINT),
         @Result(column="price", property="price", jdbcType=JdbcType.DECIMAL),
-        @Result(column="start", property="start", jdbcType=JdbcType.BIGINT),
-        @Result(column="end", property="end", jdbcType=JdbcType.BIGINT),
-        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
+        @Result(column="start", property="start", jdbcType=JdbcType.VARCHAR),
+        @Result(column="end", property="end", jdbcType=JdbcType.VARCHAR),
+        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT),
+        @Result(column="status", property="status", jdbcType=JdbcType.INTEGER)
     })
     List<WarehouseInventory> selectMany(SelectStatementProvider selectStatement);
 
@@ -104,6 +105,7 @@ public interface WarehouseInventoryBaseMapper {
             .map(start).toProperty("start")
             .map(end).toProperty("end")
             .map(version).toProperty("version")
+            .map(status).toProperty("status")
         );
     }
 
@@ -118,6 +120,7 @@ public interface WarehouseInventoryBaseMapper {
             .map(start).toProperty("start")
             .map(end).toProperty("end")
             .map(version).toProperty("version")
+            .map(status).toProperty("status")
         );
     }
 
@@ -132,6 +135,7 @@ public interface WarehouseInventoryBaseMapper {
             .map(start).toPropertyWhenPresent("start", record::getStart)
             .map(end).toPropertyWhenPresent("end", record::getEnd)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
+            .map(status).toPropertyWhenPresent("status", record::getStatus)
         );
     }
 
@@ -171,7 +175,8 @@ public interface WarehouseInventoryBaseMapper {
                 .set(price).equalTo(record::getPrice)
                 .set(start).equalTo(record::getStart)
                 .set(end).equalTo(record::getEnd)
-                .set(version).equalTo(record::getVersion);
+                .set(version).equalTo(record::getVersion)
+                .set(status).equalTo(record::getStatus);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -183,7 +188,8 @@ public interface WarehouseInventoryBaseMapper {
                 .set(price).equalToWhenPresent(record::getPrice)
                 .set(start).equalToWhenPresent(record::getStart)
                 .set(end).equalToWhenPresent(record::getEnd)
-                .set(version).equalToWhenPresent(record::getVersion);
+                .set(version).equalToWhenPresent(record::getVersion)
+                .set(status).equalToWhenPresent(record::getStatus);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -196,6 +202,7 @@ public interface WarehouseInventoryBaseMapper {
             .set(start).equalTo(record::getStart)
             .set(end).equalTo(record::getEnd)
             .set(version).equalTo(record::getVersion)
+            .set(status).equalTo(record::getStatus)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -210,6 +217,7 @@ public interface WarehouseInventoryBaseMapper {
             .set(start).equalToWhenPresent(record::getStart)
             .set(end).equalToWhenPresent(record::getEnd)
             .set(version).equalToWhenPresent(record::getVersion)
+            .set(status).equalToWhenPresent(record::getStatus)
             .where(id, isEqualTo(record::getId))
         );
     }

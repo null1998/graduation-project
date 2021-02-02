@@ -20,6 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class DictionaryCategoryController {
     @Autowired
     private IDictionaryCategoryService dictionaryCategoryService;
+
+    /**
+     * 保存字典分类
+     * @param dictionaryCategoryDTO 字典分类
+     * @return 字典分类ID
+     */
     @ApiLog
     @PostMapping
     public Long save(@RequestBody  DictionaryCategoryDTO dictionaryCategoryDTO) {
