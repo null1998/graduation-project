@@ -1,19 +1,20 @@
 package com.hyd.financial.service.impl;
 
-import com.hyd.basedata.dao.UnitMapper;
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.service.IUnitService;
 import com.hyd.financial.dao.ClaimFormBaseMapper;
 import com.hyd.financial.dao.ClaimFormMapper;
 import com.hyd.financial.entity.ClaimForm;
 import com.hyd.financial.service.IClaimFormService;
+import com.hyd.financial.web.dto.ClaimFormDTO;
 import com.sd365.common.core.annotation.stuffer.IdGenerator;
 import com.sd365.common.core.common.exception.BusinessException;
 import com.sd365.common.core.common.exception.code.BusinessErrorCode;
+import com.sd365.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -27,9 +28,9 @@ public class ClaimFormService implements IClaimFormService {
     @Autowired
     private ClaimFormMapper claimFormMapper;
     @Autowired
-    private IUnitService unitService;
-    @Autowired
     private IdGenerator idGenerator;
+    @Autowired
+    private IUnitService unitService;
     @Override
     public Long save(ClaimForm claimForm) {
         if (claimForm == null) {
@@ -37,6 +38,9 @@ public class ClaimFormService implements IClaimFormService {
         }
         long id = idGenerator.snowflakeId();
         claimForm.setId(id);
+        long orderNumber = idGenerator.snowflakeId();
+        claimForm.setOrderNumber(orderNumber);
+        claimForm.setClaimDate(LocalDateTime.now());
         claimFormBaseMapper.insertSelective(claimForm);
         return id;
     }
@@ -58,25 +62,40 @@ public class ClaimFormService implements IClaimFormService {
     }
 
     @Override
-    public List<ClaimForm> listByClaimUnitId(Long claimUnitId) {
+    public List<ClaimFormDTO> listByClaimUnitId(Long claimUnitId) {
         if (claimUnitId == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("申领单位ID为空"));
         }
-        return claimFormMapper.listByClaimUnitId(claimUnitId);
+        List<ClaimForm> claimFormList = claimFormMapper.listByClaimUnitId(claimUnitId);
+        return listClaimUnitName(claimFormList);
     }
 
     @Override
-    public List<ClaimForm> listChildClaimFormByParentUnitId(Long parentUnitId) {
+    public List<ClaimFormDTO> listChildClaimFormByParentUnitId(Long parentUnitId) {
         if (parentUnitId == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("父级单位ID为空"));
         }
-        // 查询父级单位的所有下属单位
-        List<Unit> unitList = unitService.listUnitByParentId(parentUnitId);
-        ArrayList<Long> unitIdList = new ArrayList<>();
-        for (Unit unit : unitList) {
-            unitIdList.add(unit.getId());
+        List<ClaimForm> claimFormList = claimFormMapper.listChildClaimFormByParentUnitId(parentUnitId);
+        return listClaimUnitName(claimFormList);
+    }
+
+    /**
+     * 根据申领单的单位ID查询单位名
+     * @param claimFormList 申领单列表
+     * @return 申领单列表
+     */
+    private List<ClaimFormDTO> listClaimUnitName(List<ClaimForm> claimFormList) {
+        if (claimFormList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("申领单为空"));
         }
-        // 根据单位ID列表查询申领单列表
-        return claimFormMapper.listClaimFormByUnitIdList(unitIdList);
+        List<ClaimFormDTO> claimFormDTOList = BeanUtil.copyList(claimFormList, ClaimFormDTO.class);
+        for (ClaimFormDTO claimFormDTO : claimFormDTOList) {
+            Long claimUnitId = claimFormDTO.getClaimUnitId();
+            if (claimUnitId != null) {
+                Unit unit = unitService.getUnitById(claimUnitId);
+                claimFormDTO.setClaimUnitName(unit.getName());
+            }
+        }
+        return claimFormDTOList;
     }
 }

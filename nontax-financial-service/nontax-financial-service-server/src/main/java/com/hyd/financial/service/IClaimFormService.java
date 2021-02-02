@@ -1,6 +1,7 @@
 package com.hyd.financial.service;
 
 import com.hyd.financial.entity.ClaimForm;
+import com.hyd.financial.web.dto.ClaimFormDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public interface IClaimFormService {
      * @param claimUnitId 申领单位ID
      * @return 申领单列表
      */
-    List<ClaimForm> listByClaimUnitId(Long claimUnitId);
+    List<ClaimFormDTO> listByClaimUnitId(Long claimUnitId);
 
     /**
      * 根据父单位ID查询下级单位申领单
@@ -44,5 +45,5 @@ public interface IClaimFormService {
      * @return 申领单列表
      */
     @Transactional
-    List<ClaimForm> listChildClaimFormByParentUnitId(Long parentUnitId);
+    List<ClaimFormDTO> listChildClaimFormByParentUnitId(Long parentUnitId);
 }

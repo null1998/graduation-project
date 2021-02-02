@@ -20,6 +20,8 @@ public class WarehouseInventoryVO implements Serializable {
 
     private Integer status;
 
+    private Long version;
+
     public Long getId() {
         return id;
     }
@@ -84,6 +86,14 @@ public class WarehouseInventoryVO implements Serializable {
         this.status = status;
     }
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     @Override
     public String toString() {
         return "WarehouseInventoryVO{" +
@@ -95,6 +105,7 @@ public class WarehouseInventoryVO implements Serializable {
                 ", start='" + start + '\'' +
                 ", end='" + end + '\'' +
                 ", status=" + status +
+                ", version=" + version +
                 '}';
     }
 }

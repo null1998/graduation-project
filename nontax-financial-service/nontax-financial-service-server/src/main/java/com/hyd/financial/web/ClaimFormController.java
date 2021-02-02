@@ -1,6 +1,8 @@
 package com.hyd.financial.web;
 
+import com.hyd.basedata.service.IUnitService;
 import com.hyd.financial.entity.ClaimForm;
+import com.hyd.financial.entity.vo.ClaimFormVO;
 import com.hyd.financial.service.IClaimFormService;
 import com.hyd.financial.web.dto.ClaimFormDTO;
 import com.sd365.common.log.api.annotation.ApiLog;
@@ -19,6 +21,7 @@ import java.util.List;
 public class ClaimFormController {
     @Autowired
     private IClaimFormService claimFormService;
+
     /**
      * 保存
      * @param claimFormDTO 申领单
@@ -58,8 +61,9 @@ public class ClaimFormController {
      */
     @ApiLog
     @GetMapping(value = "/list/{claimUnitId}")
-    public List<ClaimForm> listByClaimUnitId(@PathVariable("claimUnitId") Long claimUnitId) {
-        return claimFormService.listByClaimUnitId(claimUnitId);
+    public List<ClaimFormVO> listByClaimUnitId(@PathVariable("claimUnitId") Long claimUnitId) {
+        List<ClaimFormDTO> claimFormDTOList = claimFormService.listByClaimUnitId(claimUnitId);
+        return BeanUtil.copyList(claimFormDTOList, ClaimFormVO.class);
     }
     /**
      * 根据父单位ID查询下级单位申领单
@@ -67,8 +71,9 @@ public class ClaimFormController {
      * @return 申领单列表
      */
     @ApiLog
-    @GetMapping(value = "/list/child/{claimUnitId}")
-    public List<ClaimForm> listChildClaimFormByParentUnitId(Long parentUnitId) {
-        return claimFormService.listChildClaimFormByParentUnitId(parentUnitId);
+    @GetMapping(value = "/list/child/{parentUnitId}")
+    public List<ClaimFormVO> listChildClaimFormByParentUnitId(@PathVariable("parentUnitId") Long parentUnitId) {
+        List<ClaimFormDTO> claimFormDTOList = claimFormService.listChildClaimFormByParentUnitId(parentUnitId);
+        return BeanUtil.copyList(claimFormDTOList, ClaimFormVO.class);
     }
 }
