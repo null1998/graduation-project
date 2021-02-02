@@ -7,6 +7,8 @@ import java.math.BigDecimal;
  * @date 2021/2/1 16:02
  */
 public class TicketVO {
+    private Long id;
+
     private String name;
 
     private String year;
@@ -18,6 +20,16 @@ public class TicketVO {
     private BigDecimal price;
 
     private String unitOfMeasurement;
+
+    private Long version;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -67,15 +79,25 @@ public class TicketVO {
         this.unitOfMeasurement = unitOfMeasurement;
     }
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     @Override
     public String toString() {
         return "TicketVO{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", year='" + year + '\'' +
                 ", code='" + code + '\'' +
                 ", mnemonic='" + mnemonic + '\'' +
                 ", price=" + price +
                 ", unitOfMeasurement='" + unitOfMeasurement + '\'' +
+                ", version=" + version +
                 '}';
     }
 }

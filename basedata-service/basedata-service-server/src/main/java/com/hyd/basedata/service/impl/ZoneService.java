@@ -16,6 +16,9 @@ import com.sd365.common.core.common.exception.code.BusinessErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.dynamic.sql.SqlBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -37,9 +40,9 @@ public class ZoneService implements IZoneService {
     private UnitBaseMapper unitBaseMapper;
     @Autowired
     private IdGenerator idGenerator;
-
+    @Cacheable(value = {"ZoneService::getZoneById"},key = "#id")
     @Override
-    public Zone getUnitById(Long id) {
+    public Zone getZoneById(Long id) {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
         }
@@ -49,7 +52,7 @@ public class ZoneService implements IZoneService {
         }
         return optional.get();
     }
-
+    @Cacheable(value = {"ZoneService::listZoneByParentId"},key = "#parentId")
     @Override
     public List<Zone> listZoneByParentId(Long parentId) {
         if (parentId == null) {
@@ -57,7 +60,8 @@ public class ZoneService implements IZoneService {
         }
         return zoneBaseMapper.select(c -> c.where(ZoneDynamicSqlSupport.parentId, SqlBuilder.isEqualTo(parentId)));
     }
-
+    @Caching(evict = {@CacheEvict(value = {"ZoneService::getZoneById"}, allEntries = true),
+            @CacheEvict(value = {"ZoneService::listZoneByParentId"}, allEntries = true)})
     @Override
     public Long save(Zone zone) {
         if (zone == null) {

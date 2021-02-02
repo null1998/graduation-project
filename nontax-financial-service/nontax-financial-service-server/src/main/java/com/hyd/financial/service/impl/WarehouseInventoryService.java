@@ -8,6 +8,8 @@ import com.sd365.common.core.annotation.stuffer.IdGenerator;
 import com.sd365.common.core.common.exception.BusinessException;
 import com.sd365.common.core.common.exception.code.BusinessErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +26,7 @@ public class WarehouseInventoryService implements IWarehouseInventoryService {
     private WarehouseInventoryMapper warehouseInventoryMapper;
     @Autowired
     private IdGenerator idGenerator;
-
+    @CacheEvict(value = {"WarehouseInventoryService::listWarehouseInventory"},allEntries = true)
     @Override
     public Long save(WarehouseInventory warehouseInventory) {
         if (warehouseInventory == null) {
@@ -35,7 +37,7 @@ public class WarehouseInventoryService implements IWarehouseInventoryService {
         warehouseInventoryBaseMapper.insertSelective(warehouseInventory);
         return id;
     }
-
+    @CacheEvict(value = {"WarehouseInventoryService::listWarehouseInventory"},allEntries = true)
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -43,7 +45,7 @@ public class WarehouseInventoryService implements IWarehouseInventoryService {
         }
         return warehouseInventoryBaseMapper.deleteByPrimaryKey(id) == 1;
     }
-
+    @CacheEvict(value = {"WarehouseInventoryService::listWarehouseInventory"},allEntries = true)
     @Override
     public Integer update(WarehouseInventory warehouseInventory) {
         if (warehouseInventory == null) {
@@ -51,7 +53,7 @@ public class WarehouseInventoryService implements IWarehouseInventoryService {
         }
         return warehouseInventoryBaseMapper.updateByPrimaryKeySelective(warehouseInventory);
     }
-
+    @Cacheable(value = {"WarehouseInventoryService::listWarehouseInventory"},key = "#warehouseInventory.toString()")
     @Override
     public List<WarehouseInventory> listWarehouseInventory(WarehouseInventory warehouseInventory) {
         if (warehouseInventory == null) {

@@ -11,6 +11,8 @@ import com.sd365.common.core.common.exception.BusinessException;
 import com.sd365.common.core.common.exception.code.BusinessErrorCode;
 import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,7 @@ public class WarehouseService implements IWarehouseService {
     private UnitBaseMapper unitBaseMapper;
     @Autowired
     private IdGenerator idGenerator;
+    @CacheEvict(value = {"WarehouseService::getWarehouseById"},allEntries = true)
     @Override
     public Long save(Warehouse warehouse) {
         if (warehouse == null) {
@@ -39,7 +42,7 @@ public class WarehouseService implements IWarehouseService {
         warehouseBaseMapper.insertSelective(warehouse);
         return id;
     }
-
+    @CacheEvict(value = {"WarehouseService::getWarehouseById"},key = "#id")
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -47,7 +50,7 @@ public class WarehouseService implements IWarehouseService {
         }
         return warehouseBaseMapper.deleteByPrimaryKey(id) == 1;
     }
-
+    @CacheEvict(value = {"WarehouseService::getWarehouseById"},key = "#warehouse.id")
     @Override
     public Integer update(Warehouse warehouse) {
         if (warehouse == null) {
@@ -55,7 +58,7 @@ public class WarehouseService implements IWarehouseService {
         }
         return warehouseBaseMapper.updateByPrimaryKeySelective(warehouse);
     }
-
+    @Cacheable(value = {"WarehouseService::getWarehouseById"},key = "#id")
     @Override
     public Warehouse getWarehouseById(Long id) {
         if (id == null) {

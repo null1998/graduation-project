@@ -8,6 +8,8 @@ import com.sd365.common.core.annotation.stuffer.IdGenerator;
 import com.sd365.common.core.common.exception.BusinessException;
 import com.sd365.common.core.common.exception.code.BusinessErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,6 +24,7 @@ public class TicketService implements ITicketService {
     private TicketBaseMapper ticketBaseMapper;
     @Autowired
     private IdGenerator idGenerator;
+    @CacheEvict(value = {"TicketService::getTicketById"},allEntries = true)
     @Override
     public Long save(Ticket ticket) {
         if (ticket == null) {
@@ -33,7 +36,7 @@ public class TicketService implements ITicketService {
         ticketBaseMapper.insertSelective(ticket);
         return id;
     }
-
+    @CacheEvict(value = {"TicketService::getTicketById"},key="#ticket.id")
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -41,7 +44,7 @@ public class TicketService implements ITicketService {
         }
         return ticketBaseMapper.deleteByPrimaryKey(id) == 1;
     }
-
+    @CacheEvict(value = {"TicketService::getTicketById"},key="#ticket.id")
     @Override
     public Integer update(Ticket ticket) {
         if (ticket == null) {
@@ -49,7 +52,7 @@ public class TicketService implements ITicketService {
         }
         return ticketBaseMapper.updateByPrimaryKeySelective(ticket);
     }
-
+    @Cacheable(value = {"TicketService::getTicketById"},key="#id")
     @Override
     public Ticket getTicketById(Long id) {
         if (id == null) {

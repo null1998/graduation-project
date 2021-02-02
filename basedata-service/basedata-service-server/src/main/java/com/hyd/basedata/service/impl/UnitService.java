@@ -10,6 +10,9 @@ import com.sd365.common.core.common.exception.BusinessException;
 import com.sd365.common.core.common.exception.code.BusinessErrorCode;
 import org.mybatis.dynamic.sql.SqlBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +30,8 @@ public class UnitService implements IUnitService {
     private UnitMapper unitMapper;
     @Autowired
     private IdGenerator idGenerator;
+    @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById"}, allEntries = true),
+            @CacheEvict(value = {"UnitService::listUnitByParentId"}, allEntries = true)})
     @Override
     public Long save(Unit unit) {
         if (unit == null) {
@@ -37,7 +42,7 @@ public class UnitService implements IUnitService {
         unitBaseMapper.insertSelective(unit);
         return uid;
     }
-
+    @Cacheable(value = {"UnitService::getUnitById"},key="#id")
     @Override
     public Unit getUnitById(Long id) {
         if (id == null) {
@@ -49,7 +54,7 @@ public class UnitService implements IUnitService {
         }
         return optional.get();
     }
-
+    @Cacheable(value = {"UnitService::listUnitByParentId"},key="#parentId")
     @Override
     public List<Unit> listUnitByParentId(Long parentId) {
         if (parentId == null) {
@@ -57,7 +62,8 @@ public class UnitService implements IUnitService {
         }
         return unitMapper.listUnitByParentId(parentId);
     }
-
+    @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById"}, key="#id"),
+            @CacheEvict(value = {"UnitService::listUnitByParentId"}, allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -65,7 +71,8 @@ public class UnitService implements IUnitService {
         }
         return unitBaseMapper.deleteByPrimaryKey(id) == 1;
     }
-
+    @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById"}, key="#unit.id"),
+            @CacheEvict(value = {"UnitService::listUnitByParentId"}, key="#unit.parentId")})
     @Override
     public Integer update(Unit unit) {
         if (unit == null) {

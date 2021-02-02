@@ -5,6 +5,9 @@ server:
   servlet:
     context-path: /nontax/financial
 spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
   datasource:
     url: jdbc:mysql://114.55.137.13:9000/nontax_financial?useSSL=false
     username: root

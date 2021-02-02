@@ -28,7 +28,7 @@ public class ZoneController {
     @ApiLog
     @GetMapping(value = "/{id}")
     public ZoneVO getZoneById(@PathVariable(name = "id") Long id) {
-        Zone zone = zoneService.getUnitById(id);
+        Zone zone = zoneService.getZoneById(id);
         return BeanUtil.copy(zone, ZoneVO.class);
     }
 

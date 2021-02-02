@@ -14,7 +14,7 @@ public interface IZoneService {
      * @param id 行政区划ID
      * @return 行政区划
      */
-    Zone getUnitById(Long id);
+    Zone getZoneById(Long id);
 
     /**
      * 根据父行政区划ID查询

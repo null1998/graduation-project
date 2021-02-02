@@ -12,6 +12,9 @@ import com.sd365.common.core.common.exception.BusinessException;
 import com.sd365.common.core.common.exception.code.BusinessErrorCode;
 import com.sd365.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,6 +34,8 @@ public class ClaimFormService implements IClaimFormService {
     private IdGenerator idGenerator;
     @Autowired
     private IUnitService unitService;
+    @Caching(evict = {@CacheEvict(value = {"ClaimFormService::listByClaimUnitId"},allEntries = true)
+            ,@CacheEvict(value = {"ClaimFormService::listChildClaimFormByParentUnitId"},allEntries = true)})
     @Override
     public Long save(ClaimForm claimForm) {
         if (claimForm == null) {
@@ -44,7 +49,8 @@ public class ClaimFormService implements IClaimFormService {
         claimFormBaseMapper.insertSelective(claimForm);
         return id;
     }
-
+    @Caching(evict = {@CacheEvict(value = {"ClaimFormService::listByClaimUnitId"},allEntries = true)
+            ,@CacheEvict(value = {"ClaimFormService::listChildClaimFormByParentUnitId"},allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -52,7 +58,8 @@ public class ClaimFormService implements IClaimFormService {
         }
         return claimFormBaseMapper.deleteByPrimaryKey(id) == 1;
     }
-
+    @Caching(evict = {@CacheEvict(value = {"ClaimFormService::listByClaimUnitId"},key="#claimForm.claimUnitId")
+    ,@CacheEvict(value = {"ClaimFormService::listChildClaimFormByParentUnitId"},allEntries = true)})
     @Override
     public Integer update(ClaimForm claimForm) {
         if (claimForm == null) {
@@ -60,7 +67,7 @@ public class ClaimFormService implements IClaimFormService {
         }
         return claimFormBaseMapper.updateByPrimaryKeySelective(claimForm);
     }
-
+    @Cacheable(value = {"ClaimFormService::listByClaimUnitId"},key = "#claimUnitId")
     @Override
     public List<ClaimFormDTO> listByClaimUnitId(Long claimUnitId) {
         if (claimUnitId == null) {
@@ -69,7 +76,7 @@ public class ClaimFormService implements IClaimFormService {
         List<ClaimForm> claimFormList = claimFormMapper.listByClaimUnitId(claimUnitId);
         return listClaimUnitName(claimFormList);
     }
-
+    @Cacheable(value = {"ClaimFormService::listChildClaimFormByParentUnitId"},key = "#parentUnitId")
     @Override
     public List<ClaimFormDTO> listChildClaimFormByParentUnitId(Long parentUnitId) {
         if (parentUnitId == null) {

@@ -6,6 +6,7 @@ package com.hyd.basedata.entity.vo;
  * @date 2021/2/1 16:56
  */
 public class WarehouseVO {
+    private Long id;
 
     private String name;
 
@@ -14,6 +15,16 @@ public class WarehouseVO {
     private String mnemonic;
 
     private String address;
+
+    private Long version;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -47,13 +58,23 @@ public class WarehouseVO {
         this.address = address;
     }
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     @Override
     public String toString() {
         return "WarehouseVO{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", code='" + code + '\'' +
                 ", mnemonic='" + mnemonic + '\'' +
                 ", address='" + address + '\'' +
+                ", version=" + version +
                 '}';
     }
 }
