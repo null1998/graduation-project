@@ -1,14 +1,11 @@
 package com.hyd.basedata.service.impl;
 
-import com.hyd.basedata.dao.UnitBaseMapper;
-import com.hyd.basedata.dao.UnitDynamicSqlSupport;
 import com.hyd.basedata.dao.UnitMapper;
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.service.IUnitService;
 import com.sd365.common.core.annotation.stuffer.IdGenerator;
 import com.sd365.common.core.common.exception.BusinessException;
 import com.sd365.common.core.common.exception.code.BusinessErrorCode;
-import org.mybatis.dynamic.sql.SqlBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,8 +22,6 @@ import java.util.Optional;
 @Service
 public class UnitService implements IUnitService {
     @Autowired
-    private UnitBaseMapper unitBaseMapper;
-    @Autowired
     private UnitMapper unitMapper;
     @Autowired
     private IdGenerator idGenerator;
@@ -39,7 +34,7 @@ public class UnitService implements IUnitService {
         }
         long uid = idGenerator.snowflakeId();
         unit.setId(uid);
-        unitBaseMapper.insertSelective(unit);
+        unitMapper.insertSelective(unit);
         return uid;
     }
     @Cacheable(value = {"UnitService::getUnitById"},key="#id")
@@ -48,7 +43,7 @@ public class UnitService implements IUnitService {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
         }
-        Optional<Unit> optional = unitBaseMapper.selectByPrimaryKey(id);
+        Optional<Unit> optional = unitMapper.selectByPrimaryKey(id);
         if (!optional.isPresent()) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("未查询到相应的单位记录"));
         }
@@ -69,7 +64,7 @@ public class UnitService implements IUnitService {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
         }
-        return unitBaseMapper.deleteByPrimaryKey(id) == 1;
+        return unitMapper.deleteByPrimaryKey(id) == 1;
     }
     @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById"}, key="#unit.id"),
             @CacheEvict(value = {"UnitService::listUnitByParentId"}, allEntries = true)})
@@ -78,7 +73,7 @@ public class UnitService implements IUnitService {
         if (unit == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位为空"));
         }
-        return unitBaseMapper.updateByPrimaryKeySelective(unit);
+        return unitMapper.updateByPrimaryKeySelective(unit);
     }
 
 }

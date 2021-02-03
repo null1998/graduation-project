@@ -93,7 +93,7 @@ public class ZoneService implements IZoneService {
 
 
     @Override
-    public void importData() {
+    public void init() {
         File file = new File("C:\\Users\\test\\Desktop\\pcas-code.json");
         StringBuilder stringBuilder = new StringBuilder();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {

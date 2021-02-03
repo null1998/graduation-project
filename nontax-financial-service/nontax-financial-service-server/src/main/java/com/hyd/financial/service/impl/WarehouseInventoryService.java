@@ -1,6 +1,5 @@
 package com.hyd.financial.service.impl;
 
-import com.hyd.financial.dao.WarehouseInventoryBaseMapper;
 import com.hyd.financial.dao.WarehouseInventoryMapper;
 import com.hyd.financial.entity.WarehouseInventory;
 import com.hyd.financial.service.IWarehouseInventoryService;
@@ -21,8 +20,6 @@ import java.util.List;
 @Service
 public class WarehouseInventoryService implements IWarehouseInventoryService {
     @Autowired
-    private WarehouseInventoryBaseMapper warehouseInventoryBaseMapper;
-    @Autowired
     private WarehouseInventoryMapper warehouseInventoryMapper;
     @Autowired
     private IdGenerator idGenerator;
@@ -34,7 +31,7 @@ public class WarehouseInventoryService implements IWarehouseInventoryService {
         }
         long id = idGenerator.snowflakeId();
         warehouseInventory.setId(id);
-        warehouseInventoryBaseMapper.insertSelective(warehouseInventory);
+        warehouseInventoryMapper.insertSelective(warehouseInventory);
         return id;
     }
     @CacheEvict(value = {"WarehouseInventoryService::listWarehouseInventory"},allEntries = true)
@@ -43,7 +40,7 @@ public class WarehouseInventoryService implements IWarehouseInventoryService {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
         }
-        return warehouseInventoryBaseMapper.deleteByPrimaryKey(id) == 1;
+        return warehouseInventoryMapper.deleteByPrimaryKey(id) == 1;
     }
     @CacheEvict(value = {"WarehouseInventoryService::listWarehouseInventory"},allEntries = true)
     @Override
@@ -51,7 +48,7 @@ public class WarehouseInventoryService implements IWarehouseInventoryService {
         if (warehouseInventory == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("仓库库存为空"));
         }
-        return warehouseInventoryBaseMapper.updateByPrimaryKeySelective(warehouseInventory);
+        return warehouseInventoryMapper.updateByPrimaryKeySelective(warehouseInventory);
     }
     @Cacheable(value = {"WarehouseInventoryService::listWarehouseInventory"},key = "#warehouseInventory.toString()")
     @Override

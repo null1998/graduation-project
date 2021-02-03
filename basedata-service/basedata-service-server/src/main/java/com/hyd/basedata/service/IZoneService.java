@@ -46,5 +46,5 @@ public interface IZoneService {
     /**
      * 初始化数据
      */
-    void importData();
+    void init();
 }

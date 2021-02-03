@@ -24,9 +24,14 @@
 <!--        <table tableName="financial_warehouse_inventory" mapperName="WarehouseInventoryBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
 <!--        </table>-->
-        <table tableName="financial_claim_form" mapperName="ClaimFormBaseMapper">
+<!--        <table tableName="financial_claim_form" mapperName="ClaimFormBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
+<!--        </table>-->
+<!--        <table tableName="financial_claim_form_ticket" mapperName="ClaimFormTicketBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
+<!--        </table>-->
+        <table tableName="financial_settlement" mapperName="SettlementBaseMapper">
             <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
         </table>
-
     </context>
 </generatorConfiguration>

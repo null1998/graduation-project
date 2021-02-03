@@ -64,8 +64,8 @@ public class ZoneController {
     /**
      * 初始化数据
      */
-    @PostMapping
-    public void importData() {
-        zoneService.importData();
+    @PostMapping("/init")
+    public void init() {
+        zoneService.init();
     }
 }
