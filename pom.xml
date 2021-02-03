@@ -12,6 +12,7 @@
         <module>basedata-service</module>
         <module>nontax-financial-service</module>
         <module>nontax-unit-service</module>
+        <module>user-center</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
