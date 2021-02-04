@@ -6,15 +6,13 @@ import com.hyd.basedata.web.dto.DictionaryCategoryDTO;
 import com.sd365.common.log.api.annotation.ApiLog;
 import com.sd365.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author yanduohuang
  * @date 2021/2/1 15:05
  */
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/dictionary/category")
 public class DictionaryCategoryController {

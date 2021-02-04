@@ -15,6 +15,7 @@ import java.util.List;
  * @author yanduohuang
  * @date 2021/2/3 10:32
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/claim/form/ticket")
 public class ClaimFormTicketController {

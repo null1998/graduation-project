@@ -15,6 +15,7 @@ import java.util.List;
  * @author yanduohuang
  * @date 2021/2/1 10:51
  */
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/zone")
 public class ZoneController {

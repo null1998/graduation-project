@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @author yanduohuang
  * @date 2021/2/1 15:58
  */
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/ticket")
 public class TicketController {

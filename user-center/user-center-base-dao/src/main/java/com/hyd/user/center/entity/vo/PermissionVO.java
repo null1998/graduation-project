@@ -12,9 +12,19 @@ public class PermissionVO {
 
     private String url;
 
+    private String method;
+
     private String action;
 
     private Long version;
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
 
     public Long getId() {
         return id;
@@ -62,6 +72,7 @@ public class PermissionVO {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
+                ", method='" + method + '\'' +
                 ", action='" + action + '\'' +
                 ", version=" + version +
                 '}';

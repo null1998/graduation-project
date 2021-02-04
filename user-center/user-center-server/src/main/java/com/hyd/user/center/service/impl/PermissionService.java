@@ -24,7 +24,7 @@ public class PermissionService implements IPermissionService {
     private PermissionMapper permissionMapper;
     @Autowired
     private IdGenerator idGenerator;
-    @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName","PermissionService::listPermission"},allEntries = true)})
     @Override
     public Long save(Permission permission) {
         if (permission == null) {
@@ -35,7 +35,7 @@ public class PermissionService implements IPermissionService {
         permissionMapper.insertSelective(permission);
         return id;
     }
-    @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName","PermissionService::listPermission"},allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -43,7 +43,7 @@ public class PermissionService implements IPermissionService {
         }
         return permissionMapper.deleteByPrimaryKey(id) == 1;
     }
-    @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName","PermissionService::listPermission"},allEntries = true)})
     @Override
     public Integer update(Permission permission) {
         if (permission == null) {
@@ -58,5 +58,13 @@ public class PermissionService implements IPermissionService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("权限名为空"));
         }
         return permissionMapper.listByName(name);
+    }
+    @Cacheable(value = {"PermissionService::listPermission"},key = "#permission.toString()")
+    @Override
+    public List<Permission> listPermission(Permission permission) {
+        if (permission == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("权限为空"));
+        }
+        return permissionMapper.listPermission(permission);
     }
 }

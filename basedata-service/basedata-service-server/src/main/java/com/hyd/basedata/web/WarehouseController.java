@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @author yanduohuang
  * @date 2021/2/1 16:56
  */
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/warehouse")
 public class WarehouseController {

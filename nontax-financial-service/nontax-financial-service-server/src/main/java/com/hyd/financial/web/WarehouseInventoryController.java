@@ -15,6 +15,7 @@ import java.util.List;
  * @author yanduohuang
  * @date 2021/2/2 9:47
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/warehouse/inventory")
 public class WarehouseInventoryController {

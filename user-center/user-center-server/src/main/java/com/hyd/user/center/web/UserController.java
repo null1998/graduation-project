@@ -16,6 +16,7 @@ import java.security.spec.InvalidKeySpecException;
  * @author yanduohuang
  * @date 2021/2/3 16:12
  */
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {

@@ -20,4 +20,14 @@ public interface PermissionMapper extends PermissionBaseMapper{
         String wrap = StringUtils.wrap(name, "%");
         return this.select(c->c.where(PermissionDynamicSqlSupport.name, SqlBuilder.isLikeWhenPresent(wrap)));
     }
+    /**
+     * 根据条件（权限名，动作）查询权限列表
+     * @param permission 条件
+     * @return 权限列表
+     */
+    default List<Permission> listPermission(Permission permission) {
+        String wrap = permission.getName() == null ? null : StringUtils.wrap(permission.getName(), "%");
+        return this.select(c -> c.where(PermissionDynamicSqlSupport.name, SqlBuilder.isLikeWhenPresent(wrap))
+                .and(PermissionDynamicSqlSupport.action, SqlBuilder.isNotEqualToWhenPresent(permission.getAction())));
+    }
 }

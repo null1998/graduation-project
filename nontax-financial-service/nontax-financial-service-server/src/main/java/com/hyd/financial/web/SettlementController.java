@@ -15,6 +15,7 @@ import java.util.List;
  * @author yanduohuang
  * @date 2021/2/3 11:31
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/settlement")
 public class SettlementController {

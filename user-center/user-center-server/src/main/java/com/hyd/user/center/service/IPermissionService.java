@@ -36,4 +36,11 @@ public interface IPermissionService {
      * @return 权限列表
      */
     List<Permission> listByName(String name);
+
+    /**
+     * 根据条件（权限名，动作）查询权限列表
+     * @param permission 条件
+     * @return 权限列表
+     */
+    List<Permission> listPermission(Permission permission);
 }

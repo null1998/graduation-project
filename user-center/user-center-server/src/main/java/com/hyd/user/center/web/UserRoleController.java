@@ -14,6 +14,7 @@ import java.util.List;
  * @author yanduohuang
  * @date 2021/2/3 17:51
  */
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/user/role")
 public class UserRoleController {

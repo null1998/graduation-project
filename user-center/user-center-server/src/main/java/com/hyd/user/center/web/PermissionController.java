@@ -4,6 +4,7 @@ import com.hyd.user.center.entity.Permission;
 import com.hyd.user.center.entity.vo.PermissionVO;
 import com.hyd.user.center.service.IPermissionService;
 import com.hyd.user.center.web.dto.PermissionDTO;
+import com.hyd.user.center.web.qo.PermissionQO;
 import com.sd365.common.log.api.annotation.ApiLog;
 import com.sd365.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.List;
  * @author yanduohuang
  * @date 2021/2/4 11:09
  */
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/permission")
 public class PermissionController {
@@ -61,6 +63,18 @@ public class PermissionController {
     @GetMapping(value = "/list/{name}")
     public List<PermissionVO> listByName(@PathVariable("name") String name) {
         List<Permission> permissionList = permissionService.listByName(name);
+        return BeanUtil.copyList(permissionList, PermissionVO.class);
+    }
+    /**
+     * 根据条件（权限名，动作）查询权限列表
+     * @param permissionQO 条件
+     * @return 权限列表
+     */
+    @ApiLog
+    @GetMapping(value = "/list")
+    public List<PermissionVO> listPermission(PermissionQO permissionQO) {
+        Permission permission = BeanUtil.copy(permissionQO, Permission.class);
+        List<Permission> permissionList = permissionService.listPermission(permission);
         return BeanUtil.copyList(permissionList, PermissionVO.class);
     }
 }

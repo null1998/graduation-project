@@ -11,10 +11,13 @@ public class PermissionDTO implements Serializable {
     private String name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String action;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String url;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String action;
+    private String method;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
@@ -43,6 +46,16 @@ public class PermissionDTO implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getAction() {
+        return action;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getUrl() {
         return url;
     }
@@ -53,13 +66,13 @@ public class PermissionDTO implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getAction() {
-        return action;
+    public String getMethod() {
+        return method;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setAction(String action) {
-        this.action = action;
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -87,8 +100,9 @@ public class PermissionDTO implements Serializable {
         PermissionDTO other = (PermissionDTO) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
             && (this.getAction() == null ? other.getAction() == null : this.getAction().equals(other.getAction()))
+            && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
+            && (this.getMethod() == null ? other.getMethod() == null : this.getMethod().equals(other.getMethod()))
             && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
     }
 
@@ -99,8 +113,9 @@ public class PermissionDTO implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         result = prime * result + ((getAction() == null) ? 0 : getAction().hashCode());
+        result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
+        result = prime * result + ((getMethod() == null) ? 0 : getMethod().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         return result;
     }

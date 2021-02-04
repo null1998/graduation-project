@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PermissionBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, url, action, version);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, action, url, method, version);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -58,8 +58,9 @@ public interface PermissionBaseMapper {
     @Results(id="PermissionResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
-        @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
         @Result(column="action", property="action", jdbcType=JdbcType.VARCHAR),
+        @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
+        @Result(column="method", property="method", jdbcType=JdbcType.VARCHAR),
         @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
     })
     List<Permission> selectMany(SelectStatementProvider selectStatement);
@@ -95,8 +96,9 @@ public interface PermissionBaseMapper {
         return MyBatis3Utils.insert(this::insert, record, permission, c ->
             c.map(id).toProperty("id")
             .map(name).toProperty("name")
-            .map(url).toProperty("url")
             .map(action).toProperty("action")
+            .map(url).toProperty("url")
+            .map(method).toProperty("method")
             .map(version).toProperty("version")
         );
     }
@@ -106,8 +108,9 @@ public interface PermissionBaseMapper {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, permission, c ->
             c.map(id).toProperty("id")
             .map(name).toProperty("name")
-            .map(url).toProperty("url")
             .map(action).toProperty("action")
+            .map(url).toProperty("url")
+            .map(method).toProperty("method")
             .map(version).toProperty("version")
         );
     }
@@ -117,8 +120,9 @@ public interface PermissionBaseMapper {
         return MyBatis3Utils.insert(this::insert, record, permission, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
             .map(name).toPropertyWhenPresent("name", record::getName)
-            .map(url).toPropertyWhenPresent("url", record::getUrl)
             .map(action).toPropertyWhenPresent("action", record::getAction)
+            .map(url).toPropertyWhenPresent("url", record::getUrl)
+            .map(method).toPropertyWhenPresent("method", record::getMethod)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
         );
     }
@@ -154,8 +158,9 @@ public interface PermissionBaseMapper {
     static UpdateDSL<UpdateModel> updateAllColumns(Permission record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
                 .set(name).equalTo(record::getName)
-                .set(url).equalTo(record::getUrl)
                 .set(action).equalTo(record::getAction)
+                .set(url).equalTo(record::getUrl)
+                .set(method).equalTo(record::getMethod)
                 .set(version).equalTo(record::getVersion);
     }
 
@@ -163,8 +168,9 @@ public interface PermissionBaseMapper {
     static UpdateDSL<UpdateModel> updateSelectiveColumns(Permission record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
                 .set(name).equalToWhenPresent(record::getName)
-                .set(url).equalToWhenPresent(record::getUrl)
                 .set(action).equalToWhenPresent(record::getAction)
+                .set(url).equalToWhenPresent(record::getUrl)
+                .set(method).equalToWhenPresent(record::getMethod)
                 .set(version).equalToWhenPresent(record::getVersion);
     }
 
@@ -172,8 +178,9 @@ public interface PermissionBaseMapper {
     default int updateByPrimaryKey(Permission record) {
         return update(c ->
             c.set(name).equalTo(record::getName)
-            .set(url).equalTo(record::getUrl)
             .set(action).equalTo(record::getAction)
+            .set(url).equalTo(record::getUrl)
+            .set(method).equalTo(record::getMethod)
             .set(version).equalTo(record::getVersion)
             .where(id, isEqualTo(record::getId))
         );
@@ -183,8 +190,9 @@ public interface PermissionBaseMapper {
     default int updateByPrimaryKeySelective(Permission record) {
         return update(c ->
             c.set(name).equalToWhenPresent(record::getName)
-            .set(url).equalToWhenPresent(record::getUrl)
             .set(action).equalToWhenPresent(record::getAction)
+            .set(url).equalToWhenPresent(record::getUrl)
+            .set(method).equalToWhenPresent(record::getMethod)
             .set(version).equalToWhenPresent(record::getVersion)
             .where(id, isEqualTo(record::getId))
         );

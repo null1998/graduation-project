@@ -15,6 +15,7 @@ import java.util.List;
  * @author yanduohuang
  * @date 2021/1/29 16:29
  */
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/unit")
 public class UnitController {

@@ -16,10 +16,13 @@ public final class PermissionDynamicSqlSupport {
     public static final SqlColumn<String> name = permission.name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> action = permission.action;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> url = permission.url;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> action = permission.action;
+    public static final SqlColumn<String> method = permission.method;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Long> version = permission.version;
@@ -30,9 +33,11 @@ public final class PermissionDynamicSqlSupport {
 
         public final SqlColumn<String> name = column("name", JDBCType.VARCHAR);
 
+        public final SqlColumn<String> action = column("action", JDBCType.VARCHAR);
+
         public final SqlColumn<String> url = column("url", JDBCType.VARCHAR);
 
-        public final SqlColumn<String> action = column("action", JDBCType.VARCHAR);
+        public final SqlColumn<String> method = column("method", JDBCType.VARCHAR);
 
         public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
 
