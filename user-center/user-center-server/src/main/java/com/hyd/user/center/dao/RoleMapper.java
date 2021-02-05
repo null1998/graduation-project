@@ -20,4 +20,15 @@ public interface RoleMapper extends RoleBaseMapper{
         String wrap = StringUtils.wrap(name, "%");
         return this.select(c -> c.where(RoleDynamicSqlSupport.name, SqlBuilder.isLikeWhenPresent(wrap)));
     }
+    /**
+     * 根据条件（角色名，角色类型）查询角色列表
+     * @param role 角色
+     * @return 角色列表
+     */
+    default List<Role> listRole(Role role) {
+        String wrap = StringUtils.isEmpty(role.getName()) ? null : StringUtils.wrap(role.getName(), "%");
+        String type = StringUtils.isEmpty(role.getType()) ? null : role.getType();
+        return this.select(c -> c.where(RoleDynamicSqlSupport.name, SqlBuilder.isLikeWhenPresent(wrap))
+                .and(RoleDynamicSqlSupport.type, SqlBuilder.isEqualToWhenPresent(type)));
+    }
 }

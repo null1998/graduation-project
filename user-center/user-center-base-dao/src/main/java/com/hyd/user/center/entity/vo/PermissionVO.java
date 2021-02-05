@@ -15,8 +15,16 @@ public class PermissionVO {
     private String method;
 
     private String action;
-
+    private String remark;
     private Long version;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public String getMethod() {
         return method;
@@ -74,6 +82,7 @@ public class PermissionVO {
                 ", url='" + url + '\'' +
                 ", method='" + method + '\'' +
                 ", action='" + action + '\'' +
+                ", remark='" + remark + '\'' +
                 ", version=" + version +
                 '}';
     }

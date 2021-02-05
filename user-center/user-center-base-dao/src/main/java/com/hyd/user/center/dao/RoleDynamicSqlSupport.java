@@ -16,6 +16,12 @@ public final class RoleDynamicSqlSupport {
     public static final SqlColumn<String> name = role.name;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> type = role.type;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> remark = role.remark;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Long> version = role.version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -23,6 +29,10 @@ public final class RoleDynamicSqlSupport {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
         public final SqlColumn<String> name = column("name", JDBCType.VARCHAR);
+
+        public final SqlColumn<String> type = column("type", JDBCType.VARCHAR);
+
+        public final SqlColumn<String> remark = column("remark", JDBCType.VARCHAR);
 
         public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
 

@@ -25,12 +25,12 @@
 <!--        <table tableName="user_center_user" mapperName="UserBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>-->
 <!--        </table>-->
-<!--        <table tableName="user_center_role" mapperName="RoleBaseMapper">-->
-<!--            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>-->
-<!--        </table>-->
-        <table tableName="user_center_permission" mapperName="PermissionBaseMapper">
+        <table tableName="user_center_role" mapperName="RoleBaseMapper">
             <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>
         </table>
+<!--        <table tableName="user_center_permission" mapperName="PermissionBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>-->
+<!--        </table>-->
 <!--        <table tableName="user_center_role_relate" mapperName="RoleRelateBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>-->
 <!--        </table>-->

@@ -23,6 +23,9 @@ public class Permission implements Serializable {
     private Long version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String remark;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -85,6 +88,16 @@ public class Permission implements Serializable {
         this.version = version;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getRemark() {
+        return remark;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
@@ -103,7 +116,8 @@ public class Permission implements Serializable {
             && (this.getAction() == null ? other.getAction() == null : this.getAction().equals(other.getAction()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
             && (this.getMethod() == null ? other.getMethod() == null : this.getMethod().equals(other.getMethod()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
+            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
+            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()));
     }
 
     @Override
@@ -117,6 +131,7 @@ public class Permission implements Serializable {
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         result = prime * result + ((getMethod() == null) ? 0 : getMethod().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
+        result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
         return result;
     }
 }

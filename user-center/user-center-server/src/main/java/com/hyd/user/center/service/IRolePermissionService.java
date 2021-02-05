@@ -35,10 +35,18 @@ public interface IRolePermissionService {
      * @return 角色权限列表
      */
     List<RolePermission> listByRoleId(Long roleId);
+
     /**
      * 根据角色ID删除
      * @param roleId 角色ID
      * @return 删除行数
      */
     Integer removeByRoleId(Long roleId);
+
+    /**
+     * 根据权限ID删除
+     * @param permissionId 权限ID
+     * @return 删除行数
+     */
+    Integer removeByPermissionId(Long permissionId);
 }

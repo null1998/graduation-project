@@ -4,6 +4,7 @@ import com.hyd.user.center.entity.Role;
 import com.hyd.user.center.entity.vo.RoleVO;
 import com.hyd.user.center.service.IRoleService;
 import com.hyd.user.center.web.dto.RoleDTO;
+import com.hyd.user.center.web.qo.RoleQO;
 import com.sd365.common.log.api.annotation.ApiLog;
 import com.sd365.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,18 @@ public class RoleController {
     @GetMapping(value = "/list/{name}")
     public List<RoleVO> listByName(@PathVariable("name") String name) {
         List<Role> roleList = roleService.listByName(name);
+        return BeanUtil.copyList(roleList, RoleVO.class);
+    }
+    /**
+     * 根据条件（资源名，动作）查询权限列表
+     * @param roleQO 条件
+     * @return 权限列表
+     */
+    @ApiLog
+    @GetMapping(value = "/list")
+    public List<RoleVO> listRole(RoleQO roleQO) {
+        Role role = BeanUtil.copy(roleQO, Role.class);
+        List<Role> roleList = roleService.listRole(role);
         return BeanUtil.copyList(roleList, RoleVO.class);
     }
 }

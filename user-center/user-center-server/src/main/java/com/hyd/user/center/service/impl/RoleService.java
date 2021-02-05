@@ -5,6 +5,7 @@ import com.hyd.user.center.entity.Role;
 import com.hyd.user.center.service.IRolePermissionService;
 import com.hyd.user.center.service.IRoleRelateService;
 import com.hyd.user.center.service.IRoleService;
+import com.hyd.user.center.service.IUserRoleService;
 import com.sd365.common.core.annotation.stuffer.IdGenerator;
 import com.sd365.common.core.common.exception.BusinessException;
 import com.sd365.common.core.common.exception.code.BusinessErrorCode;
@@ -31,7 +32,9 @@ public class RoleService implements IRoleService {
     private IRolePermissionService rolePermissionService;
     @Autowired
     private IRoleRelateService roleRelateService;
-    @Caching(evict = {@CacheEvict(value = {"RoleService::listByName"},allEntries = true)})
+    @Autowired
+    private IUserRoleService userRoleService;
+    @Caching(evict = {@CacheEvict(value = {"RoleService::listByName","RoleService::listRole"},allEntries = true)})
     @Override
     public Long save(Role role) {
         if (role == null) {
@@ -43,7 +46,7 @@ public class RoleService implements IRoleService {
         return id;
     }
     @Transactional
-    @Caching(evict = {@CacheEvict(value = {"RoleService::listByName"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"RoleService::listByName","RoleService::listRole"},allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -53,10 +56,12 @@ public class RoleService implements IRoleService {
         rolePermissionService.removeByRoleId(id);
         // 解除该角色与其它角色的关系
         roleRelateService.removeByRoleId(id);
+        // 解除该角色与用户的关系
+        userRoleService.removeByRoleId(id);
         // 删除角色
         return roleMapper.deleteByPrimaryKey(id) == 1;
     }
-    @Caching(evict = {@CacheEvict(value = {"RoleService::listByName"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"RoleService::listByName","RoleService::listRole"},allEntries = true)})
     @Override
     public Integer update(Role role) {
         if (role == null) {
@@ -71,5 +76,13 @@ public class RoleService implements IRoleService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("角色名为空"));
         }
         return roleMapper.listByName(name);
+    }
+    @Cacheable(value = {"RoleService::listRole"},key = "#role.toString()")
+    @Override
+    public List<Role> listRole(Role role) {
+        if (role == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("角色为空"));
+        }
+        return roleMapper.listRole(role);
     }
 }

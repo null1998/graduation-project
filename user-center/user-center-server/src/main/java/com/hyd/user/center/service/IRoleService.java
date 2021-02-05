@@ -36,4 +36,11 @@ public interface IRoleService {
      * @return 角色列表
      */
     List<Role> listByName(String name);
+
+    /**
+     * 根据条件（角色名，角色类型）查询角色列表
+     * @param role 角色
+     * @return 角色列表
+     */
+    List<Role> listRole(Role role);
 }

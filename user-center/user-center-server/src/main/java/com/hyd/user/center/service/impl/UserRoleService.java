@@ -51,4 +51,11 @@ public class UserRoleService implements IUserRoleService {
         }
         userRoleMapper.removeByUserId(userId);
     }
+    @Override
+    public Integer removeByRoleId(Long roleId) {
+        if (roleId == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("角色ID为空"));
+        }
+        return userRoleMapper.removeByRoleId(roleId);
+    }
 }

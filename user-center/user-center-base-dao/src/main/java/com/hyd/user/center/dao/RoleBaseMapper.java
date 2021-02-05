@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface RoleBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, version);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, type, remark, version);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -58,6 +58,8 @@ public interface RoleBaseMapper {
     @Results(id="RoleResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
+        @Result(column="type", property="type", jdbcType=JdbcType.VARCHAR),
+        @Result(column="remark", property="remark", jdbcType=JdbcType.VARCHAR),
         @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
     })
     List<Role> selectMany(SelectStatementProvider selectStatement);
@@ -93,6 +95,8 @@ public interface RoleBaseMapper {
         return MyBatis3Utils.insert(this::insert, record, role, c ->
             c.map(id).toProperty("id")
             .map(name).toProperty("name")
+            .map(type).toProperty("type")
+            .map(remark).toProperty("remark")
             .map(version).toProperty("version")
         );
     }
@@ -102,6 +106,8 @@ public interface RoleBaseMapper {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, role, c ->
             c.map(id).toProperty("id")
             .map(name).toProperty("name")
+            .map(type).toProperty("type")
+            .map(remark).toProperty("remark")
             .map(version).toProperty("version")
         );
     }
@@ -111,6 +117,8 @@ public interface RoleBaseMapper {
         return MyBatis3Utils.insert(this::insert, record, role, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
             .map(name).toPropertyWhenPresent("name", record::getName)
+            .map(type).toPropertyWhenPresent("type", record::getType)
+            .map(remark).toPropertyWhenPresent("remark", record::getRemark)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
         );
     }
@@ -146,6 +154,8 @@ public interface RoleBaseMapper {
     static UpdateDSL<UpdateModel> updateAllColumns(Role record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
                 .set(name).equalTo(record::getName)
+                .set(type).equalTo(record::getType)
+                .set(remark).equalTo(record::getRemark)
                 .set(version).equalTo(record::getVersion);
     }
 
@@ -153,6 +163,8 @@ public interface RoleBaseMapper {
     static UpdateDSL<UpdateModel> updateSelectiveColumns(Role record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
                 .set(name).equalToWhenPresent(record::getName)
+                .set(type).equalToWhenPresent(record::getType)
+                .set(remark).equalToWhenPresent(record::getRemark)
                 .set(version).equalToWhenPresent(record::getVersion);
     }
 
@@ -160,6 +172,8 @@ public interface RoleBaseMapper {
     default int updateByPrimaryKey(Role record) {
         return update(c ->
             c.set(name).equalTo(record::getName)
+            .set(type).equalTo(record::getType)
+            .set(remark).equalTo(record::getRemark)
             .set(version).equalTo(record::getVersion)
             .where(id, isEqualTo(record::getId))
         );
@@ -169,6 +183,8 @@ public interface RoleBaseMapper {
     default int updateByPrimaryKeySelective(Role record) {
         return update(c ->
             c.set(name).equalToWhenPresent(record::getName)
+            .set(type).equalToWhenPresent(record::getType)
+            .set(remark).equalToWhenPresent(record::getRemark)
             .set(version).equalToWhenPresent(record::getVersion)
             .where(id, isEqualTo(record::getId))
         );

@@ -31,14 +31,14 @@ public interface IPermissionService {
     Integer update(Permission permission);
 
     /**
-     * 根据权限名查询
-     * @param name 权限名
+     * 根据资源名查询
+     * @param name 资源名
      * @return 权限列表
      */
     List<Permission> listByName(String name);
 
     /**
-     * 根据条件（权限名，动作）查询权限列表
+     * 根据条件（资源名，动作）查询权限列表
      * @param permission 条件
      * @return 权限列表
      */

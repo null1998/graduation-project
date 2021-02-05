@@ -27,4 +27,11 @@ public interface IUserRoleService {
      * @param userId 用户ID
      */
     void removeByUserId(Long userId);
+
+    /**
+     * 根据角色ID删除用户角色关系
+     * @param roleId 角色ID
+     * @return 删除数目
+     */
+    Integer removeByRoleId(Long roleId);
 }

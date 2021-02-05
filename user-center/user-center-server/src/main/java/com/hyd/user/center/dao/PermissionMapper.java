@@ -13,7 +13,7 @@ import java.util.List;
 public interface PermissionMapper extends PermissionBaseMapper{
     /**
      * 根据权限名查询
-     * @param name 权限名
+     * @param name 资源名
      * @return 权限列表
      */
     default List<Permission> listByName(String name) {
@@ -21,13 +21,14 @@ public interface PermissionMapper extends PermissionBaseMapper{
         return this.select(c->c.where(PermissionDynamicSqlSupport.name, SqlBuilder.isLikeWhenPresent(wrap)));
     }
     /**
-     * 根据条件（权限名，动作）查询权限列表
+     * 根据条件（资源名，动作）查询权限列表
      * @param permission 条件
      * @return 权限列表
      */
     default List<Permission> listPermission(Permission permission) {
-        String wrap = permission.getName() == null ? null : StringUtils.wrap(permission.getName(), "%");
+        String wrap = StringUtils.isEmpty(permission.getName()) ? null : StringUtils.wrap(permission.getName(), "%");
+        String action = StringUtils.isEmpty(permission.getAction()) ? null : permission.getAction();
         return this.select(c -> c.where(PermissionDynamicSqlSupport.name, SqlBuilder.isLikeWhenPresent(wrap))
-                .and(PermissionDynamicSqlSupport.action, SqlBuilder.isNotEqualToWhenPresent(permission.getAction())));
+                .and(PermissionDynamicSqlSupport.action, SqlBuilder.isEqualToWhenPresent(action)));
     }
 }

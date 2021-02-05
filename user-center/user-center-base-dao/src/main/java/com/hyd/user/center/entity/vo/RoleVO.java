@@ -1,6 +1,8 @@
 package com.hyd.user.center.entity.vo;
 
 
+import javax.annotation.Generated;
+
 /**
  * @author yanduohuang
  * @date 2021/2/3 18:06
@@ -9,8 +11,26 @@ public class RoleVO {
     private Long id;
 
     private String name;
+    private String type;
 
+    private String remark;
     private Long version;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public Long getId() {
         return id;
@@ -41,6 +61,8 @@ public class RoleVO {
         return "RoleVO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", remark='" + remark + '\'' +
                 ", version=" + version +
                 '}';
     }

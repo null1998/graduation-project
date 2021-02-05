@@ -45,6 +45,7 @@ public class RolePermissionService implements IRolePermissionService {
         for (RolePermission rolePermission : rolePermissionList) {
             long id = idGenerator.snowflakeId();
             rolePermission.setId(id);
+            rolePermission.setVersion(0L);
         }
         rolePermissionMapper.saveList(rolePermissionList);
     }
@@ -64,12 +65,20 @@ public class RolePermissionService implements IRolePermissionService {
         }
         return rolePermissionMapper.listByRoleId(roleId);
     }
-
+    @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId"},key = "#roleId")})
     @Override
     public Integer removeByRoleId(Long roleId) {
         if (roleId == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("角色ID为空"));
         }
         return rolePermissionMapper.removeByRoleId(roleId);
+    }
+    @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId"},allEntries = true)})
+    @Override
+    public Integer removeByPermissionId(Long permissionId) {
+        if (permissionId == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("权限ID为空"));
+        }
+        return rolePermissionMapper.removeByPermissionId(permissionId);
     }
 }

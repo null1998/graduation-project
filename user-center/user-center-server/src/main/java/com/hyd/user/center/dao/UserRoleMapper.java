@@ -16,4 +16,12 @@ public interface UserRoleMapper extends UserRoleBaseMapper{
     default int removeByUserId(Long userId) {
         return this.delete(c -> c.where(UserRoleDynamicSqlSupport.userId, SqlBuilder.isEqualTo(userId)));
     }
+    /**
+     * 根据角色ID删除用户角色关系
+     * @param roleId 角色ID
+     * @return 删除数目
+     */
+    default Integer removeByRoleId(Long roleId) {
+        return this.delete(c -> c.where(UserRoleDynamicSqlSupport.roleId, SqlBuilder.isEqualTo(roleId)));
+    }
 }

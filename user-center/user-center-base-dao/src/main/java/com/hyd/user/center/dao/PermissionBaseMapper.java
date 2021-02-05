@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PermissionBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, action, url, method, version);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, action, url, method, version, remark);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -61,7 +61,8 @@ public interface PermissionBaseMapper {
         @Result(column="action", property="action", jdbcType=JdbcType.VARCHAR),
         @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
         @Result(column="method", property="method", jdbcType=JdbcType.VARCHAR),
-        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
+        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT),
+        @Result(column="remark", property="remark", jdbcType=JdbcType.VARCHAR)
     })
     List<Permission> selectMany(SelectStatementProvider selectStatement);
 
@@ -100,6 +101,7 @@ public interface PermissionBaseMapper {
             .map(url).toProperty("url")
             .map(method).toProperty("method")
             .map(version).toProperty("version")
+            .map(remark).toProperty("remark")
         );
     }
 
@@ -112,6 +114,7 @@ public interface PermissionBaseMapper {
             .map(url).toProperty("url")
             .map(method).toProperty("method")
             .map(version).toProperty("version")
+            .map(remark).toProperty("remark")
         );
     }
 
@@ -124,6 +127,7 @@ public interface PermissionBaseMapper {
             .map(url).toPropertyWhenPresent("url", record::getUrl)
             .map(method).toPropertyWhenPresent("method", record::getMethod)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
+            .map(remark).toPropertyWhenPresent("remark", record::getRemark)
         );
     }
 
@@ -161,7 +165,8 @@ public interface PermissionBaseMapper {
                 .set(action).equalTo(record::getAction)
                 .set(url).equalTo(record::getUrl)
                 .set(method).equalTo(record::getMethod)
-                .set(version).equalTo(record::getVersion);
+                .set(version).equalTo(record::getVersion)
+                .set(remark).equalTo(record::getRemark);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -171,7 +176,8 @@ public interface PermissionBaseMapper {
                 .set(action).equalToWhenPresent(record::getAction)
                 .set(url).equalToWhenPresent(record::getUrl)
                 .set(method).equalToWhenPresent(record::getMethod)
-                .set(version).equalToWhenPresent(record::getVersion);
+                .set(version).equalToWhenPresent(record::getVersion)
+                .set(remark).equalToWhenPresent(record::getRemark);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -182,6 +188,7 @@ public interface PermissionBaseMapper {
             .set(url).equalTo(record::getUrl)
             .set(method).equalTo(record::getMethod)
             .set(version).equalTo(record::getVersion)
+            .set(remark).equalTo(record::getRemark)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -194,6 +201,7 @@ public interface PermissionBaseMapper {
             .set(url).equalToWhenPresent(record::getUrl)
             .set(method).equalToWhenPresent(record::getMethod)
             .set(version).equalToWhenPresent(record::getVersion)
+            .set(remark).equalToWhenPresent(record::getRemark)
             .where(id, isEqualTo(record::getId))
         );
     }

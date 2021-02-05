@@ -34,4 +34,12 @@ public interface RolePermissionMapper extends RolePermissionBaseMapper{
     default int removeByRoleId(Long roleId) {
         return this.delete(c -> c.where(RolePermissionDynamicSqlSupport.roleId, SqlBuilder.isEqualTo(roleId)));
     }
+    /**
+     * 根据权限ID删除
+     * @param permissionId 权限ID
+     * @return 删除行数
+     */
+    default Integer removeByPermissionId(Long permissionId) {
+        return this.delete(c -> c.where(RolePermissionDynamicSqlSupport.permissionId, SqlBuilder.isEqualTo(permissionId)));
+    }
 }

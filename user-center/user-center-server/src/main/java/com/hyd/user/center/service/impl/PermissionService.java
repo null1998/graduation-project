@@ -3,6 +3,7 @@ package com.hyd.user.center.service.impl;
 import com.hyd.user.center.dao.PermissionMapper;
 import com.hyd.user.center.entity.Permission;
 import com.hyd.user.center.service.IPermissionService;
+import com.hyd.user.center.service.IRolePermissionService;
 import com.sd365.common.core.annotation.stuffer.IdGenerator;
 import com.sd365.common.core.common.exception.BusinessException;
 import com.sd365.common.core.common.exception.code.BusinessErrorCode;
@@ -23,6 +24,8 @@ public class PermissionService implements IPermissionService {
     @Autowired
     private PermissionMapper permissionMapper;
     @Autowired
+    private IRolePermissionService rolePermissionService;
+    @Autowired
     private IdGenerator idGenerator;
     @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName","PermissionService::listPermission"},allEntries = true)})
     @Override
@@ -41,6 +44,9 @@ public class PermissionService implements IPermissionService {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
         }
+        // 删除角色权限表中与该权限相关的数据
+        rolePermissionService.removeByPermissionId(id);
+        // 删除该权限
         return permissionMapper.deleteByPrimaryKey(id) == 1;
     }
     @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName","PermissionService::listPermission"},allEntries = true)})

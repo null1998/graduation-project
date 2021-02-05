@@ -28,6 +28,9 @@ public final class PermissionDynamicSqlSupport {
     public static final SqlColumn<Long> version = permission.version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> remark = permission.remark;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Permission extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -40,6 +43,8 @@ public final class PermissionDynamicSqlSupport {
         public final SqlColumn<String> method = column("method", JDBCType.VARCHAR);
 
         public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
+
+        public final SqlColumn<String> remark = column("remark", JDBCType.VARCHAR);
 
         public Permission() {
             super("user_center_permission");
