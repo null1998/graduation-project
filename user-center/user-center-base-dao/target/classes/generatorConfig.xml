@@ -1,0 +1,44 @@
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="saas" targetRuntime="MyBatis3DynamicSql">
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+<!--        <plugin type="com.bosssoft.nontax3.saas.compoent.mybatis.generator.plugin.JSR303Plugin" />-->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://114.55.137.13:9000/user_center"
+                        userId="root"
+                        password="123456"/>
+        <javaTypeResolver>
+            <property name="useJSR310Types" value="true" />
+        </javaTypeResolver>
+        <javaModelGenerator targetPackage="com.hyd.user.center.entity" targetProject="src/main/java"/>
+        <javaClientGenerator targetPackage="com.hyd.user.center.dao" targetProject="src/main/java"/>
+
+<!--        <table tableName="user_center_user" mapperName="UserBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>-->
+<!--        </table>-->
+        <table tableName="user_center_role" mapperName="RoleBaseMapper">
+            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>
+        </table>
+<!--        <table tableName="user_center_permission" mapperName="PermissionBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>-->
+<!--        </table>-->
+<!--        <table tableName="user_center_role_relate" mapperName="RoleRelateBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>-->
+<!--        </table>-->
+<!--        <table tableName="user_center_role_permission" mapperName="RolePermissionBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>-->
+<!--        </table>-->
+<!--        <table tableName="user_center_user_role" mapperName="UserRoleBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>-->
+<!--        </table>-->
+    </context>
+</generatorConfiguration>

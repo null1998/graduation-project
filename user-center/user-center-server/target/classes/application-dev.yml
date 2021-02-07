@@ -1,0 +1,27 @@
+app:
+  version: 1.0.0
+server:
+  port: 8083
+  servlet:
+    context-path: /user/center
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  datasource:
+    url: jdbc:mysql://114.55.137.13:9000/user_center?useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: user-center-server
+swagger:
+  title: user-center-server
+  description: api for user-center-server
+  version: 0.0.1
+  apiBasePackage: com.hyd.user.center.web
+
