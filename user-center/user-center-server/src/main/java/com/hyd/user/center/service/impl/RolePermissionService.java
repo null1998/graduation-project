@@ -1,8 +1,10 @@
 package com.hyd.user.center.service.impl;
 
 import com.hyd.user.center.dao.RolePermissionMapper;
+import com.hyd.user.center.entity.Role;
 import com.hyd.user.center.entity.RolePermission;
 import com.hyd.user.center.service.IRolePermissionService;
+import com.hyd.user.center.service.IRoleService;
 import com.sd365.common.core.annotation.stuffer.IdGenerator;
 import com.sd365.common.core.common.exception.BusinessException;
 import com.sd365.common.core.common.exception.code.BusinessErrorCode;
@@ -12,6 +14,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,8 +27,10 @@ public class RolePermissionService implements IRolePermissionService {
     private IdGenerator idGenerator;
     @Autowired
     private RolePermissionMapper rolePermissionMapper;
+    @Autowired
+    private IRoleService roleService;
 
-    @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId","RolePermissionService::listByRoleIdList"},allEntries = true)})
     @Override
     public Long save(RolePermission rolePermission) {
         if (rolePermission == null) {
@@ -36,7 +41,7 @@ public class RolePermissionService implements IRolePermissionService {
         rolePermissionMapper.insertSelective(rolePermission);
         return id;
     }
-    @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId","RolePermissionService::listByRoleIdList"},allEntries = true)})
     @Override
     public void saveList(List<RolePermission> rolePermissionList) {
         if (rolePermissionList == null) {
@@ -49,7 +54,7 @@ public class RolePermissionService implements IRolePermissionService {
         }
         rolePermissionMapper.saveList(rolePermissionList);
     }
-    @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId","RolePermissionService::listByRoleIdList"},allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -65,7 +70,33 @@ public class RolePermissionService implements IRolePermissionService {
         }
         return rolePermissionMapper.listByRoleId(roleId);
     }
-    @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId"},key = "#roleId")})
+    @Cacheable(value = {"RolePermissionService::listByRoleIdList"},key = "#roleIdList.toString()")
+    @Override
+    public List<RolePermission> listByRoleIdList(List<Long> roleIdList) {
+        if (roleIdList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("角色ID列表为空"));
+        }
+        // 基础角色ID列表
+        ArrayList<Long> baseRoleIds = new ArrayList<>();
+        // 高级角色ID列表
+        ArrayList<Long> advancedRoleIds = new ArrayList<>();
+        for (Long roleId : roleIdList) {
+            Role role = roleService.getBydId(roleId);
+            if (role.getType().equals("高级角色")) {
+                advancedRoleIds.add(roleId);
+            } else if (role.getType().equals("基础角色")) {
+                baseRoleIds.add(roleId);
+            }
+        }
+        // 基础角色可以直接查询出拥有的权限
+        List<RolePermission> rolePermissions = rolePermissionMapper.listByRoleIdList(baseRoleIds);
+        // 高级角色递归查询
+        rolePermissions.addAll(listByRoleIdList(advancedRoleIds));
+        return rolePermissions;
+    }
+
+    @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId"},key = "#roleId"),
+            @CacheEvict(value = {"RolePermissionService::listByRoleIdList"},allEntries = true)})
     @Override
     public Integer removeByRoleId(Long roleId) {
         if (roleId == null) {
@@ -73,7 +104,7 @@ public class RolePermissionService implements IRolePermissionService {
         }
         return rolePermissionMapper.removeByRoleId(roleId);
     }
-    @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId","RolePermissionService::listByRoleIdList"},allEntries = true)})
     @Override
     public Integer removeByPermissionId(Long permissionId) {
         if (permissionId == null) {

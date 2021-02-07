@@ -2,6 +2,7 @@ package com.hyd.user.center.web;
 
 import com.hyd.user.center.entity.User;
 import com.hyd.user.center.entity.vo.UserVO;
+import com.hyd.user.center.service.IUserRoleService;
 import com.hyd.user.center.service.IUserService;
 import com.hyd.user.center.web.dto.UserDTO;
 import com.sd365.common.log.api.annotation.ApiLog;
@@ -22,6 +23,8 @@ import java.security.spec.InvalidKeySpecException;
 public class UserController {
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IUserRoleService userRoleService;
     /**
      * 保存
      * @param userDTO 用户
@@ -76,7 +79,8 @@ public class UserController {
      */
     @ApiLog
     @GetMapping(value = "/login")
-    public Boolean login(@RequestParam String username,@RequestParam String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        return userService.login(username, password);
+    public UserVO login(@RequestParam String username,@RequestParam String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        UserDTO userDTO = userService.login(username, password);
+        return BeanUtil.copy(userDTO, UserVO.class);
     }
 }

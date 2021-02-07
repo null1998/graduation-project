@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author yanduohuang
@@ -43,6 +44,7 @@ public class RoleService implements IRoleService {
         long id = idGenerator.snowflakeId();
         role.setId(id);
         roleMapper.insertSelective(role);
+
         return id;
     }
     @Transactional
@@ -84,5 +86,18 @@ public class RoleService implements IRoleService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("角色为空"));
         }
         return roleMapper.listRole(role);
+    }
+
+    @Override
+    public Role getBydId(Long id) {
+        if (id == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
+        }
+        Optional<Role> optional = roleMapper.selectByPrimaryKey(id);
+        if (!optional.isPresent()) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("未查询到相应角色"));
+        }
+
+        return optional.get();
     }
 }

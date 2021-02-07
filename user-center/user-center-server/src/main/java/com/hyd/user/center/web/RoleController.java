@@ -60,15 +60,15 @@ public class RoleController {
      * @return 角色列表
      */
     @ApiLog
-    @GetMapping(value = "/list/{name}")
-    public List<RoleVO> listByName(@PathVariable("name") String name) {
+    @GetMapping(value = "/list/name")
+    public List<RoleVO> listByName(@RequestParam String name) {
         List<Role> roleList = roleService.listByName(name);
         return BeanUtil.copyList(roleList, RoleVO.class);
     }
     /**
-     * 根据条件（资源名，动作）查询权限列表
+     * 根据条件（角色名，角色类型）查询角色列表
      * @param roleQO 条件
-     * @return 权限列表
+     * @return 角色列表
      */
     @ApiLog
     @GetMapping(value = "/list")

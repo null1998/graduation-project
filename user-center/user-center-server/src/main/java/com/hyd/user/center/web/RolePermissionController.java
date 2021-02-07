@@ -64,4 +64,15 @@ public class RolePermissionController {
         List<RolePermission> rolePermissionList = rolePermissionService.listByRoleId(roleId);
         return BeanUtil.copyList(rolePermissionList, RolePermissionVO.class);
     }
+    /**
+     * 根据角色ID列表查询
+     * @param roleIdList 角色ID列表
+     * @return 角色权限列表
+     */
+    @ApiLog
+    @PostMapping("/query/role/id/list")
+    List<RolePermissionVO> listByRoleId(@RequestBody List<Long> roleIdList) {
+        List<RolePermission> rolePermissionList = rolePermissionService.listByRoleIdList(roleIdList);
+        return BeanUtil.copyList(rolePermissionList, RolePermissionVO.class);
+    }
 }

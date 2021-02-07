@@ -34,4 +34,11 @@ public interface IUserRoleService {
      * @return 删除数目
      */
     Integer removeByRoleId(Long roleId);
+
+    /**
+     * 根据角色ID查询用户角色关系
+     * @param userId 角色ID
+     * @return 用户角色关系列表
+     */
+    List<UserRole> listByUserId(Long userId);
 }

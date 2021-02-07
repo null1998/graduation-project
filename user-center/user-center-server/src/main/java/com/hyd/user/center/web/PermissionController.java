@@ -60,8 +60,8 @@ public class PermissionController {
      * @return 权限列表
      */
     @ApiLog
-    @GetMapping(value = "/list/{name}")
-    public List<PermissionVO> listByName(@PathVariable("name") String name) {
+    @GetMapping(value = "/list/name")
+    public List<PermissionVO> listByName(@RequestParam String name) {
         List<Permission> permissionList = permissionService.listByName(name);
         return BeanUtil.copyList(permissionList, PermissionVO.class);
     }

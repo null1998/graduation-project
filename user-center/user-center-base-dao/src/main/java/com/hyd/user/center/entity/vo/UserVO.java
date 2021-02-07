@@ -1,6 +1,7 @@
 package com.hyd.user.center.entity.vo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * @author yanduohuang
@@ -24,6 +25,15 @@ public class UserVO {
     private Long unitId;
 
     private Long version;
+    private ArrayList<Long> roleIdList;
+
+    public ArrayList<Long> getRoleIdList() {
+        return roleIdList;
+    }
+
+    public void setRoleIdList(ArrayList<Long> roleIdList) {
+        this.roleIdList = roleIdList;
+    }
 
     public Long getId() {
         return id;
@@ -109,6 +119,7 @@ public class UserVO {
                 ", email='" + email + '\'' +
                 ", unitId=" + unitId +
                 ", version=" + version +
+                ", roleIdList=" + roleIdList +
                 '}';
     }
 }

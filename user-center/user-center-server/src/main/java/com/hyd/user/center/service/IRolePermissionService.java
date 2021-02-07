@@ -37,6 +37,13 @@ public interface IRolePermissionService {
     List<RolePermission> listByRoleId(Long roleId);
 
     /**
+     * 根据角色ID列表查询
+     * @param roleIdList 角色ID列表
+     * @return 角色权限列表
+     */
+    List<RolePermission> listByRoleIdList(List<Long> roleIdList);
+
+    /**
      * 根据角色ID删除
      * @param roleId 角色ID
      * @return 删除行数

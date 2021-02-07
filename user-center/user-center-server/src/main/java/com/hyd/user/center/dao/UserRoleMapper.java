@@ -1,6 +1,9 @@
 package com.hyd.user.center.dao;
 
+import com.hyd.user.center.entity.UserRole;
 import org.mybatis.dynamic.sql.SqlBuilder;
+
+import java.util.List;
 
 
 /**
@@ -23,5 +26,13 @@ public interface UserRoleMapper extends UserRoleBaseMapper{
      */
     default Integer removeByRoleId(Long roleId) {
         return this.delete(c -> c.where(UserRoleDynamicSqlSupport.roleId, SqlBuilder.isEqualTo(roleId)));
+    }
+    /**
+     * 根据角色ID查询用户角色关系
+     * @param userId 角色ID
+     * @return 用户角色关系列表
+     */
+    default List<UserRole> listByUserId(Long userId) {
+        return this.select(c -> c.where(UserRoleDynamicSqlSupport.userId, SqlBuilder.isEqualTo(userId)));
     }
 }

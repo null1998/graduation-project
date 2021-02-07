@@ -25,6 +25,14 @@ public interface RolePermissionMapper extends RolePermissionBaseMapper{
     default List<RolePermission> listByRoleId(Long roleId) {
         return this.select(c -> c.where(RolePermissionDynamicSqlSupport.roleId, SqlBuilder.isEqualTo(roleId)));
     }
+    /**
+     * 根据角色ID列表查询
+     * @param roleIdList 角色ID列表
+     * @return 角色权限列表
+     */
+    default List<RolePermission> listByRoleIdList(List<Long> roleIdList) {
+        return this.select(c -> c.where(RolePermissionDynamicSqlSupport.roleId, SqlBuilder.isInWhenPresent(roleIdList)));
+    }
 
     /**
      * 根据角色ID删除

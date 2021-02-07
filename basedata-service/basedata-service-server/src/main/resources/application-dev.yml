@@ -16,7 +16,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 114.55.137.13:9003
+        server-addr: 127.0.0.1:8848
   application:
     name: basedata-service-server
 swagger:

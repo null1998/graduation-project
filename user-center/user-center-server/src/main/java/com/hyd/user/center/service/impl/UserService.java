@@ -2,12 +2,15 @@ package com.hyd.user.center.service.impl;
 
 import com.hyd.user.center.dao.UserMapper;
 import com.hyd.user.center.entity.User;
+import com.hyd.user.center.entity.UserRole;
 import com.hyd.user.center.service.IUserRoleService;
 import com.hyd.user.center.service.IUserService;
 import com.hyd.user.center.util.PBKDF2Util;
+import com.hyd.user.center.web.dto.UserDTO;
 import com.sd365.common.core.annotation.stuffer.IdGenerator;
 import com.sd365.common.core.common.exception.BusinessException;
 import com.sd365.common.core.common.exception.code.BusinessErrorCode;
+import com.sd365.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -96,12 +101,23 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Boolean login(String username,String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    public UserDTO login(String username, String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
         if (username == null || password == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("账号密码为空"));
         }
         User user = getByUsername(username);
         // 将待验证密码加密后与数据库已加密密码比较
-        return PBKDF2Util.authenticate(password, user.getPassword());
+        if (Boolean.TRUE.equals(PBKDF2Util.authenticate(password, user.getPassword()))) {
+            // 校验通过，获取用户角色列表
+            List<UserRole> userRoleList = userRoleService.listByUserId(user.getId());
+            ArrayList<Long> roleIdList = new ArrayList<>();
+            for (UserRole userRole : userRoleList) {
+                roleIdList.add(userRole.getRoleId());
+            }
+            UserDTO userDTO = BeanUtil.copy(user, UserDTO.class);
+            userDTO.setRoleIdList(roleIdList);
+            return userDTO;
+        }
+        return new UserDTO();
     }
 }

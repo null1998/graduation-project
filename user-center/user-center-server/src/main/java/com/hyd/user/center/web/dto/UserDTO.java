@@ -3,6 +3,8 @@ package com.hyd.user.center.web.dto;
 import javax.annotation.Generated;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class UserDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -34,6 +36,16 @@ public class UserDTO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
+
+    private ArrayList<Long> roleIdList;
+
+    public ArrayList<Long> getRoleIdList() {
+        return roleIdList;
+    }
+
+    public void setRoleIdList(ArrayList<Long> roleIdList) {
+        this.roleIdList = roleIdList;
+    }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
@@ -139,45 +151,42 @@ public class UserDTO implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        UserDTO other = (UserDTO) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
-            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
-            && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()))
-            && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
-            && (this.getBirthday() == null ? other.getBirthday() == null : this.getBirthday().equals(other.getBirthday()))
-            && (this.getTel() == null ? other.getTel() == null : this.getTel().equals(other.getTel()))
-            && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
-            && (this.getUnitId() == null ? other.getUnitId() == null : this.getUnitId().equals(other.getUnitId()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return Objects.equals(id, userDTO.id) &&
+                Objects.equals(username, userDTO.username) &&
+                Objects.equals(password, userDTO.password) &&
+                Objects.equals(avatar, userDTO.avatar) &&
+                Objects.equals(sex, userDTO.sex) &&
+                Objects.equals(birthday, userDTO.birthday) &&
+                Objects.equals(tel, userDTO.tel) &&
+                Objects.equals(email, userDTO.email) &&
+                Objects.equals(unitId, userDTO.unitId) &&
+                Objects.equals(version, userDTO.version) &&
+                Objects.equals(roleIdList, userDTO.roleIdList);
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
-        result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
-        result = prime * result + ((getAvatar() == null) ? 0 : getAvatar().hashCode());
-        result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
-        result = prime * result + ((getBirthday() == null) ? 0 : getBirthday().hashCode());
-        result = prime * result + ((getTel() == null) ? 0 : getTel().hashCode());
-        result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
-        result = prime * result + ((getUnitId() == null) ? 0 : getUnitId().hashCode());
-        result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
-        return result;
+        return Objects.hash(id, username, password, avatar, sex, birthday, tel, email, unitId, version, roleIdList);
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", sex=" + sex +
+                ", birthday=" + birthday +
+                ", tel='" + tel + '\'' +
+                ", email='" + email + '\'' +
+                ", unitId=" + unitId +
+                ", version=" + version +
+                ", roleIdList=" + roleIdList +
+                '}';
     }
 }

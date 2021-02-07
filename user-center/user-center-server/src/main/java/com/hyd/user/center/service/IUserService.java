@@ -1,6 +1,7 @@
 package com.hyd.user.center.service;
 
 import com.hyd.user.center.entity.User;
+import com.hyd.user.center.web.dto.UserDTO;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -46,5 +47,5 @@ public interface IUserService {
      * @param password 密码
      * @return 结果
      */
-    Boolean login(String username,String password) throws InvalidKeySpecException, NoSuchAlgorithmException;
+    UserDTO login(String username, String password) throws InvalidKeySpecException, NoSuchAlgorithmException;
 }

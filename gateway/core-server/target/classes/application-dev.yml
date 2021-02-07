@@ -1,0 +1,25 @@
+server:
+  port: 8091
+spring:
+  application:
+    name: core-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+#        前端登录时，转到认证
+        - id: authentication-server-auth
+          uri: lb://authentication-server
+          predicates:
+            - Path=/user/center/user/login
+          filters:
+            - RewritePath=/user/center/user/login,/authenticate
+#        转发至用户中心
+        - id: user-center-server
+          uri: lb://user-center-server
+          predicates:
+            - Path=/user/center/**
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin
