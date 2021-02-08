@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author yanduohuang
@@ -72,5 +73,17 @@ public class PermissionService implements IPermissionService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("权限为空"));
         }
         return permissionMapper.listPermission(permission);
+    }
+
+    @Override
+    public Permission getById(Long id) {
+        if (id == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
+        }
+        Optional<Permission> optional = permissionMapper.selectByPrimaryKey(id);
+        if (!optional.isPresent()) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("查询结果为空"));
+        }
+        return optional.get();
     }
 }

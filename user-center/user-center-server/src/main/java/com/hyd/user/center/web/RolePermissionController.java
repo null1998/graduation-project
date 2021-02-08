@@ -71,7 +71,7 @@ public class RolePermissionController {
      */
     @ApiLog
     @PostMapping("/query/role/id/list")
-    List<RolePermissionVO> listByRoleId(@RequestBody List<Long> roleIdList) {
+    List<RolePermissionVO> listByRoleIdList(@RequestBody List<Long> roleIdList) {
         List<RolePermission> rolePermissionList = rolePermissionService.listByRoleIdList(roleIdList);
         return BeanUtil.copyList(rolePermissionList, RolePermissionVO.class);
     }

@@ -3,7 +3,9 @@ package com.hyd.user.center.service.impl;
 import com.hyd.user.center.dao.RolePermissionMapper;
 import com.hyd.user.center.entity.Role;
 import com.hyd.user.center.entity.RolePermission;
+import com.hyd.user.center.entity.RoleRelate;
 import com.hyd.user.center.service.IRolePermissionService;
+import com.hyd.user.center.service.IRoleRelateService;
 import com.hyd.user.center.service.IRoleService;
 import com.sd365.common.core.annotation.stuffer.IdGenerator;
 import com.sd365.common.core.common.exception.BusinessException;
@@ -29,6 +31,8 @@ public class RolePermissionService implements IRolePermissionService {
     private RolePermissionMapper rolePermissionMapper;
     @Autowired
     private IRoleService roleService;
+    @Autowired
+    private IRoleRelateService roleRelateService;
 
     @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId","RolePermissionService::listByRoleIdList"},allEntries = true)})
     @Override
@@ -83,15 +87,24 @@ public class RolePermissionService implements IRolePermissionService {
         for (Long roleId : roleIdList) {
             Role role = roleService.getBydId(roleId);
             if (role.getType().equals("高级角色")) {
-                advancedRoleIds.add(roleId);
+                // 把高级角色的下属角色找出来
+                List<RoleRelate> roleRelateList = roleRelateService.listByParentRoleId(roleId);
+                for (RoleRelate roleRelate : roleRelateList) {
+                    advancedRoleIds.add(roleRelate.getChildRoleId());
+                }
             } else if (role.getType().equals("基础角色")) {
                 baseRoleIds.add(roleId);
             }
         }
-        // 基础角色可以直接查询出拥有的权限
-        List<RolePermission> rolePermissions = rolePermissionMapper.listByRoleIdList(baseRoleIds);
-        // 高级角色递归查询
-        rolePermissions.addAll(listByRoleIdList(advancedRoleIds));
+        List<RolePermission> rolePermissions = new ArrayList<>();
+        if (!baseRoleIds.isEmpty()) {
+            // 基础角色可以直接查询出拥有的权限
+            rolePermissions  = rolePermissionMapper.listByRoleIdList(baseRoleIds);
+        }
+        if (!advancedRoleIds.isEmpty()) {
+            // 高级角色递归查询
+            rolePermissions.addAll(listByRoleIdList(advancedRoleIds));
+        }
         return rolePermissions;
     }
 

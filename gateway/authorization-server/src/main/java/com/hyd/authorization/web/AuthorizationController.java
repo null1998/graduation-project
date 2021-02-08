@@ -16,7 +16,7 @@ public class AuthorizationController {
     @Autowired
     private IAuthorizationService authorizationService;
     @GetMapping
-    public CommonResponse<Object> authorization(@RequestParam String token, @RequestParam String url) {
-        return authorizationService.authorization(token, url);
+    public CommonResponse<Object> authorization(@RequestParam String token, @RequestParam String url, @RequestParam String method) {
+        return authorizationService.authorization(token, url, method);
     }
 }

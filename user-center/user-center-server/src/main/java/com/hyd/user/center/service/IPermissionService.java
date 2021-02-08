@@ -43,4 +43,11 @@ public interface IPermissionService {
      * @return 权限列表
      */
     List<Permission> listPermission(Permission permission);
+
+    /**
+     * 根据IFD查询
+     * @param id
+     * @return 权限
+     */
+    Permission getById(Long id);
 }
