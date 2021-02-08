@@ -25,8 +25,8 @@ public interface IAuthenticationService {
 
     /**
      * 禁用token
-     * @param username 用户名
+     * @param token
      * @return
      */
-    CommonResponse<Object> disableToken(String username);
+    CommonResponse<Object> disableToken(String token);
 }

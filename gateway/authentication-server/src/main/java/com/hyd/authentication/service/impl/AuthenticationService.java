@@ -6,7 +6,9 @@ import com.hyd.authentication.service.IAuthenticationService;
 
 import com.hyd.common.core.aop.CommonResponse;
 import com.hyd.common.core.util.CommonResponseUtils;
+import com.hyd.common.util.AESUtil;
 import com.hyd.common.util.TokenUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @author yanduohuang
  * @date 2021/2/7 9:37
  */
+@Slf4j
 @Service
 public class AuthenticationService implements IAuthenticationService {
     @Autowired
@@ -33,8 +36,8 @@ public class AuthenticationService implements IAuthenticationService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    private static final String SECRET = "coisdcasdncajwe";
-
+    private static Long ACCESS_TOKEN_LIFE_CYCLE_MILLI = 30*1000L;
+    private static Long REFRESH_TOKEN_LIFE_CYCLE_MILLI = 30*60*1000L;
     public static final String URL = "http://user-center-server/user/center/user/login?username=%s&password=%s";
     @Override
     public CommonResponse<Object> authenticate(String username, String password) {
@@ -59,17 +62,17 @@ public class AuthenticationService implements IAuthenticationService {
                 payload.put("unitId", body.getLong("unitId"));
                 payload.put("roleIdList",body.getJSONArray("roleIdList"));
                 // 使用账户为键，将refresh token存储在redis中,有效期为2小时
-                redisTemplate.opsForValue().set(username, TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString()),2, TimeUnit.HOURS);
+                redisTemplate.opsForValue().set(username, TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString()),REFRESH_TOKEN_LIFE_CYCLE_MILLI,TimeUnit.MILLISECONDS);
 
                 // 设置access token有效期为30秒
                 long currentTimeMillis = System.currentTimeMillis();
-                payload.put("exp",currentTimeMillis+0.5*60*1000);
+                payload.put("exp",currentTimeMillis+ACCESS_TOKEN_LIFE_CYCLE_MILLI);
                 // 加密头部和负载生成签名
-                String signature = TokenUtil.encoderToken(encrypt(TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString())));
+                String signature = TokenUtil.encoderToken(AESUtil.encrypt(TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString())));
                 // 生成access token
                 String accessToken = TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString())+"."+signature;
-                body.put("accessToken",accessToken);
-                return CommonResponseUtils.success(body);
+                log.info(username+"认证成功");
+                return CommonResponseUtils.success(accessToken,body);
             }
         } catch (RestClientException e) {
             return CommonResponseUtils.failed(e.getMessage());
@@ -79,50 +82,49 @@ public class AuthenticationService implements IAuthenticationService {
 
     @Override
     public CommonResponse<Object> refreshToken(String expiredToken) {
-        return null;
+        if (TokenUtil.tokenValid(expiredToken)) {
+            // 首先验证已过期token是否合法
+            String[] split = expiredToken.split("\\.");
+            // 取出负载
+            JSONObject playLoad = JSON.parseObject(TokenUtil.decryptToken(split[1]).get(0));
+            String username = playLoad.getString("username");
+            log.info(String.format("旧token的时间戳%d",playLoad.getLong("exp")));
+            Object refreshToken = redisTemplate.opsForValue().get(username);
+            if (refreshToken != null) {
+                // 验证refreshToken 没有过期
+                long currentTimeMillis = System.currentTimeMillis();
+                // 重新设置access token过期时间
+                playLoad.put("exp", currentTimeMillis+ACCESS_TOKEN_LIFE_CYCLE_MILLI);
+                log.info(String.format("新token的时间戳%d",playLoad.getLong("exp")));
+                String header = TokenUtil.decryptToken(split[0]).get(0);
+                // 重新生成签名
+                String signature = TokenUtil.encoderToken(AESUtil.encrypt(TokenUtil.encoderToken(header,playLoad.toJSONString())));
+                // 生成access token
+                String accessToken = TokenUtil.encoderToken(header, playLoad.toJSONString()) + "." + signature;
+                log.info(username+"刷新token成功");
+                return CommonResponseUtils.successWithToken(accessToken);
+            }
+        }
+        log.info(expiredToken+"刷新token失败");
+        return CommonResponseUtils.failedWithMsg("50008","重新登录");
     }
 
     @Override
-    public CommonResponse<Object> disableToken(String username) {
-        return null;
-    }
-    /**
-     * 根据密钥对指定的明文plainText进行加密.
-     *
-     * @param plainText 明文
-     * @return 加密后的密文.
-     */
-    public static String encrypt(String plainText) {
-        Key secretKey = getKey(SECRET);
-        try {
-            Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            byte[] p = plainText.getBytes(StandardCharsets.UTF_8);
-            byte[] result = cipher.doFinal(p);
-            BASE64Encoder encoder = new BASE64Encoder();
-            return encoder.encode(result);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    public CommonResponse<Object> disableToken(String expiredToken) {
+        if (TokenUtil.tokenValid(expiredToken)) {
+            // 首先验证已过期token是否合法
+            String[] split = expiredToken.split("\\.");
+            // 取出负载
+            JSONObject playLoad = JSON.parseObject(TokenUtil.decryptToken(split[1]).get(0));
+            String username = playLoad.getString("username");
+            Object refreshToken = redisTemplate.opsForValue().get(username);
+            if (refreshToken != null) {
+                redisTemplate.delete(username);
+            }
+            log.info(username+"禁用token成功");
+            return CommonResponseUtils.success();
         }
-    }
-    public static Key getKey(String keySeed) {
-        if (keySeed == null) {
-            keySeed = System.getenv("AES_SYS_KEY");
-        }
-        if (keySeed == null) {
-            keySeed = System.getProperty("AES_SYS_KEY");
-        }
-        if (keySeed == null || keySeed.trim().length() == 0) {
-            keySeed = "abcd1234!@#$";
-        }
-        try {
-            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
-            secureRandom.setSeed(keySeed.getBytes());
-            KeyGenerator generator = KeyGenerator.getInstance("AES");
-            generator.init(secureRandom);
-            return generator.generateKey();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        log.info(expiredToken+"禁用token失败");
+        return CommonResponseUtils.failedWithMsg("50009","禁用token失败");
     }
 }

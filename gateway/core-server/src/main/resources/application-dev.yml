@@ -16,6 +16,13 @@ spring:
             - Path=/user/center/user/login
           filters:
             - RewritePath=/user/center/user/login,/authenticate
+#        前端退出登录时，禁用token
+        - id: authentication-server-disable
+          uri: lb://authentication-server
+          predicates:
+            - Path=/user/center/user/logout
+          filters:
+            - RewritePath=/user/center/user/logout,/authenticate/disable
 #        转发至用户中心
         - id: user-center-server
           uri: lb://user-center-server

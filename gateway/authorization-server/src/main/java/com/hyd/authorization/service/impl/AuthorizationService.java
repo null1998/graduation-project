@@ -35,16 +35,15 @@ import static java.util.regex.Pattern.*;
 public class AuthorizationService implements IAuthorizationService {
     @Autowired
     private RestTemplate restTemplate;
-    public static final String URL = "http://user-center-server/user/center/role/permission/query/role/id/list";
-    public static final String URL_PERMISSION = "http://user-center-server/user/center/permission/%d";
-    private static final String SECRET = "coisdcasdncajwe";
+    private static final String URL = "http://user-center-server/user/center/role/permission/query/role/id/list";
+    private static final String URL_PERMISSION = "http://user-center-server/user/center/permission/%d";
+    private static final String URL_REFRESH_TOKEN = "http://authentication-server/authenticate/refresh?expiredToken=%s";
     @Override
     public CommonResponse<Object> authorization(String token, String url, String method) {
         if (token == null || url == null) {
             CommonResponseUtils.failed("Internal Server Error");
         }
-        Boolean valid = tokenValid(token);
-        if (Boolean.TRUE.equals(valid)) {
+        if (TokenUtil.tokenValid(token)) {
             // token合法
             // 分解token为header，playLoad，signature
             String[] split = token.split("\\.");
@@ -53,24 +52,40 @@ public class AuthorizationService implements IAuthorizationService {
             // 取出过期时间
             Long expiredTime = playLoad.getLong("exp");
             long currentTimeMillis = System.currentTimeMillis();
-            if (!(expiredTime >= currentTimeMillis)) {
-                // 没有过期则开始查询权限
-                JSONArray roleIdsJson = playLoad.getJSONArray("roleIdList");
-                // 查找出该用户的所有权限
-                List<Permission> permissionList = listPermission(roleIdsJson);
-                // 一一判断直到找到结果
-                boolean authorizationResult = authorizationResult(permissionList, url, method);
-                return authorizationResult ? CommonResponseUtils.success() : CommonResponseUtils.failedWithMsg("50000","没有权限");
+            if (currentTimeMillis > expiredTime) {
+                // 过期则尝试刷新token
+                JSONObject resp = restTemplate.getForObject(String.format(URL_REFRESH_TOKEN, token), JSONObject.class);
+                if (resp != null && resp.getJSONObject("head") != null) {
+                    Integer code = resp.getJSONObject("head").getInteger("code");
+                    // 新的token
+                    token = resp.getJSONObject("head").getString("accessToken");
+                    if (code == 0 && token != null && TokenUtil.tokenValid(token)) {
+                        // 刷新成功
+                        log.info("刷新token成功");
+                        // 负载更新
+                        playLoad = JSON.parseObject(TokenUtil.decryptToken(token.split("\\.")[1]).get(0));
+                    } else {
+                        log.info("重新登录");
+                        return CommonResponseUtils.failedWithMsg("50008","重新登录");
+                    }
+                }
             }
-            // 已过期
-            return CommonResponseUtils.failedWithMsg("50014","token过期");
+            // 取出该用户角色列表
+            JSONArray roleIdsJson = playLoad.getJSONArray("roleIdList");
+            // 查找出该用户的所有角色的所有权限
+            List<Permission> permissionList = listPermission(roleIdsJson);
+            // 一一判断直到判断出是否有对应权限
+            boolean authorizationResult = authorizationResult(permissionList, url, method);
+            log.info(String.format("%s---%s鉴权结果%s",method,url,authorizationResult));
+            // 每次鉴权后把token放在head中，方便前端更新
+            return authorizationResult ? CommonResponseUtils.successWithToken(token) : CommonResponseUtils.failedWithMsg("50000","没有权限");
         }
+        log.info("重新登录");
         // 不合法
-        return CommonResponseUtils.failedWithMsg("50008","token不合法");
+        return CommonResponseUtils.failedWithMsg("50008","重新登录");
 
     }
-    private class Permission {
-
+    private static class Permission {
 
         private String url;
 
@@ -143,71 +158,7 @@ public class AuthorizationService implements IAuthorizationService {
         return false;
     }
 
-    public static void main(String[] args) {
-        String url = "http://127.0.0.1:8091/user/center/permission/list?assax=1";
-        final Pattern compile = compile("^https?:\\/\\/(?:[a-zA-Z0-9\\.:]*)([a-zA-Z\\/]*)(?:\\??[0-9]*)");
-        Matcher matcher = compile.matcher(url);
-        if (matcher.find()) {
-            System.out.println(matcher.group(0));
-            System.out.println(matcher.group(1));
-        }
-    }
 
-    /**
-     * 验证token是否被篡改
-     * @param token
-     * @return
-     */
-    private Boolean tokenValid(String token) {
-        if (token == null) {
-            return false;
-        }
-        // 分解token为header，playLoad，signature
-        String[] split = token.split("\\.");
-        if (split.length == 3) {
-            String encrypt = encrypt(split[0] + "." + split[1]);
-            return encrypt.equals(TokenUtil.decryptToken(split[2]).get(0));
-        }
-        return false;
-    }
-    /**
-     * 根据密钥对指定的明文plainText进行加密.
-     *
-     * @param plainText 明文
-     * @return 加密后的密文.
-     */
-    public static String encrypt(String plainText) {
-        Key secretKey = getKey(SECRET);
-        try {
-            Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            byte[] p = plainText.getBytes(StandardCharsets.UTF_8);
-            byte[] result = cipher.doFinal(p);
-            BASE64Encoder encoder = new BASE64Encoder();
-            return encoder.encode(result);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public static Key getKey(String keySeed) {
-        if (keySeed == null) {
-            keySeed = System.getenv("AES_SYS_KEY");
-        }
-        if (keySeed == null) {
-            keySeed = System.getProperty("AES_SYS_KEY");
-        }
-        if (keySeed == null || keySeed.trim().length() == 0) {
-            keySeed = "abcd1234!@#$";// 默认种子
-        }
-        try {
-            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
-            secureRandom.setSeed(keySeed.getBytes());
-            KeyGenerator generator = KeyGenerator.getInstance("AES");
-            generator.init(secureRandom);
-            return generator.generateKey();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
 }
