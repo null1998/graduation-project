@@ -1,11 +1,11 @@
 package com.hyd.financial.web;
 
+import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.util.BeanUtil;
 import com.hyd.financial.entity.WarehouseInventory;
 import com.hyd.financial.entity.vo.WarehouseInventoryVO;
 import com.hyd.financial.service.IWarehouseInventoryService;
 import com.hyd.financial.web.dto.WarehouseInventoryDTO;
-import com.sd365.common.log.api.annotation.ApiLog;
-import com.sd365.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

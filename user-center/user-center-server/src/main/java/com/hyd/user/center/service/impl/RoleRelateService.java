@@ -1,11 +1,11 @@
 package com.hyd.user.center.service.impl;
 
+import com.hyd.common.core.exception.BusinessException;
+import com.hyd.common.core.exception.code.BusinessErrorCode;
+import com.hyd.common.util.IdGenerator;
 import com.hyd.user.center.dao.RoleRelateMapper;
 import com.hyd.user.center.entity.RoleRelate;
 import com.hyd.user.center.service.IRoleRelateService;
-import com.sd365.common.core.annotation.stuffer.IdGenerator;
-import com.sd365.common.core.common.exception.BusinessException;
-import com.sd365.common.core.common.exception.code.BusinessErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;

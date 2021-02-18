@@ -1,10 +1,12 @@
 package com.hyd.user.center.web.qo;
 
+import com.hyd.common.core.pojo.qo.BaseQO;
+
 /**
  * @author yanduohuang
  * @date 2021/2/5 14:19
  */
-public class RoleQO {
+public class RoleQO extends BaseQO {
     private String name;
     private String type;
 

@@ -24,4 +24,6 @@ swagger:
   description: api for user-center-server
   version: 0.0.1
   apiBasePackage: com.hyd.user.center.web
-
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true

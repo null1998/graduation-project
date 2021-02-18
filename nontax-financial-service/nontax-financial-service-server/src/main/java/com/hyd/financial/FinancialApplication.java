@@ -10,8 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @date 2021/2/1 17:45
  */
 @SpringBootApplication
-@ComponentScan("com.sd365.common")
-@ComponentScan("com.sd365.common.api.version")
+@ComponentScan("com.hyd.common")
 @ComponentScan("com.hyd.financial.dao")
 @ComponentScan("com.hyd.basedata.service")
 @MapperScan(basePackages = {"com.hyd.financial.dao","com.hyd.basedata.dao"})

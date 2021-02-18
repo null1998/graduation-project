@@ -3,8 +3,8 @@ package com.hyd.basedata.web;
 import com.hyd.basedata.entity.Dictionary;
 import com.hyd.basedata.service.IDictionaryService;
 import com.hyd.basedata.web.dto.DictionaryDTO;
-import com.sd365.common.log.api.annotation.ApiLog;
-import com.sd365.common.util.BeanUtil;
+import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -4,8 +4,8 @@ import com.hyd.basedata.entity.Ticket;
 import com.hyd.basedata.entity.vo.TicketVO;
 import com.hyd.basedata.service.ITicketService;
 import com.hyd.basedata.web.dto.TicketDTO;
-import com.sd365.common.log.api.annotation.ApiLog;
-import com.sd365.common.util.BeanUtil;
+import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

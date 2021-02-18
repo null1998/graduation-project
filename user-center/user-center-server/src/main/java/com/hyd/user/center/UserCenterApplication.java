@@ -10,8 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @date 2021/2/3 15:51
  */
 @SpringBootApplication
-@ComponentScan("com.sd365.common")
-@ComponentScan("com.sd365.common.api.version")
+@ComponentScan("com.hyd.common")
 @ComponentScan("com.hyd.user.center.dao")
 @MapperScan(basePackages = {"com.hyd.user.center.dao"})
 public class UserCenterApplication {

@@ -1,11 +1,11 @@
 package com.hyd.financial.service.impl;
 
+import com.hyd.common.core.exception.BusinessException;
+import com.hyd.common.core.exception.code.BusinessErrorCode;
+import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.WarehouseInventoryMapper;
 import com.hyd.financial.entity.WarehouseInventory;
 import com.hyd.financial.service.IWarehouseInventoryService;
-import com.sd365.common.core.annotation.stuffer.IdGenerator;
-import com.sd365.common.core.common.exception.BusinessException;
-import com.sd365.common.core.common.exception.code.BusinessErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;

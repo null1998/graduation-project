@@ -1,12 +1,13 @@
 package com.hyd.user.center.web;
 
+import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.core.annotation.PageHelper;
+import com.hyd.common.util.BeanUtil;
 import com.hyd.user.center.entity.Permission;
 import com.hyd.user.center.entity.vo.PermissionVO;
 import com.hyd.user.center.service.IPermissionService;
 import com.hyd.user.center.web.dto.PermissionDTO;
 import com.hyd.user.center.web.qo.PermissionQO;
-import com.sd365.common.log.api.annotation.ApiLog;
-import com.sd365.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,6 +71,7 @@ public class PermissionController {
      * @param permissionQO 条件
      * @return 权限列表
      */
+    @PageHelper
     @ApiLog
     @GetMapping(value = "/list")
     public List<PermissionVO> listPermission(PermissionQO permissionQO) {

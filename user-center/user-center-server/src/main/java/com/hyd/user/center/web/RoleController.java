@@ -1,12 +1,13 @@
 package com.hyd.user.center.web;
 
+import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.core.annotation.PageHelper;
+import com.hyd.common.util.BeanUtil;
 import com.hyd.user.center.entity.Role;
 import com.hyd.user.center.entity.vo.RoleVO;
 import com.hyd.user.center.service.IRoleService;
 import com.hyd.user.center.web.dto.RoleDTO;
 import com.hyd.user.center.web.qo.RoleQO;
-import com.sd365.common.log.api.annotation.ApiLog;
-import com.sd365.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,6 +71,7 @@ public class RoleController {
      * @param roleQO 条件
      * @return 角色列表
      */
+    @PageHelper
     @ApiLog
     @GetMapping(value = "/list")
     public List<RoleVO> listRole(RoleQO roleQO) {

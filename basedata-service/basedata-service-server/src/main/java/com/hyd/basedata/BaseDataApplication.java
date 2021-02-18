@@ -9,8 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
  * 基础数据
  */
 @SpringBootApplication
-@ComponentScan("com.sd365.common")
-@ComponentScan("com.sd365.common.api.version")
+@ComponentScan("com.hyd.common")
 @ComponentScan("com.hyd.basedata.dao")
 @MapperScan(basePackages = {"com.hyd.basedata.dao"})
 public class BaseDataApplication {

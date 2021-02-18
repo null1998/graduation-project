@@ -1,12 +1,14 @@
 package com.hyd.user.center.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.hyd.common.core.exception.BusinessException;
+import com.hyd.common.core.exception.code.BusinessErrorCode;
+import com.hyd.common.util.IdGenerator;
 import com.hyd.user.center.dao.PermissionMapper;
 import com.hyd.user.center.entity.Permission;
 import com.hyd.user.center.service.IPermissionService;
 import com.hyd.user.center.service.IRolePermissionService;
-import com.sd365.common.core.annotation.stuffer.IdGenerator;
-import com.sd365.common.core.common.exception.BusinessException;
-import com.sd365.common.core.common.exception.code.BusinessErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -72,7 +74,10 @@ public class PermissionService implements IPermissionService {
         if (permission == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("权限为空"));
         }
-        return permissionMapper.listPermission(permission);
+        PageHelper.startPage(2,10);
+        List<Permission> permissionList = permissionMapper.listPermission(permission);
+        PageInfo<Permission> pageInfo = new PageInfo<>(permissionList);
+        return permissionList;
     }
 
     @Override
