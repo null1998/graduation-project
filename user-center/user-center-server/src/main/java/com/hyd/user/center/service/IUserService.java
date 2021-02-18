@@ -30,7 +30,7 @@ public interface IUserService {
      * @param user 用户
      * @return 更新行数
      */
-    Integer update(User user);
+    Integer update(User user) throws InvalidKeySpecException, NoSuchAlgorithmException;
 
     /**
      * 根据用户ID查询
@@ -48,4 +48,11 @@ public interface IUserService {
      * @return 结果
      */
     UserDTO login(String username, String password) throws InvalidKeySpecException, NoSuchAlgorithmException;
+
+    /**
+     * 获取用户信息
+     * @param token
+     * @return 用户信息
+     */
+    UserDTO getUserInfo(String token);
 }

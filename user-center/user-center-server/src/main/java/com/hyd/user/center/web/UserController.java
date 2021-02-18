@@ -53,7 +53,7 @@ public class UserController {
      */
     @ApiLog
     @PutMapping
-    public Integer update(@RequestBody UserDTO userDTO) {
+    public Integer update(@RequestBody UserDTO userDTO) throws InvalidKeySpecException, NoSuchAlgorithmException {
         User user = BeanUtil.copy(userDTO, User.class);
         return userService.update(user);
     }
@@ -81,6 +81,18 @@ public class UserController {
     @GetMapping(value = "/login")
     public UserVO login(@RequestParam String username,@RequestParam String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
         UserDTO userDTO = userService.login(username, password);
+        return BeanUtil.copy(userDTO, UserVO.class);
+    }
+
+    /**
+     * 获取用户信息，包含角色名列表
+     * @param token
+     * @return
+     */
+    @ApiLog
+    @GetMapping(value = "/info")
+    public UserVO getUserInfo(@RequestHeader("accessToken") String token) {
+        UserDTO userDTO = userService.getUserInfo(token);
         return BeanUtil.copy(userDTO, UserVO.class);
     }
 }

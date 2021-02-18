@@ -45,7 +45,7 @@ public class RoleController {
     }
     /**
      * 更新
-     * @param roleDTO juese
+     * @param roleDTO 角色
      * @return 更新行数
      */
     @ApiLog

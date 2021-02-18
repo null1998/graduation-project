@@ -26,6 +26,15 @@ public class UserVO {
 
     private Long version;
     private ArrayList<Long> roleIdList;
+    private ArrayList<String> roleNameList;
+
+    public ArrayList<String> getRoleNameList() {
+        return roleNameList;
+    }
+
+    public void setRoleNameList(ArrayList<String> roleNameList) {
+        this.roleNameList = roleNameList;
+    }
 
     public ArrayList<Long> getRoleIdList() {
         return roleIdList;
@@ -120,6 +129,7 @@ public class UserVO {
                 ", unitId=" + unitId +
                 ", version=" + version +
                 ", roleIdList=" + roleIdList +
+                ", roleNameList=" + roleNameList +
                 '}';
     }
 }

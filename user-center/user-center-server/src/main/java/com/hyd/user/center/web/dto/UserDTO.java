@@ -39,6 +39,16 @@ public class UserDTO implements Serializable {
 
     private ArrayList<Long> roleIdList;
 
+    private ArrayList<String> roleNameList;
+
+    public ArrayList<String> getRoleNameList() {
+        return roleNameList;
+    }
+
+    public void setRoleNameList(ArrayList<String> roleNameList) {
+        this.roleNameList = roleNameList;
+    }
+
     public ArrayList<Long> getRoleIdList() {
         return roleIdList;
     }
@@ -165,12 +175,13 @@ public class UserDTO implements Serializable {
                 Objects.equals(email, userDTO.email) &&
                 Objects.equals(unitId, userDTO.unitId) &&
                 Objects.equals(version, userDTO.version) &&
-                Objects.equals(roleIdList, userDTO.roleIdList);
+                Objects.equals(roleIdList, userDTO.roleIdList) &&
+                Objects.equals(roleNameList, userDTO.roleNameList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, avatar, sex, birthday, tel, email, unitId, version, roleIdList);
+        return Objects.hash(id, username, password, avatar, sex, birthday, tel, email, unitId, version, roleIdList, roleNameList);
     }
 
     @Override
@@ -187,6 +198,7 @@ public class UserDTO implements Serializable {
                 ", unitId=" + unitId +
                 ", version=" + version +
                 ", roleIdList=" + roleIdList +
+                ", roleNameList=" + roleNameList +
                 '}';
     }
 }

@@ -14,14 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import sun.misc.BASE64Encoder;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.security.Permission;
-import java.security.SecureRandom;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -150,8 +143,8 @@ public class AuthorizationService implements IAuthorizationService {
             if (Objects.equals(permission.getMethod(), method)) {
                 final Pattern compile = compile("^https?:\\/\\/(?:[a-zA-Z0-9\\.:]*)([a-zA-Z\\/]*)(?:\\??[0-9]*)");
                 Matcher matcher = compile.matcher(url);
-                if (matcher.find()) {
-                    return Objects.equals(permission.getUrl(), matcher.group(1));
+                if (matcher.find() && Objects.equals(permission.getUrl(), matcher.group(1))) {
+                    return true;
                 }
             }
         }
