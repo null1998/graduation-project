@@ -8,6 +8,7 @@ import com.hyd.common.core.aop.CommonResponse;
 import com.hyd.common.core.util.CommonResponseUtils;
 import com.hyd.common.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -33,8 +34,8 @@ public class AuthorizationService implements IAuthorizationService {
     private static final String URL_REFRESH_TOKEN = "http://authentication-server/authenticate/refresh?expiredToken=%s";
     @Override
     public CommonResponse<Object> authorization(String token, String url, String method) {
-        if (token == null || url == null) {
-            CommonResponseUtils.failed("Internal Server Error");
+        if (token == null || StringUtils.equals(token,"null") || url == null) {
+            return CommonResponseUtils.failed("Internal Server Error");
         }
         if (TokenUtil.tokenValid(token)) {
             // token合法
@@ -128,8 +129,8 @@ public class AuthorizationService implements IAuthorizationService {
                     // 查询该权限详细信息
                     JSONObject respPermission = restTemplate.getForObject(String.format(URL_PERMISSION, permissionId), JSONObject.class);
                     if (respPermission != null && respPermission.getJSONObject("body") != null) {
-                        String method = respPermission.getJSONObject("body").getString("method");
-                        String url = respPermission.getJSONObject("body").getString("url");
+                        String method = respPermission.getJSONObject("body").getJSONObject("data").getString("method");
+                        String url = respPermission.getJSONObject("body").getJSONObject("data").getString("url");
                         Permission permission = new Permission(url,method);
                         permissions.add(permission);
                     }
