@@ -30,7 +30,16 @@
 <!--        <table tableName="financial_claim_form_ticket" mapperName="ClaimFormTicketBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
 <!--        </table>-->
-        <table tableName="financial_settlement" mapperName="SettlementBaseMapper">
+<!--        <table tableName="financial_settlement" mapperName="SettlementBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
+<!--        </table>-->
+        <table tableName="financial_printing_plan" mapperName="PrintingPlanBaseMapper">
+            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
+        </table>
+        <table tableName="financial_printing_plan_ticket" mapperName="PrintingPlanTicketBaseMapper">
+            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
+        </table>
+        <table tableName="financial_printing_plan_limit_date" mapperName="PrintingPlanLimitDateBaseMapper">
             <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
         </table>
     </context>
