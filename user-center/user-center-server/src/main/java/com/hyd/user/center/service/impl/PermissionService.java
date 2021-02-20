@@ -4,11 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
+import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.user.center.dao.PermissionMapper;
 import com.hyd.user.center.entity.Permission;
 import com.hyd.user.center.service.IPermissionService;
 import com.hyd.user.center.service.IRolePermissionService;
+import com.hyd.user.center.web.qo.PermissionQO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -68,15 +70,14 @@ public class PermissionService implements IPermissionService {
         }
         return permissionMapper.listByName(name);
     }
-    @Cacheable(value = {"PermissionService::listPermission"},key = "#permission.toString()")
+    @Cacheable(value = {"PermissionService::listPermission"},key = "#permissionQO.toString()")
     @Override
-    public List<Permission> listPermission(Permission permission) {
-        if (permission == null) {
+    public List<Permission> listPermission(PermissionQO permissionQO) {
+        if (permissionQO == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("权限为空"));
         }
-        PageHelper.startPage(2,10);
+        Permission permission = BeanUtil.copy(permissionQO, Permission.class);
         List<Permission> permissionList = permissionMapper.listPermission(permission);
-        PageInfo<Permission> pageInfo = new PageInfo<>(permissionList);
         return permissionList;
     }
 

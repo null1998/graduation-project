@@ -1,6 +1,7 @@
 package com.hyd.user.center.service;
 
 import com.hyd.user.center.entity.Permission;
+import com.hyd.user.center.web.qo.PermissionQO;
 
 import java.util.List;
 
@@ -39,10 +40,10 @@ public interface IPermissionService {
 
     /**
      * 根据条件（资源名，动作）查询权限列表
-     * @param permission 条件
+     * @param permissionQO 条件
      * @return 权限列表
      */
-    List<Permission> listPermission(Permission permission);
+    List<Permission> listPermission(PermissionQO permissionQO);
 
     /**
      * 根据IFD查询

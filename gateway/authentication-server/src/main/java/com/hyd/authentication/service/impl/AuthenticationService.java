@@ -49,30 +49,33 @@ public class AuthenticationService implements IAuthenticationService {
         try {
             Object resp = restTemplate.getForObject(format, Object.class);
             JSONObject json = (JSONObject) JSON.toJSON(resp);
-            JSONObject body = json.getJSONObject("body");
-            if (body.getLong("id") != null) {
-                // 构建头
-                JSONObject header = new JSONObject();
-                header.put("alg","AES");
-                header.put("typ","JWT");
-                // 构建负载
-                JSONObject payload = new JSONObject();
-                payload.put("username", username);
-                payload.put("userId", body.getLong("id"));
-                payload.put("unitId", body.getLong("unitId"));
-                payload.put("roleIdList",body.getJSONArray("roleIdList"));
-                // 使用账户为键，将refresh token存储在redis中,有效期为2小时
-                redisTemplate.opsForValue().set(username, TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString()),REFRESH_TOKEN_LIFE_CYCLE_MILLI,TimeUnit.MILLISECONDS);
+            if (json != null && json.getJSONObject("body") != null) {
+                JSONObject body = json.getJSONObject("body");
+                if (body.getJSONObject("data") != null && body.getJSONObject("data").getLong("id") != null) {
+                    JSONObject data = body.getJSONObject("data");
+                    // 构建头
+                    JSONObject header = new JSONObject();
+                    header.put("alg","AES");
+                    header.put("typ","JWT");
+                    // 构建负载
+                    JSONObject payload = new JSONObject();
+                    payload.put("username", username);
+                    payload.put("userId", data.getLong("id"));
+                    payload.put("unitId", data.getLong("unitId"));
+                    payload.put("roleIdList",data.getJSONArray("roleIdList"));
+                    // 使用账户为键，将refresh token存储在redis中,有效期为2小时
+                    redisTemplate.opsForValue().set(username, TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString()),REFRESH_TOKEN_LIFE_CYCLE_MILLI,TimeUnit.MILLISECONDS);
 
-                // 设置access token有效期为30秒
-                long currentTimeMillis = System.currentTimeMillis();
-                payload.put("exp",currentTimeMillis+ACCESS_TOKEN_LIFE_CYCLE_MILLI);
-                // 加密头部和负载生成签名
-                String signature = TokenUtil.encoderToken(AESUtil.encrypt(TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString())));
-                // 生成access token
-                String accessToken = TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString())+"."+signature;
-                log.info(username+"认证成功");
-                return CommonResponseUtils.success(accessToken,body);
+                    // 设置access token有效期为30秒
+                    long currentTimeMillis = System.currentTimeMillis();
+                    payload.put("exp",currentTimeMillis+ACCESS_TOKEN_LIFE_CYCLE_MILLI);
+                    // 加密头部和负载生成签名
+                    String signature = TokenUtil.encoderToken(AESUtil.encrypt(TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString())));
+                    // 生成access token
+                    String accessToken = TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString())+"."+signature;
+                    log.info(username+"认证成功");
+                    return CommonResponseUtils.success(accessToken,data);
+                }
             }
         } catch (RestClientException e) {
             return CommonResponseUtils.failed(e.getMessage());

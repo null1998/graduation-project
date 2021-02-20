@@ -1,5 +1,6 @@
 package com.hyd.user.center.web;
 
+
 import com.hyd.common.core.annotation.ApiLog;
 import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
@@ -18,9 +19,9 @@ import java.util.List;
  * @date 2021/2/4 11:09
  */
 @CrossOrigin
+@RequestMapping("/permission")
 @RestController
-@RequestMapping(value = "/permission")
-public class PermissionController {
+public class PermissionController{
     @Autowired
     private IPermissionService permissionService;
     /**
@@ -71,14 +72,19 @@ public class PermissionController {
      * @param permissionQO 条件
      * @return 权限列表
      */
-    @PageHelper
     @ApiLog
+    @PageHelper
     @GetMapping(value = "/list")
     public List<PermissionVO> listPermission(PermissionQO permissionQO) {
-        Permission permission = BeanUtil.copy(permissionQO, Permission.class);
-        List<Permission> permissionList = permissionService.listPermission(permission);
+        List<Permission> permissionList = permissionService.listPermission(permissionQO);
         return BeanUtil.copyList(permissionList, PermissionVO.class);
     }
+
+    /**
+     * 根据ID查询
+     * @param id
+     * @return
+     */
     @ApiLog
     @GetMapping(value = "/{id}")
     public PermissionVO getById(@PathVariable("id") Long id) {

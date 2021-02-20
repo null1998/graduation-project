@@ -31,6 +31,7 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         //获取请求路径
         String url = exchange.getRequest().getURI().toString();
+        url = url.split("\\?")[0];
         String method = exchange.getRequest().getMethod().name();
         //跳过鉴权
         if (url.contains("user/login")||url.contains("/user/logout")) {
