@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c49c2d76-bc6f-4ed0-b0bb-dbf0db29c06d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-base-dao/target/classes/com/hyd/financial/entity/vo/PrintingPlanLimitDateVO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/target/classes/com/hyd/financial/dao/PrintingPlanLimitDateMapper.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/target/classes/com/hyd/financial/service/IPrintingPlanLimitDateService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/target/classes/com/hyd/financial/service/IPrintingPlanService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/target/classes/com/hyd/financial/service/impl/PrintingPlanLimitDateService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/target/classes/com/hyd/financial/web/PrintingPlanLimitDateController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/target/classes/com/hyd/financial/web/dto/PrintingPlanLimitDateDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/BaseDataApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/BaseDataApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/dao/UnitMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/dao/UnitMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/service/IUnitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/service/IUnitService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/service/impl/TicketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/service/impl/TicketService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/service/impl/UnitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/service/impl/UnitService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/service/impl/WarehouseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/service/impl/WarehouseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/service/impl/ZoneService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/service/impl/ZoneService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/web/UnitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/src/main/java/com/hyd/basedata/web/UnitController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/BaseDataApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/BaseDataApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/service/IUnitService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/service/IUnitService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/service/impl/TicketService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/service/impl/TicketService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/service/impl/UnitService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/service/impl/UnitService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/service/impl/WarehouseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/service/impl/WarehouseService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/service/impl/ZoneService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/service/impl/ZoneService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/web/UnitController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../basedata-service/basedata-service-server/target/classes/com/hyd/basedata/web/UnitController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication-server/src/main/java/com/hyd/authentication/service/impl/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/authentication-server/src/main/java/com/hyd/authentication/service/impl/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication-server/target/classes/com/hyd/authentication/service/impl/AuthenticationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/authentication-server/target/classes/com/hyd/authentication/service/impl/AuthenticationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authorization-server/src/main/java/com/hyd/authorization/service/impl/AuthorizationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/authorization-server/src/main/java/com/hyd/authorization/service/impl/AuthorizationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authorization-server/target/classes/com/hyd/authorization/service/impl/AuthorizationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/authorization-server/target/classes/com/hyd/authorization/service/impl/AuthorizationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-server/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/core-server/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core-server/target/classes/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/core-server/target/classes/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/src/main/java/com/hyd/financial/FinancialApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/src/main/java/com/hyd/financial/FinancialApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/src/main/java/com/hyd/financial/service/impl/ClaimFormService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/src/main/java/com/hyd/financial/service/impl/ClaimFormService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/src/main/java/com/hyd/financial/service/impl/SettlementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/src/main/java/com/hyd/financial/service/impl/SettlementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/target/classes/com/hyd/financial/FinancialApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/target/classes/com/hyd/financial/FinancialApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/target/classes/com/hyd/financial/service/impl/ClaimFormService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/target/classes/com/hyd/financial/service/impl/ClaimFormService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/target/classes/com/hyd/financial/service/impl/SettlementService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../nontax-financial-service/nontax-financial-service-server/target/classes/com/hyd/financial/service/impl/SettlementService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/UserCenterApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/UserCenterApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/service/IUserRoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/service/IUserRoleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/service/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/service/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/service/impl/PermissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/service/impl/PermissionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/service/impl/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/service/impl/RoleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/service/impl/UserRoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/service/impl/UserRoleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/service/impl/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/service/impl/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/web/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/web/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/web/UserRoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-center/user-center-server/src/main/java/com/hyd/user/center/web/UserRoleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-center/user-center-server/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-center/user-center-server/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-center/user-center-server/target/classes/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-center/user-center-server/target/classes/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-center/user-center-server/target/classes/com/hyd/user/center/web/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../user-center/user-center-server/target/classes/com/hyd/user/center/web/UserController.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+    <option name="PARALLEL_COMPILATION" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="C:\tools\maven\repository" />
+        <option name="mavenHome" value="C:/tools/maven/apache-maven-3.6.3" />
+        <option name="userSettingsFile" value="C:\tools\maven\apache-maven-3.6.3\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1o6OirmVix5KELpGzJhfTaHfctq" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/core-server/src/main/java/com/hyd/core/config" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.hyd.authorization.service.impl" />
+      <recent name="com.hyd.authentication.service.impl" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.hyd.authorization.config" />
+      <recent name="com.hyd.authentication.config" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\work\graduation-project\gateway\core-server\src\main\java\com\hyd\core\config" />
+      <recent name="C:\work\graduation-project\gateway\authorization-server\src\main\resources" />
+      <recent name="C:\work\graduation-project\gateway\authentication-server\src\main\resources" />
+      <recent name="C:\work\graduation-project\gateway\core-server\src\main\java\com\hyd\core\filter" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.GatewayApplication">
+    <configuration name="AuthorizationService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hyd.authorization.service.impl.AuthorizationService" />
+      <module name="authorization-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hyd.authorization.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthenticationApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="authentication-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hyd.authentication.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hyd.authentication.AuthenticationApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthorizationApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="authorization-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hyd.authorization.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hyd.authorization.AuthorizationApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="core-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hyd.core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hyd.core.GatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.GatewayApplication" />
+        <item itemvalue="Spring Boot.AuthorizationApplication" />
+        <item itemvalue="Spring Boot.AuthenticationApplication" />
+        <item itemvalue="Application.AuthorizationService" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c49c2d76-bc6f-4ed0-b0bb-dbf0db29c06d" name="Default Changelist" comment="" />
+      <created>1612603703331</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1612603703331</updated>
+      <workItem from="1612603707391" duration="31782000" />
+      <workItem from="1612764398875" duration="14150000" />
+      <workItem from="1613116159442" duration="5942000" />
+      <workItem from="1613147090640" duration="928000" />
+      <workItem from="1613228287325" duration="3655000" />
+      <workItem from="1613610447494" duration="3992000" />
+      <workItem from="1613619066075" duration="29156000" />
+    </task>
+    <task id="LOCAL-00001" summary="网关">
+      <created>1612692467167</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1612692467167</updated>
+    </task>
+    <task id="LOCAL-00002" summary="鉴权基本跑通">
+      <created>1612755911003</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1612755911003</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="网关" />
+    <MESSAGE value="鉴权基本跑通" />
+    <option name="LAST_COMMIT_MESSAGE" value="鉴权基本跑通" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="223" y="75" width="1155" height="683" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1612665059777">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="223" y="75" width="1155" height="683" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1612665059777" />
+    <state x="488" y="226" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1612660863196">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="488" y="226" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.834@0.0.1536.834" timestamp="1612660863196" />
+    <state x="574" y="126" key="#com.intellij.ide.util.MemberChooser" timestamp="1612754089693">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="574" y="126" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1612754089693" />
+    <state x="287" y="16" key="CommitChangelistDialog2" timestamp="1612755903997">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="287" y="16" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1612755903997" />
+    <state width="1493" height="401" key="GridCell.Tab.0.bottom" timestamp="1613976719755">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="401" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1613976719755" />
+    <state width="1493" height="401" key="GridCell.Tab.0.center" timestamp="1613976719755">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="401" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1613976719755" />
+    <state width="1493" height="401" key="GridCell.Tab.0.left" timestamp="1613976719755">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="401" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1613976719755" />
+    <state width="1493" height="401" key="GridCell.Tab.0.right" timestamp="1613976719755">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="401" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1613976719755" />
+    <state width="1493" height="401" key="GridCell.Tab.1.bottom" timestamp="1613976719755">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="401" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1613976719755" />
+    <state width="1493" height="401" key="GridCell.Tab.1.center" timestamp="1613976719755">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="401" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1613976719755" />
+    <state width="1493" height="401" key="GridCell.Tab.1.left" timestamp="1613976719755">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="401" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1613976719755" />
+    <state width="1493" height="401" key="GridCell.Tab.1.right" timestamp="1613976719755">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="401" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1613976719755" />
+    <state width="1493" height="401" key="GridCell.Tab.2.bottom" timestamp="1613976719756">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="401" key="GridCell.Tab.2.bottom/0.0.1536.834@0.0.1536.834" timestamp="1613976719756" />
+    <state width="1493" height="401" key="GridCell.Tab.2.center" timestamp="1613976719755">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="401" key="GridCell.Tab.2.center/0.0.1536.834@0.0.1536.834" timestamp="1613976719755" />
+    <state width="1493" height="401" key="GridCell.Tab.2.left" timestamp="1613976719755">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="401" key="GridCell.Tab.2.left/0.0.1536.834@0.0.1536.834" timestamp="1613976719755" />
+    <state width="1493" height="401" key="GridCell.Tab.2.right" timestamp="1613976719755">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="401" key="GridCell.Tab.2.right/0.0.1536.834@0.0.1536.834" timestamp="1613976719755" />
+    <state x="249" y="0" key="SettingsEditor" timestamp="1612605861097">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="249" y="0" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1612605861097" />
+    <state x="361" y="153" key="Vcs.Push.Dialog.v2" timestamp="1612755955863">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="361" y="153" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1612755955863" />
+    <state x="323" y="156" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1613130357154">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="323" y="156" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.834@0.0.1536.834" timestamp="1613130357154" />
+    <state x="178" y="121" key="new project wizard" timestamp="1612666358492">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="178" y="121" key="new project wizard/0.0.1536.834@0.0.1536.834" timestamp="1612666358492" />
+  </component>
+</project>

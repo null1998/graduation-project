@@ -1,0 +1,21 @@
+
+R
+java:S1191"5Use classes from the Java API instead of Sun classes.(ëŞï®8å³øı÷.
+Q
+java:S3740}"/Provide the parametrized type for this generic.(ĞöÈÃûÿÿÿÿ8å³øı÷.
+`
+java:S22591"CA "NullPointerException" could be thrown; "token" is nullable here.(ƒŠÉ–8å³øı÷.
+R
+java:S1128"0Remove this unused import 'javax.crypto.Cipher'.(ç‡‡³øÿÿÿÿ8ÔÙ›ßù.
+X
+java:S1128"6Remove this unused import 'javax.crypto.KeyGenerator'.(ÑÃ’§ÿÿÿÿÿ8ÔÙ›ßù.
+[
+java:S1128">Remove this unused import 'java.nio.charset.StandardCharsets'.(ï˜ŞÛ8ÔÙ›ßù.
+P
+java:S1128".Remove this unused import 'java.security.Key'.(ŞÃ“úÿÿÿÿ8ÔÙ›ßù.
+Y
+java:S1128"7Remove this unused import 'java.security.SecureRandom'.(›éè™úÿÿÿÿ8ÔÙ›ßù.
+P
+java:S1128"3Remove this unused import 'sun.misc.BASE64Encoder'.(ëŞï®8ÔÙ›ßù.
+o
+java:S3776*"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(êóıÖ8ÔÙ›ßù.

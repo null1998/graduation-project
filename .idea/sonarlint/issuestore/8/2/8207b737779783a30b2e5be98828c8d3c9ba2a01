@@ -1,0 +1,9 @@
+
+™
+java:S1319#"wThe type of the "roleNameList" object should be an interface such as "List" rather than the implementation "ArrayList".(ùîØ¿ùÿÿÿÿ8ï–‘áù.
+’
+java:S1319'"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(¬Š‰øşÿÿÿÿ8è‰áù.
+’
+java:S1319+"uThe type of the "roleIdList" object should be an interface such as "List" rather than the implementation "ArrayList".(ú¤Àñ8è‰áù.
+
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ÍÚ¼ƒ8ï–‘áù.

@@ -7,10 +7,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="basedata-service-server" />
+        <module name="user-center-server" />
+        <module name="user_center" />
+        <module name="basedata-service-base-dao" />
         <module name="nontax-unit-service" />
-        <module name="nontax-financial-service" />
-        <module name="basedata-service" />
+        <module name="user-center-base-dao" />
+        <module name="nontax-financial-service-base-dao" />
+        <module name="nontax-financial-service-server" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="user_center" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

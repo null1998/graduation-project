@@ -1,0 +1,23 @@
+
+R
+java:S1191"5Use classes from the Java API instead of Sun classes.(ëŞï®8®êíÑ÷.
+L
+java:S3740%"/Provide the parametrized type for this generic.(‚Ê«8õ“¦Ò÷.
+k
+java:S1192<"IDefine a constant instead of duplicating this literal "username" 3 times.(°Ö“¾ùÿÿÿÿ8ãÙ›ßù.
+R
+java:S1128"0Remove this unused import 'javax.crypto.Cipher'.(ç‡‡³øÿÿÿÿ8ãÙ›ßù.
+X
+java:S1128"6Remove this unused import 'javax.crypto.KeyGenerator'.(ÑÃ’§ÿÿÿÿÿ8ãÙ›ßù.
+[
+java:S1128">Remove this unused import 'java.nio.charset.StandardCharsets'.(ï˜ŞÛ8ãÙ›ßù.
+P
+java:S1128".Remove this unused import 'java.security.Key'.(ŞÃ“úÿÿÿÿ8ãÙ›ßù.
+Y
+java:S1128"7Remove this unused import 'java.security.SecureRandom'.(›éè™úÿÿÿÿ8ãÙ›ßù.
+P
+java:S1128"3Remove this unused import 'sun.misc.BASE64Encoder'.(ëŞï®8ãÙ›ßù.
+Š
+java:S3008'"hRename this field "ACCESS_TOKEN_LIFE_CYCLE_MILLI" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Üşßşÿÿÿÿ8ãÙ›ßù.
+†
+java:S3008("iRename this field "REFRESH_TOKEN_LIFE_CYCLE_MILLI" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚÒÍ¢8ãÙ›ßù.

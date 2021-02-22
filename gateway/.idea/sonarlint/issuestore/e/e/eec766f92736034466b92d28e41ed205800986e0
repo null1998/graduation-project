@@ -1,0 +1,11 @@
+
+X
+java:S2259)"BA "NullPointerException" could be thrown; "get()" can return null.(ÑÛ³’
+R
+java:S1128"6Remove this unused import 'com.alibaba.fastjson.JSON'.(Ö¢å$8å³øý÷.
+X
+java:S2259A"BA "NullPointerException" could be thrown; "resp" is nullable here.(Ò–žš
+j
+java:S2259""HA "NullPointerException" could be thrown; "getMethod()" can return null.(…š¢©øÿÿÿÿ8å³øý÷.
+i
+java:S1192)"LDefine a constant instead of duplicating this literal "accessToken" 6 times.(ÑÛ³’8þÙ›ßù.
