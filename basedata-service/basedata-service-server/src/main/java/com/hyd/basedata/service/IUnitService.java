@@ -44,4 +44,11 @@ public interface IUnitService {
      * @return 更新行数
      */
     Integer update(Unit unit);
+
+    /**
+     * 查询全部
+     * @return 单位列表
+     */
+    List<Unit> listAll();
+
 }

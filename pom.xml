@@ -30,6 +30,7 @@
         <mybatis-starter.version>2.1.4</mybatis-starter.version>
         <common.version>1.0-SNAPSHOT</common.version>
         <pagehelper-springboot.version>1.3.0</pagehelper-springboot.version>
+        <spring-boot-starter-data-redis.version>2.4.3</spring-boot-starter-data-redis.version>
     </properties>
     <dependencies>
         <dependency>
@@ -48,6 +49,7 @@
             <version>${pagehelper-springboot.version}</version>
         </dependency>
     </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

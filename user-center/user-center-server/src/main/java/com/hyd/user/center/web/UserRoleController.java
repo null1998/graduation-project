@@ -1,8 +1,11 @@
 package com.hyd.user.center.web;
 
 import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
+import com.hyd.user.center.entity.User;
 import com.hyd.user.center.entity.UserRole;
+import com.hyd.user.center.entity.vo.UserVO;
 import com.hyd.user.center.service.IUserRoleService;
 import com.hyd.user.center.web.dto.UserRoleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,4 +53,6 @@ public class UserRoleController {
     public void removeByUserId(@PathVariable("userId") Long userId) {
         userRoleService.removeByUserId(userId);
     }
+
+
 }

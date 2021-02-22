@@ -36,8 +36,8 @@ public class AuthenticationService implements IAuthenticationService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    private static Long ACCESS_TOKEN_LIFE_CYCLE_MILLI = 30*1000L;
-    private static Long REFRESH_TOKEN_LIFE_CYCLE_MILLI = 30*60*1000L;
+    private static Long ACCESS_TOKEN_LIFE_CYCLE_MILLI = 60*60*1000L;
+    private static Long REFRESH_TOKEN_LIFE_CYCLE_MILLI = 24*60*60*1000L;
     public static final String URL = "http://user-center-server/user/center/user/login?username=%s&password=%s";
     @Override
     public CommonResponse<Object> authenticate(String username, String password) {
@@ -63,7 +63,7 @@ public class AuthenticationService implements IAuthenticationService {
                     payload.put("userId", data.getLong("id"));
                     payload.put("unitId", data.getLong("unitId"));
                     payload.put("roleIdList",data.getJSONArray("roleIdList"));
-                    // 使用账户为键，将refresh token存储在redis中,有效期为2小时
+                    // 使用账户为键，将refresh token存储在redis中
                     redisTemplate.opsForValue().set(username, TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString()),REFRESH_TOKEN_LIFE_CYCLE_MILLI,TimeUnit.MILLISECONDS);
 
                     // 设置access token有效期为30秒

@@ -1,6 +1,7 @@
 package com.hyd.user.center.web;
 
 import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
 import com.hyd.user.center.entity.User;
 import com.hyd.user.center.entity.vo.UserVO;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.List;
 
 /**
  * @author yanduohuang
@@ -94,5 +96,11 @@ public class UserController {
     public UserVO getUserInfo(@RequestHeader("accessToken") String token) {
         UserDTO userDTO = userService.getUserInfo(token);
         return BeanUtil.copy(userDTO, UserVO.class);
+    }
+    @ApiLog
+    @GetMapping(value = "/all")
+    public List<UserVO> listAll() {
+        List<UserDTO> userDTOList = userService.listAll();
+        return BeanUtil.copyList(userDTOList, UserVO.class);
     }
 }

@@ -28,5 +28,10 @@ spring:
           uri: lb://user-center-server
           predicates:
             - Path=/user/center/**
+#        基础数据
+        - id: basedata-service-server
+          uri: lb://basedata-service-server
+          predicates:
+            - Path=/nontax/basedata/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin

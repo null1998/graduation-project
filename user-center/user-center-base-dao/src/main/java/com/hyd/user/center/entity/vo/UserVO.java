@@ -27,6 +27,15 @@ public class UserVO {
     private Long version;
     private ArrayList<Long> roleIdList;
     private ArrayList<String> roleNameList;
+    private String unitName;
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
 
     public ArrayList<String> getRoleNameList() {
         return roleNameList;
@@ -130,6 +139,7 @@ public class UserVO {
                 ", version=" + version +
                 ", roleIdList=" + roleIdList +
                 ", roleNameList=" + roleNameList +
+                ", unitName='" + unitName + '\'' +
                 '}';
     }
 }

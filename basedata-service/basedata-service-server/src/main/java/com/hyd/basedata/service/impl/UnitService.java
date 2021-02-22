@@ -6,6 +6,7 @@ import com.hyd.basedata.service.IUnitService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.IdGenerator;
+import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,8 +26,7 @@ public class UnitService implements IUnitService {
     private UnitMapper unitMapper;
     @Autowired
     private IdGenerator idGenerator;
-    @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById"}, allEntries = true),
-            @CacheEvict(value = {"UnitService::listUnitByParentId"}, allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll"}, allEntries = true)})
     @Override
     public Long save(Unit unit) {
         if (unit == null) {
@@ -58,7 +58,7 @@ public class UnitService implements IUnitService {
         return unitMapper.listUnitByParentId(parentId);
     }
     @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById"}, key="#id"),
-            @CacheEvict(value = {"UnitService::listUnitByParentId"}, allEntries = true)})
+            @CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll"}, allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -67,13 +67,18 @@ public class UnitService implements IUnitService {
         return unitMapper.deleteByPrimaryKey(id) == 1;
     }
     @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById"}, key="#unit.id"),
-            @CacheEvict(value = {"UnitService::listUnitByParentId"}, allEntries = true)})
+            @CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll"}, allEntries = true)})
     @Override
     public Integer update(Unit unit) {
         if (unit == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位为空"));
         }
         return unitMapper.updateByPrimaryKeySelective(unit);
+    }
+    @Cacheable(value = {"UnitService::listAll"})
+    @Override
+    public List<Unit> listAll() {
+        return unitMapper.select(QueryExpressionDSL::where);
     }
 
 }

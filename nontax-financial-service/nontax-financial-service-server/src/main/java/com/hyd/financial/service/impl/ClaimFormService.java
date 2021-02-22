@@ -31,8 +31,7 @@ public class ClaimFormService implements IClaimFormService {
     private IdGenerator idGenerator;
     @Autowired
     private IUnitService unitService;
-    @Caching(evict = {@CacheEvict(value = {"ClaimFormService::listByClaimUnitId"},allEntries = true)
-            ,@CacheEvict(value = {"ClaimFormService::listChildClaimFormByParentUnitId"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"ClaimFormService::listByClaimUnitId","ClaimFormService::listChildClaimFormByParentUnitId"},allEntries = true)})
     @Override
     public Long save(ClaimForm claimForm) {
         if (claimForm == null) {
@@ -46,8 +45,7 @@ public class ClaimFormService implements IClaimFormService {
         claimFormMapper.insertSelective(claimForm);
         return id;
     }
-    @Caching(evict = {@CacheEvict(value = {"ClaimFormService::listByClaimUnitId"},allEntries = true)
-            ,@CacheEvict(value = {"ClaimFormService::listChildClaimFormByParentUnitId"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"ClaimFormService::listByClaimUnitId","ClaimFormService::listChildClaimFormByParentUnitId"},allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -55,8 +53,7 @@ public class ClaimFormService implements IClaimFormService {
         }
         return claimFormMapper.deleteByPrimaryKey(id) == 1;
     }
-    @Caching(evict = {@CacheEvict(value = {"ClaimFormService::listByClaimUnitId"},allEntries = true)
-    ,@CacheEvict(value = {"ClaimFormService::listChildClaimFormByParentUnitId"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"ClaimFormService::listByClaimUnitId","ClaimFormService::listChildClaimFormByParentUnitId"},allEntries = true)})
     @Override
     public Integer update(ClaimForm claimForm) {
         if (claimForm == null) {

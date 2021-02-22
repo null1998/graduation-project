@@ -5,6 +5,7 @@ import com.hyd.user.center.web.dto.UserDTO;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.List;
 
 /**
  * @author yanduohuang
@@ -55,4 +56,9 @@ public interface IUserService {
      * @return 用户信息
      */
     UserDTO getUserInfo(String token);
+    /**
+     * 查询全部
+     * @return 用户列表
+     */
+    List<UserDTO> listAll();
 }

@@ -48,7 +48,8 @@ public class RoleService implements IRoleService {
         return id;
     }
     @Transactional
-    @Caching(evict = {@CacheEvict(value = {"RoleService::listByName","RoleService::listRole"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"RoleService::listByName","RoleService::listRole"},allEntries = true),
+            @CacheEvict(value = {"RoleService::getBydId"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -63,7 +64,8 @@ public class RoleService implements IRoleService {
         // 删除角色
         return roleMapper.deleteByPrimaryKey(id) == 1;
     }
-    @Caching(evict = {@CacheEvict(value = {"RoleService::listByName","RoleService::listRole"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"RoleService::listByName","RoleService::listRole"},allEntries = true),
+            @CacheEvict(value = {"RoleService::getBydId"},key = "#role.id")})
     @Override
     public Integer update(Role role) {
         if (role == null) {
@@ -87,7 +89,7 @@ public class RoleService implements IRoleService {
         }
         return roleMapper.listRole(role);
     }
-
+    @Cacheable(value = {"RoleService::getBydId"},key = "#id")
     @Override
     public Role getBydId(Long id) {
         if (id == null) {

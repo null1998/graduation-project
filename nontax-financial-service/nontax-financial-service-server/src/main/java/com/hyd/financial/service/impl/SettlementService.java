@@ -24,8 +24,7 @@ public class SettlementService implements ISettlementService {
     private SettlementMapper settlementMapper;
     @Autowired
     private IdGenerator idGenerator;
-    @Caching(evict = {@CacheEvict(value = "SettlementService::listBySettlementUnitId",allEntries = true),
-            @CacheEvict(value = "SettlementService::listByUnitId",allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"SettlementService::listBySettlementUnitId","SettlementService::listByUnitId"},allEntries = true)})
     @Override
     public Long save(Settlement settlement) {
         if (settlement == null) {
@@ -36,8 +35,7 @@ public class SettlementService implements ISettlementService {
         settlementMapper.insertSelective(settlement);
         return id;
     }
-    @Caching(evict = {@CacheEvict(value = "SettlementService::listBySettlementUnitId",allEntries = true),
-            @CacheEvict(value = "SettlementService::listByUnitId",allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"SettlementService::listBySettlementUnitId","SettlementService::listByUnitId"},allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -45,8 +43,7 @@ public class SettlementService implements ISettlementService {
         }
         return settlementMapper.deleteByPrimaryKey(id) == 1;
     }
-    @Caching(evict = {@CacheEvict(value = "SettlementService::listBySettlementUnitId",allEntries = true),
-            @CacheEvict(value = "SettlementService::listByUnitId",allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"SettlementService::listBySettlementUnitId","SettlementService::listByUnitId"},allEntries = true)})
     @Override
     public Integer update(Settlement settlement) {
         if (settlement == null) {

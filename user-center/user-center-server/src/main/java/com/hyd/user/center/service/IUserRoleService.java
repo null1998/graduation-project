@@ -1,5 +1,6 @@
 package com.hyd.user.center.service;
 
+import com.hyd.user.center.entity.User;
 import com.hyd.user.center.entity.UserRole;
 
 import java.util.List;
@@ -41,4 +42,6 @@ public interface IUserRoleService {
      * @return 用户角色关系列表
      */
     List<UserRole> listByUserId(Long userId);
+
+
 }

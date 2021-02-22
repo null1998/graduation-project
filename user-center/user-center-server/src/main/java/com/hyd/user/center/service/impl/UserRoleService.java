@@ -4,9 +4,13 @@ import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.user.center.dao.UserRoleMapper;
+import com.hyd.user.center.entity.User;
 import com.hyd.user.center.entity.UserRole;
 import com.hyd.user.center.service.IUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +25,7 @@ public class UserRoleService implements IUserRoleService {
     private UserRoleMapper userRoleMapper;
     @Autowired
     private IdGenerator idGenerator;
+    @Caching(evict = {@CacheEvict(value = {"UserRoleService::listByUserId"},allEntries = true)})
     @Override
     public Long save(UserRole userRole) {
         if (userRole == null) {
@@ -31,7 +36,7 @@ public class UserRoleService implements IUserRoleService {
         userRoleMapper.insertSelective(userRole);
         return id;
     }
-
+    @Caching(evict = {@CacheEvict(value = {"UserRoleService::listByUserId"},allEntries = true)})
     @Override
     public void saveList(List<UserRole> userRoleList) {
         if (userRoleList == null) {
@@ -43,7 +48,7 @@ public class UserRoleService implements IUserRoleService {
         }
         userRoleMapper.insertMultiple(userRoleList);
     }
-
+    @Caching(evict = {@CacheEvict(value = {"UserRoleService::listByUserId"},key = "#userId")})
     @Override
     public void removeByUserId(Long userId) {
         if (userId == null) {
@@ -51,6 +56,7 @@ public class UserRoleService implements IUserRoleService {
         }
         userRoleMapper.removeByUserId(userId);
     }
+    @Caching(evict = {@CacheEvict(value = {"UserRoleService::listByUserId"},allEntries = true)})
     @Override
     public Integer removeByRoleId(Long roleId) {
         if (roleId == null) {
@@ -58,7 +64,7 @@ public class UserRoleService implements IUserRoleService {
         }
         return userRoleMapper.removeByRoleId(roleId);
     }
-
+    @Cacheable(value = "UserRoleService::listByUserId",key = "#userId")
     @Override
     public List<UserRole> listByUserId(Long userId) {
         if (userId == null) {
@@ -66,4 +72,6 @@ public class UserRoleService implements IUserRoleService {
         }
         return userRoleMapper.listByUserId(userId);
     }
+
+
 }

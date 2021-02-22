@@ -18,4 +18,5 @@ public interface UnitMapper extends UnitBaseMapper {
     default List<Unit> listUnitByParentId(Long parentId) {
         return this.select(c -> c.where(UnitDynamicSqlSupport.parentId, SqlBuilder.isEqualTo(parentId)));
     }
+
 }

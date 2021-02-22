@@ -24,7 +24,6 @@ public class TicketService implements ITicketService {
     private TicketBaseMapper ticketBaseMapper;
     @Autowired
     private IdGenerator idGenerator;
-    @CacheEvict(value = {"TicketService::getTicketById"},allEntries = true)
     @Override
     public Long save(Ticket ticket) {
         if (ticket == null) {
@@ -36,7 +35,7 @@ public class TicketService implements ITicketService {
         ticketBaseMapper.insertSelective(ticket);
         return id;
     }
-    @CacheEvict(value = {"TicketService::getTicketById"},key="#ticket.id")
+    @CacheEvict(value = {"TicketService::getTicketById"},key="id")
     @Override
     public Boolean remove(Long id) {
         if (id == null) {

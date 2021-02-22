@@ -140,6 +140,10 @@ public class AuthorizationService implements IAuthorizationService {
         return permissions;
     }
     private boolean authorizationResult(List<Permission> permissionList, String url, String method) {
+        if (Objects.equals(method,"GET") && url != null && url.contains("/nontax/basedata")) {
+            // 查询基础数据都放行
+            return true;
+        }
         for (Permission permission : permissionList) {
             if (Objects.equals(permission.getMethod(), method)) {
                 final Pattern compile = compile("^https?:\\/\\/(?:[a-zA-Z0-9\\.:]*)([a-zA-Z\\/]*)(?:\\??[0-9]*)");

@@ -57,6 +57,12 @@ public class UnitController {
         List<Unit> unitList = unitService.listUnitByParentId(parentUnitId);
         return BeanUtil.copyList(unitList, UnitVO.class);
     }
+    @ApiLog
+    @GetMapping(value = "/all")
+    public List<UnitVO> listAll() {
+        List<Unit> unitList = unitService.listAll();
+        return BeanUtil.copyList(unitList, UnitVO.class);
+    }
 
     /**
      * 删除

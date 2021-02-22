@@ -40,7 +40,6 @@ public class ZoneService implements IZoneService {
     private UnitBaseMapper unitBaseMapper;
     @Autowired
     private IdGenerator idGenerator;
-    @Cacheable(value = {"ZoneService::getZoneById"},key = "#id")
     @Override
     public Zone getZoneById(Long id) {
         if (id == null) {
@@ -60,8 +59,7 @@ public class ZoneService implements IZoneService {
         }
         return zoneBaseMapper.select(c -> c.where(ZoneDynamicSqlSupport.parentId, SqlBuilder.isEqualTo(parentId)));
     }
-    @Caching(evict = {@CacheEvict(value = {"ZoneService::getZoneById"}, allEntries = true),
-            @CacheEvict(value = {"ZoneService::listZoneByParentId"}, allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"ZoneService::listZoneByParentId"}, allEntries = true)})
     @Override
     public Long save(Zone zone) {
         if (zone == null) {

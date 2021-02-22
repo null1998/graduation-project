@@ -41,6 +41,25 @@ public class UserDTO implements Serializable {
 
     private ArrayList<String> roleNameList;
 
+    private String confirmPassword;
+    private String unitName;
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
     public ArrayList<String> getRoleNameList() {
         return roleNameList;
     }
@@ -161,30 +180,6 @@ public class UserDTO implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserDTO userDTO = (UserDTO) o;
-        return Objects.equals(id, userDTO.id) &&
-                Objects.equals(username, userDTO.username) &&
-                Objects.equals(password, userDTO.password) &&
-                Objects.equals(avatar, userDTO.avatar) &&
-                Objects.equals(sex, userDTO.sex) &&
-                Objects.equals(birthday, userDTO.birthday) &&
-                Objects.equals(tel, userDTO.tel) &&
-                Objects.equals(email, userDTO.email) &&
-                Objects.equals(unitId, userDTO.unitId) &&
-                Objects.equals(version, userDTO.version) &&
-                Objects.equals(roleIdList, userDTO.roleIdList) &&
-                Objects.equals(roleNameList, userDTO.roleNameList);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, password, avatar, sex, birthday, tel, email, unitId, version, roleIdList, roleNameList);
-    }
-
-    @Override
     public String toString() {
         return "UserDTO{" +
                 "id=" + id +
@@ -199,6 +194,8 @@ public class UserDTO implements Serializable {
                 ", version=" + version +
                 ", roleIdList=" + roleIdList +
                 ", roleNameList=" + roleNameList +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", unitName='" + unitName + '\'' +
                 '}';
     }
 }

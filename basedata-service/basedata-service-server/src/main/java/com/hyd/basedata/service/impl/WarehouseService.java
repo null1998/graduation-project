@@ -30,7 +30,6 @@ public class WarehouseService implements IWarehouseService {
     private UnitBaseMapper unitBaseMapper;
     @Autowired
     private IdGenerator idGenerator;
-    @CacheEvict(value = {"WarehouseService::getWarehouseById"},allEntries = true)
     @Override
     public Long save(Warehouse warehouse) {
         if (warehouse == null) {

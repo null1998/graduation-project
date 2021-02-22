@@ -2,6 +2,8 @@ package com.hyd.user.center.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.hyd.basedata.entity.Unit;
+import com.hyd.basedata.service.IUnitService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.BeanUtil;
@@ -11,11 +13,13 @@ import com.hyd.user.center.dao.UserMapper;
 import com.hyd.user.center.entity.Role;
 import com.hyd.user.center.entity.User;
 import com.hyd.user.center.entity.UserRole;
+import com.hyd.user.center.entity.vo.UserVO;
 import com.hyd.user.center.service.IRoleService;
 import com.hyd.user.center.service.IUserRoleService;
 import com.hyd.user.center.service.IUserService;
 import com.hyd.user.center.util.PBKDF2Util;
 import com.hyd.user.center.web.dto.UserDTO;
+import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -43,7 +47,9 @@ public class UserService implements IUserService {
     private IUserRoleService userRoleService;
     @Autowired
     private IRoleService roleService;
-
+    @Autowired
+    private IUnitService unitService;
+    @Caching(evict = {@CacheEvict(value = {"UserService::listAll"}, allEntries = true)})
     @Override
     public Long save(User user) throws InvalidKeySpecException, NoSuchAlgorithmException {
         if (user == null) {
@@ -65,7 +71,7 @@ public class UserService implements IUserService {
 
     @Transactional
     @Caching(evict = {@CacheEvict(value = {"UserService::getById"}, key = "#id"),
-            @CacheEvict(value = {"UserService::getByUsername"}, allEntries = true)})
+            @CacheEvict(value = {"UserService::getByUsername","UserService::getUserInfo","UserService::listAll"}, allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -77,7 +83,8 @@ public class UserService implements IUserService {
     }
 
     @Caching(evict = {@CacheEvict(value = {"UserService::getById"}, key = "#user.id"),
-            @CacheEvict(value = {"UserService::getByUsername"}, key = "#user.username")})
+            @CacheEvict(value = {"UserService::getByUsername"}, key = "#user.username"),
+            @CacheEvict(value = {"UserService::getUserInfo","UserService::listAll"},allEntries = true)})
     @Override
     public Integer update(User user) throws InvalidKeySpecException, NoSuchAlgorithmException {
         if (user == null) {
@@ -140,7 +147,7 @@ public class UserService implements IUserService {
         }
         return new UserDTO();
     }
-
+    @Cacheable(value = {"UserService::getUserInfo"}, key = "#token")
     @Override
     public UserDTO getUserInfo(String token) {
         Long id = getIdFromToken(token);
@@ -160,6 +167,20 @@ public class UserService implements IUserService {
         UserDTO userDTO = BeanUtil.copy(user, UserDTO.class);
         userDTO.setRoleNameList(roleNameList);
         return userDTO;
+    }
+    @Cacheable(value = {"UserService::listAll"})
+    @Override
+    public List<UserDTO> listAll() {
+        List<User> userList = userMapper.select(QueryExpressionDSL::where);
+        List<UserDTO> userDTOList = BeanUtil.copyList(userList, UserDTO.class);
+        for (UserDTO userDTO : userDTOList) {
+            if (userDTO.getUnitId()!=null) {
+                Unit unit = unitService.getUnitById(userDTO.getUnitId());
+                userDTO.setUnitName(unit.getName());
+            }
+
+        }
+        return userDTOList;
     }
 
     private Long getIdFromToken(String token) {

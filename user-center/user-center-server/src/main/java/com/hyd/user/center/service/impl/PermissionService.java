@@ -43,7 +43,8 @@ public class PermissionService implements IPermissionService {
         permissionMapper.insertSelective(permission);
         return id;
     }
-    @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName","PermissionService::listPermission"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName","PermissionService::listPermission"},allEntries = true),
+            @CacheEvict(value = {"PermissionService::getById"},key = "#permission.id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -54,7 +55,8 @@ public class PermissionService implements IPermissionService {
         // 删除该权限
         return permissionMapper.deleteByPrimaryKey(id) == 1;
     }
-    @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName","PermissionService::listPermission"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName","PermissionService::listPermission"},allEntries = true),
+                        @CacheEvict(value = {"PermissionService::getById"},key = "#permission.id")})
     @Override
     public Integer update(Permission permission) {
         if (permission == null) {
@@ -80,7 +82,7 @@ public class PermissionService implements IPermissionService {
         List<Permission> permissionList = permissionMapper.listPermission(permission);
         return permissionList;
     }
-
+    @Cacheable(value = {"PermissionService::getById"},key = "#id")
     @Override
     public Permission getById(Long id) {
         if (id == null) {
