@@ -14,10 +14,10 @@ import java.util.List;
 public interface IUserService {
     /**
      * 保存
-     * @param user 用户
+     * @param userDTO 用户
      * @return 用户ID
      */
-    Long save(User user) throws InvalidKeySpecException, NoSuchAlgorithmException;
+    Long save(UserDTO userDTO) throws InvalidKeySpecException, NoSuchAlgorithmException;
 
     /**
      * 删除

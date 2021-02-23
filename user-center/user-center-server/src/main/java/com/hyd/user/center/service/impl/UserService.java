@@ -51,19 +51,32 @@ public class UserService implements IUserService {
     private IUnitService unitService;
     @Caching(evict = {@CacheEvict(value = {"UserService::listAll"}, allEntries = true)})
     @Override
-    public Long save(User user) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        if (user == null) {
+    public Long save(UserDTO userDTO) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        if (userDTO == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("用户为空"));
         }
-        Optional<User> optional = userMapper.getByUsername(user.getUsername());
+        Optional<User> optional = userMapper.getByUsername(userDTO.getUsername());
         if (!optional.isPresent()) {
             // 用户名必须唯一
             long id = idGenerator.snowflakeId();
+            ArrayList<Long> roleIdList = userDTO.getRoleIdList();
+            User user = BeanUtil.copy(userDTO, User.class);
             user.setId(id);
             // 使用pbkdf2加密
             String encryptedPassword = PBKDF2Util.getEncryptedPassword(user.getPassword());
             user.setPassword(encryptedPassword);
             userMapper.insertSelective(user);
+            if (roleIdList != null && !roleIdList.isEmpty()) {
+                List<UserRole> userRoleList = new ArrayList<>();
+                for (Long roleId : roleIdList) {
+                    UserRole userRole = new UserRole();
+                    userRole.setUserId(id);
+                    userRole.setRoleId(roleId);
+                    userRoleList.add(userRole);
+                }
+                userRoleService.saveList(userRoleList);
+            }
+
             return id;
         }
         return null;

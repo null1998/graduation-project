@@ -35,8 +35,7 @@ public class UserController {
     @ApiLog
     @PostMapping
     public Long save(@RequestBody UserDTO userDTO) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        User user = BeanUtil.copy(userDTO, User.class);
-        return userService.save(user);
+        return userService.save(userDTO);
     }
     /**
      * 删除

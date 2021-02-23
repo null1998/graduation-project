@@ -45,6 +45,7 @@ public class UserRoleService implements IUserRoleService {
         for (UserRole userRole : userRoleList) {
             long id = idGenerator.snowflakeId();
             userRole.setId(id);
+            userRole.setVersion(0L);
         }
         userRoleMapper.insertMultiple(userRoleList);
     }
