@@ -1,7 +1,8 @@
 package com.hyd.core.filter;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.hyd.common.util.TimeUtil;
+import com.hyd.common.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -35,21 +36,25 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
         String method = exchange.getRequest().getMethod().name();
         //跳过鉴权
         if (url.contains("user/login")||url.contains("/user/logout")) {
-            log.info("跳过鉴权"+url);
+            log.info(String.format("\n===>跳过鉴权%s %s",method,url));
             return chain.filter(exchange);
         }
         //获取token
         Object token = exchange.getRequest().getHeaders().get("accessToken") == null ? null : exchange.getRequest().getHeaders().get("accessToken").get(0);
         // 鉴权结果
         JSONObject resp = restTemplate.getForObject(String.format(AUTHORIZATION_URL,token,url,method), JSONObject.class);
-        log.info("鉴权结果"+resp);
         if (resp != null && resp.getJSONObject("head") != null) {
+            log.info("\n===>鉴权结果"+resp.toJSONString());
             JSONObject head = resp.getJSONObject("head");
             Integer code = head.getInteger("code");
             // 鉴权通过
             if (code != null && code == 0) {
-                // 如果发现有刷新的token则覆盖旧token
+                // 可能有刷新的token，放在响应头中方便前端刷新token
                 if (head.getString("accessToken") != null) {
+                    JSONObject parseToken = TokenUtil.parseToken(head.getString("accessToken"));
+                    log.info("\n===>token置于HTTP响应头中"
+                            +"\n===>有效期至"+ TimeUtil.getDateTimeOfTimestamp(parseToken.getJSONObject("payload").getLong("exp"))
+                            +"\n===>解析的token"+ parseToken.toJSONString());
                     ArrayList<String> list = new ArrayList<>();
                     list.add("accessToken");
                     // 服务端设置该字段，浏览器才能获取额外的头字段
@@ -59,7 +64,8 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
                 return chain.filter(exchange);
             }
         }
-
+        resp = resp == null ? new JSONObject():resp;
+        log.info("\n===>鉴权失败"+resp.toJSONString());
         // 设置头
         exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
         // 鉴权不通过，设置响应体为resp并返回

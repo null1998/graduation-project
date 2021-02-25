@@ -1,7 +1,7 @@
 package com.hyd.financial.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 
 public class PrintingPlanLimitDate implements Serializable {
@@ -12,10 +12,10 @@ public class PrintingPlanLimitDate implements Serializable {
     private Integer year;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
@@ -47,22 +47,22 @@ public class PrintingPlanLimitDate implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

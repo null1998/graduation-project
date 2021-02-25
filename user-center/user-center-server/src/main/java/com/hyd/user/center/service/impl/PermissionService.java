@@ -44,7 +44,7 @@ public class PermissionService implements IPermissionService {
         return id;
     }
     @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName","PermissionService::listPermission"},allEntries = true),
-            @CacheEvict(value = {"PermissionService::getById"},key = "#permission.id")})
+            @CacheEvict(value = {"PermissionService::getById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {

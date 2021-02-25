@@ -58,8 +58,8 @@ public interface PrintingPlanLimitDateBaseMapper {
     @Results(id="PrintingPlanLimitDateResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="year", property="year", jdbcType=JdbcType.INTEGER),
-        @Result(column="start_date", property="startDate", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="end_date", property="endDate", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="start_date", property="startDate", jdbcType=JdbcType.DATE),
+        @Result(column="end_date", property="endDate", jdbcType=JdbcType.DATE),
         @Result(column="unit_id", property="unitId", jdbcType=JdbcType.BIGINT),
         @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
     })

@@ -31,6 +31,6 @@ public class RoleQO extends BaseQO {
         return "RoleQO{" +
                 "name='" + name + '\'' +
                 ", type='" + type + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

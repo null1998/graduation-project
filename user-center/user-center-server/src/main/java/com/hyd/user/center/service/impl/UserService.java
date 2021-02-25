@@ -49,6 +49,8 @@ public class UserService implements IUserService {
     private IRoleService roleService;
     @Autowired
     private IUnitService unitService;
+    @Autowired
+    private IUserService userService;
     @Caching(evict = {@CacheEvict(value = {"UserService::listAll"}, allEntries = true)})
     @Override
     public Long save(UserDTO userDTO) throws InvalidKeySpecException, NoSuchAlgorithmException {
@@ -141,7 +143,7 @@ public class UserService implements IUserService {
         if (username == null || password == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("账号密码为空"));
         }
-        User user = getByUsername(username);
+        User user = userService.getByUsername(username);
         // 将待验证密码加密后与数据库已加密密码比较
         if (Boolean.TRUE.equals(PBKDF2Util.authenticate(password, user.getPassword()))) {
             // 校验通过，获取用户角色列表
@@ -167,7 +169,7 @@ public class UserService implements IUserService {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
         }
-        User user = getById(id);
+        User user = userService.getById(id);
         if (user == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("未查询到相应的用户记录"));
         }

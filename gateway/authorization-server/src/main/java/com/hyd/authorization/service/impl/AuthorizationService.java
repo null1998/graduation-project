@@ -3,6 +3,7 @@ package com.hyd.authorization.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Strings;
 import com.hyd.authorization.service.IAuthorizationService;
 import com.hyd.common.core.aop.CommonResponse;
 import com.hyd.common.core.util.CommonResponseUtils;
@@ -37,6 +38,7 @@ public class AuthorizationService implements IAuthorizationService {
         if (token == null || StringUtils.equals(token,"null") || url == null) {
             return CommonResponseUtils.failed("Internal Server Error");
         }
+        log.info(String.format("\n===>请求接口%s %s",method,url)+"\n===>待校验token"+token);
         if (TokenUtil.tokenValid(token)) {
             // token合法
             // 分解token为header，playLoad，signature
@@ -55,12 +57,11 @@ public class AuthorizationService implements IAuthorizationService {
                     token = resp.getJSONObject("head").getString("accessToken");
                     if (code == 0 && token != null && TokenUtil.tokenValid(token)) {
                         // 刷新成功
-                        log.info("刷新token成功");
                         // 负载更新
                         playLoad = JSON.parseObject(TokenUtil.decryptToken(token.split("\\.")[1]).get(0));
                     } else {
-                        log.info("重新登录");
-                        return CommonResponseUtils.failedWithMsg("50008","重新登录");
+                        log.info("\n===>重新登录[刷新token失败]");
+                        return CommonResponseUtils.failedWithMsg("50008","重新登录[刷新token失败]");
                     }
                 }
             }
@@ -70,13 +71,13 @@ public class AuthorizationService implements IAuthorizationService {
             List<Permission> permissionList = listPermission(roleIdsJson);
             // 一一判断直到判断出是否有对应权限
             boolean authorizationResult = authorizationResult(permissionList, url, method);
-            log.info(String.format("%s---%s鉴权结果%s",method,url,authorizationResult));
+            log.info(String.format("\n===>请求接口%s %s",method,url)+"\n===>鉴权结果"+authorizationResult);
             // 每次鉴权后把token放在head中，方便前端更新
             return authorizationResult ? CommonResponseUtils.successWithToken(token) : CommonResponseUtils.failedWithMsg("50000","没有权限");
         }
-        log.info("重新登录");
+        log.info("\n===>重新登录[token不合法]"+"\n===>尝试解析不合法token"+TokenUtil.parseToken(token).toJSONString());
         // 不合法
-        return CommonResponseUtils.failedWithMsg("50008","重新登录");
+        return CommonResponseUtils.failedWithMsg("50008","重新登录[token不合法]");
 
     }
     private static class Permission {
@@ -140,22 +141,40 @@ public class AuthorizationService implements IAuthorizationService {
         return permissions;
     }
     private boolean authorizationResult(List<Permission> permissionList, String url, String method) {
+        if (!whiteList(url,method)) {
+            // 如果不在白名单中，则开始鉴权
+            for (Permission permission : permissionList) {
+                if (Objects.equals(permission.getMethod(), method)) {
+                    final Pattern compile = compile("^https?:\\/\\/(?:[a-zA-Z0-9\\.:]*)([a-zA-Z\\/]*)(?:\\??[0-9]*)");
+                    Matcher matcher = compile.matcher(url);
+                    if (matcher.find() && Objects.equals(permission.getUrl(), matcher.group(1))) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 白名单，部分api可以开放给所有角色，无需鉴权
+     * @param url
+     * @param method
+     * @return
+     */
+    private boolean whiteList(String url, String method) {
         if (Objects.equals(method,"GET") && url != null && url.contains("/nontax/basedata")) {
             // 查询基础数据都放行
             return true;
         }
-        for (Permission permission : permissionList) {
-            if (Objects.equals(permission.getMethod(), method)) {
-                final Pattern compile = compile("^https?:\\/\\/(?:[a-zA-Z0-9\\.:]*)([a-zA-Z\\/]*)(?:\\??[0-9]*)");
-                Matcher matcher = compile.matcher(url);
-                if (matcher.find() && Objects.equals(permission.getUrl(), matcher.group(1))) {
-                    return true;
-                }
-            }
+        if (Objects.equals(method, "GET") && url != null && url.contains("/user/center/user/info")) {
+            // 查询用户信息的放行
+            return true;
         }
         return false;
     }
-
 
 
 

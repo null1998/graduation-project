@@ -32,6 +32,6 @@ public class PermissionQO extends BaseQO {
         return "PermissionQO{" +
                 "name='" + name + '\'' +
                 ", action='" + action + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

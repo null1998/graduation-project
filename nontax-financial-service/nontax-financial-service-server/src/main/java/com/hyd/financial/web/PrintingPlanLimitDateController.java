@@ -39,7 +39,7 @@ public class PrintingPlanLimitDateController {
      */
     @ApiLog
     @DeleteMapping("/{id}")
-    Boolean remove(@PathVariable("id") Long id) {
+    public Boolean remove(@PathVariable("id") Long id) {
         return printingPlanLimitDateService.remove(id);
     }
 
@@ -50,8 +50,18 @@ public class PrintingPlanLimitDateController {
      */
     @ApiLog
     @GetMapping("/{unitId}")
-    List<PrintingPlanLimitDateVO> listByUnitId(@PathVariable("unitId") Long unitId) {
+    public List<PrintingPlanLimitDateVO> listByUnitId(@PathVariable("unitId") Long unitId) {
         List<PrintingPlanLimitDate> printingPlanLimitDateList = printingPlanLimitDateService.listByUnitId(unitId);
         return BeanUtil.copyList(printingPlanLimitDateList, PrintingPlanLimitDateVO.class);
+    }
+    /**
+     * 根据单位ID查询该单位是否在提交印制计划的时间范围内
+     * @param unitId 单位ID
+     * @return 是否在时间范围内
+     */
+    @ApiLog
+    @GetMapping("/in/range/{unitId}")
+    public Boolean inRangeOfLimitDate(@PathVariable("unitId")Long unitId) {
+        return printingPlanLimitDateService.inRangeOfLimitDate(unitId);
     }
 }

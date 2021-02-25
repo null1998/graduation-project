@@ -26,7 +26,9 @@ public class UnitService implements IUnitService {
     private UnitMapper unitMapper;
     @Autowired
     private IdGenerator idGenerator;
-    @Caching(evict = {@CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll"}, allEntries = true)})
+    @Autowired
+    private IUnitService unitService;
+    @Caching(evict = {@CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll","UnitService::getByCode"}, allEntries = true)})
     @Override
     public Long save(Unit unit) {
         if (unit == null) {
@@ -57,8 +59,8 @@ public class UnitService implements IUnitService {
         }
         return unitMapper.listUnitByParentId(parentId);
     }
-    @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById"}, key="#id"),
-            @CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll"}, allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById","UnitService::getProvinceUnitByChildId"}, key="#id"),
+            @CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll","UnitService::getByCode"}, allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -66,8 +68,9 @@ public class UnitService implements IUnitService {
         }
         return unitMapper.deleteByPrimaryKey(id) == 1;
     }
-    @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById"}, key="#unit.id"),
-            @CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll"}, allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById","UnitService::getProvinceUnitByChildId"}, key="#unit.id"),
+            @CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll"}, allEntries = true),
+            @CacheEvict(value = {"UnitService::getByCode"},key = "unit.code")})
     @Override
     public Integer update(Unit unit) {
         if (unit == null) {
@@ -79,6 +82,29 @@ public class UnitService implements IUnitService {
     @Override
     public List<Unit> listAll() {
         return unitMapper.select(QueryExpressionDSL::where);
+    }
+    @Cacheable(value = {"UnitService::getByCode"},key = "#code")
+    @Override
+    public Unit getByCode(String code) {
+        if (code == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("编码为空"));
+        }
+        return unitMapper.getByCode(code);
+    }
+    @Cacheable(value = {"UnitService::getProvinceUnitByChildUnitId"},key = "#id")
+    @Override
+    public Unit getProvinceUnitByChildId(Long id) {
+        if (id == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
+        }
+        // 查询下级单位
+        Unit unit = unitService.getUnitById(id);
+        if (unit.getCode() != null && unit.getCode().length() >= 4) {
+            // 该下级单位对应的省级单位编码
+            String provinceCode = unit.getCode().substring(0, 4);
+            return unitService.getByCode(provinceCode);
+        }
+        return new Unit();
     }
 
 }

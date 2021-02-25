@@ -33,6 +33,8 @@ public class RolePermissionService implements IRolePermissionService {
     private IRoleService roleService;
     @Autowired
     private IRoleRelateService roleRelateService;
+    @Autowired
+    private IRolePermissionService rolePermissionService;
 
     @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId","RolePermissionService::listByRoleIdList"},allEntries = true)})
     @Override
@@ -103,7 +105,7 @@ public class RolePermissionService implements IRolePermissionService {
         }
         if (!advancedRoleIds.isEmpty()) {
             // 高级角色递归查询
-            rolePermissions.addAll(listByRoleIdList(advancedRoleIds));
+            rolePermissions.addAll(rolePermissionService.listByRoleIdList(advancedRoleIds));
         }
         return rolePermissions;
     }

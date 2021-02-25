@@ -4,6 +4,7 @@ import com.hyd.basedata.entity.Unit;
 import org.mybatis.dynamic.sql.SqlBuilder;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author yanduohuang
@@ -17,6 +18,15 @@ public interface UnitMapper extends UnitBaseMapper {
      */
     default List<Unit> listUnitByParentId(Long parentId) {
         return this.select(c -> c.where(UnitDynamicSqlSupport.parentId, SqlBuilder.isEqualTo(parentId)));
+    }
+    /**
+     * 根据单位编码查询单位
+     * @param code 单位编码
+     * @return 单位
+     */
+    default Unit getByCode(String code){
+        Optional<Unit> optional = this.selectOne(c -> c.where(UnitDynamicSqlSupport.code, SqlBuilder.isEqualTo(code)));
+        return optional.orElseGet(Unit::new);
     }
 
 }

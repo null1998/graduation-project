@@ -2,6 +2,7 @@ package com.hyd.financial.entity.vo;
 
 import javax.annotation.Generated;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class PrintingPlanLimitDateVO implements Serializable {
@@ -9,9 +10,9 @@ public class PrintingPlanLimitDateVO implements Serializable {
 
     private Integer year;
 
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     private Long version;
 
@@ -31,19 +32,19 @@ public class PrintingPlanLimitDateVO implements Serializable {
         this.year = year;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

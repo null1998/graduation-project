@@ -51,4 +51,17 @@ public interface IUnitService {
      */
     List<Unit> listAll();
 
+    /**
+     * 根据单位编码查询单位
+     * @param code 单位编码
+     * @return 单位
+     */
+    Unit getByCode(String code);
+    /**
+     * 根据下级单位ID查询该单位对应的省级单位
+     * @param id 单位ID
+     * @return 省级单位
+     */
+    Unit getProvinceUnitByChildId(Long id);
+
 }
