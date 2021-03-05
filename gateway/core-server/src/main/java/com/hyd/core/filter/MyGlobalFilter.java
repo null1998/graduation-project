@@ -35,7 +35,7 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
         url = url.split("\\?")[0];
         String method = exchange.getRequest().getMethod().name();
         //跳过鉴权
-        if (url.contains("user/login")||url.contains("/user/logout")) {
+        if (url.contains("user/login")||url.contains("/user/op/logout")) {
             log.info(String.format("\n===>跳过鉴权%s %s",method,url));
             return chain.filter(exchange);
         }

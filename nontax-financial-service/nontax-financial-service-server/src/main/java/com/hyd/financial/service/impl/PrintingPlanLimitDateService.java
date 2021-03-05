@@ -41,10 +41,14 @@ public class PrintingPlanLimitDateService implements IPrintingPlanLimitDateServi
         if (printingPlanLimitDate == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("印制计划时间限制为空"));
         }
-        long id = idGenerator.snowflakeId();
-        printingPlanLimitDate.setId(id);
-        printingPlanLimitDateMapper.insertSelective(printingPlanLimitDate);
-        return id;
+        PrintingPlanLimitDate find = printingPlanLimitDateMapper.getByUnitIdAndYear(printingPlanLimitDate.getUnitId(), printingPlanLimitDate.getYear());
+        if (find == null) {
+            long id = idGenerator.snowflakeId();
+            printingPlanLimitDate.setId(id);
+            printingPlanLimitDateMapper.insertSelective(printingPlanLimitDate);
+            return id;
+        }
+        return null;
     }
     @Caching(evict = {@CacheEvict(value = {"PrintingPlanLimitDateService::listByUnitId","PrintingPlanLimitDateService::listByChildUnitId"},allEntries = true)})
     @Override

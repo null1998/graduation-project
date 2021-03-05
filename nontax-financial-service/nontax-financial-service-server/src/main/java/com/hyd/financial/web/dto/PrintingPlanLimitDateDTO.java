@@ -1,5 +1,8 @@
 package com.hyd.financial.web.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
 import javax.annotation.Generated;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,9 +17,11 @@ public class PrintingPlanLimitDateDTO implements Serializable {
     private Integer year;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate startDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")

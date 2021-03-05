@@ -76,7 +76,8 @@ public class RolePermissionService implements IRolePermissionService {
         }
         return rolePermissionMapper.listByRoleId(roleId);
     }
-    @Cacheable(value = {"RolePermissionService::listByRoleIdList"},key = "#roleIdList.toString()")
+    // 这个缓存有问题
+    //@Cacheable(value = {"RolePermissionService::listByRoleIdList"},key = "#roleIdList.toString()")
     @Override
     public List<RolePermission> listByRoleIdList(List<Long> roleIdList) {
         if (roleIdList == null) {

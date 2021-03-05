@@ -20,9 +20,9 @@ spring:
         - id: authentication-server-disable
           uri: lb://authentication-server
           predicates:
-            - Path=/user/center/user/logout
+            - Path=/user/op/logout
           filters:
-            - RewritePath=/user/center/user/logout,/authenticate/disable
+            - RewritePath=/user/op/logout,/authenticate/disable
 #        转发至用户中心
         - id: user-center-server
           uri: lb://user-center-server
@@ -33,5 +33,10 @@ spring:
           uri: lb://basedata-service-server
           predicates:
             - Path=/nontax/basedata/**
+#        财政票据平台
+        - id: nontax-financial-service-server
+          uri: lb://nontax-financial-service-server
+          predicates:
+            - Path=/nontax/financial/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin

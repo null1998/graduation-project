@@ -71,7 +71,6 @@ public class RoleController {
      * @param roleQO 条件
      * @return 角色列表
      */
-    @PageHelper
     @ApiLog
     @GetMapping(value = "/list")
     public List<RoleVO> listRole(RoleQO roleQO) {
