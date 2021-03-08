@@ -2,6 +2,8 @@ package com.hyd.basedata.service;
 
 import com.hyd.basedata.entity.Ticket;
 
+import java.util.List;
+
 /**
  * @author yanduohuang
  * @date 2021/2/1 15:12
@@ -34,4 +36,10 @@ public interface ITicketService {
      * @return 票据
      */
     Ticket getTicketById(Long id);
+
+    /**
+     * 查询全部票据
+     * @return
+     */
+    List<Ticket> listAll();
 }

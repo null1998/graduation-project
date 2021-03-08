@@ -18,6 +18,13 @@ public interface IPrintingPlanTicketService {
     Long save(PrintingPlanTicket printingPlanTicket);
 
     /**
+     * 批量保存
+     * @param printingPlanTicketList
+     * @return
+     */
+    Integer saveList(List<PrintingPlanTicket> printingPlanTicketList);
+
+    /**
      * 根据子单位的印制计划列表汇总生成本单位的印制计划列表
      * @param printingPlanList 子单位的印制计划列表
      * @return 生成的ID
@@ -37,4 +44,6 @@ public interface IPrintingPlanTicketService {
      * @return 印制计划票据列表
      */
     List<PrintingPlanTicket> listByPrintingPlanId(Long printingPlanId);
+
+
 }

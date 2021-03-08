@@ -36,6 +36,17 @@ public class PrintingPlanTicketController {
     }
 
     /**
+     * 批量保存
+     * @param printingPlanTicketDTOList
+     * @return
+     */
+    @ApiLog
+    @PostMapping("/all")
+    public Integer saveList(@RequestBody List<PrintingPlanTicketDTO> printingPlanTicketDTOList) {
+        List<PrintingPlanTicket> printingPlanTicketList = BeanUtil.copyList(printingPlanTicketDTOList, PrintingPlanTicket.class);
+        return printingPlanTicketService.saveList(printingPlanTicketList);
+    }
+    /**
      * 根据子单位的印制计划列表汇总生成本单位的印制计划列表
      * @param printingPlanDTOList 子单位的印制计划列表
      * @return 生成的ID

@@ -9,6 +9,8 @@ import com.hyd.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author yanduohuang
  * @date 2021/2/1 15:58
@@ -65,5 +67,11 @@ public class TicketController {
     public TicketVO getTicketById(@PathVariable(name = "id") Long id) {
         Ticket ticket = ticketService.getTicketById(id);
         return BeanUtil.copy(ticket, TicketVO.class);
+    }
+    @ApiLog
+    @GetMapping(value = "/all")
+    public List<TicketVO> listAll() {
+        List<Ticket> ticketList = ticketService.listAll();
+        return BeanUtil.copyList(ticketList, TicketVO.class);
     }
 }

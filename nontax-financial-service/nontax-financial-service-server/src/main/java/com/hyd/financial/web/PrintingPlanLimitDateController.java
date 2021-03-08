@@ -44,6 +44,17 @@ public class PrintingPlanLimitDateController {
     }
 
     /**
+     * 更新
+     * @param printingPlanLimitDateDTO
+     * @return 更新行数
+     */
+    @ApiLog
+    @PutMapping
+    public Integer update(@RequestBody PrintingPlanLimitDateDTO printingPlanLimitDateDTO) {
+        PrintingPlanLimitDate printingPlanLimitDate = BeanUtil.copy(printingPlanLimitDateDTO, PrintingPlanLimitDate.class);
+        return printingPlanLimitDateService.update(printingPlanLimitDate);
+    }
+    /**
      * 根据单位ID查询历年印制计划时间限制
      * @param unitId 单位ID
      * @return 历年印制计划时间限制

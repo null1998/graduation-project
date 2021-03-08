@@ -42,6 +42,19 @@ public class PrintingPlanTicketService implements IPrintingPlanTicketService {
         printingPlanTicketMapper.insertSelective(printingPlanTicket);
         return id;
     }
+    @Caching(evict = {@CacheEvict(value = {"PrintingPlanTicketService::listByPrintingPlanId"},key = "#printingPlanTicket.printingPlanId")})
+    @Override
+    public Integer saveList(List<PrintingPlanTicket> printingPlanTicketList) {
+        if (printingPlanTicketList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("印制计划票据列表为空"));
+        }
+        printingPlanTicketList.forEach(e->{
+            e.setId(idGenerator.snowflakeId());
+            e.setVersion(0L);
+        });
+        return printingPlanTicketMapper.insertMultiple(printingPlanTicketList);
+    }
+
     @Caching(evict = {@CacheEvict(value = {"PrintingPlanTicketService::listByPrintingPlanId"},allEntries = true)})
     @Override
     public Long saveByChildUnitPrintingPlanList(List<PrintingPlan> printingPlanList) {

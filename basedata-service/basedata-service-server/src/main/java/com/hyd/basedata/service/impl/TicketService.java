@@ -7,11 +7,14 @@ import com.hyd.basedata.util.MnemonicUtil;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.IdGenerator;
+import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -35,7 +38,9 @@ public class TicketService implements ITicketService {
         ticketBaseMapper.insertSelective(ticket);
         return id;
     }
-    @CacheEvict(value = {"TicketService::getTicketById"},key="id")
+    @Caching(evict = {@CacheEvict(value = {"TicketService::getTicketById"},key="id"),
+            @CacheEvict(value = {"TicketService::listAll"},allEntries = true)})
+
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -43,7 +48,8 @@ public class TicketService implements ITicketService {
         }
         return ticketBaseMapper.deleteByPrimaryKey(id) == 1;
     }
-    @CacheEvict(value = {"TicketService::getTicketById"},key="#ticket.id")
+    @Caching(evict = {@CacheEvict(value = {"TicketService::getTicketById"},key="#ticket.id"),
+            @CacheEvict(value = {"TicketService::listAll"},allEntries = true)})
     @Override
     public Integer update(Ticket ticket) {
         if (ticket == null) {
@@ -62,5 +68,10 @@ public class TicketService implements ITicketService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("未查询到相应的票据记录"));
         }
         return optional.get();
+    }
+    @Cacheable(value = {"TicketService::listAll"})
+    @Override
+    public List<Ticket> listAll() {
+        return ticketBaseMapper.select(QueryExpressionDSL::where);
     }
 }

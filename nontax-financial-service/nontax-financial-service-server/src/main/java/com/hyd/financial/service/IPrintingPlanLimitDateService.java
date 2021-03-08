@@ -11,7 +11,7 @@ import java.util.List;
 public interface IPrintingPlanLimitDateService {
     /**
      * 保存
-     * @param printingPlanLimitDate 印制计划限制日期
+     * @param printingPlanLimitDate 印制计划上报日期
      * @return 生成的ID
      */
     Long save(PrintingPlanLimitDate printingPlanLimitDate);
@@ -22,6 +22,13 @@ public interface IPrintingPlanLimitDateService {
      * @return 是否删除成功
      */
     Boolean remove(Long id);
+
+    /**
+     * 更新
+     * @param printingPlanLimitDate 印制计划上报日期
+     * @return 更新行数
+     */
+    Integer update(PrintingPlanLimitDate printingPlanLimitDate);
 
     /**
      * 根据单位ID查询历年印制计划时间限制

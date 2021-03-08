@@ -39,7 +39,7 @@ public class PrintingPlanController {
      */
     @ApiLog
     @DeleteMapping("/{id}")
-    public Boolean removeById(@PathVariable("unitId") Long id) {
+    public Boolean removeById(@PathVariable("id") Long id) {
         return printingPlanService.removeById(id);
     }
     /**

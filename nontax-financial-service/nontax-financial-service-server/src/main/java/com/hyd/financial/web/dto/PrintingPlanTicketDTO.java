@@ -164,12 +164,5 @@ public class PrintingPlanTicketDTO implements Serializable {
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         return result;
     }
-
-    public PrintingPlanTicketDTO(Long ticketId, Long theFirstSeason, Long theSecondSeason, Long theThirdSeason, Long theFourthSeason) {
-        this.ticketId = ticketId;
-        this.theFirstSeason = theFirstSeason;
-        this.theSecondSeason = theSecondSeason;
-        this.theThirdSeason = theThirdSeason;
-        this.theFourthSeason = theFourthSeason;
-    }
+    
 }

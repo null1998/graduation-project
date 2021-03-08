@@ -41,6 +41,9 @@ public class PrintingPlanService implements IPrintingPlanService {
         }
         long id = idGenerator.snowflakeId();
         printingPlan.setId(id);
+        long orderNumber = idGenerator.snowflakeId();
+        printingPlan.setOrderNumber(orderNumber);
+        printingPlan.setStatus(0);
         printingPlanMapper.insertSelective(printingPlan);
         return id;
     }

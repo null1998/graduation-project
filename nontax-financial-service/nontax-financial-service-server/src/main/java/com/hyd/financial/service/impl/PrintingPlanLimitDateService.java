@@ -58,6 +58,15 @@ public class PrintingPlanLimitDateService implements IPrintingPlanLimitDateServi
         }
         return printingPlanLimitDateMapper.deleteByPrimaryKey(id) == 1;
     }
+    @Caching(evict = {@CacheEvict(value = {"PrintingPlanLimitDateService::listByUnitId","PrintingPlanLimitDateService::listByChildUnitId"},allEntries = true)})
+    @Override
+    public Integer update(PrintingPlanLimitDate printingPlanLimitDate) {
+        if (printingPlanLimitDate == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("印制计划时间限制为空"));
+        }
+        return printingPlanLimitDateMapper.updateByPrimaryKeySelective(printingPlanLimitDate);
+    }
+
     @Cacheable(value = {"PrintingPlanLimitDateService::listByUnitId"},key = "#unitId")
     @Override
     public List<PrintingPlanLimitDate> listByUnitId(Long unitId) {
