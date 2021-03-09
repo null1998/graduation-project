@@ -93,6 +93,15 @@ public class PrintingPlanTicketService implements IPrintingPlanTicketService {
         }
         return printingPlanTicketMapper.deleteByPrimaryKey(id) == 1;
     }
+    @Caching(evict = {@CacheEvict(value = {"PrintingPlanTicketService::listByPrintingPlanId"},allEntries = true)})
+    @Override
+    public Integer update(PrintingPlanTicket printingPlanTicket) {
+        if (printingPlanTicket == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("印制计划票据为空"));
+        }
+        return printingPlanTicketMapper.updateByPrimaryKeySelective(printingPlanTicket);
+    }
+
     @Cacheable(value = {"PrintingPlanTicketService::listByPrintingPlanId"},key = "#printingPlanId")
     @Override
     public List<PrintingPlanTicket> listByPrintingPlanId(Long printingPlanId) {

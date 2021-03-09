@@ -6,8 +6,10 @@ import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.PrintingPlanMapper;
 import com.hyd.financial.entity.PrintingPlan;
 import com.hyd.financial.entity.PrintingPlanLimitDate;
+import com.hyd.financial.entity.PrintingPlanTicket;
 import com.hyd.financial.service.IPrintingPlanLimitDateService;
 import com.hyd.financial.service.IPrintingPlanService;
+import com.hyd.financial.service.IPrintingPlanTicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -31,6 +33,8 @@ public class PrintingPlanService implements IPrintingPlanService {
     private IPrintingPlanLimitDateService printingPlanLimitDateService;
     @Autowired
     private IPrintingPlanService printingPlanService;
+    @Autowired
+    private IPrintingPlanTicketService printingPlanTicketService;
 
     @Caching(evict = {@CacheEvict(value = {"PrintingPlanService::listByParentUnitIdAndStatusAndYear",
             "PrintingPlanService::listByUnitId"},allEntries = true)})
@@ -49,16 +53,22 @@ public class PrintingPlanService implements IPrintingPlanService {
     }
 
     @Caching(evict = {@CacheEvict(value = {"PrintingPlanService::listByParentUnitIdAndStatusAndYear",
-            "PrintingPlanService::listByUnitId"},allEntries = true)})
+            "PrintingPlanService::listByUnitId"},allEntries = true),
+            @CacheEvict(value = {"PrintingPlanService::getById"},key = "#id")})
     @Override
     public Boolean removeById(Long id) {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
         }
+        List<PrintingPlanTicket> printingPlanTicketList = printingPlanTicketService.listByPrintingPlanId(id);
+        for (PrintingPlanTicket printingPlanTicket : printingPlanTicketList) {
+            printingPlanTicketService.removeById(printingPlanTicket.getId());
+        }
         return printingPlanMapper.deleteByPrimaryKey(id) == 1;
     }
     @Caching(evict = {@CacheEvict(value = {"PrintingPlanService::listByParentUnitIdAndStatusAndYear",
-            "PrintingPlanService::listByUnitId"},allEntries = true)})
+            "PrintingPlanService::listByUnitId"},allEntries = true),
+            @CacheEvict(value = {"PrintingPlanService::getById"},key = "#printingPlan.id")})
     @Override
     public Integer update(PrintingPlan printingPlan) {
         if (printingPlan == null) {
@@ -66,6 +76,16 @@ public class PrintingPlanService implements IPrintingPlanService {
         }
         return printingPlanMapper.updateByPrimaryKeySelective(printingPlan);
     }
+    @Cacheable(value = {"PrintingPlanService::getById"},key = "#id")
+    @Override
+    public PrintingPlan getById(Long id) {
+        if (id == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
+        }
+        Optional<PrintingPlan> optional = printingPlanMapper.selectByPrimaryKey(id);
+        return optional.orElseGet(PrintingPlan::new);
+    }
+
     @Cacheable(value = {"PrintingPlanService::listByParentUnitIdAndStatusAndYear"}, key = "#parentUnitId+'&&'+#printingPlanStatus+'&&'+#year")
     @Override
     public List<PrintingPlan> listByParentUnitIdAndStatusAndYear(Long parentUnitId, Integer printingPlanStatus, Integer year) {

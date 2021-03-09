@@ -31,6 +31,12 @@ public interface IPrintingPlanService {
     Integer update(PrintingPlan printingPlan);
 
     /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    PrintingPlan getById(Long id);
+    /**
      * 根据父单位ID,印制计划状态,年度，查询子单位的印制计划列表
      * @param parentUnitId 父单位ID
      * @param printingPlanStatus 印制计划状态

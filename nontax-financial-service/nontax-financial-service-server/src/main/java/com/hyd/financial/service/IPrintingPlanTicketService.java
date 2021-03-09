@@ -39,6 +39,12 @@ public interface IPrintingPlanTicketService {
     Boolean removeById(Long id);
 
     /**
+     * 更新
+     * @param printingPlanTicket 印制计划票据
+     * @return
+     */
+    Integer update(PrintingPlanTicket printingPlanTicket);
+    /**
      * 根据印制计划ID查询印制计划票据列表
      * @param printingPlanId 印制计划ID
      * @return 印制计划票据列表

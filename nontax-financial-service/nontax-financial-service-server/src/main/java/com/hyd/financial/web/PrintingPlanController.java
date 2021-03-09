@@ -67,6 +67,17 @@ public class PrintingPlanController {
     }
 
     /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    @ApiLog
+    @GetMapping("/{id}")
+    public PrintingPlanVO getById(@PathVariable("id") Long id) {
+        PrintingPlan printingPlan = printingPlanService.getById(id);
+        return BeanUtil.copy(printingPlan, PrintingPlanVO.class);
+    }
+    /**
      * 根据父单位ID,印制计划状态,年度，查询子单位的印制计划列表
      * @param parentUnitId 父单位ID
      * @param printingPlanStatus 印制计划状态

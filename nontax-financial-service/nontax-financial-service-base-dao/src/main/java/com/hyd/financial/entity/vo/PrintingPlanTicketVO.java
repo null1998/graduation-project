@@ -164,7 +164,7 @@ public class PrintingPlanTicketVO implements Serializable {
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         return result;
     }
-
+    public PrintingPlanTicketVO(){}
     public PrintingPlanTicketVO(Long ticketId, Long theFirstSeason, Long theSecondSeason, Long theThirdSeason, Long theFourthSeason) {
         this.ticketId = ticketId;
         this.theFirstSeason = theFirstSeason;

@@ -68,7 +68,11 @@ public class PrintingPlanTicketController {
     public Boolean removeById(@PathVariable("id") Long id) {
         return printingPlanTicketService.removeById(id);
     }
-
+    @ApiLog
+    @PutMapping
+    public Integer update(@RequestBody PrintingPlanTicket printingPlanTicket) {
+        return printingPlanTicketService.update(printingPlanTicket);
+    }
     /**
      * 根据印制计划ID查询印制计划票据列表
      * @param printingPlanId 印制计划ID
