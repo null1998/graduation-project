@@ -1,12 +1,15 @@
 package com.hyd.financial.service.impl;
 
+import com.hyd.basedata.service.ITicketService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
+import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.PrintingPlanTicketMapper;
 import com.hyd.financial.entity.PrintingPlan;
 import com.hyd.financial.entity.PrintingPlanTicket;
 import com.hyd.financial.service.IPrintingPlanTicketService;
+import com.hyd.financial.web.dto.PrintingPlanTicketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -30,6 +33,8 @@ public class PrintingPlanTicketService implements IPrintingPlanTicketService {
     private PrintingPlanTicketMapper printingPlanTicketMapper;
     @Autowired
     private IPrintingPlanTicketService printingPlanTicketService;
+    @Autowired
+    private ITicketService ticketService;
 
     @Caching(evict = {@CacheEvict(value = {"PrintingPlanTicketService::listByPrintingPlanId"},key = "#printingPlanTicket.printingPlanId")})
     @Override
@@ -65,7 +70,7 @@ public class PrintingPlanTicketService implements IPrintingPlanTicketService {
         List<PrintingPlanTicket> printingPlanTicketList = new LinkedList<>();
         // 根据下级的印制计划单查询出每种票据的计划数量
         for (PrintingPlan printingPlan : printingPlanList) {
-            printingPlanTicketList.addAll(printingPlanTicketService.listByPrintingPlanId(printingPlan.getId()));
+            printingPlanTicketList.addAll(BeanUtil.copyList(printingPlanTicketService.listByPrintingPlanId(printingPlan.getId()),PrintingPlanTicket.class));
         }
         // 根据票据分类
         Map<Long, List<PrintingPlanTicket>> map = printingPlanTicketList.stream().collect(Collectors.groupingBy(PrintingPlanTicket::getTicketId));
@@ -104,10 +109,13 @@ public class PrintingPlanTicketService implements IPrintingPlanTicketService {
 
     @Cacheable(value = {"PrintingPlanTicketService::listByPrintingPlanId"},key = "#printingPlanId")
     @Override
-    public List<PrintingPlanTicket> listByPrintingPlanId(Long printingPlanId) {
+    public List<PrintingPlanTicketDTO> listByPrintingPlanId(Long printingPlanId) {
         if (printingPlanId == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("印制计划ID为空"));
         }
-        return printingPlanTicketMapper.listByPrintingPlanId(printingPlanId);
+        List<PrintingPlanTicket> printingPlanTicketList = printingPlanTicketMapper.listByPrintingPlanId(printingPlanId);
+        List<PrintingPlanTicketDTO> printingPlanTicketDTOList = BeanUtil.copyList(printingPlanTicketList, PrintingPlanTicketDTO.class);
+        printingPlanTicketDTOList.forEach(e->e.setTicketName(ticketService.getTicketById(e.getTicketId()).getName()));
+        return printingPlanTicketDTOList;
     }
 }

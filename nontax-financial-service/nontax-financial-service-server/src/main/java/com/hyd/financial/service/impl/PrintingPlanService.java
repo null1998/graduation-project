@@ -1,7 +1,9 @@
 package com.hyd.financial.service.impl;
 
+import com.hyd.basedata.service.IUnitService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
+import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.PrintingPlanMapper;
 import com.hyd.financial.entity.PrintingPlan;
@@ -10,6 +12,8 @@ import com.hyd.financial.entity.PrintingPlanTicket;
 import com.hyd.financial.service.IPrintingPlanLimitDateService;
 import com.hyd.financial.service.IPrintingPlanService;
 import com.hyd.financial.service.IPrintingPlanTicketService;
+import com.hyd.financial.web.dto.PrintingPlanDTO;
+import com.hyd.financial.web.dto.PrintingPlanTicketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -35,6 +39,8 @@ public class PrintingPlanService implements IPrintingPlanService {
     private IPrintingPlanService printingPlanService;
     @Autowired
     private IPrintingPlanTicketService printingPlanTicketService;
+    @Autowired
+    private IUnitService unitService;
 
     @Caching(evict = {@CacheEvict(value = {"PrintingPlanService::listByParentUnitIdAndStatusAndYear",
             "PrintingPlanService::listByUnitId"},allEntries = true)})
@@ -60,9 +66,9 @@ public class PrintingPlanService implements IPrintingPlanService {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
         }
-        List<PrintingPlanTicket> printingPlanTicketList = printingPlanTicketService.listByPrintingPlanId(id);
-        for (PrintingPlanTicket printingPlanTicket : printingPlanTicketList) {
-            printingPlanTicketService.removeById(printingPlanTicket.getId());
+        List<PrintingPlanTicketDTO> printingPlanTicketDTOList = printingPlanTicketService.listByPrintingPlanId(id);
+        for (PrintingPlanTicketDTO printingPlanTicketDTO : printingPlanTicketDTOList) {
+            printingPlanTicketService.removeById(printingPlanTicketDTO.getId());
         }
         return printingPlanMapper.deleteByPrimaryKey(id) == 1;
     }
@@ -88,11 +94,14 @@ public class PrintingPlanService implements IPrintingPlanService {
 
     @Cacheable(value = {"PrintingPlanService::listByParentUnitIdAndStatusAndYear"}, key = "#parentUnitId+'&&'+#printingPlanStatus+'&&'+#year")
     @Override
-    public List<PrintingPlan> listByParentUnitIdAndStatusAndYear(Long parentUnitId, Integer printingPlanStatus, Integer year) {
+    public List<PrintingPlanDTO> listByParentUnitIdAndStatusAndYear(Long parentUnitId, Integer printingPlanStatus, Integer year) {
         if (parentUnitId == null || printingPlanStatus == null || year == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
         }
-        return printingPlanMapper.listByParentUnitIdAndStatus(parentUnitId, printingPlanStatus,year);
+        List<PrintingPlan> printingPlanList = printingPlanMapper.listByParentUnitIdAndStatus(parentUnitId, printingPlanStatus, year);
+        List<PrintingPlanDTO> printingPlanDTOList = BeanUtil.copyList(printingPlanList, PrintingPlanDTO.class);
+        printingPlanDTOList.forEach(e->e.setUnitName(unitService.getUnitById(e.getUnitId()).getName()));
+        return printingPlanDTOList;
     }
     @Cacheable(value = {"PrintingPlanService::listByUnitId"},key = "#unitId")
     @Override

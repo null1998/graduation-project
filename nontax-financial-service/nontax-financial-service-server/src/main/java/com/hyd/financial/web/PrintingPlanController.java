@@ -87,8 +87,8 @@ public class PrintingPlanController {
     @ApiLog
     @GetMapping("/list")
     public List<PrintingPlanVO> listByParentUnitIdAndStatusAndYear(@RequestParam Long parentUnitId, @RequestParam Integer printingPlanStatus, @RequestParam Integer year) {
-        List<PrintingPlan> printingPlanList = printingPlanService.listByParentUnitIdAndStatusAndYear(parentUnitId, printingPlanStatus, year);
-        return BeanUtil.copyList(printingPlanList, PrintingPlanVO.class);
+        List<PrintingPlanDTO> printingPlanDTOList = printingPlanService.listByParentUnitIdAndStatusAndYear(parentUnitId, printingPlanStatus, year);
+        return BeanUtil.copyList(printingPlanDTOList, PrintingPlanVO.class);
     }
     /**
      * 根据单位ID查询历年印制计划列表

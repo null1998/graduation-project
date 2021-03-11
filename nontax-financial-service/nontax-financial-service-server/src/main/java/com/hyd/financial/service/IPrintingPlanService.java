@@ -1,6 +1,7 @@
 package com.hyd.financial.service;
 
 import com.hyd.financial.entity.PrintingPlan;
+import com.hyd.financial.web.dto.PrintingPlanDTO;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public interface IPrintingPlanService {
      * @param year 年度
      * @return 印制计划列表
      */
-    List<PrintingPlan> listByParentUnitIdAndStatusAndYear(Long parentUnitId, Integer printingPlanStatus, Integer year);
+    List<PrintingPlanDTO> listByParentUnitIdAndStatusAndYear(Long parentUnitId, Integer printingPlanStatus, Integer year);
 
     /**
      * 根据单位ID查询历年印制计划列表

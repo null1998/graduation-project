@@ -81,7 +81,7 @@ public class PrintingPlanTicketController {
     @ApiLog
     @GetMapping("/list/{printingPlanId}")
     public List<PrintingPlanTicketVO> listByPrintingPlanId(@PathVariable("printingPlanId") Long printingPlanId) {
-        List<PrintingPlanTicket> printingPlanTicketList = printingPlanTicketService.listByPrintingPlanId(printingPlanId);
-        return BeanUtil.copyList(printingPlanTicketList, PrintingPlanTicketVO.class);
+        List<PrintingPlanTicketDTO> printingPlanTicketDTOList = printingPlanTicketService.listByPrintingPlanId(printingPlanId);
+        return BeanUtil.copyList(printingPlanTicketDTOList, PrintingPlanTicketVO.class);
     }
 }

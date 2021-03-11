@@ -2,6 +2,7 @@ package com.hyd.financial.service;
 
 import com.hyd.financial.entity.PrintingPlan;
 import com.hyd.financial.entity.PrintingPlanTicket;
+import com.hyd.financial.web.dto.PrintingPlanTicketDTO;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public interface IPrintingPlanTicketService {
      * @param printingPlanId 印制计划ID
      * @return 印制计划票据列表
      */
-    List<PrintingPlanTicket> listByPrintingPlanId(Long printingPlanId);
+    List<PrintingPlanTicketDTO> listByPrintingPlanId(Long printingPlanId);
 
 
 }
