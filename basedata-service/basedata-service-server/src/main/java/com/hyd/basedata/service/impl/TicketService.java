@@ -1,6 +1,7 @@
 package com.hyd.basedata.service.impl;
 
-import com.hyd.basedata.dao.TicketBaseMapper;
+
+import com.hyd.basedata.dao.TicketMapper;
 import com.hyd.basedata.entity.Ticket;
 import com.hyd.basedata.service.ITicketService;
 import com.hyd.basedata.util.MnemonicUtil;
@@ -24,10 +25,10 @@ import java.util.Optional;
 @Service
 public class TicketService implements ITicketService {
     @Autowired
-    private TicketBaseMapper ticketBaseMapper;
+    private TicketMapper ticketMapper;
     @Autowired
     private IdGenerator idGenerator;
-    @Caching(evict = {@CacheEvict(value = {"TicketService::listAll"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"TicketService::listAll","TicketService::listByZoneId"},allEntries = true)})
     @Override
     public Long save(Ticket ticket) {
         if (ticket == null) {
@@ -36,27 +37,26 @@ public class TicketService implements ITicketService {
         long id = idGenerator.snowflakeId();
         ticket.setId(id);
         ticket.setMnemonic(MnemonicUtil.buildMnemonic(ticket.getName()));
-        ticketBaseMapper.insertSelective(ticket);
+        ticketMapper.insertSelective(ticket);
         return id;
     }
     @Caching(evict = {@CacheEvict(value = {"TicketService::getTicketById"},key="#id"),
-            @CacheEvict(value = {"TicketService::listAll"},allEntries = true)})
-
+            @CacheEvict(value = {"TicketService::listAll","TicketService::listByZoneId"},allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
         }
-        return ticketBaseMapper.deleteByPrimaryKey(id) == 1;
+        return ticketMapper.deleteByPrimaryKey(id) == 1;
     }
     @Caching(evict = {@CacheEvict(value = {"TicketService::getTicketById"},key="#ticket.id"),
-            @CacheEvict(value = {"TicketService::listAll"},allEntries = true)})
+            @CacheEvict(value = {"TicketService::listAll","TicketService::listByZoneId"},allEntries = true)})
     @Override
     public Integer update(Ticket ticket) {
         if (ticket == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("票据为空"));
         }
-        return ticketBaseMapper.updateByPrimaryKeySelective(ticket);
+        return ticketMapper.updateByPrimaryKeySelective(ticket);
     }
     @Cacheable(value = {"TicketService::getTicketById"},key="#id")
     @Override
@@ -64,15 +64,24 @@ public class TicketService implements ITicketService {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
         }
-        Optional<Ticket> optional = ticketBaseMapper.selectByPrimaryKey(id);
+        Optional<Ticket> optional = ticketMapper.selectByPrimaryKey(id);
         if (!optional.isPresent()) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("未查询到相应的票据记录"));
         }
         return optional.get();
     }
+    @Cacheable(value = {"TicketService::listByZoneId"},key="#zoneId")
+    @Override
+    public List<Ticket> listByZoneId(Long zoneId) {
+        if (zoneId == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("地区ID为空"));
+        }
+        return ticketMapper.listByZoneId(zoneId);
+    }
+
     @Cacheable(value = {"TicketService::listAll"})
     @Override
     public List<Ticket> listAll() {
-        return ticketBaseMapper.select(QueryExpressionDSL::where);
+        return ticketMapper.select(QueryExpressionDSL::where);
     }
 }

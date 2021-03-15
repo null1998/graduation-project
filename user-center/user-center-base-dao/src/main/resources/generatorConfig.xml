@@ -22,12 +22,12 @@
         <javaModelGenerator targetPackage="com.hyd.user.center.entity" targetProject="src/main/java"/>
         <javaClientGenerator targetPackage="com.hyd.user.center.dao" targetProject="src/main/java"/>
 
-<!--        <table tableName="user_center_user" mapperName="UserBaseMapper">-->
-<!--            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>-->
-<!--        </table>-->
-        <table tableName="user_center_role" mapperName="RoleBaseMapper">
+        <table tableName="user_center_user" mapperName="UserBaseMapper">
             <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>
         </table>
+<!--        <table tableName="user_center_role" mapperName="RoleBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>-->
+<!--        </table>-->
 <!--        <table tableName="user_center_permission" mapperName="PermissionBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^UserCenter" replaceString=""/>-->
 <!--        </table>-->

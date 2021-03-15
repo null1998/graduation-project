@@ -13,6 +13,10 @@ public class UserDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String username;
 
+    private String nickname;
+
+    private Long zoneId;
+
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String password;
 
@@ -43,6 +47,22 @@ public class UserDTO implements Serializable {
 
     private String confirmPassword;
     private String unitName;
+
+    public Long getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(Long zoneId) {
+        this.zoneId = zoneId;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public String getUnitName() {
         return unitName;
@@ -179,23 +199,4 @@ public class UserDTO implements Serializable {
         this.version = version;
     }
 
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", sex=" + sex +
-                ", birthday=" + birthday +
-                ", tel='" + tel + '\'' +
-                ", email='" + email + '\'' +
-                ", unitId=" + unitId +
-                ", version=" + version +
-                ", roleIdList=" + roleIdList +
-                ", roleNameList=" + roleNameList +
-                ", confirmPassword='" + confirmPassword + '\'' +
-                ", unitName='" + unitName + '\'' +
-                '}';
-    }
 }

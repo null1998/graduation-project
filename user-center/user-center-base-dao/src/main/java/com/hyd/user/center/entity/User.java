@@ -12,6 +12,9 @@ public class User implements Serializable {
     private String username;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String nickname;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String password;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -56,6 +59,16 @@ public class User implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getNickname() {
+        return nickname;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -153,6 +166,7 @@ public class User implements Serializable {
         User other = (User) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
+            && (this.getNickname() == null ? other.getNickname() == null : this.getNickname().equals(other.getNickname()))
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
             && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()))
             && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
@@ -170,6 +184,7 @@ public class User implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
+        result = prime * result + ((getNickname() == null) ? 0 : getNickname().hashCode());
         result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
         result = prime * result + ((getAvatar() == null) ? 0 : getAvatar().hashCode());
         result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());

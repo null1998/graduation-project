@@ -69,6 +69,12 @@ public class TicketController {
         return BeanUtil.copy(ticket, TicketVO.class);
     }
     @ApiLog
+    @GetMapping("/list/zone/{zoneId}")
+    public List<TicketVO> listByZoneId(@PathVariable(name="zoneId") Long zoneId) {
+        List<Ticket> ticketList = ticketService.listByZoneId(zoneId);
+        return BeanUtil.copyList(ticketList, TicketVO.class);
+    }
+    @ApiLog
     @GetMapping(value = "/all")
     public List<TicketVO> listAll() {
         List<Ticket> ticketList = ticketService.listAll();

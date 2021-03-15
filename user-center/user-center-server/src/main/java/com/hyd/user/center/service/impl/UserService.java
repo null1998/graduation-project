@@ -173,6 +173,7 @@ public class UserService implements IUserService {
         if (user == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("未查询到相应的用户记录"));
         }
+
         List<UserRole> userRoleList = userRoleService.listByUserId(id);
         ArrayList<String> roleNameList = new ArrayList<>();
         for (UserRole userRole : userRoleList) {
@@ -181,6 +182,12 @@ public class UserService implements IUserService {
         }
         UserDTO userDTO = BeanUtil.copy(user, UserDTO.class);
         userDTO.setRoleNameList(roleNameList);
+        if (user.getUnitId()!=null){
+            // 查询单位信息
+            Unit unit = unitService.getUnitById(user.getUnitId());
+            // 设置区划id
+            userDTO.setZoneId(unit.getZoneId());
+        }
         return userDTO;
     }
     @Cacheable(value = {"UserService::listAll"})

@@ -11,7 +11,8 @@ public class UserVO {
     private Long id;
 
     private String username;
-
+    private String nickname;
+    private Long zoneId;
     private String avatar;
 
     private Integer sex;
@@ -28,6 +29,14 @@ public class UserVO {
     private ArrayList<Long> roleIdList;
     private ArrayList<String> roleNameList;
     private String unitName;
+
+    public Long getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(Long zoneId) {
+        this.zoneId = zoneId;
+    }
 
     public String getUnitName() {
         return unitName;
@@ -125,21 +134,13 @@ public class UserVO {
         this.version = version;
     }
 
-    @Override
-    public String toString() {
-        return "UserVO{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", sex=" + sex +
-                ", birthday=" + birthday +
-                ", tel='" + tel + '\'' +
-                ", email='" + email + '\'' +
-                ", unitId=" + unitId +
-                ", version=" + version +
-                ", roleIdList=" + roleIdList +
-                ", roleNameList=" + roleNameList +
-                ", unitName='" + unitName + '\'' +
-                '}';
+    public String getNickname() {
+        return nickname;
     }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+
 }

@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface UserBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, username, password, avatar, sex, birthday, tel, email, unitId, version);
+    BasicColumn[] selectList = BasicColumn.columnList(id, username, nickname, password, avatar, sex, birthday, tel, email, unitId, version);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -58,6 +58,7 @@ public interface UserBaseMapper {
     @Results(id="UserResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="username", property="username", jdbcType=JdbcType.VARCHAR),
+        @Result(column="nickname", property="nickname", jdbcType=JdbcType.VARCHAR),
         @Result(column="password", property="password", jdbcType=JdbcType.VARCHAR),
         @Result(column="avatar", property="avatar", jdbcType=JdbcType.VARCHAR),
         @Result(column="sex", property="sex", jdbcType=JdbcType.INTEGER),
@@ -100,6 +101,7 @@ public interface UserBaseMapper {
         return MyBatis3Utils.insert(this::insert, record, user, c ->
             c.map(id).toProperty("id")
             .map(username).toProperty("username")
+            .map(nickname).toProperty("nickname")
             .map(password).toProperty("password")
             .map(avatar).toProperty("avatar")
             .map(sex).toProperty("sex")
@@ -116,6 +118,7 @@ public interface UserBaseMapper {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, user, c ->
             c.map(id).toProperty("id")
             .map(username).toProperty("username")
+            .map(nickname).toProperty("nickname")
             .map(password).toProperty("password")
             .map(avatar).toProperty("avatar")
             .map(sex).toProperty("sex")
@@ -132,6 +135,7 @@ public interface UserBaseMapper {
         return MyBatis3Utils.insert(this::insert, record, user, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
             .map(username).toPropertyWhenPresent("username", record::getUsername)
+            .map(nickname).toPropertyWhenPresent("nickname", record::getNickname)
             .map(password).toPropertyWhenPresent("password", record::getPassword)
             .map(avatar).toPropertyWhenPresent("avatar", record::getAvatar)
             .map(sex).toPropertyWhenPresent("sex", record::getSex)
@@ -174,6 +178,7 @@ public interface UserBaseMapper {
     static UpdateDSL<UpdateModel> updateAllColumns(User record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
                 .set(username).equalTo(record::getUsername)
+                .set(nickname).equalTo(record::getNickname)
                 .set(password).equalTo(record::getPassword)
                 .set(avatar).equalTo(record::getAvatar)
                 .set(sex).equalTo(record::getSex)
@@ -188,6 +193,7 @@ public interface UserBaseMapper {
     static UpdateDSL<UpdateModel> updateSelectiveColumns(User record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
                 .set(username).equalToWhenPresent(record::getUsername)
+                .set(nickname).equalToWhenPresent(record::getNickname)
                 .set(password).equalToWhenPresent(record::getPassword)
                 .set(avatar).equalToWhenPresent(record::getAvatar)
                 .set(sex).equalToWhenPresent(record::getSex)
@@ -202,6 +208,7 @@ public interface UserBaseMapper {
     default int updateByPrimaryKey(User record) {
         return update(c ->
             c.set(username).equalTo(record::getUsername)
+            .set(nickname).equalTo(record::getNickname)
             .set(password).equalTo(record::getPassword)
             .set(avatar).equalTo(record::getAvatar)
             .set(sex).equalTo(record::getSex)
@@ -218,6 +225,7 @@ public interface UserBaseMapper {
     default int updateByPrimaryKeySelective(User record) {
         return update(c ->
             c.set(username).equalToWhenPresent(record::getUsername)
+            .set(nickname).equalToWhenPresent(record::getNickname)
             .set(password).equalToWhenPresent(record::getPassword)
             .set(avatar).equalToWhenPresent(record::getAvatar)
             .set(sex).equalToWhenPresent(record::getSex)

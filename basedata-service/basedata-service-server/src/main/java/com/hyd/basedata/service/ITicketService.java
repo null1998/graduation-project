@@ -38,6 +38,12 @@ public interface ITicketService {
     Ticket getTicketById(Long id);
 
     /**
+     * 根据zoneId查询
+     * @param zoneId 地区id
+     * @return 地区
+     */
+    List<Ticket> listByZoneId(Long zoneId);
+    /**
      * 查询全部票据
      * @return
      */
