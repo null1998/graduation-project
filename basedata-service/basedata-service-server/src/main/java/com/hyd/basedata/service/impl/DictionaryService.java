@@ -1,12 +1,16 @@
 package com.hyd.basedata.service.impl;
 
 import com.hyd.basedata.dao.DictionaryBaseMapper;
+import com.hyd.basedata.dao.DictionaryMapper;
 import com.hyd.basedata.entity.Dictionary;
 import com.hyd.basedata.service.IDictionaryService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +22,10 @@ import java.util.List;
 @Service
 public class DictionaryService implements IDictionaryService {
     @Autowired
-    private DictionaryBaseMapper dictionaryBaseMapper;
+    private DictionaryMapper dictionaryMapper;
     @Autowired
     private IdGenerator idGenerator;
+    @Caching(evict = {@CacheEvict(value = {"DictionaryService::listByCategoryName"},allEntries = true)})
     @Override
     public Long save(Dictionary dictionary) {
         if (dictionary == null) {
@@ -28,10 +33,10 @@ public class DictionaryService implements IDictionaryService {
         }
         long id = idGenerator.snowflakeId();
         dictionary.setId(id);
-        dictionaryBaseMapper.insertSelective(dictionary);
+        dictionaryMapper.insertSelective(dictionary);
         return id;
     }
-
+    @Caching(evict = {@CacheEvict(value = {"DictionaryService::listByCategoryName"},allEntries = true)})
     @Override
     public void saveList(List<Dictionary> dictionaryList) {
         if (dictionaryList == null) {
@@ -41,6 +46,14 @@ public class DictionaryService implements IDictionaryService {
             dictionary.setId(idGenerator.snowflakeId());
             dictionary.setVersion(0L);
         }
-        dictionaryBaseMapper.insertMultiple(dictionaryList);
+        dictionaryMapper.insertMultiple(dictionaryList);
+    }
+    //@Cacheable(value = {"DictionaryService::listByCategoryName"},key = "#categoryName")
+    @Override
+    public List<Dictionary> listByCategoryName(String categoryName) {
+        if (categoryName == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("字典类别为空"));
+        }
+        return dictionaryMapper.listByCategoryName(categoryName);
     }
 }

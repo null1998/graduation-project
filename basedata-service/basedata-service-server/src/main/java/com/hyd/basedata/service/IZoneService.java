@@ -47,4 +47,10 @@ public interface IZoneService {
      * 初始化数据
      */
     void init();
+
+    /**
+     * 查询省级行政区划
+     * @return
+     */
+    List<Zone> listProvinceZone();
 }

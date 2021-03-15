@@ -1,5 +1,6 @@
 package com.hyd.basedata.entity.vo;
 
+import javax.annotation.Generated;
 import java.math.BigDecimal;
 
 /**
@@ -22,6 +23,25 @@ public class TicketVO {
     private String unitOfMeasurement;
 
     private Long version;
+    private Long zoneId;
+
+    private Long dictionaryId;
+
+    public Long getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(Long zoneId) {
+        this.zoneId = zoneId;
+    }
+
+    public Long getDictionaryId() {
+        return dictionaryId;
+    }
+
+    public void setDictionaryId(Long dictionaryId) {
+        this.dictionaryId = dictionaryId;
+    }
 
     public Long getId() {
         return id;
@@ -87,17 +107,5 @@ public class TicketVO {
         this.version = version;
     }
 
-    @Override
-    public String toString() {
-        return "TicketVO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", year='" + year + '\'' +
-                ", code='" + code + '\'' +
-                ", mnemonic='" + mnemonic + '\'' +
-                ", price=" + price +
-                ", unitOfMeasurement='" + unitOfMeasurement + '\'' +
-                ", version=" + version +
-                '}';
-    }
+
 }

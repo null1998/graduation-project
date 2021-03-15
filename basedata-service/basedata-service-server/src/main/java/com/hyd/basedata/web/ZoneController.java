@@ -46,6 +46,12 @@ public class ZoneController {
         return BeanUtil.copyList(zoneList, ZoneVO.class);
     }
     @ApiLog
+    @GetMapping("/list/province")
+    public List<ZoneVO> listProvinceZone(){
+        List<Zone> zoneList = zoneService.listProvinceZone();
+        return BeanUtil.copyList(zoneList, ZoneVO.class);
+    }
+    @ApiLog
     @PostMapping
     public Long save(ZoneDTO zoneDTO) {
         Zone zone = BeanUtil.copy(zoneDTO, Zone.class);

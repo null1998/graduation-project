@@ -1,6 +1,7 @@
 package com.hyd.basedata.web;
 
 import com.hyd.basedata.entity.Dictionary;
+import com.hyd.basedata.entity.vo.DictionaryVO;
 import com.hyd.basedata.service.IDictionaryService;
 import com.hyd.basedata.web.dto.DictionaryDTO;
 import com.hyd.common.core.annotation.ApiLog;
@@ -8,6 +9,7 @@ import com.hyd.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -42,6 +44,12 @@ public class DictionaryController {
     public void saveList(@RequestBody List<DictionaryDTO> dictionaryDTOList) {
         List<Dictionary> dictionaryList = BeanUtil.copyList(dictionaryDTOList, Dictionary.class);
         dictionaryService.saveList(dictionaryList);
+    }
+    @ApiLog
+    @GetMapping("/list/category/name")
+    public List<DictionaryVO> listByCategoryName(String categoryName){
+        List<Dictionary> dictionaryList = dictionaryService.listByCategoryName(categoryName);
+        return BeanUtil.copyList(dictionaryList,DictionaryVO.class);
     }
 
 }

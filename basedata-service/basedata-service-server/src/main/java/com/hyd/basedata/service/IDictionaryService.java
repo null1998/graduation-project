@@ -21,4 +21,11 @@ public interface IDictionaryService {
      * @param dictionaryList 字典列表
      */
     void saveList(List<Dictionary>dictionaryList);
+
+    /**
+     * 根据类别名查询
+     * @param categoryName
+     * @return
+     */
+    List<Dictionary> listByCategoryName(String categoryName);
 }

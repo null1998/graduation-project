@@ -40,6 +40,7 @@ public class ZoneService implements IZoneService {
     private UnitBaseMapper unitBaseMapper;
     @Autowired
     private IdGenerator idGenerator;
+    @Cacheable(value = {"ZoneService::getZoneById"},key = "#id")
     @Override
     public Zone getZoneById(Long id) {
         if (id == null) {
@@ -59,7 +60,7 @@ public class ZoneService implements IZoneService {
         }
         return zoneBaseMapper.select(c -> c.where(ZoneDynamicSqlSupport.parentId, SqlBuilder.isEqualTo(parentId)));
     }
-    @Caching(evict = {@CacheEvict(value = {"ZoneService::listZoneByParentId"}, allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"ZoneService::listZoneByParentId,ZoneService::listProvinceZone"}, allEntries = true)})
     @Override
     public Long save(Zone zone) {
         if (zone == null) {
@@ -71,7 +72,7 @@ public class ZoneService implements IZoneService {
         return id;
     }
     @Caching(evict = {@CacheEvict(value = {"ZoneService::getZoneById"}, key = "#id"),
-            @CacheEvict(value = {"ZoneService::listZoneByParentId"}, allEntries = true)})
+            @CacheEvict(value = {"ZoneService::listZoneByParentId,ZoneService::listProvinceZone"}, allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -80,7 +81,7 @@ public class ZoneService implements IZoneService {
         return zoneBaseMapper.deleteByPrimaryKey(id) == 1;
     }
     @Caching(evict = {@CacheEvict(value = {"ZoneService::getZoneById"}, key = "#zone.id"),
-            @CacheEvict(value = {"ZoneService::listZoneByParentId"}, allEntries = true)})
+            @CacheEvict(value = {"ZoneService::listZoneByParentId,ZoneService::listProvinceZone"}, allEntries = true)})
     @Override
     public Integer update(Zone zone) {
         if (zone == null) {
@@ -106,6 +107,12 @@ public class ZoneService implements IZoneService {
         }
 
     }
+    @Cacheable(value = "ZoneService::listProvinceZone")
+    @Override
+    public List<Zone> listProvinceZone() {
+        return zoneBaseMapper.select(c -> c.where(ZoneDynamicSqlSupport.parentId, SqlBuilder.isNull()));
+    }
+
     private void recursion(JSONArray jsonArray, Long parentZoneId, Long parentUnitId, Integer level) {
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
