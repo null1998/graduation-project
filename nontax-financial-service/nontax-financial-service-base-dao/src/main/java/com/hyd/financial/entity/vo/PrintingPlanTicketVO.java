@@ -140,4 +140,20 @@ public class PrintingPlanTicketVO implements Serializable {
         this.theThirdSeason = theThirdSeason;
         this.theFourthSeason = theFourthSeason;
     }
+
+    @Override
+    public String toString() {
+        return "PrintingPlanTicketVO{" +
+                "id=" + id +
+                ", printingPlanId=" + printingPlanId +
+                ", ticketId=" + ticketId +
+                ", ticketName='" + ticketName + '\'' +
+                ", theFirstSeason=" + theFirstSeason +
+                ", theSecondSeason=" + theSecondSeason +
+                ", theThirdSeason=" + theThirdSeason +
+                ", theFourthSeason=" + theFourthSeason +
+                ", lastYear=" + lastYear +
+                ", version=" + version +
+                '}';
+    }
 }

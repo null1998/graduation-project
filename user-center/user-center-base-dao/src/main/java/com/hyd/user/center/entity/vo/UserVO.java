@@ -142,5 +142,23 @@ public class UserVO {
         this.nickname = nickname;
     }
 
-
+    @Override
+    public String toString() {
+        return "UserVO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", zoneId=" + zoneId +
+                ", avatar='" + avatar + '\'' +
+                ", sex=" + sex +
+                ", birthday=" + birthday +
+                ", tel='" + tel + '\'' +
+                ", email='" + email + '\'' +
+                ", unitId=" + unitId +
+                ", version=" + version +
+                ", roleIdList=" + roleIdList +
+                ", roleNameList=" + roleNameList +
+                ", unitName='" + unitName + '\'' +
+                '}';
+    }
 }

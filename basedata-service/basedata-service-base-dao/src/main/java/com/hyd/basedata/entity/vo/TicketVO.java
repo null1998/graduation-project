@@ -107,5 +107,19 @@ public class TicketVO {
         this.version = version;
     }
 
-
+    @Override
+    public String toString() {
+        return "TicketVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", year='" + year + '\'' +
+                ", code='" + code + '\'' +
+                ", mnemonic='" + mnemonic + '\'' +
+                ", price=" + price +
+                ", unitOfMeasurement='" + unitOfMeasurement + '\'' +
+                ", version=" + version +
+                ", zoneId=" + zoneId +
+                ", dictionaryId=" + dictionaryId +
+                '}';
+    }
 }

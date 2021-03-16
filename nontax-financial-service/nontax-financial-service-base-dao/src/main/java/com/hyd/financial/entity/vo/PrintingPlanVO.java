@@ -132,5 +132,20 @@ public class PrintingPlanVO implements Serializable {
     public void setVersion(Long version) {
         this.version = version;
     }
-    
+
+    @Override
+    public String toString() {
+        return "PrintingPlanVO{" +
+                "id=" + id +
+                ", orderNumber=" + orderNumber +
+                ", year=" + year +
+                ", unitId=" + unitId +
+                ", person='" + person + '\'' +
+                ", tel='" + tel + '\'' +
+                ", remark='" + remark + '\'' +
+                ", status=" + status +
+                ", version=" + version +
+                ", unitName='" + unitName + '\'' +
+                '}';
+    }
 }
