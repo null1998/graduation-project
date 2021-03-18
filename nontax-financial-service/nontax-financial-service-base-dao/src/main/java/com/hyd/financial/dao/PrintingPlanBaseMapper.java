@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PrintingPlanBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, year, unitId, person, tel, remark, status, version);
+    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, year, unitId, person, tel, remark, status, version, submitDate);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -64,7 +64,8 @@ public interface PrintingPlanBaseMapper {
         @Result(column="tel", property="tel", jdbcType=JdbcType.VARCHAR),
         @Result(column="remark", property="remark", jdbcType=JdbcType.VARCHAR),
         @Result(column="status", property="status", jdbcType=JdbcType.INTEGER),
-        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
+        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT),
+        @Result(column="submit_date", property="submitDate", jdbcType=JdbcType.VARCHAR)
     })
     List<PrintingPlan> selectMany(SelectStatementProvider selectStatement);
 
@@ -106,6 +107,7 @@ public interface PrintingPlanBaseMapper {
             .map(remark).toProperty("remark")
             .map(status).toProperty("status")
             .map(version).toProperty("version")
+            .map(submitDate).toProperty("submitDate")
         );
     }
 
@@ -121,6 +123,7 @@ public interface PrintingPlanBaseMapper {
             .map(remark).toProperty("remark")
             .map(status).toProperty("status")
             .map(version).toProperty("version")
+            .map(submitDate).toProperty("submitDate")
         );
     }
 
@@ -136,6 +139,7 @@ public interface PrintingPlanBaseMapper {
             .map(remark).toPropertyWhenPresent("remark", record::getRemark)
             .map(status).toPropertyWhenPresent("status", record::getStatus)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
+            .map(submitDate).toPropertyWhenPresent("submitDate", record::getSubmitDate)
         );
     }
 
@@ -176,7 +180,8 @@ public interface PrintingPlanBaseMapper {
                 .set(tel).equalTo(record::getTel)
                 .set(remark).equalTo(record::getRemark)
                 .set(status).equalTo(record::getStatus)
-                .set(version).equalTo(record::getVersion);
+                .set(version).equalTo(record::getVersion)
+                .set(submitDate).equalTo(record::getSubmitDate);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -189,7 +194,8 @@ public interface PrintingPlanBaseMapper {
                 .set(tel).equalToWhenPresent(record::getTel)
                 .set(remark).equalToWhenPresent(record::getRemark)
                 .set(status).equalToWhenPresent(record::getStatus)
-                .set(version).equalToWhenPresent(record::getVersion);
+                .set(version).equalToWhenPresent(record::getVersion)
+                .set(submitDate).equalToWhenPresent(record::getSubmitDate);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -203,6 +209,7 @@ public interface PrintingPlanBaseMapper {
             .set(remark).equalTo(record::getRemark)
             .set(status).equalTo(record::getStatus)
             .set(version).equalTo(record::getVersion)
+            .set(submitDate).equalTo(record::getSubmitDate)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -218,6 +225,7 @@ public interface PrintingPlanBaseMapper {
             .set(remark).equalToWhenPresent(record::getRemark)
             .set(status).equalToWhenPresent(record::getStatus)
             .set(version).equalToWhenPresent(record::getVersion)
+            .set(submitDate).equalToWhenPresent(record::getSubmitDate)
             .where(id, isEqualTo(record::getId))
         );
     }

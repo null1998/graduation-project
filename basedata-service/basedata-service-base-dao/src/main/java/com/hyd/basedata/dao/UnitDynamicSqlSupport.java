@@ -52,6 +52,9 @@ public final class UnitDynamicSqlSupport {
     public static final SqlColumn<Long> version = unit.version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> dictionaryId = unit.dictionaryId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Unit extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -80,6 +83,8 @@ public final class UnitDynamicSqlSupport {
         public final SqlColumn<Long> parentId = column("parent_id", JDBCType.BIGINT);
 
         public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
+
+        public final SqlColumn<Long> dictionaryId = column("dictionary_id", JDBCType.BIGINT);
 
         public Unit() {
             super("basedata_unit");

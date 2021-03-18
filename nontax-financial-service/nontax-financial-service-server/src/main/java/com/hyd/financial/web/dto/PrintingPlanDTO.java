@@ -32,9 +32,17 @@ public class PrintingPlanDTO implements Serializable {
     private Long version;
 
     private String unitName;
-
+    private String submitDate;
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+
+    public String getSubmitDate() {
+        return submitDate;
+    }
+
+    public void setSubmitDate(String submitDate) {
+        this.submitDate = submitDate;
+    }
 
     public String getUnitName() {
         return unitName;

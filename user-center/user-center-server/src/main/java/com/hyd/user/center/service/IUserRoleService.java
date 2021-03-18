@@ -44,4 +44,5 @@ public interface IUserRoleService {
     List<UserRole> listByUserId(Long userId);
 
 
+    void removeById(Long id);
 }

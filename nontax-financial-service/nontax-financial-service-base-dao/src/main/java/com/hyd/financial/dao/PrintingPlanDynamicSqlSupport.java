@@ -37,6 +37,9 @@ public final class PrintingPlanDynamicSqlSupport {
     public static final SqlColumn<Long> version = printingPlan.version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> submitDate = printingPlan.submitDate;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class PrintingPlan extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -55,6 +58,8 @@ public final class PrintingPlanDynamicSqlSupport {
         public final SqlColumn<Integer> status = column("status", JDBCType.INTEGER);
 
         public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
+
+        public final SqlColumn<String> submitDate = column("submit_date", JDBCType.VARCHAR);
 
         public PrintingPlan() {
             super("financial_printing_plan");

@@ -49,10 +49,14 @@ public class UserRoleController {
      * @param userId 用户ID
      */
     @ApiLog
-    @DeleteMapping(value = "{/userId}")
+    @DeleteMapping(value = "/user/id/{userId}")
     public void removeByUserId(@PathVariable("userId") Long userId) {
         userRoleService.removeByUserId(userId);
     }
 
-
+    @ApiLog
+    @DeleteMapping("/{id}")
+    public void removeById(@PathVariable("id") Long id) {
+        userRoleService.removeById(id);
+    }
 }

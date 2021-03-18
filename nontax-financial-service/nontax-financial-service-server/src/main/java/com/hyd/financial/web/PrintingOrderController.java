@@ -1,0 +1,50 @@
+package com.hyd.financial.web;
+
+import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.util.BeanUtil;
+import com.hyd.financial.entity.PrintingOrder;
+import com.hyd.financial.entity.vo.PrintingOrderVO;
+import com.hyd.financial.service.IPrintingOrderService;
+import com.hyd.financial.web.dto.PrintingOrderDTO;
+import com.hyd.financial.web.qo.PrintingOrderQO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * @author yanduohuang
+ * @date 2021/3/18 19:00
+ */
+@CrossOrigin
+@RestController
+@RequestMapping("/printing/order")
+public class PrintingOrderController {
+    @Autowired
+    IPrintingOrderService printingOrderService;
+    @ApiLog
+    @PostMapping
+    public Long save(@RequestParam PrintingOrderDTO printingOrderDTO) {
+        PrintingOrder printingOrder = BeanUtil.copy(printingOrderDTO, PrintingOrder.class);
+        return printingOrderService.save(printingOrder);
+    }
+    @ApiLog
+    @DeleteMapping("/{id}")
+    public Boolean remove(@PathVariable("id") Long id) {
+        return printingOrderService.remove(id);
+    }
+    @ApiLog
+    @PutMapping
+    public Integer update(@RequestParam PrintingOrderDTO printingOrderDTO) {
+        PrintingOrder printingOrder = BeanUtil.copy(printingOrderDTO, PrintingOrder.class);
+        return printingOrderService.update(printingOrder);
+    }
+    @ApiLog
+    @GetMapping("/common/query")
+    public List<PrintingOrderVO> commonQuery(PrintingOrderQO printingOrderQO) {
+        PrintingOrder printingOrder = BeanUtil.copy(printingOrderQO, PrintingOrder.class);
+        List<PrintingOrder> printingOrderList = printingOrderService.commonQuery(printingOrder);
+        return BeanUtil.copyList(printingOrderList, PrintingOrderVO.class);
+    }
+
+}

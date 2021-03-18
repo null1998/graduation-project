@@ -34,6 +34,15 @@ public class PrintingPlanVO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
     private String unitName;
+    private String submitDate;
+
+    public String getSubmitDate() {
+        return submitDate;
+    }
+
+    public void setSubmitDate(String submitDate) {
+        this.submitDate = submitDate;
+    }
 
     public String getUnitName() {
         return unitName;
@@ -146,6 +155,7 @@ public class PrintingPlanVO implements Serializable {
                 ", status=" + status +
                 ", version=" + version +
                 ", unitName='" + unitName + '\'' +
+                ", submitDate='" + submitDate + '\'' +
                 '}';
     }
 }

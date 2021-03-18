@@ -1,38 +1,35 @@
-package com.hyd.financial.entity;
+package com.hyd.financial.web.dto;
 
-import java.io.Serializable;
 import javax.annotation.Generated;
+import java.io.Serializable;
 
-public class PrintingPlan implements Serializable {
+public class PrintingOrderDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long orderNumber;
+    private Long ordernumber;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer year;
+    private String start;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String end;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String person;
+    private Long printUnitId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String tel;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String remark;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Integer status;
+    private Long warehouseId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String submitDate;
+    private Integer status;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
@@ -48,23 +45,33 @@ public class PrintingPlan implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getOrderNumber() {
-        return orderNumber;
+    public Long getOrdernumber() {
+        return ordernumber;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setOrderNumber(Long orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setOrdernumber(Long ordernumber) {
+        this.ordernumber = ordernumber;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getYear() {
-        return year;
+    public String getStart() {
+        return start;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getEnd() {
+        return end;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setEnd(String end) {
+        this.end = end;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -78,43 +85,23 @@ public class PrintingPlan implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getPerson() {
-        return person;
+    public Long getPrintUnitId() {
+        return printUnitId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPerson(String person) {
-        this.person = person;
+    public void setPrintUnitId(Long printUnitId) {
+        this.printUnitId = printUnitId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getTel() {
-        return tel;
+    public Long getWarehouseId() {
+        return warehouseId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getRemark() {
-        return remark;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Integer getStatus() {
-        return status;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setWarehouseId(Long warehouseId) {
+        this.warehouseId = warehouseId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -128,13 +115,13 @@ public class PrintingPlan implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getSubmitDate() {
-        return submitDate;
+    public Integer getStatus() {
+        return status;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setSubmitDate(String submitDate) {
-        this.submitDate = submitDate;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Override
@@ -149,17 +136,16 @@ public class PrintingPlan implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        PrintingPlan other = (PrintingPlan) that;
+        PrintingOrderDTO other = (PrintingOrderDTO) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getOrderNumber() == null ? other.getOrderNumber() == null : this.getOrderNumber().equals(other.getOrderNumber()))
-            && (this.getYear() == null ? other.getYear() == null : this.getYear().equals(other.getYear()))
+            && (this.getOrdernumber() == null ? other.getOrdernumber() == null : this.getOrdernumber().equals(other.getOrdernumber()))
+            && (this.getStart() == null ? other.getStart() == null : this.getStart().equals(other.getStart()))
+            && (this.getEnd() == null ? other.getEnd() == null : this.getEnd().equals(other.getEnd()))
             && (this.getUnitId() == null ? other.getUnitId() == null : this.getUnitId().equals(other.getUnitId()))
-            && (this.getPerson() == null ? other.getPerson() == null : this.getPerson().equals(other.getPerson()))
-            && (this.getTel() == null ? other.getTel() == null : this.getTel().equals(other.getTel()))
-            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getPrintUnitId() == null ? other.getPrintUnitId() == null : this.getPrintUnitId().equals(other.getPrintUnitId()))
+            && (this.getWarehouseId() == null ? other.getWarehouseId() == null : this.getWarehouseId().equals(other.getWarehouseId()))
             && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
-            && (this.getSubmitDate() == null ? other.getSubmitDate() == null : this.getSubmitDate().equals(other.getSubmitDate()));
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
     @Override
@@ -168,15 +154,14 @@ public class PrintingPlan implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getOrderNumber() == null) ? 0 : getOrderNumber().hashCode());
-        result = prime * result + ((getYear() == null) ? 0 : getYear().hashCode());
+        result = prime * result + ((getOrdernumber() == null) ? 0 : getOrdernumber().hashCode());
+        result = prime * result + ((getStart() == null) ? 0 : getStart().hashCode());
+        result = prime * result + ((getEnd() == null) ? 0 : getEnd().hashCode());
         result = prime * result + ((getUnitId() == null) ? 0 : getUnitId().hashCode());
-        result = prime * result + ((getPerson() == null) ? 0 : getPerson().hashCode());
-        result = prime * result + ((getTel() == null) ? 0 : getTel().hashCode());
-        result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
-        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getPrintUnitId() == null) ? 0 : getPrintUnitId().hashCode());
+        result = prime * result + ((getWarehouseId() == null) ? 0 : getWarehouseId().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
-        result = prime * result + ((getSubmitDate() == null) ? 0 : getSubmitDate().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }
 }

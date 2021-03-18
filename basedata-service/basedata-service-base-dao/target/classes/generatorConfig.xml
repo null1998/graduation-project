@@ -21,9 +21,9 @@
         </javaTypeResolver>
         <javaModelGenerator targetPackage="com.hyd.basedata.entity" targetProject="src/main/java"/>
         <javaClientGenerator targetPackage="com.hyd.basedata.dao" targetProject="src/main/java"/>
-<!--        <table tableName="basedata_unit" mapperName="UnitBaseMapper">-->
-<!--            <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>-->
-<!--        </table>-->
+        <table tableName="basedata_unit" mapperName="UnitBaseMapper">
+            <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>
+        </table>
 <!--        <table tableName="basedata_zone" mapperName="ZoneBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>-->
 <!--        </table>-->
@@ -36,9 +36,9 @@
 <!--        <table tableName="basedata_dictionary_category" mapperName="DictionaryCategoryBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>-->
 <!--        </table>-->
-        <table tableName="basedata_warehouse" mapperName="WarehouseBaseMapper">
-            <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>
-        </table>
+<!--        <table tableName="basedata_warehouse" mapperName="WarehouseBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^Basedata" replaceString=""/>-->
+<!--        </table>-->
 
     </context>
 </generatorConfiguration>

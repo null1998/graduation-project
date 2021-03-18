@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface UnitBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, name, code, mnemonic, master, taxNumber, faxNumber, telNumber, address, email, website, zoneId, parentId, version);
+    BasicColumn[] selectList = BasicColumn.columnList(id, name, code, mnemonic, master, taxNumber, faxNumber, telNumber, address, email, website, zoneId, parentId, version, dictionaryId);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -69,7 +69,8 @@ public interface UnitBaseMapper {
         @Result(column="website", property="website", jdbcType=JdbcType.VARCHAR),
         @Result(column="zone_id", property="zoneId", jdbcType=JdbcType.BIGINT),
         @Result(column="parent_id", property="parentId", jdbcType=JdbcType.BIGINT),
-        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
+        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT),
+        @Result(column="dictionary_id", property="dictionaryId", jdbcType=JdbcType.BIGINT)
     })
     List<Unit> selectMany(SelectStatementProvider selectStatement);
 
@@ -116,6 +117,7 @@ public interface UnitBaseMapper {
             .map(zoneId).toProperty("zoneId")
             .map(parentId).toProperty("parentId")
             .map(version).toProperty("version")
+            .map(dictionaryId).toProperty("dictionaryId")
         );
     }
 
@@ -136,6 +138,7 @@ public interface UnitBaseMapper {
             .map(zoneId).toProperty("zoneId")
             .map(parentId).toProperty("parentId")
             .map(version).toProperty("version")
+            .map(dictionaryId).toProperty("dictionaryId")
         );
     }
 
@@ -156,6 +159,7 @@ public interface UnitBaseMapper {
             .map(zoneId).toPropertyWhenPresent("zoneId", record::getZoneId)
             .map(parentId).toPropertyWhenPresent("parentId", record::getParentId)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
+            .map(dictionaryId).toPropertyWhenPresent("dictionaryId", record::getDictionaryId)
         );
     }
 
@@ -201,7 +205,8 @@ public interface UnitBaseMapper {
                 .set(website).equalTo(record::getWebsite)
                 .set(zoneId).equalTo(record::getZoneId)
                 .set(parentId).equalTo(record::getParentId)
-                .set(version).equalTo(record::getVersion);
+                .set(version).equalTo(record::getVersion)
+                .set(dictionaryId).equalTo(record::getDictionaryId);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -219,7 +224,8 @@ public interface UnitBaseMapper {
                 .set(website).equalToWhenPresent(record::getWebsite)
                 .set(zoneId).equalToWhenPresent(record::getZoneId)
                 .set(parentId).equalToWhenPresent(record::getParentId)
-                .set(version).equalToWhenPresent(record::getVersion);
+                .set(version).equalToWhenPresent(record::getVersion)
+                .set(dictionaryId).equalToWhenPresent(record::getDictionaryId);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -238,6 +244,7 @@ public interface UnitBaseMapper {
             .set(zoneId).equalTo(record::getZoneId)
             .set(parentId).equalTo(record::getParentId)
             .set(version).equalTo(record::getVersion)
+            .set(dictionaryId).equalTo(record::getDictionaryId)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -258,6 +265,7 @@ public interface UnitBaseMapper {
             .set(zoneId).equalToWhenPresent(record::getZoneId)
             .set(parentId).equalToWhenPresent(record::getParentId)
             .set(version).equalToWhenPresent(record::getVersion)
+            .set(dictionaryId).equalToWhenPresent(record::getDictionaryId)
             .where(id, isEqualTo(record::getId))
         );
     }

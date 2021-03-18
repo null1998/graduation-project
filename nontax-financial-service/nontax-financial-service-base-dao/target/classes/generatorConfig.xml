@@ -36,11 +36,17 @@
 <!--        <table tableName="financial_printing_plan" mapperName="PrintingPlanBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
 <!--        </table>-->
+        <table tableName="financial_printing_order" mapperName="PrintingOrderBaseMapper">
+            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
+        </table>
+        <table tableName="financial_printing_order_ticket" mapperName="PrintingOrderTicketBaseMapper">
+            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
+        </table>
 <!--        <table tableName="financial_printing_plan_ticket" mapperName="PrintingPlanTicketBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
 <!--        </table>-->
-        <table tableName="financial_printing_plan_limit_date" mapperName="PrintingPlanLimitDateBaseMapper">
-            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
-        </table>
+<!--        <table tableName="financial_printing_plan_limit_date" mapperName="PrintingPlanLimitDateBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
+<!--        </table>-->
     </context>
 </generatorConfiguration>

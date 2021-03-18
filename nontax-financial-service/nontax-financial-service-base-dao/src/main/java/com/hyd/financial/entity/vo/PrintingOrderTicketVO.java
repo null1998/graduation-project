@@ -1,20 +1,20 @@
-package com.hyd.user.center.entity;
+package com.hyd.financial.entity.vo;
 
-import java.io.Serializable;
 import javax.annotation.Generated;
+import java.io.Serializable;
 
-public class Role implements Serializable {
+public class PrintingOrderTicketVO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String name;
+    private Long printingOrderId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String type;
+    private Long ticketId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String remark;
+    private Long number;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
@@ -33,33 +33,33 @@ public class Role implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getName() {
-        return name;
+    public Long getPrintingOrderId() {
+        return printingOrderId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setName(String name) {
-        this.name = name;
+    public void setPrintingOrderId(Long printingOrderId) {
+        this.printingOrderId = printingOrderId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getType() {
-        return type;
+    public Long getTicketId() {
+        return ticketId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setType(String type) {
-        this.type = type;
+    public void setTicketId(Long ticketId) {
+        this.ticketId = ticketId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getRemark() {
-        return remark;
+    public Long getNumber() {
+        return number;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setNumber(Long number) {
+        this.number = number;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -84,11 +84,11 @@ public class Role implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Role other = (Role) that;
+        PrintingOrderTicketVO other = (PrintingOrderTicketVO) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
-            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
+            && (this.getPrintingOrderId() == null ? other.getPrintingOrderId() == null : this.getPrintingOrderId().equals(other.getPrintingOrderId()))
+            && (this.getTicketId() == null ? other.getTicketId() == null : this.getTicketId().equals(other.getTicketId()))
+            && (this.getNumber() == null ? other.getNumber() == null : this.getNumber().equals(other.getNumber()))
             && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
     }
 
@@ -98,20 +98,20 @@ public class Role implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
-        result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
+        result = prime * result + ((getPrintingOrderId() == null) ? 0 : getPrintingOrderId().hashCode());
+        result = prime * result + ((getTicketId() == null) ? 0 : getTicketId().hashCode());
+        result = prime * result + ((getNumber() == null) ? 0 : getNumber().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         return result;
     }
 
     @Override
     public String toString() {
-        return "Role{" +
+        return "PrintingOrderTicketVO{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", remark='" + remark + '\'' +
+                ", printingOrderId=" + printingOrderId +
+                ", ticketId=" + ticketId +
+                ", number=" + number +
                 ", version=" + version +
                 '}';
     }

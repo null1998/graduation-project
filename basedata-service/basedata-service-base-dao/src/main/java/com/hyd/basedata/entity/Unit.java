@@ -47,6 +47,9 @@ public class Unit implements Serializable {
     private Long version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long dictionaryId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -189,6 +192,16 @@ public class Unit implements Serializable {
         this.version = version;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getDictionaryId() {
+        return dictionaryId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setDictionaryId(Long dictionaryId) {
+        this.dictionaryId = dictionaryId;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
@@ -215,7 +228,8 @@ public class Unit implements Serializable {
             && (this.getWebsite() == null ? other.getWebsite() == null : this.getWebsite().equals(other.getWebsite()))
             && (this.getZoneId() == null ? other.getZoneId() == null : this.getZoneId().equals(other.getZoneId()))
             && (this.getParentId() == null ? other.getParentId() == null : this.getParentId().equals(other.getParentId()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
+            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
+            && (this.getDictionaryId() == null ? other.getDictionaryId() == null : this.getDictionaryId().equals(other.getDictionaryId()));
     }
 
     @Override
@@ -237,6 +251,7 @@ public class Unit implements Serializable {
         result = prime * result + ((getZoneId() == null) ? 0 : getZoneId().hashCode());
         result = prime * result + ((getParentId() == null) ? 0 : getParentId().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
+        result = prime * result + ((getDictionaryId() == null) ? 0 : getDictionaryId().hashCode());
         return result;
     }
 }

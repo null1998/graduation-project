@@ -32,6 +32,15 @@ public class UnitVO {
     private Long parentId;
 
     private Long version;
+    private Long dictionaryId;
+
+    public Long getDictionaryId() {
+        return dictionaryId;
+    }
+
+    public void setDictionaryId(Long dictionaryId) {
+        this.dictionaryId = dictionaryId;
+    }
 
     public Long getParentId() {
         return parentId;
@@ -153,6 +162,7 @@ public class UnitVO {
                 ", website='" + website + '\'' +
                 ", parentId=" + parentId +
                 ", version=" + version +
+                ", dictionaryId=" + dictionaryId +
                 '}';
     }
 }

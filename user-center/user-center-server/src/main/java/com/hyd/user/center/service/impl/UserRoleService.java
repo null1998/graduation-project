@@ -73,6 +73,14 @@ public class UserRoleService implements IUserRoleService {
         }
         return userRoleMapper.listByUserId(userId);
     }
+    @Caching(evict = {@CacheEvict(value = {"UserRoleService::listByUserId"},allEntries = true)})
+    @Override
+    public void removeById(Long id) {
+        if (id == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
+        }
+        userRoleMapper.deleteByPrimaryKey(id);
+    }
 
 
 }
