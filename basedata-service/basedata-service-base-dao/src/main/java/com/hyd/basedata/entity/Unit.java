@@ -254,4 +254,25 @@ public class Unit implements Serializable {
         result = prime * result + ((getDictionaryId() == null) ? 0 : getDictionaryId().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Unit{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", mnemonic='" + mnemonic + '\'' +
+                ", master='" + master + '\'' +
+                ", taxNumber='" + taxNumber + '\'' +
+                ", faxNumber='" + faxNumber + '\'' +
+                ", telNumber='" + telNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", website='" + website + '\'' +
+                ", zoneId=" + zoneId +
+                ", parentId=" + parentId +
+                ", version=" + version +
+                ", dictionaryId=" + dictionaryId +
+                '}';
+    }
 }

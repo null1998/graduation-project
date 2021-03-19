@@ -1,11 +1,15 @@
 package com.hyd.financial.service.impl;
 
+import com.hyd.basedata.service.IUnitService;
+import com.hyd.basedata.service.IWarehouseService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
+import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.PrintingOrderMapper;
 import com.hyd.financial.entity.PrintingOrder;
 import com.hyd.financial.service.IPrintingOrderService;
+import com.hyd.financial.web.dto.PrintingOrderDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -13,6 +17,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author yanduohuang
@@ -24,6 +29,10 @@ public class PrintingOrderService implements IPrintingOrderService {
     private IdGenerator idGenerator;
     @Autowired
     private PrintingOrderMapper printingOrderMapper;
+    @Autowired
+    private IUnitService unitService;
+    @Autowired
+    private IWarehouseService warehouseService;
     @Caching(evict = {@CacheEvict(value = "PrintingOrderService::commonQuery",allEntries = true)})
     @Override
     public Long save(PrintingOrder printingOrder) {
@@ -37,7 +46,8 @@ public class PrintingOrderService implements IPrintingOrderService {
         printingOrderMapper.insertSelective(printingOrder);
         return id;
     }
-    @Caching(evict = {@CacheEvict(value = "PrintingOrderService::commonQuery",allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = "PrintingOrderService::commonQuery",allEntries = true),
+            @CacheEvict(value = {"PrintingOrderService::getById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -45,7 +55,8 @@ public class PrintingOrderService implements IPrintingOrderService {
         }
         return printingOrderMapper.deleteByPrimaryKey(id) == 1;
     }
-    @Caching(evict = {@CacheEvict(value = "PrintingOrderService::commonQuery",allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = "PrintingOrderService::commonQuery",allEntries = true),
+    @CacheEvict(value = {"PrintingOrderService::getById"},key = "#printingOrder.id")})
     @Override
     public Integer update(PrintingOrder printingOrder) {
         if (printingOrder == null) {
@@ -53,6 +64,26 @@ public class PrintingOrderService implements IPrintingOrderService {
         }
         return printingOrderMapper.updateByPrimaryKeySelective(printingOrder);
     }
+    @Cacheable(value = {"PrintingOrderService::getById"},key = "#id")
+    @Override
+    public PrintingOrderDTO getById(Long id) {
+        if (id == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
+        }
+        Optional<PrintingOrder> optional = printingOrderMapper.selectByPrimaryKey(id);
+        if (optional.isPresent()) {
+            PrintingOrderDTO printingOrderDTO = BeanUtil.copy(optional.get(), PrintingOrderDTO.class);
+            if (printingOrderDTO.getPrintUnitId()!=null) {
+                printingOrderDTO.setPrintUnitName(unitService.getUnitById(printingOrderDTO.getPrintUnitId()).getName());
+            }
+            if (printingOrderDTO.getWarehouseId() != null) {
+                printingOrderDTO.setWarehouseName(warehouseService.getWarehouseById(printingOrderDTO.getWarehouseId()).getName());
+            }
+            return printingOrderDTO;
+        }
+        return new PrintingOrderDTO();
+    }
+
     @Cacheable(value = {"PrintingOrderService::commonQuery"},key = "#printingOrder.toString()")
     @Override
     public List<PrintingOrder> commonQuery(PrintingOrder printingOrder) {

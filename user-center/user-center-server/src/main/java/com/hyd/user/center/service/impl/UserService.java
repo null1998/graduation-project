@@ -3,7 +3,9 @@ package com.hyd.user.center.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hyd.basedata.entity.Unit;
+import com.hyd.basedata.entity.Zone;
 import com.hyd.basedata.service.IUnitService;
+import com.hyd.basedata.service.IZoneService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.BeanUtil;
@@ -31,6 +33,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -51,6 +54,8 @@ public class UserService implements IUserService {
     private IUnitService unitService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IZoneService zoneService;
     @Caching(evict = {@CacheEvict(value = {"UserService::listAll"}, allEntries = true)})
     @Override
     public Long save(UserDTO userDTO) throws InvalidKeySpecException, NoSuchAlgorithmException {
@@ -173,7 +178,7 @@ public class UserService implements IUserService {
         if (user == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("未查询到相应的用户记录"));
         }
-
+        // 获取用户角色列表（没有递归查询所有基础角色）
         List<UserRole> userRoleList = userRoleService.listByUserId(id);
         ArrayList<String> roleNameList = new ArrayList<>();
         for (UserRole userRole : userRoleList) {
@@ -182,11 +187,22 @@ public class UserService implements IUserService {
         }
         UserDTO userDTO = BeanUtil.copy(user, UserDTO.class);
         userDTO.setRoleNameList(roleNameList);
+
         if (user.getUnitId()!=null){
             // 查询单位信息
             Unit unit = unitService.getUnitById(user.getUnitId());
-            // 设置区划id
-            userDTO.setZoneId(unit.getZoneId());
+            if (unit.getZoneId() !=null) {
+                // 设置区划id
+                userDTO.setZoneId(unit.getZoneId());
+                Zone zone = zoneService.getZoneById(unit.getZoneId());
+                List<Zone> provinceZoneList = zoneService.listProvinceZone();
+                for (Zone provinceZone : provinceZoneList) {
+                    if (zone.getCode()!=null&&Objects.equals(provinceZone.getCode(),zone.getCode().substring(0,2))) {
+                        userDTO.setProvinceZoneId(provinceZone.getId());
+                        break;
+                    }
+                }
+            }
         }
         return userDTO;
     }

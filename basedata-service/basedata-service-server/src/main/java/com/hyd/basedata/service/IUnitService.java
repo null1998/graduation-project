@@ -64,4 +64,10 @@ public interface IUnitService {
      */
     Unit getProvinceUnitByChildId(Long id);
 
+    /**
+     * 通用查询，根据字段id，zoneId，dictionaryId
+     * @param unit
+     * @return
+     */
+    List<Unit> commonQuery(Unit unit);
 }

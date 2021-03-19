@@ -28,5 +28,15 @@ public interface UnitMapper extends UnitBaseMapper {
         Optional<Unit> optional = this.selectOne(c -> c.where(UnitDynamicSqlSupport.code, SqlBuilder.isEqualTo(code)));
         return optional.orElseGet(Unit::new);
     }
+    /**
+     * 通用查询，根据字段id，zoneId，dictionaryId
+     * @param unit
+     * @return
+     */
+    default List<Unit> commonQuery(Unit unit) {
+        return this.select(c->c.where(UnitDynamicSqlSupport.id,SqlBuilder.isEqualToWhenPresent(unit.getId()))
+                .and(UnitDynamicSqlSupport.zoneId,SqlBuilder.isEqualToWhenPresent(unit.getZoneId()))
+                .and(UnitDynamicSqlSupport.dictionaryId,SqlBuilder.isEqualToWhenPresent(unit.getDictionaryId())));
+    }
 
 }

@@ -24,7 +24,7 @@ public class PrintingOrderController {
     IPrintingOrderService printingOrderService;
     @ApiLog
     @PostMapping
-    public Long save(@RequestParam PrintingOrderDTO printingOrderDTO) {
+    public Long save(@RequestBody PrintingOrderDTO printingOrderDTO) {
         PrintingOrder printingOrder = BeanUtil.copy(printingOrderDTO, PrintingOrder.class);
         return printingOrderService.save(printingOrder);
     }
@@ -35,10 +35,21 @@ public class PrintingOrderController {
     }
     @ApiLog
     @PutMapping
-    public Integer update(@RequestParam PrintingOrderDTO printingOrderDTO) {
+    public Integer update(@RequestBody PrintingOrderDTO printingOrderDTO) {
         PrintingOrder printingOrder = BeanUtil.copy(printingOrderDTO, PrintingOrder.class);
         return printingOrderService.update(printingOrder);
     }
+    @ApiLog
+    @GetMapping("/{id}")
+    public PrintingOrderVO getById(@PathVariable("id") Long id) {
+        PrintingOrderDTO printingOrderDTO = printingOrderService.getById(id);
+        return BeanUtil.copy(printingOrderDTO, PrintingOrderVO.class);
+    }
+    /**
+     * 通用查询，支持id，unitId，printUnitId，status字段
+     * @param printingOrderQO
+     * @return
+     */
     @ApiLog
     @GetMapping("/common/query")
     public List<PrintingOrderVO> commonQuery(PrintingOrderQO printingOrderQO) {

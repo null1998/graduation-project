@@ -2,6 +2,7 @@ package com.hyd.basedata.service.impl;
 
 import com.hyd.basedata.dao.UnitBaseMapper;
 import com.hyd.basedata.dao.WarehouseBaseMapper;
+import com.hyd.basedata.dao.WarehouseDynamicSqlSupport;
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.entity.Warehouse;
 import com.hyd.basedata.service.IWarehouseService;
@@ -9,10 +10,12 @@ import com.hyd.basedata.util.MnemonicUtil;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.IdGenerator;
+import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,7 +44,8 @@ public class WarehouseService implements IWarehouseService {
         warehouseBaseMapper.insertSelective(warehouse);
         return id;
     }
-    @CacheEvict(value = {"WarehouseService::getWarehouseById"},key = "#id")
+    @Caching(evict = {@CacheEvict(value = {"WarehouseService::listByUnitId"},allEntries = true),
+            @CacheEvict(value = {"WarehouseService::getWarehouseById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -49,7 +53,8 @@ public class WarehouseService implements IWarehouseService {
         }
         return warehouseBaseMapper.deleteByPrimaryKey(id) == 1;
     }
-    @CacheEvict(value = {"WarehouseService::getWarehouseById"},key = "#warehouse.id")
+    @Caching(evict = {@CacheEvict(value = {"WarehouseService::listByUnitId"},allEntries = true),
+            @CacheEvict(value = {"WarehouseService::getWarehouseById",},key = "#warehouse.id")})
     @Override
     public Integer update(Warehouse warehouse) {
         if (warehouse == null) {
@@ -68,6 +73,19 @@ public class WarehouseService implements IWarehouseService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("未查询到相应的仓库记录"));
         }
         return optional.get();
+    }
+
+    @Override
+    public List<Warehouse> commonQuery(Warehouse warehouse) {
+        return null;
+    }
+    @Cacheable(value = {"WarehouseService::listByUnitId"},key = "#unitId")
+    @Override
+    public List<Warehouse> listByUnitId(Long unitId) {
+        if (unitId == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位ID为空"));
+        }
+        return warehouseBaseMapper.select(c -> c.where(WarehouseDynamicSqlSupport.unitId, SqlBuilder.isEqualToWhenPresent(unitId)));
     }
 
     @Override

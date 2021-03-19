@@ -1,6 +1,7 @@
 package com.hyd.financial.service;
 
 import com.hyd.financial.entity.PrintingOrder;
+import com.hyd.financial.web.dto.PrintingOrderDTO;
 
 import java.util.List;
 
@@ -30,6 +31,12 @@ public interface IPrintingOrderService {
      */
     Integer update(PrintingOrder printingOrder);
 
+    /**
+     * 通过id查询
+     * @param id
+     * @return
+     */
+    PrintingOrderDTO getById(Long id);
     /**
      * 通用查询，支持id，unitId，printUnitId，status字段
      * @param printingOrder

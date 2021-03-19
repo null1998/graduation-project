@@ -2,6 +2,8 @@ package com.hyd.basedata.service;
 
 import com.hyd.basedata.entity.Warehouse;
 
+import java.util.List;
+
 /**
  * @author yanduohuang
  * @date 2021/2/1 16:47
@@ -35,5 +37,8 @@ public interface IWarehouseService {
      */
     Warehouse getWarehouseById(Long id);
 
+    List<Warehouse> commonQuery(Warehouse warehouse);
+
+    List<Warehouse> listByUnitId(Long unitId);
     void init();
 }

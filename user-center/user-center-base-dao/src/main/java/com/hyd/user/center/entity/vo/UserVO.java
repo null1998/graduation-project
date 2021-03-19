@@ -13,6 +13,7 @@ public class UserVO {
     private String username;
     private String nickname;
     private Long zoneId;
+    private Long provinceZoneId;
     private String avatar;
 
     private Integer sex;
@@ -29,6 +30,14 @@ public class UserVO {
     private ArrayList<Long> roleIdList;
     private ArrayList<String> roleNameList;
     private String unitName;
+
+    public Long getProvinceZoneId() {
+        return provinceZoneId;
+    }
+
+    public void setProvinceZoneId(Long provinceZoneId) {
+        this.provinceZoneId = provinceZoneId;
+    }
 
     public Long getZoneId() {
         return zoneId;
@@ -149,6 +158,7 @@ public class UserVO {
                 ", username='" + username + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", zoneId=" + zoneId +
+                ", provinceZoneId=" + provinceZoneId +
                 ", avatar='" + avatar + '\'' +
                 ", sex=" + sex +
                 ", birthday=" + birthday +

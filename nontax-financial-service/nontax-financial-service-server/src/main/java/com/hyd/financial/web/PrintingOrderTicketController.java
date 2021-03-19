@@ -22,13 +22,13 @@ public class PrintingOrderTicketController {
     private IPrintingOrderTicketService printingOrderTicketService;
     @ApiLog
     @PostMapping
-    public Long save(@RequestParam PrintingOrderTicketDTO printingOrderTicketDTO) {
+    public Long save(@RequestBody PrintingOrderTicketDTO printingOrderTicketDTO) {
         PrintingOrderTicket printingOrderTicket = BeanUtil.copy(printingOrderTicketDTO, PrintingOrderTicket.class);
         return printingOrderTicketService.save(printingOrderTicket);
     }
     @ApiLog
     @PostMapping("/list")
-    public void saveList(@RequestParam List<PrintingOrderTicketDTO> printingOrderTicketDTOList) {
+    public void saveList(@RequestBody List<PrintingOrderTicketDTO> printingOrderTicketDTOList) {
         List<PrintingOrderTicket> printingOrderTicketList = BeanUtil.copyList(printingOrderTicketDTOList, PrintingOrderTicket.class);
         printingOrderTicketService.saveList(printingOrderTicketList);
     }
@@ -39,7 +39,7 @@ public class PrintingOrderTicketController {
     }
     @ApiLog
     @PutMapping
-    public Integer update(@RequestParam PrintingOrderTicketDTO printingOrderTicketDTO) {
+    public Integer update(@RequestBody PrintingOrderTicketDTO printingOrderTicketDTO) {
         PrintingOrderTicket printingOrderTicket = BeanUtil.copy(printingOrderTicketDTO, PrintingOrderTicket.class);
         return printingOrderTicketService.update(printingOrderTicket);
     }

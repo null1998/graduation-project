@@ -4,6 +4,7 @@ import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.entity.vo.UnitVO;
 import com.hyd.basedata.service.IUnitService;
 import com.hyd.basedata.web.dto.UnitDTO;
+import com.hyd.basedata.web.qo.UnitQO;
 import com.hyd.common.core.annotation.ApiLog;
 import com.hyd.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,18 @@ public class UnitController {
     @GetMapping(value = "/all")
     public List<UnitVO> listAll() {
         List<Unit> unitList = unitService.listAll();
+        return BeanUtil.copyList(unitList, UnitVO.class);
+    }
+    /**
+     * 通用查询，根据字段id，zoneId，dictionaryId
+     * @param unitQO
+     * @return
+     */
+    @ApiLog
+    @GetMapping("/common/query")
+    public List<UnitVO> commonQuery(UnitQO unitQO) {
+        Unit unit = BeanUtil.copy(unitQO, Unit.class);
+        List<Unit> unitList = unitService.commonQuery(unit);
         return BeanUtil.copyList(unitList, UnitVO.class);
     }
 

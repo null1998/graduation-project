@@ -30,9 +30,26 @@ public class PrintingOrder implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer status;
-
+    private String person;
+    private String tel;
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+
+    public String getPerson() {
+        return person;
+    }
+
+    public void setPerson(String person) {
+        this.person = person;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -125,47 +142,6 @@ public class PrintingOrder implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        PrintingOrder other = (PrintingOrder) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getOrdernumber() == null ? other.getOrdernumber() == null : this.getOrdernumber().equals(other.getOrdernumber()))
-            && (this.getStart() == null ? other.getStart() == null : this.getStart().equals(other.getStart()))
-            && (this.getEnd() == null ? other.getEnd() == null : this.getEnd().equals(other.getEnd()))
-            && (this.getUnitId() == null ? other.getUnitId() == null : this.getUnitId().equals(other.getUnitId()))
-            && (this.getPrintUnitId() == null ? other.getPrintUnitId() == null : this.getPrintUnitId().equals(other.getPrintUnitId()))
-            && (this.getWarehouseId() == null ? other.getWarehouseId() == null : this.getWarehouseId().equals(other.getWarehouseId()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
-    }
-
-    @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getOrdernumber() == null) ? 0 : getOrdernumber().hashCode());
-        result = prime * result + ((getStart() == null) ? 0 : getStart().hashCode());
-        result = prime * result + ((getEnd() == null) ? 0 : getEnd().hashCode());
-        result = prime * result + ((getUnitId() == null) ? 0 : getUnitId().hashCode());
-        result = prime * result + ((getPrintUnitId() == null) ? 0 : getPrintUnitId().hashCode());
-        result = prime * result + ((getWarehouseId() == null) ? 0 : getWarehouseId().hashCode());
-        result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
-        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "PrintingOrder{" +
                 "id=" + id +
@@ -177,6 +153,8 @@ public class PrintingOrder implements Serializable {
                 ", warehouseId=" + warehouseId +
                 ", version=" + version +
                 ", status=" + status +
+                ", person='" + person + '\'' +
+                ", tel='" + tel + '\'' +
                 '}';
     }
 }

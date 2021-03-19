@@ -3,6 +3,7 @@ package com.hyd.basedata.service.impl;
 import com.hyd.basedata.dao.UnitMapper;
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.service.IUnitService;
+import com.hyd.basedata.util.MnemonicUtil;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.IdGenerator;
@@ -28,7 +29,7 @@ public class UnitService implements IUnitService {
     private IdGenerator idGenerator;
     @Autowired
     private IUnitService unitService;
-    @Caching(evict = {@CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll","UnitService::getByCode"}, allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll","UnitService::getByCode","UnitService::commonQuery"}, allEntries = true)})
     @Override
     public Long save(Unit unit) {
         if (unit == null) {
@@ -36,6 +37,7 @@ public class UnitService implements IUnitService {
         }
         long uid = idGenerator.snowflakeId();
         unit.setId(uid);
+        unit.setMnemonic(MnemonicUtil.buildMnemonic(unit.getName()));
         unitMapper.insertSelective(unit);
         return uid;
     }
@@ -60,7 +62,7 @@ public class UnitService implements IUnitService {
         return unitMapper.listUnitByParentId(parentId);
     }
     @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById","UnitService::getProvinceUnitByChildId"}, key="#id"),
-            @CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll","UnitService::getByCode"}, allEntries = true)})
+            @CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll","UnitService::getByCode","UnitService::commonQuery"}, allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -69,8 +71,8 @@ public class UnitService implements IUnitService {
         return unitMapper.deleteByPrimaryKey(id) == 1;
     }
     @Caching(evict = {@CacheEvict(value = {"UnitService::getUnitById","UnitService::getProvinceUnitByChildId"}, key="#unit.id"),
-            @CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll"}, allEntries = true),
-            @CacheEvict(value = {"UnitService::getByCode"},key = "unit.code")})
+            @CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll","UnitService::commonQuery"}, allEntries = true),
+            @CacheEvict(value = {"UnitService::getByCode"},key = "#unit.code")})
     @Override
     public Integer update(Unit unit) {
         if (unit == null) {
@@ -105,6 +107,14 @@ public class UnitService implements IUnitService {
             return unitService.getByCode(provinceCode);
         }
         return new Unit();
+    }
+    @Cacheable(value = {"UnitService::commonQuery"},key = "#unit.toString()")
+    @Override
+    public List<Unit> commonQuery(Unit unit) {
+        if (unit == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位为空"));
+        }
+        return unitMapper.commonQuery(unit);
     }
 
 }
