@@ -2,6 +2,7 @@ package com.hyd.financial.web.dto;
 
 import javax.annotation.Generated;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class PrintingOrderTicketDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -13,6 +14,8 @@ public class PrintingOrderTicketDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long ticketId;
 
+    private BigDecimal price;
+
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long number;
 
@@ -21,6 +24,14 @@ public class PrintingOrderTicketDTO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -73,35 +84,14 @@ public class PrintingOrderTicketDTO implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        PrintingOrderTicketDTO other = (PrintingOrderTicketDTO) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getPrintingOrderId() == null ? other.getPrintingOrderId() == null : this.getPrintingOrderId().equals(other.getPrintingOrderId()))
-            && (this.getTicketId() == null ? other.getTicketId() == null : this.getTicketId().equals(other.getTicketId()))
-            && (this.getNumber() == null ? other.getNumber() == null : this.getNumber().equals(other.getNumber()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
-    }
-
-    @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getPrintingOrderId() == null) ? 0 : getPrintingOrderId().hashCode());
-        result = prime * result + ((getTicketId() == null) ? 0 : getTicketId().hashCode());
-        result = prime * result + ((getNumber() == null) ? 0 : getNumber().hashCode());
-        result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
-        return result;
+    public String toString() {
+        return "PrintingOrderTicketDTO{" +
+                "id=" + id +
+                ", printingOrderId=" + printingOrderId +
+                ", ticketId=" + ticketId +
+                ", price=" + price +
+                ", number=" + number +
+                ", version=" + version +
+                '}';
     }
 }

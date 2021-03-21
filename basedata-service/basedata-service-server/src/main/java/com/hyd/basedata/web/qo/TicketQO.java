@@ -4,12 +4,21 @@ import com.hyd.common.core.pojo.qo.BaseQO;
 
 /**
  * @author yanduohuang
- * @date 2021/3/19 1:09
+ * @date 2021/3/21 0:24
  */
-public class UnitQO  extends BaseQO {
+public class TicketQO  extends BaseQO {
     private Long id;
     private Long zoneId;
-    private Long dictionaryId;
+    private String year;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
@@ -27,20 +36,21 @@ public class UnitQO  extends BaseQO {
         this.zoneId = zoneId;
     }
 
-    public Long getDictionaryId() {
-        return dictionaryId;
+    public String getYear() {
+        return year;
     }
 
-    public void setDictionaryId(Long dictionaryId) {
-        this.dictionaryId = dictionaryId;
+    public void setYear(String year) {
+        this.year = year;
     }
 
     @Override
     public String toString() {
-        return "UnitQO{" +
+        return "TicketQO{" +
                 "id=" + id +
                 ", zoneId=" + zoneId +
-                ", dictionaryId=" + dictionaryId +
+                ", year='" + year + '\'' +
+                ", name='" + name + '\'' +
                 "} " + super.toString();
     }
 }

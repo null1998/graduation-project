@@ -42,5 +42,5 @@ public interface IPrintingOrderService {
      * @param printingOrder
      * @return
      */
-    List<PrintingOrder> commonQuery(PrintingOrder printingOrder);
+    List<PrintingOrderDTO> commonQuery(PrintingOrder printingOrder);
 }

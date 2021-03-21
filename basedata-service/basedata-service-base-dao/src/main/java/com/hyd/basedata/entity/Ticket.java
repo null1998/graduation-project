@@ -180,4 +180,20 @@ public class Ticket implements Serializable {
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", zoneId=" + zoneId +
+                ", dictionaryId=" + dictionaryId +
+                ", year='" + year + '\'' +
+                ", code='" + code + '\'' +
+                ", mnemonic='" + mnemonic + '\'' +
+                ", price=" + price +
+                ", unitOfMeasurement='" + unitOfMeasurement + '\'' +
+                ", version=" + version +
+                '}';
+    }
 }

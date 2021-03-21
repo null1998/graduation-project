@@ -3,6 +3,7 @@ package com.hyd.financial.web;
 import com.hyd.common.core.annotation.ApiLog;
 import com.hyd.common.util.BeanUtil;
 import com.hyd.financial.entity.PrintingOrderTicket;
+import com.hyd.financial.entity.vo.PrintingOrderTicketVO;
 import com.hyd.financial.service.IPrintingOrderTicketService;
 import com.hyd.financial.web.dto.PrintingOrderTicketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,8 @@ public class PrintingOrderTicketController {
     }
     @ApiLog
     @GetMapping("/printing/order/{printingOrderId}")
-    public List<PrintingOrderTicket> listByPrintingOrderId(@PathVariable("printingOrderId") Long printingOrderId) {
-        return printingOrderTicketService.listByPrintingOrderId(printingOrderId);
+    public List<PrintingOrderTicketVO> listByPrintingOrderId(@PathVariable("printingOrderId") Long printingOrderId) {
+        List<PrintingOrderTicketDTO> printingOrderTicketDTOList = printingOrderTicketService.listByPrintingOrderId(printingOrderId);
+        return BeanUtil.copyList(printingOrderTicketDTOList, PrintingOrderTicketVO.class);
     }
 }

@@ -13,4 +13,15 @@ public interface TicketMapper extends TicketBaseMapper {
     default List<Ticket> listByZoneId(Long zoneId) {
         return this.select(c -> c.where(TicketDynamicSqlSupport.zoneId, SqlBuilder.isEqualTo(zoneId)));
     }
+    /**
+     * 通用查询。支持字段id，zoneId，year，name
+     * @param ticket
+     * @return
+     */
+    default List<Ticket> commonQuery(Ticket ticket) {
+        return this.select(c->c.where(TicketDynamicSqlSupport.id,SqlBuilder.isEqualToWhenPresent(ticket.getId()))
+                .and(TicketDynamicSqlSupport.zoneId,SqlBuilder.isEqualToWhenPresent(ticket.getZoneId()))
+                .and(TicketDynamicSqlSupport.year,SqlBuilder.isEqualToWhenPresent(ticket.getYear()))
+                .and(TicketDynamicSqlSupport.name,SqlBuilder.isEqualToWhenPresent(ticket.getName())));
+    }
 }

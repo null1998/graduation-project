@@ -31,6 +31,7 @@ public class PrintingOrderController {
     @ApiLog
     @DeleteMapping("/{id}")
     public Boolean remove(@PathVariable("id") Long id) {
+
         return printingOrderService.remove(id);
     }
     @ApiLog
@@ -54,8 +55,8 @@ public class PrintingOrderController {
     @GetMapping("/common/query")
     public List<PrintingOrderVO> commonQuery(PrintingOrderQO printingOrderQO) {
         PrintingOrder printingOrder = BeanUtil.copy(printingOrderQO, PrintingOrder.class);
-        List<PrintingOrder> printingOrderList = printingOrderService.commonQuery(printingOrder);
-        return BeanUtil.copyList(printingOrderList, PrintingOrderVO.class);
+        List<PrintingOrderDTO> printingOrderDTOList = printingOrderService.commonQuery(printingOrder);
+        return BeanUtil.copyList(printingOrderDTOList, PrintingOrderVO.class);
     }
 
 }

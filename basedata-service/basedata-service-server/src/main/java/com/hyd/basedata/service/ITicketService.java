@@ -48,4 +48,11 @@ public interface ITicketService {
      * @return
      */
     List<Ticket> listAll();
+
+    /**
+     * 通用查询。支持字段id，zoneId，year，name
+     * @param ticket
+     * @return
+     */
+    List<Ticket> commonQuery(Ticket ticket);
 }

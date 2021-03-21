@@ -28,7 +28,7 @@ public class TicketService implements ITicketService {
     private TicketMapper ticketMapper;
     @Autowired
     private IdGenerator idGenerator;
-    @Caching(evict = {@CacheEvict(value = {"TicketService::listAll","TicketService::listByZoneId"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"TicketService::listAll","TicketService::listByZoneId","TicketService::commonQuery"},allEntries = true)})
     @Override
     public Long save(Ticket ticket) {
         if (ticket == null) {
@@ -41,7 +41,7 @@ public class TicketService implements ITicketService {
         return id;
     }
     @Caching(evict = {@CacheEvict(value = {"TicketService::getTicketById"},key="#id"),
-            @CacheEvict(value = {"TicketService::listAll","TicketService::listByZoneId"},allEntries = true)})
+            @CacheEvict(value = {"TicketService::listAll","TicketService::listByZoneId","TicketService::commonQuery"},allEntries = true)})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -50,7 +50,7 @@ public class TicketService implements ITicketService {
         return ticketMapper.deleteByPrimaryKey(id) == 1;
     }
     @Caching(evict = {@CacheEvict(value = {"TicketService::getTicketById"},key="#ticket.id"),
-            @CacheEvict(value = {"TicketService::listAll","TicketService::listByZoneId"},allEntries = true)})
+            @CacheEvict(value = {"TicketService::listAll","TicketService::listByZoneId","TicketService::commonQuery"},allEntries = true)})
     @Override
     public Integer update(Ticket ticket) {
         if (ticket == null) {
@@ -83,5 +83,13 @@ public class TicketService implements ITicketService {
     @Override
     public List<Ticket> listAll() {
         return ticketMapper.select(QueryExpressionDSL::where);
+    }
+    @Cacheable(value = "TicketService::commonQuery",key = "#ticket.toString()")
+    @Override
+    public List<Ticket> commonQuery(Ticket ticket) {
+        if (ticket == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("票据为空"));
+        }
+        return ticketMapper.commonQuery(ticket);
     }
 }

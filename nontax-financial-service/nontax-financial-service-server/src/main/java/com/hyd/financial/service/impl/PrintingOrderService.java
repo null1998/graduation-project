@@ -1,5 +1,7 @@
 package com.hyd.financial.service.impl;
 
+import com.hyd.basedata.entity.Unit;
+import com.hyd.basedata.entity.Warehouse;
 import com.hyd.basedata.service.IUnitService;
 import com.hyd.basedata.service.IWarehouseService;
 import com.hyd.common.core.exception.BusinessException;
@@ -86,10 +88,22 @@ public class PrintingOrderService implements IPrintingOrderService {
 
     @Cacheable(value = {"PrintingOrderService::commonQuery"},key = "#printingOrder.toString()")
     @Override
-    public List<PrintingOrder> commonQuery(PrintingOrder printingOrder) {
+    public List<PrintingOrderDTO> commonQuery(PrintingOrder printingOrder) {
         if (printingOrder == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("印制订单为空"));
         }
-        return printingOrderMapper.commonQuery(printingOrder);
+        List<PrintingOrder> printingOrderList = printingOrderMapper.commonQuery(printingOrder);
+        List<PrintingOrderDTO> printingOrderDTOList = BeanUtil.copyList(printingOrderList, PrintingOrderDTO.class);
+        for (PrintingOrderDTO printingOrderDTO : printingOrderDTOList) {
+            if (printingOrderDTO.getWarehouseId()!=null) {
+                Warehouse warehouse = warehouseService.getWarehouseById(printingOrderDTO.getWarehouseId());
+                printingOrderDTO.setWarehouseName(warehouse.getName());
+            }
+            if (printingOrderDTO.getPrintUnitId()!=null) {
+                Unit printUnit = unitService.getUnitById(printingOrderDTO.getPrintUnitId());
+                printingOrderDTO.setPrintUnitName(printUnit.getName());
+            }
+        }
+        return printingOrderDTOList;
     }
 }

@@ -1,6 +1,7 @@
 package com.hyd.financial.service;
 
 import com.hyd.financial.entity.PrintingOrderTicket;
+import com.hyd.financial.web.dto.PrintingOrderTicketDTO;
 
 import java.util.List;
 
@@ -39,5 +40,5 @@ public interface IPrintingOrderTicketService {
      * @param printingOrderId 印制订单id
      * @return
      */
-    List<PrintingOrderTicket> listByPrintingOrderId(Long printingOrderId);
+    List<PrintingOrderTicketDTO> listByPrintingOrderId(Long printingOrderId);
 }

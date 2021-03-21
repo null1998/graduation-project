@@ -36,10 +36,13 @@
 <!--        <table tableName="financial_printing_plan" mapperName="PrintingPlanBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
 <!--        </table>-->
-        <table tableName="financial_printing_order" mapperName="PrintingOrderBaseMapper">
-            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
-        </table>
-        <table tableName="financial_printing_order_ticket" mapperName="PrintingOrderTicketBaseMapper">
+<!--        <table tableName="financial_printing_order" mapperName="PrintingOrderBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
+<!--        </table>-->
+<!--        <table tableName="financial_printing_order_ticket" mapperName="PrintingOrderTicketBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
+<!--        </table>-->
+        <table tableName="financial_ticket_product_record" mapperName="TicketProductRecordBaseMapper">
             <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
         </table>
 <!--        <table tableName="financial_printing_plan_ticket" mapperName="PrintingPlanTicketBaseMapper">-->

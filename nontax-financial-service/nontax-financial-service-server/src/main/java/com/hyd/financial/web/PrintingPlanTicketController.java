@@ -70,7 +70,8 @@ public class PrintingPlanTicketController {
     }
     @ApiLog
     @PutMapping
-    public Integer update(@RequestBody PrintingPlanTicket printingPlanTicket) {
+    public Integer update(@RequestBody PrintingPlanTicketDTO printingPlanTicketDTO) {
+        PrintingPlanTicket printingPlanTicket = BeanUtil.copy(printingPlanTicketDTO, PrintingPlanTicket.class);
         return printingPlanTicketService.update(printingPlanTicket);
     }
     /**

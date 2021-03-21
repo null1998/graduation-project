@@ -1,11 +1,13 @@
 package com.hyd.financial.web.qo;
 
 
+import com.hyd.common.core.pojo.qo.BaseQO;
+
 /**
  * @author yanduohuang
  * @date 2021/3/18 19:07
  */
-public class PrintingOrderQO {
+public class PrintingOrderQO  extends BaseQO {
     private Long id;
     private Long unitId;
 
@@ -51,6 +53,6 @@ public class PrintingOrderQO {
                 ", unitId=" + unitId +
                 ", printUnitId=" + printUnitId +
                 ", status=" + status +
-                '}';
+                "} " + super.toString();
     }
 }

@@ -4,6 +4,7 @@ import com.hyd.basedata.entity.Ticket;
 import com.hyd.basedata.entity.vo.TicketVO;
 import com.hyd.basedata.service.ITicketService;
 import com.hyd.basedata.web.dto.TicketDTO;
+import com.hyd.basedata.web.qo.TicketQO;
 import com.hyd.common.core.annotation.ApiLog;
 import com.hyd.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,18 @@ public class TicketController {
     @GetMapping(value = "/all")
     public List<TicketVO> listAll() {
         List<Ticket> ticketList = ticketService.listAll();
+        return BeanUtil.copyList(ticketList, TicketVO.class);
+    }
+    /**
+     * 通用查询。支持字段id，zoneId，year，name
+     * @param ticketQO
+     * @return
+     */
+    @ApiLog
+    @GetMapping("/common/query")
+    public List<TicketVO> commonQuery(TicketQO ticketQO) {
+        Ticket ticket = BeanUtil.copy(ticketQO, Ticket.class);
+        List<Ticket> ticketList = ticketService.commonQuery(ticket);
         return BeanUtil.copyList(ticketList, TicketVO.class);
     }
 }
