@@ -21,7 +21,7 @@ public class TicketProductRecordVO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String endNumber;
-
+    private Integer number;
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long printOrderNumber;
 
@@ -33,7 +33,6 @@ public class TicketProductRecordVO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
-    private Integer number;
 
     public Integer getNumber() {
         return number;

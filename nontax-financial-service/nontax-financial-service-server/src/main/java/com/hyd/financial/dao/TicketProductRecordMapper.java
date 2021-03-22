@@ -21,6 +21,6 @@ public interface TicketProductRecordMapper extends TicketProductRecordBaseMapper
                 .and(TicketProductRecordDynamicSqlSupport.ticketId,SqlBuilder.isEqualToWhenPresent(ticketProductRecord.getTicketId()))
                 .and(TicketProductRecordDynamicSqlSupport.printOrderNumber,SqlBuilder.isEqualToWhenPresent(ticketProductRecord.getPrintOrderNumber()))
                 .and(TicketProductRecordDynamicSqlSupport.printUnitId, SqlBuilder.isEqualToWhenPresent(ticketProductRecord.getPrintUnitId()))
-                .orderBy(TicketProductRecordDynamicSqlSupport.endNumber.descending()));
+                .orderBy(TicketProductRecordDynamicSqlSupport.createdDate.descending()));
     }
 }

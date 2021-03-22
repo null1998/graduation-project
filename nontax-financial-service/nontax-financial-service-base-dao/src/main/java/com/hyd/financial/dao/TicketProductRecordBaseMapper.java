@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface TicketProductRecordBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, printUnitId, ticketId, startNumber, endNumber, printOrderNumber, version, createdDate);
+    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, printUnitId, ticketId, number, startNumber, endNumber, printOrderNumber, version, createdDate);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -60,6 +60,7 @@ public interface TicketProductRecordBaseMapper {
         @Result(column="order_number", property="orderNumber", jdbcType=JdbcType.BIGINT),
         @Result(column="print_unit_id", property="printUnitId", jdbcType=JdbcType.BIGINT),
         @Result(column="ticket_id", property="ticketId", jdbcType=JdbcType.BIGINT),
+        @Result(column="number", property="number", jdbcType=JdbcType.INTEGER),
         @Result(column="start_number", property="startNumber", jdbcType=JdbcType.VARCHAR),
         @Result(column="end_number", property="endNumber", jdbcType=JdbcType.VARCHAR),
         @Result(column="print_order_number", property="printOrderNumber", jdbcType=JdbcType.BIGINT),
@@ -101,6 +102,7 @@ public interface TicketProductRecordBaseMapper {
             .map(orderNumber).toProperty("orderNumber")
             .map(printUnitId).toProperty("printUnitId")
             .map(ticketId).toProperty("ticketId")
+            .map(number).toProperty("number")
             .map(startNumber).toProperty("startNumber")
             .map(endNumber).toProperty("endNumber")
             .map(printOrderNumber).toProperty("printOrderNumber")
@@ -116,6 +118,7 @@ public interface TicketProductRecordBaseMapper {
             .map(orderNumber).toProperty("orderNumber")
             .map(printUnitId).toProperty("printUnitId")
             .map(ticketId).toProperty("ticketId")
+            .map(number).toProperty("number")
             .map(startNumber).toProperty("startNumber")
             .map(endNumber).toProperty("endNumber")
             .map(printOrderNumber).toProperty("printOrderNumber")
@@ -131,6 +134,7 @@ public interface TicketProductRecordBaseMapper {
             .map(orderNumber).toPropertyWhenPresent("orderNumber", record::getOrderNumber)
             .map(printUnitId).toPropertyWhenPresent("printUnitId", record::getPrintUnitId)
             .map(ticketId).toPropertyWhenPresent("ticketId", record::getTicketId)
+            .map(number).toPropertyWhenPresent("number", record::getNumber)
             .map(startNumber).toPropertyWhenPresent("startNumber", record::getStartNumber)
             .map(endNumber).toPropertyWhenPresent("endNumber", record::getEndNumber)
             .map(printOrderNumber).toPropertyWhenPresent("printOrderNumber", record::getPrintOrderNumber)
@@ -172,6 +176,7 @@ public interface TicketProductRecordBaseMapper {
                 .set(orderNumber).equalTo(record::getOrderNumber)
                 .set(printUnitId).equalTo(record::getPrintUnitId)
                 .set(ticketId).equalTo(record::getTicketId)
+                .set(number).equalTo(record::getNumber)
                 .set(startNumber).equalTo(record::getStartNumber)
                 .set(endNumber).equalTo(record::getEndNumber)
                 .set(printOrderNumber).equalTo(record::getPrintOrderNumber)
@@ -185,6 +190,7 @@ public interface TicketProductRecordBaseMapper {
                 .set(orderNumber).equalToWhenPresent(record::getOrderNumber)
                 .set(printUnitId).equalToWhenPresent(record::getPrintUnitId)
                 .set(ticketId).equalToWhenPresent(record::getTicketId)
+                .set(number).equalToWhenPresent(record::getNumber)
                 .set(startNumber).equalToWhenPresent(record::getStartNumber)
                 .set(endNumber).equalToWhenPresent(record::getEndNumber)
                 .set(printOrderNumber).equalToWhenPresent(record::getPrintOrderNumber)
@@ -198,6 +204,7 @@ public interface TicketProductRecordBaseMapper {
             c.set(orderNumber).equalTo(record::getOrderNumber)
             .set(printUnitId).equalTo(record::getPrintUnitId)
             .set(ticketId).equalTo(record::getTicketId)
+            .set(number).equalTo(record::getNumber)
             .set(startNumber).equalTo(record::getStartNumber)
             .set(endNumber).equalTo(record::getEndNumber)
             .set(printOrderNumber).equalTo(record::getPrintOrderNumber)
@@ -213,6 +220,7 @@ public interface TicketProductRecordBaseMapper {
             c.set(orderNumber).equalToWhenPresent(record::getOrderNumber)
             .set(printUnitId).equalToWhenPresent(record::getPrintUnitId)
             .set(ticketId).equalToWhenPresent(record::getTicketId)
+            .set(number).equalToWhenPresent(record::getNumber)
             .set(startNumber).equalToWhenPresent(record::getStartNumber)
             .set(endNumber).equalToWhenPresent(record::getEndNumber)
             .set(printOrderNumber).equalToWhenPresent(record::getPrintOrderNumber)

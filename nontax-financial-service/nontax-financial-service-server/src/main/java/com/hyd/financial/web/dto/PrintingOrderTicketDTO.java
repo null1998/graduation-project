@@ -13,6 +13,7 @@ public class PrintingOrderTicketDTO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long ticketId;
+    private String ticketName;
 
     private BigDecimal price;
 
@@ -24,6 +25,14 @@ public class PrintingOrderTicketDTO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+
+    public String getTicketName() {
+        return ticketName;
+    }
+
+    public void setTicketName(String ticketName) {
+        this.ticketName = ticketName;
+    }
 
     public BigDecimal getPrice() {
         return price;
@@ -89,6 +98,7 @@ public class PrintingOrderTicketDTO implements Serializable {
                 "id=" + id +
                 ", printingOrderId=" + printingOrderId +
                 ", ticketId=" + ticketId +
+                ", ticketName='" + ticketName + '\'' +
                 ", price=" + price +
                 ", number=" + number +
                 ", version=" + version +

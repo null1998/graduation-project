@@ -15,9 +15,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author yanduohuang
@@ -50,13 +52,15 @@ public class TicketProductRecordService implements ITicketProductRecordService {
             query.setTicketId(ticketId);
             // 查询该票据过去的生产记录
             List<TicketProductRecord> ticketProductRecordList = ticketProductRecordService.commonQuery(query);
+            // 按终止号倒序
+            ticketProductRecordList = ticketProductRecordList.stream().sorted(Comparator.comparing(TicketProductRecord::getEndNumber).reversed()).collect(Collectors.toList());
             if (ticketProductRecordList == null || ticketProductRecordList.isEmpty()) {
                 // 没有生产记录则初始化票号
                 ticketProductRecord.setStartNumber(TicketCodeConvertUtil.longConvertString(0L));
                 ticketProductRecord.setEndNumber(TicketCodeConvertUtil.longConvertString(Long.parseLong(number.toString())-1));
             } else {
                 // 有生产记录则记录新的票号
-                TicketProductRecord lastRecord = ticketProductRecordList.get(ticketProductRecordList.size() - 1);
+                TicketProductRecord lastRecord = ticketProductRecordList.get(0);
                 Long lastEndNumber = TicketCodeConvertUtil.stringConvertLong(lastRecord.getEndNumber());
                 ticketProductRecord.setStartNumber(TicketCodeConvertUtil.longConvertString(lastEndNumber+1));
                 ticketProductRecord.setEndNumber(TicketCodeConvertUtil.longConvertString(lastEndNumber+number));
@@ -86,7 +90,13 @@ public class TicketProductRecordService implements ITicketProductRecordService {
         if (ticketProductRecord == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("票据生产记录为空"));
         }
-        return ticketProductRecordMapper.updateByPrimaryKeySelective(ticketProductRecord);
+        Long oldId = ticketProductRecord.getId();
+        Long id = ticketProductRecordService.save(ticketProductRecord);
+        if (id!=null&&ticketProductRecord.getId()!=null) {
+            ticketProductRecordService.remove(oldId);
+            return 2;
+        }
+        return 0;
     }
     @Cacheable(value = "TicketProductRecordService::commonQuery",key = "#ticketProductRecord.toString()")
     @Override

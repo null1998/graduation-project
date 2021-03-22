@@ -82,6 +82,7 @@ public class PrintingOrderTicketService implements IPrintingOrderTicketService {
         for (PrintingOrderTicketDTO printingOrderTicketDTO : printingOrderTicketDTOList) {
             Ticket ticket = ticketService.getTicketById(printingOrderTicketDTO.getTicketId());
             printingOrderTicketDTO.setPrice(ticket.getPrice());
+            printingOrderTicketDTO.setTicketName(ticket.getName());
         }
         return printingOrderTicketDTOList;
     }

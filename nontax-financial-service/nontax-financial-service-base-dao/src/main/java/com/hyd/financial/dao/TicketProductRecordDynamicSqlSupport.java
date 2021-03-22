@@ -22,6 +22,9 @@ public final class TicketProductRecordDynamicSqlSupport {
     public static final SqlColumn<Long> ticketId = ticketProductRecord.ticketId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> number = ticketProductRecord.number;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> startNumber = ticketProductRecord.startNumber;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -45,6 +48,8 @@ public final class TicketProductRecordDynamicSqlSupport {
         public final SqlColumn<Long> printUnitId = column("print_unit_id", JDBCType.BIGINT);
 
         public final SqlColumn<Long> ticketId = column("ticket_id", JDBCType.BIGINT);
+
+        public final SqlColumn<Integer> number = column("number", JDBCType.INTEGER);
 
         public final SqlColumn<String> startNumber = column("start_number", JDBCType.VARCHAR);
 
