@@ -106,7 +106,7 @@ public class TicketProductRecordService implements ITicketProductRecordService {
         }
         return ticketProductRecordMapper.commonQuery(ticketProductRecord);
     }
-    @Cacheable(value = "TicketProductRecordService::commonQuery",key = "#id")
+    @Cacheable(value = "TicketProductRecordService::getById",key = "#id")
     @Override
     public TicketProductRecord getById(Long id) {
         if (id == null) {
