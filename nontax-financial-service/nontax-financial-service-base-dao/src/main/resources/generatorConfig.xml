@@ -49,6 +49,9 @@
         <table tableName="financial_ticket_store_record" mapperName="TicketStoreRecordBaseMapper">
             <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
         </table>
+        <table tableName="financial_ticket_store_record_ticket" mapperName="TicketStoreRecordTicketBaseMapper">
+            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
+        </table>
 <!--        <table tableName="financial_printing_plan_ticket" mapperName="PrintingPlanTicketBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
 <!--        </table>-->

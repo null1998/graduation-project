@@ -27,6 +27,24 @@ public class TicketStoreRecordQO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+    private Long dictionaryId;
+    private String storeDate;
+
+    public String getStoreDate() {
+        return storeDate;
+    }
+
+    public void setStoreDate(String storeDate) {
+        this.storeDate = storeDate;
+    }
+
+    public Long getDictionaryId() {
+        return dictionaryId;
+    }
+
+    public void setDictionaryId(Long dictionaryId) {
+        this.dictionaryId = dictionaryId;
+    }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -99,57 +117,17 @@ public class TicketStoreRecordQO implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        TicketStoreRecordQO other = (TicketStoreRecordQO) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getOrderNumber() == null ? other.getOrderNumber() == null : this.getOrderNumber().equals(other.getOrderNumber()))
-            && (this.getSourceOrderNumber() == null ? other.getSourceOrderNumber() == null : this.getSourceOrderNumber().equals(other.getSourceOrderNumber()))
-            && (this.getUnitId() == null ? other.getUnitId() == null : this.getUnitId().equals(other.getUnitId()))
-            && (this.getSourceUnitId() == null ? other.getSourceUnitId() == null : this.getSourceUnitId().equals(other.getSourceUnitId()))
-            && (this.getSourceWarehouseId() == null ? other.getSourceWarehouseId() == null : this.getSourceWarehouseId().equals(other.getSourceWarehouseId()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
-    }
-
-    @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getOrderNumber() == null) ? 0 : getOrderNumber().hashCode());
-        result = prime * result + ((getSourceOrderNumber() == null) ? 0 : getSourceOrderNumber().hashCode());
-        result = prime * result + ((getUnitId() == null) ? 0 : getUnitId().hashCode());
-        result = prime * result + ((getSourceUnitId() == null) ? 0 : getSourceUnitId().hashCode());
-        result = prime * result + ((getSourceWarehouseId() == null) ? 0 : getSourceWarehouseId().hashCode());
-        result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
-        return result;
-    }
-
-    @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", orderNumber=").append(orderNumber);
-        sb.append(", sourceOrderNumber=").append(sourceOrderNumber);
-        sb.append(", unitId=").append(unitId);
-        sb.append(", sourceUnitId=").append(sourceUnitId);
-        sb.append(", sourceWarehouseId=").append(sourceWarehouseId);
-        sb.append(", version=").append(version);
-        sb.append("]");
-        return sb.toString();
+        return "TicketStoreRecordQO{" +
+                "id=" + id +
+                ", orderNumber=" + orderNumber +
+                ", sourceOrderNumber=" + sourceOrderNumber +
+                ", unitId=" + unitId +
+                ", sourceUnitId=" + sourceUnitId +
+                ", sourceWarehouseId=" + sourceWarehouseId +
+                ", version=" + version +
+                ", dictionaryId=" + dictionaryId +
+                ", storeDate='" + storeDate + '\'' +
+                '}';
     }
 }

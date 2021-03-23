@@ -26,6 +26,12 @@ public class TicketStoreRecord implements Serializable {
     private Long version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Long dictionaryId;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String storeDate;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -98,6 +104,26 @@ public class TicketStoreRecord implements Serializable {
         this.version = version;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Long getDictionaryId() {
+        return dictionaryId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setDictionaryId(Long dictionaryId) {
+        this.dictionaryId = dictionaryId;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getStoreDate() {
+        return storeDate;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setStoreDate(String storeDate) {
+        this.storeDate = storeDate;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
@@ -117,7 +143,9 @@ public class TicketStoreRecord implements Serializable {
             && (this.getUnitId() == null ? other.getUnitId() == null : this.getUnitId().equals(other.getUnitId()))
             && (this.getSourceUnitId() == null ? other.getSourceUnitId() == null : this.getSourceUnitId().equals(other.getSourceUnitId()))
             && (this.getSourceWarehouseId() == null ? other.getSourceWarehouseId() == null : this.getSourceWarehouseId().equals(other.getSourceWarehouseId()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
+            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
+            && (this.getDictionaryId() == null ? other.getDictionaryId() == null : this.getDictionaryId().equals(other.getDictionaryId()))
+            && (this.getStoreDate() == null ? other.getStoreDate() == null : this.getStoreDate().equals(other.getStoreDate()));
     }
 
     @Override
@@ -132,6 +160,8 @@ public class TicketStoreRecord implements Serializable {
         result = prime * result + ((getSourceUnitId() == null) ? 0 : getSourceUnitId().hashCode());
         result = prime * result + ((getSourceWarehouseId() == null) ? 0 : getSourceWarehouseId().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
+        result = prime * result + ((getDictionaryId() == null) ? 0 : getDictionaryId().hashCode());
+        result = prime * result + ((getStoreDate() == null) ? 0 : getStoreDate().hashCode());
         return result;
     }
 
@@ -149,6 +179,8 @@ public class TicketStoreRecord implements Serializable {
         sb.append(", sourceUnitId=").append(sourceUnitId);
         sb.append(", sourceWarehouseId=").append(sourceWarehouseId);
         sb.append(", version=").append(version);
+        sb.append(", dictionaryId=").append(dictionaryId);
+        sb.append(", storeDate=").append(storeDate);
         sb.append("]");
         return sb.toString();
     }

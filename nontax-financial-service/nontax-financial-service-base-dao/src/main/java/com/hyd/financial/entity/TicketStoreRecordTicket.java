@@ -1,26 +1,26 @@
-package com.hyd.financial.web.dto;
+package com.hyd.financial.entity;
 
 import java.io.Serializable;
 import javax.annotation.Generated;
 
-public class TicketStoreRecordDTO implements Serializable {
+public class TicketStoreRecordTicket implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long orderNumber;
+    private Long ticketStoreRecordId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long sourceOrderNumber;
+    private Long ticketId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long unitId;
+    private String startNumber;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long sourceUnitId;
+    private String endNumber;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long sourceWarehouseId;
+    private Long number;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
@@ -39,53 +39,53 @@ public class TicketStoreRecordDTO implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getOrderNumber() {
-        return orderNumber;
+    public Long getTicketStoreRecordId() {
+        return ticketStoreRecordId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setOrderNumber(Long orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setTicketStoreRecordId(Long ticketStoreRecordId) {
+        this.ticketStoreRecordId = ticketStoreRecordId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getSourceOrderNumber() {
-        return sourceOrderNumber;
+    public Long getTicketId() {
+        return ticketId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setSourceOrderNumber(Long sourceOrderNumber) {
-        this.sourceOrderNumber = sourceOrderNumber;
+    public void setTicketId(Long ticketId) {
+        this.ticketId = ticketId;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getUnitId() {
-        return unitId;
+    public String getStartNumber() {
+        return startNumber;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setUnitId(Long unitId) {
-        this.unitId = unitId;
+    public void setStartNumber(String startNumber) {
+        this.startNumber = startNumber;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getSourceUnitId() {
-        return sourceUnitId;
+    public String getEndNumber() {
+        return endNumber;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setSourceUnitId(Long sourceUnitId) {
-        this.sourceUnitId = sourceUnitId;
+    public void setEndNumber(String endNumber) {
+        this.endNumber = endNumber;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getSourceWarehouseId() {
-        return sourceWarehouseId;
+    public Long getNumber() {
+        return number;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setSourceWarehouseId(Long sourceWarehouseId) {
-        this.sourceWarehouseId = sourceWarehouseId;
+    public void setNumber(Long number) {
+        this.number = number;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -110,13 +110,13 @@ public class TicketStoreRecordDTO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        TicketStoreRecordDTO other = (TicketStoreRecordDTO) that;
+        TicketStoreRecordTicket other = (TicketStoreRecordTicket) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getOrderNumber() == null ? other.getOrderNumber() == null : this.getOrderNumber().equals(other.getOrderNumber()))
-            && (this.getSourceOrderNumber() == null ? other.getSourceOrderNumber() == null : this.getSourceOrderNumber().equals(other.getSourceOrderNumber()))
-            && (this.getUnitId() == null ? other.getUnitId() == null : this.getUnitId().equals(other.getUnitId()))
-            && (this.getSourceUnitId() == null ? other.getSourceUnitId() == null : this.getSourceUnitId().equals(other.getSourceUnitId()))
-            && (this.getSourceWarehouseId() == null ? other.getSourceWarehouseId() == null : this.getSourceWarehouseId().equals(other.getSourceWarehouseId()))
+            && (this.getTicketStoreRecordId() == null ? other.getTicketStoreRecordId() == null : this.getTicketStoreRecordId().equals(other.getTicketStoreRecordId()))
+            && (this.getTicketId() == null ? other.getTicketId() == null : this.getTicketId().equals(other.getTicketId()))
+            && (this.getStartNumber() == null ? other.getStartNumber() == null : this.getStartNumber().equals(other.getStartNumber()))
+            && (this.getEndNumber() == null ? other.getEndNumber() == null : this.getEndNumber().equals(other.getEndNumber()))
+            && (this.getNumber() == null ? other.getNumber() == null : this.getNumber().equals(other.getNumber()))
             && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
     }
 
@@ -126,11 +126,11 @@ public class TicketStoreRecordDTO implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getOrderNumber() == null) ? 0 : getOrderNumber().hashCode());
-        result = prime * result + ((getSourceOrderNumber() == null) ? 0 : getSourceOrderNumber().hashCode());
-        result = prime * result + ((getUnitId() == null) ? 0 : getUnitId().hashCode());
-        result = prime * result + ((getSourceUnitId() == null) ? 0 : getSourceUnitId().hashCode());
-        result = prime * result + ((getSourceWarehouseId() == null) ? 0 : getSourceWarehouseId().hashCode());
+        result = prime * result + ((getTicketStoreRecordId() == null) ? 0 : getTicketStoreRecordId().hashCode());
+        result = prime * result + ((getTicketId() == null) ? 0 : getTicketId().hashCode());
+        result = prime * result + ((getStartNumber() == null) ? 0 : getStartNumber().hashCode());
+        result = prime * result + ((getEndNumber() == null) ? 0 : getEndNumber().hashCode());
+        result = prime * result + ((getNumber() == null) ? 0 : getNumber().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         return result;
     }
@@ -143,11 +143,11 @@ public class TicketStoreRecordDTO implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", orderNumber=").append(orderNumber);
-        sb.append(", sourceOrderNumber=").append(sourceOrderNumber);
-        sb.append(", unitId=").append(unitId);
-        sb.append(", sourceUnitId=").append(sourceUnitId);
-        sb.append(", sourceWarehouseId=").append(sourceWarehouseId);
+        sb.append(", ticketStoreRecordId=").append(ticketStoreRecordId);
+        sb.append(", ticketId=").append(ticketId);
+        sb.append(", startNumber=").append(startNumber);
+        sb.append(", endNumber=").append(endNumber);
+        sb.append(", number=").append(number);
         sb.append(", version=").append(version);
         sb.append("]");
         return sb.toString();
