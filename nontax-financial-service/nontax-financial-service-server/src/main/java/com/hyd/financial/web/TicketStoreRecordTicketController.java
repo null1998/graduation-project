@@ -81,8 +81,8 @@ public class TicketStoreRecordTicketController {
     @GetMapping("/common/query")
     public List<TicketStoreRecordTicketVO> commonQuery(TicketStoreRecordTicketQO ticketStoreRecordTicketQO) {
         TicketStoreRecordTicket ticketStoreRecordTicket = BeanUtil.copy(ticketStoreRecordTicketQO, TicketStoreRecordTicket.class);
-        List<TicketStoreRecordTicket> ticketStoreRecordTicketList = ticketStoreRecordTicketService.commonQuery(ticketStoreRecordTicket);
-        return BeanUtil.copyList(ticketStoreRecordTicketList, TicketStoreRecordTicketVO.class);
+        List<TicketStoreRecordTicketDTO> ticketStoreRecordTicketDTOList = ticketStoreRecordTicketService.commonQuery(ticketStoreRecordTicket);
+        return BeanUtil.copyList(ticketStoreRecordTicketDTOList, TicketStoreRecordTicketVO.class);
     }
 
 }

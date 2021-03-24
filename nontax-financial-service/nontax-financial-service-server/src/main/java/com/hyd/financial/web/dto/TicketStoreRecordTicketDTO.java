@@ -12,7 +12,7 @@ public class TicketStoreRecordTicketDTO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long ticketId;
-
+    private String ticketName;
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String startNumber;
 
@@ -27,6 +27,14 @@ public class TicketStoreRecordTicketDTO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+
+    public String getTicketName() {
+        return ticketName;
+    }
+
+    public void setTicketName(String ticketName) {
+        this.ticketName = ticketName;
+    }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -99,57 +107,16 @@ public class TicketStoreRecordTicketDTO implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        TicketStoreRecordTicketDTO other = (TicketStoreRecordTicketDTO) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getTicketStoreRecordId() == null ? other.getTicketStoreRecordId() == null : this.getTicketStoreRecordId().equals(other.getTicketStoreRecordId()))
-            && (this.getTicketId() == null ? other.getTicketId() == null : this.getTicketId().equals(other.getTicketId()))
-            && (this.getStartNumber() == null ? other.getStartNumber() == null : this.getStartNumber().equals(other.getStartNumber()))
-            && (this.getEndNumber() == null ? other.getEndNumber() == null : this.getEndNumber().equals(other.getEndNumber()))
-            && (this.getNumber() == null ? other.getNumber() == null : this.getNumber().equals(other.getNumber()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
-    }
-
-    @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getTicketStoreRecordId() == null) ? 0 : getTicketStoreRecordId().hashCode());
-        result = prime * result + ((getTicketId() == null) ? 0 : getTicketId().hashCode());
-        result = prime * result + ((getStartNumber() == null) ? 0 : getStartNumber().hashCode());
-        result = prime * result + ((getEndNumber() == null) ? 0 : getEndNumber().hashCode());
-        result = prime * result + ((getNumber() == null) ? 0 : getNumber().hashCode());
-        result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
-        return result;
-    }
-
-    @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", ticketStoreRecordId=").append(ticketStoreRecordId);
-        sb.append(", ticketId=").append(ticketId);
-        sb.append(", startNumber=").append(startNumber);
-        sb.append(", endNumber=").append(endNumber);
-        sb.append(", number=").append(number);
-        sb.append(", version=").append(version);
-        sb.append("]");
-        return sb.toString();
+        return "TicketStoreRecordTicketDTO{" +
+                "id=" + id +
+                ", ticketStoreRecordId=" + ticketStoreRecordId +
+                ", ticketId=" + ticketId +
+                ", ticketName='" + ticketName + '\'' +
+                ", startNumber='" + startNumber + '\'' +
+                ", endNumber='" + endNumber + '\'' +
+                ", number=" + number +
+                ", version=" + version +
+                '}';
     }
 }

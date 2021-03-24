@@ -13,7 +13,7 @@ public final class PrintingOrderDynamicSqlSupport {
     public static final SqlColumn<Long> id = printingOrder.id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> ordernumber = printingOrder.ordernumber;
+    public static final SqlColumn<Long> orderNumber = printingOrder.orderNumber;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> start = printingOrder.start;
@@ -31,16 +31,25 @@ public final class PrintingOrderDynamicSqlSupport {
     public static final SqlColumn<Long> warehouseId = printingOrder.warehouseId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<Long> version = printingOrder.version;
+    public static final SqlColumn<String> person = printingOrder.person;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> tel = printingOrder.tel;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> remark = printingOrder.remark;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> status = printingOrder.status;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Long> version = printingOrder.version;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class PrintingOrder extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
-        public final SqlColumn<Long> ordernumber = column("orderNumber", JDBCType.BIGINT);
+        public final SqlColumn<Long> orderNumber = column("order_number", JDBCType.BIGINT);
 
         public final SqlColumn<String> start = column("start", JDBCType.VARCHAR);
 
@@ -52,9 +61,15 @@ public final class PrintingOrderDynamicSqlSupport {
 
         public final SqlColumn<Long> warehouseId = column("warehouse_id", JDBCType.BIGINT);
 
-        public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
+        public final SqlColumn<String> person = column("person", JDBCType.VARCHAR);
+
+        public final SqlColumn<String> tel = column("tel", JDBCType.VARCHAR);
+
+        public final SqlColumn<String> remark = column("remark", JDBCType.VARCHAR);
 
         public final SqlColumn<Integer> status = column("status", JDBCType.INTEGER);
+
+        public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
 
         public PrintingOrder() {
             super("financial_printing_order");

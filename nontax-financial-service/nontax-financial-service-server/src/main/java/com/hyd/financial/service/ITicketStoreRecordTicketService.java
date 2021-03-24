@@ -1,6 +1,7 @@
 package com.hyd.financial.service;
 
 import com.hyd.financial.entity.TicketStoreRecordTicket;
+import com.hyd.financial.web.dto.TicketStoreRecordTicketDTO;
 
 import java.util.List;
 
@@ -43,6 +44,6 @@ public interface ITicketStoreRecordTicketService {
      * @param ticketStoreRecordTicket 票据入库记录票据
      * @return 票据入库记录票据列表
      */
-    List<TicketStoreRecordTicket> commonQuery(TicketStoreRecordTicket ticketStoreRecordTicket);
+    List<TicketStoreRecordTicketDTO> commonQuery(TicketStoreRecordTicket ticketStoreRecordTicket);
 
 }

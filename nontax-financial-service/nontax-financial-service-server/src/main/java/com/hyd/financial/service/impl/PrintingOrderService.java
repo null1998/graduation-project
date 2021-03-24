@@ -44,7 +44,7 @@ public class PrintingOrderService implements IPrintingOrderService {
         long id = idGenerator.snowflakeId();
         long orderNumber = idGenerator.snowflakeId();
         printingOrder.setId(id);
-        printingOrder.setOrdernumber(orderNumber);
+        printingOrder.setOrderNumber(orderNumber);
         printingOrderMapper.insertSelective(printingOrder);
         return id;
     }

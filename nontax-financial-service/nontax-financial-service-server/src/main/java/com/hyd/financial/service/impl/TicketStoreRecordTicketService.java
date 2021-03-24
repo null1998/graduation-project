@@ -1,11 +1,17 @@
 package com.hyd.financial.service.impl;
 
+import com.hyd.basedata.entity.Ticket;
+import com.hyd.basedata.service.ITicketService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
+import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.TicketStoreRecordTicketMapper;
 import com.hyd.financial.entity.TicketStoreRecordTicket;
 import com.hyd.financial.service.ITicketStoreRecordTicketService;
+import com.hyd.financial.util.TicketCodeConvertUtil;
+import com.hyd.financial.web.dto.TicketStoreRecordDTO;
+import com.hyd.financial.web.dto.TicketStoreRecordTicketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -29,6 +35,9 @@ public class TicketStoreRecordTicketService implements ITicketStoreRecordTicketS
     @Autowired
     private TicketStoreRecordTicketMapper ticketStoreRecordTicketMapper;
 
+    @Autowired
+    private ITicketService ticketService;
+
 	/**
      * 保存票据入库记录票据
      * @param ticketStoreRecordTicket 票据入库记录票据
@@ -42,6 +51,7 @@ public class TicketStoreRecordTicketService implements ITicketStoreRecordTicketS
         }
         long id = idGenerator.snowflakeId();
         ticketStoreRecordTicket.setId(id);
+        calculateNumber(ticketStoreRecordTicket);
         ticketStoreRecordTicketMapper.insertSelective(ticketStoreRecordTicket);
         return id;
     }
@@ -73,6 +83,7 @@ public class TicketStoreRecordTicketService implements ITicketStoreRecordTicketS
         if (ticketStoreRecordTicket == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("票据入库记录票据为空"));
         }
+        calculateNumber(ticketStoreRecordTicket);
         return ticketStoreRecordTicketMapper.updateByPrimaryKeySelective(ticketStoreRecordTicket);
     }
 
@@ -98,10 +109,34 @@ public class TicketStoreRecordTicketService implements ITicketStoreRecordTicketS
      */
 	@Cacheable(value = "TicketStoreRecordTicketService::commonQuery",key = "#ticketStoreRecordTicket.toString()")
     @Override
-    public List<TicketStoreRecordTicket> commonQuery(TicketStoreRecordTicket ticketStoreRecordTicket) {
+    public List<TicketStoreRecordTicketDTO> commonQuery(TicketStoreRecordTicket ticketStoreRecordTicket) {
         if (ticketStoreRecordTicket == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("票据入库记录票据为空"));
         }
-        return ticketStoreRecordTicketMapper.commonQuery(ticketStoreRecordTicket);
+        List<TicketStoreRecordTicket> ticketStoreRecordTicketList = ticketStoreRecordTicketMapper.commonQuery(ticketStoreRecordTicket);
+        List<TicketStoreRecordTicketDTO> ticketStoreRecordTicketDTOList = BeanUtil.copyList(ticketStoreRecordTicketList, TicketStoreRecordTicketDTO.class);
+        for (TicketStoreRecordTicketDTO ticketStoreRecordTicketDTO : ticketStoreRecordTicketDTOList) {
+            if (ticketStoreRecordTicketDTO.getTicketId()!=null) {
+                Ticket ticket = ticketService.getTicketById(ticketStoreRecordTicketDTO.getTicketId());
+                ticketStoreRecordTicketDTO.setTicketName(ticket.getName());
+            }
+        }
+        return ticketStoreRecordTicketDTOList;
+    }
+
+    /**
+     * 计算number
+     * @param ticketStoreRecordTicket
+     */
+    private void calculateNumber(TicketStoreRecordTicket ticketStoreRecordTicket) {
+	    if (ticketStoreRecordTicket!=null) {
+            String startNumber = ticketStoreRecordTicket.getStartNumber();
+            String endNumber = ticketStoreRecordTicket.getEndNumber();
+            if (startNumber!=null&&endNumber!=null) {
+                Long s = TicketCodeConvertUtil.stringConvertLong(startNumber);
+                Long e = TicketCodeConvertUtil.stringConvertLong(endNumber);
+                ticketStoreRecordTicket.setNumber(e-s);
+            }
+	    }
     }
 }

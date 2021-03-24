@@ -134,4 +134,17 @@ public class Warehouse implements Serializable {
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Warehouse{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", mnemonic='" + mnemonic + '\'' +
+                ", address='" + address + '\'' +
+                ", unitId=" + unitId +
+                ", version=" + version +
+                '}';
+    }
 }

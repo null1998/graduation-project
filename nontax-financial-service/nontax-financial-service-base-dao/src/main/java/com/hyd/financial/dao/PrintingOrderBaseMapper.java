@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PrintingOrderBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, ordernumber, start, end, unitId, printUnitId, warehouseId, version, status);
+    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, start, end, unitId, printUnitId, warehouseId, person, tel, remark, status, version);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -57,14 +57,17 @@ public interface PrintingOrderBaseMapper {
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="PrintingOrderResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
-        @Result(column="orderNumber", property="ordernumber", jdbcType=JdbcType.BIGINT),
+        @Result(column="order_number", property="orderNumber", jdbcType=JdbcType.BIGINT),
         @Result(column="start", property="start", jdbcType=JdbcType.VARCHAR),
         @Result(column="end", property="end", jdbcType=JdbcType.VARCHAR),
         @Result(column="unit_id", property="unitId", jdbcType=JdbcType.BIGINT),
         @Result(column="print_unit_id", property="printUnitId", jdbcType=JdbcType.BIGINT),
         @Result(column="warehouse_id", property="warehouseId", jdbcType=JdbcType.BIGINT),
-        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT),
-        @Result(column="status", property="status", jdbcType=JdbcType.INTEGER)
+        @Result(column="person", property="person", jdbcType=JdbcType.VARCHAR),
+        @Result(column="tel", property="tel", jdbcType=JdbcType.VARCHAR),
+        @Result(column="remark", property="remark", jdbcType=JdbcType.VARCHAR),
+        @Result(column="status", property="status", jdbcType=JdbcType.INTEGER),
+        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
     })
     List<PrintingOrder> selectMany(SelectStatementProvider selectStatement);
 
@@ -98,14 +101,17 @@ public interface PrintingOrderBaseMapper {
     default int insert(PrintingOrder record) {
         return MyBatis3Utils.insert(this::insert, record, printingOrder, c ->
             c.map(id).toProperty("id")
-            .map(ordernumber).toProperty("ordernumber")
+            .map(orderNumber).toProperty("orderNumber")
             .map(start).toProperty("start")
             .map(end).toProperty("end")
             .map(unitId).toProperty("unitId")
             .map(printUnitId).toProperty("printUnitId")
             .map(warehouseId).toProperty("warehouseId")
-            .map(version).toProperty("version")
+            .map(person).toProperty("person")
+            .map(tel).toProperty("tel")
+            .map(remark).toProperty("remark")
             .map(status).toProperty("status")
+            .map(version).toProperty("version")
         );
     }
 
@@ -113,14 +119,17 @@ public interface PrintingOrderBaseMapper {
     default int insertMultiple(Collection<PrintingOrder> records) {
         return MyBatis3Utils.insertMultiple(this::insertMultiple, records, printingOrder, c ->
             c.map(id).toProperty("id")
-            .map(ordernumber).toProperty("ordernumber")
+            .map(orderNumber).toProperty("orderNumber")
             .map(start).toProperty("start")
             .map(end).toProperty("end")
             .map(unitId).toProperty("unitId")
             .map(printUnitId).toProperty("printUnitId")
             .map(warehouseId).toProperty("warehouseId")
-            .map(version).toProperty("version")
+            .map(person).toProperty("person")
+            .map(tel).toProperty("tel")
+            .map(remark).toProperty("remark")
             .map(status).toProperty("status")
+            .map(version).toProperty("version")
         );
     }
 
@@ -128,14 +137,17 @@ public interface PrintingOrderBaseMapper {
     default int insertSelective(PrintingOrder record) {
         return MyBatis3Utils.insert(this::insert, record, printingOrder, c ->
             c.map(id).toPropertyWhenPresent("id", record::getId)
-            .map(ordernumber).toPropertyWhenPresent("ordernumber", record::getOrdernumber)
+            .map(orderNumber).toPropertyWhenPresent("orderNumber", record::getOrderNumber)
             .map(start).toPropertyWhenPresent("start", record::getStart)
             .map(end).toPropertyWhenPresent("end", record::getEnd)
             .map(unitId).toPropertyWhenPresent("unitId", record::getUnitId)
             .map(printUnitId).toPropertyWhenPresent("printUnitId", record::getPrintUnitId)
             .map(warehouseId).toPropertyWhenPresent("warehouseId", record::getWarehouseId)
-            .map(version).toPropertyWhenPresent("version", record::getVersion)
+            .map(person).toPropertyWhenPresent("person", record::getPerson)
+            .map(tel).toPropertyWhenPresent("tel", record::getTel)
+            .map(remark).toPropertyWhenPresent("remark", record::getRemark)
             .map(status).toPropertyWhenPresent("status", record::getStatus)
+            .map(version).toPropertyWhenPresent("version", record::getVersion)
         );
     }
 
@@ -169,40 +181,49 @@ public interface PrintingOrderBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateAllColumns(PrintingOrder record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalTo(record::getId)
-                .set(ordernumber).equalTo(record::getOrdernumber)
+                .set(orderNumber).equalTo(record::getOrderNumber)
                 .set(start).equalTo(record::getStart)
                 .set(end).equalTo(record::getEnd)
                 .set(unitId).equalTo(record::getUnitId)
                 .set(printUnitId).equalTo(record::getPrintUnitId)
                 .set(warehouseId).equalTo(record::getWarehouseId)
-                .set(version).equalTo(record::getVersion)
-                .set(status).equalTo(record::getStatus);
+                .set(person).equalTo(record::getPerson)
+                .set(tel).equalTo(record::getTel)
+                .set(remark).equalTo(record::getRemark)
+                .set(status).equalTo(record::getStatus)
+                .set(version).equalTo(record::getVersion);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     static UpdateDSL<UpdateModel> updateSelectiveColumns(PrintingOrder record, UpdateDSL<UpdateModel> dsl) {
         return dsl.set(id).equalToWhenPresent(record::getId)
-                .set(ordernumber).equalToWhenPresent(record::getOrdernumber)
+                .set(orderNumber).equalToWhenPresent(record::getOrderNumber)
                 .set(start).equalToWhenPresent(record::getStart)
                 .set(end).equalToWhenPresent(record::getEnd)
                 .set(unitId).equalToWhenPresent(record::getUnitId)
                 .set(printUnitId).equalToWhenPresent(record::getPrintUnitId)
                 .set(warehouseId).equalToWhenPresent(record::getWarehouseId)
-                .set(version).equalToWhenPresent(record::getVersion)
-                .set(status).equalToWhenPresent(record::getStatus);
+                .set(person).equalToWhenPresent(record::getPerson)
+                .set(tel).equalToWhenPresent(record::getTel)
+                .set(remark).equalToWhenPresent(record::getRemark)
+                .set(status).equalToWhenPresent(record::getStatus)
+                .set(version).equalToWhenPresent(record::getVersion);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKey(PrintingOrder record) {
         return update(c ->
-            c.set(ordernumber).equalTo(record::getOrdernumber)
+            c.set(orderNumber).equalTo(record::getOrderNumber)
             .set(start).equalTo(record::getStart)
             .set(end).equalTo(record::getEnd)
             .set(unitId).equalTo(record::getUnitId)
             .set(printUnitId).equalTo(record::getPrintUnitId)
             .set(warehouseId).equalTo(record::getWarehouseId)
-            .set(version).equalTo(record::getVersion)
+            .set(person).equalTo(record::getPerson)
+            .set(tel).equalTo(record::getTel)
+            .set(remark).equalTo(record::getRemark)
             .set(status).equalTo(record::getStatus)
+            .set(version).equalTo(record::getVersion)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -210,14 +231,17 @@ public interface PrintingOrderBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKeySelective(PrintingOrder record) {
         return update(c ->
-            c.set(ordernumber).equalToWhenPresent(record::getOrdernumber)
+            c.set(orderNumber).equalToWhenPresent(record::getOrderNumber)
             .set(start).equalToWhenPresent(record::getStart)
             .set(end).equalToWhenPresent(record::getEnd)
             .set(unitId).equalToWhenPresent(record::getUnitId)
             .set(printUnitId).equalToWhenPresent(record::getPrintUnitId)
             .set(warehouseId).equalToWhenPresent(record::getWarehouseId)
-            .set(version).equalToWhenPresent(record::getVersion)
+            .set(person).equalToWhenPresent(record::getPerson)
+            .set(tel).equalToWhenPresent(record::getTel)
+            .set(remark).equalToWhenPresent(record::getRemark)
             .set(status).equalToWhenPresent(record::getStatus)
+            .set(version).equalToWhenPresent(record::getVersion)
             .where(id, isEqualTo(record::getId))
         );
     }

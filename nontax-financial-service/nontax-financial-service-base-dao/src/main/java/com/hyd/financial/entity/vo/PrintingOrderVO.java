@@ -8,7 +8,7 @@ public class PrintingOrderVO implements Serializable {
     private Long id;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long ordernumber;
+    private Long orderNumber;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String start;
@@ -79,14 +79,12 @@ public class PrintingOrderVO implements Serializable {
         this.id = id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getOrdernumber() {
-        return ordernumber;
+    public Long getOrderNumber() {
+        return orderNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setOrdernumber(Long ordernumber) {
-        this.ordernumber = ordernumber;
+    public void setOrderNumber(Long orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -163,7 +161,7 @@ public class PrintingOrderVO implements Serializable {
     public String toString() {
         return "PrintingOrderVO{" +
                 "id=" + id +
-                ", ordernumber=" + ordernumber +
+                ", orderNumber=" + orderNumber +
                 ", start='" + start + '\'' +
                 ", end='" + end + '\'' +
                 ", unitId=" + unitId +

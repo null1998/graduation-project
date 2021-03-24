@@ -36,7 +36,11 @@ public interface IWarehouseService {
      * @return 仓库
      */
     Warehouse getWarehouseById(Long id);
-
+    /**
+     * 通用查询，支持字段id，unitId
+     * @param warehouse 仓库
+     * @return 仓库列表
+     */
     List<Warehouse> commonQuery(Warehouse warehouse);
 
     List<Warehouse> listByUnitId(Long unitId);

@@ -3,6 +3,7 @@ package com.hyd.basedata.service.impl;
 import com.hyd.basedata.dao.UnitBaseMapper;
 import com.hyd.basedata.dao.WarehouseBaseMapper;
 import com.hyd.basedata.dao.WarehouseDynamicSqlSupport;
+import com.hyd.basedata.dao.WarehouseMapper;
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.entity.Warehouse;
 import com.hyd.basedata.service.IWarehouseService;
@@ -28,11 +29,12 @@ import java.util.Optional;
 @Service
 public class WarehouseService implements IWarehouseService {
     @Autowired
-    private WarehouseBaseMapper warehouseBaseMapper;
+    private WarehouseMapper warehouseMapper;
     @Autowired
     private UnitBaseMapper unitBaseMapper;
     @Autowired
     private IdGenerator idGenerator;
+    @Caching(evict = {@CacheEvict(value = {"WarehouseService::listByUnitId","WarehouseService::commonQuery"},allEntries = true)})
     @Override
     public Long save(Warehouse warehouse) {
         if (warehouse == null) {
@@ -41,26 +43,26 @@ public class WarehouseService implements IWarehouseService {
         long id = idGenerator.snowflakeId();
         warehouse.setId(id);
         warehouse.setMnemonic(MnemonicUtil.buildMnemonic(warehouse.getName()));
-        warehouseBaseMapper.insertSelective(warehouse);
+        warehouseMapper.insertSelective(warehouse);
         return id;
     }
-    @Caching(evict = {@CacheEvict(value = {"WarehouseService::listByUnitId"},allEntries = true),
+    @Caching(evict = {@CacheEvict(value = {"WarehouseService::listByUnitId","WarehouseService::commonQuery"},allEntries = true),
             @CacheEvict(value = {"WarehouseService::getWarehouseById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
         }
-        return warehouseBaseMapper.deleteByPrimaryKey(id) == 1;
+        return warehouseMapper.deleteByPrimaryKey(id) == 1;
     }
-    @Caching(evict = {@CacheEvict(value = {"WarehouseService::listByUnitId"},allEntries = true),
+    @Caching(evict = {@CacheEvict(value = {"WarehouseService::listByUnitId","WarehouseService::commonQuery"},allEntries = true),
             @CacheEvict(value = {"WarehouseService::getWarehouseById",},key = "#warehouse.id")})
     @Override
     public Integer update(Warehouse warehouse) {
         if (warehouse == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("仓库为空"));
         }
-        return warehouseBaseMapper.updateByPrimaryKeySelective(warehouse);
+        return warehouseMapper.updateByPrimaryKeySelective(warehouse);
     }
     @Cacheable(value = {"WarehouseService::getWarehouseById"},key = "#id")
     @Override
@@ -68,16 +70,19 @@ public class WarehouseService implements IWarehouseService {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
         }
-        Optional<Warehouse> optional = warehouseBaseMapper.selectByPrimaryKey(id);
+        Optional<Warehouse> optional = warehouseMapper.selectByPrimaryKey(id);
         if (!optional.isPresent()) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("未查询到相应的仓库记录"));
         }
         return optional.get();
     }
-
+    @Cacheable(value = {"WarehouseService::commonQuery"},key = "#warehouse.toString()")
     @Override
     public List<Warehouse> commonQuery(Warehouse warehouse) {
-        return null;
+        if (warehouse == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("仓库为空"));
+        }
+        return warehouseMapper.commonQuery(warehouse);
     }
     @Cacheable(value = {"WarehouseService::listByUnitId"},key = "#unitId")
     @Override
@@ -85,7 +90,7 @@ public class WarehouseService implements IWarehouseService {
         if (unitId == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位ID为空"));
         }
-        return warehouseBaseMapper.select(c -> c.where(WarehouseDynamicSqlSupport.unitId, SqlBuilder.isEqualToWhenPresent(unitId)));
+        return warehouseMapper.select(c -> c.where(WarehouseDynamicSqlSupport.unitId, SqlBuilder.isEqualToWhenPresent(unitId)));
     }
 
     @Override
@@ -99,7 +104,7 @@ public class WarehouseService implements IWarehouseService {
             warehouse.setMnemonic(MnemonicUtil.buildMnemonic(warehouse.getName()));
             warehouse.setAddress(warehouse.getName());
             warehouse.setUnitId(unit.getId());
-            warehouseBaseMapper.insertSelective(warehouse);
+            warehouseMapper.insertSelective(warehouse);
         }
     }
 }

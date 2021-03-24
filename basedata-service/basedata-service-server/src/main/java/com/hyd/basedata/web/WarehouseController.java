@@ -4,6 +4,7 @@ import com.hyd.basedata.entity.Warehouse;
 import com.hyd.basedata.entity.vo.WarehouseVO;
 import com.hyd.basedata.service.IWarehouseService;
 import com.hyd.basedata.web.dto.WarehouseDTO;
+import com.hyd.basedata.web.qo.WarehouseQO;
 import com.hyd.common.core.annotation.ApiLog;
 import com.hyd.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,13 @@ public class WarehouseController {
     @GetMapping("/unit/{unitId}")
     public List<WarehouseVO> listByUnitId(@PathVariable("unitId") Long unitId) {
         List<Warehouse> warehouseList = warehouseService.listByUnitId(unitId);
+        return BeanUtil.copyList(warehouseList, WarehouseVO.class);
+    }
+    @ApiLog
+    @GetMapping("/common/query")
+    public List<WarehouseVO> commonQuery(WarehouseQO warehouseQO) {
+        Warehouse warehouse = BeanUtil.copy(warehouseQO, Warehouse.class);
+        List<Warehouse> warehouseList = warehouseService.commonQuery(warehouse);
         return BeanUtil.copyList(warehouseList, WarehouseVO.class);
     }
     /**
