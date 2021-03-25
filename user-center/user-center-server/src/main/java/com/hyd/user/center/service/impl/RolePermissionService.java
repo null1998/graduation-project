@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,7 @@ public class RolePermissionService implements IRolePermissionService {
         rolePermissionMapper.insertSelective(rolePermission);
         return id;
     }
+    @Transactional(rollbackFor=Exception.class)
     @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId","RolePermissionService::listByRoleIdList"},allEntries = true)})
     @Override
     public void saveList(List<RolePermission> rolePermissionList) {

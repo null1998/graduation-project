@@ -12,13 +12,17 @@ import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.TicketStoreRecordMapper;
 import com.hyd.financial.entity.TicketStoreRecord;
+import com.hyd.financial.entity.TicketStoreRecordTicket;
 import com.hyd.financial.service.ITicketStoreRecordService;
+import com.hyd.financial.service.ITicketStoreRecordTicketService;
 import com.hyd.financial.web.dto.TicketStoreRecordDTO;
+import com.hyd.financial.web.dto.TicketStoreRecordTicketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -46,6 +50,9 @@ public class TicketStoreRecordService implements ITicketStoreRecordService {
 
     @Autowired
     private IDictionaryService dictionaryService;
+
+    @Autowired
+    private ITicketStoreRecordTicketService ticketStoreRecordTicketService;
 	/**
      * 保存票据入库记录
      * @param ticketStoreRecord 票据入库记录
@@ -70,12 +77,19 @@ public class TicketStoreRecordService implements ITicketStoreRecordService {
      * @param id
      * @return 是否删除成功
      */
+    @Transactional(rollbackFor=Exception.class)
     @Caching(evict = {@CacheEvict(value = {"TicketStoreRecordService::commonQuery"},allEntries = true),
             @CacheEvict(value = {"TicketStoreRecordService::commonQuery"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
+        }
+        TicketStoreRecordTicket query = new TicketStoreRecordTicket();
+        query.setTicketStoreRecordId(id);
+        List<TicketStoreRecordTicketDTO> ticketStoreRecordTicketDTOList = ticketStoreRecordTicketService.commonQuery(query);
+        for (TicketStoreRecordTicketDTO ticketStoreRecordTicketDTO : ticketStoreRecordTicketDTOList) {
+            ticketStoreRecordTicketService.remove(ticketStoreRecordTicketDTO.getId());
         }
         return ticketStoreRecordMapper.deleteByPrimaryKey(id) == 1;
     }

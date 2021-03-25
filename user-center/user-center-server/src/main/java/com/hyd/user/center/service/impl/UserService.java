@@ -89,7 +89,7 @@ public class UserService implements IUserService {
         return null;
     }
 
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     @Caching(evict = {@CacheEvict(value = {"UserService::getById"}, key = "#id"),
             @CacheEvict(value = {"UserService::getByUsername","UserService::getUserInfo","UserService::listAll"}, allEntries = true)})
     @Override

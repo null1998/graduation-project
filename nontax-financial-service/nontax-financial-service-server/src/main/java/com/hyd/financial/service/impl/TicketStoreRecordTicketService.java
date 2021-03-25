@@ -135,7 +135,9 @@ public class TicketStoreRecordTicketService implements ITicketStoreRecordTicketS
             if (startNumber!=null&&endNumber!=null) {
                 Long s = TicketCodeConvertUtil.stringConvertLong(startNumber);
                 Long e = TicketCodeConvertUtil.stringConvertLong(endNumber);
-                ticketStoreRecordTicket.setNumber(e-s);
+                if (e>=s) {
+                    ticketStoreRecordTicket.setNumber(e-s+1);
+                }
             }
 	    }
     }

@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -83,6 +84,7 @@ public class TicketProductRecordService implements ITicketProductRecordService {
         }
         return ticketProductRecordMapper.deleteByPrimaryKey(id) == 1;
     }
+    @Transactional(rollbackFor=Exception.class)
     @Caching(evict = {@CacheEvict(value = {"TicketProductRecordService::commonQuery"},allEntries = true),
     @CacheEvict(value = {"TicketProductRecordService::commonQuery"},key = "#ticketProductRecord.id")})
     @Override

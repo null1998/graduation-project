@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -47,6 +48,7 @@ public class PrintingPlanTicketService implements IPrintingPlanTicketService {
         printingPlanTicketMapper.insertSelective(printingPlanTicket);
         return id;
     }
+    @Transactional(rollbackFor=Exception.class)
     @Caching(evict = {@CacheEvict(value = {"PrintingPlanTicketService::listByPrintingPlanId"},key = "#printingPlanTicket.printingPlanId")})
     @Override
     public Integer saveList(List<PrintingPlanTicket> printingPlanTicketList) {
@@ -59,7 +61,7 @@ public class PrintingPlanTicketService implements IPrintingPlanTicketService {
         });
         return printingPlanTicketMapper.insertMultiple(printingPlanTicketList);
     }
-
+    @Transactional(rollbackFor=Exception.class)
     @Caching(evict = {@CacheEvict(value = {"PrintingPlanTicketService::listByPrintingPlanId"},allEntries = true)})
     @Override
     public Long saveByChildUnitPrintingPlanList(List<PrintingPlan> printingPlanList) {

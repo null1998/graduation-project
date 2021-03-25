@@ -12,11 +12,12 @@ import java.util.List;
  */
 public interface TicketStoreRecordMapper extends TicketStoreRecordBaseMapper {
     /**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id，unitId
      * @param ticketStoreRecord
      * @return 票据入库记录列表
      */
     default List<TicketStoreRecord> commonQuery(TicketStoreRecord ticketStoreRecord) {
-        return this.select(c->c.where(TicketStoreRecordDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(ticketStoreRecord.getId())));
+        return this.select(c->c.where(TicketStoreRecordDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(ticketStoreRecord.getId()))
+                .and(TicketStoreRecordDynamicSqlSupport.unitId, SqlBuilder.isEqualToWhenPresent(ticketStoreRecord.getUnitId())));
     }
 }

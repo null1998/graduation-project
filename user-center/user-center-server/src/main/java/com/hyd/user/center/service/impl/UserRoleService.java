@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class UserRoleService implements IUserRoleService {
         userRoleMapper.insertSelective(userRole);
         return id;
     }
+    @Transactional(rollbackFor=Exception.class)
     @Caching(evict = {@CacheEvict(value = {"UserRoleService::listByUserId"},allEntries = true)})
     @Override
     public void saveList(List<UserRole> userRoleList) {

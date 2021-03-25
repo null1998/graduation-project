@@ -47,7 +47,7 @@ public class RoleService implements IRoleService {
 
         return id;
     }
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     @Caching(evict = {@CacheEvict(value = {"RoleService::listByName","RoleService::listRole"},allEntries = true),
             @CacheEvict(value = {"RoleService::getBydId"},key = "#id")})
     @Override
@@ -81,7 +81,7 @@ public class RoleService implements IRoleService {
         }
         return roleMapper.listByName(name);
     }
-    @Cacheable(value = {"RoleService::listRole"},key = "#role.toString()")
+    //@Cacheable(value = {"RoleService::listRole"},key = "#role.toString()")
     @Override
     public List<Role> listRole(Role role) {
         if (role == null) {

@@ -73,7 +73,7 @@ public class TicketStoreRecordController {
     }
 
     /**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id，unitId
      * @param ticketStoreRecordQO 票据入库记录
      * @return 票据入库记录列表
      */

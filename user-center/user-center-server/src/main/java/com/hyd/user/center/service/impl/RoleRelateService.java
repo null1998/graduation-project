@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class RoleRelateService implements IRoleRelateService {
         roleRelateMapper.insertSelective(roleRelate);
         return id;
     }
+    @Transactional(rollbackFor=Exception.class)
     @Caching(evict = {@CacheEvict(value = {"RoleRelateService::listByParentRoleId"},allEntries = true)})
     @Override
     public Integer saveList(List<RoleRelate> roleRelateList) {

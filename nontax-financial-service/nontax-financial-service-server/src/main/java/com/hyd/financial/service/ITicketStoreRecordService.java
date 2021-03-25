@@ -40,7 +40,7 @@ public interface ITicketStoreRecordService {
     TicketStoreRecord getById(Long id);
 
     /**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id，unitId
      * @param ticketStoreRecord 票据入库记录
      * @return 票据入库记录列表
      */

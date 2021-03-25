@@ -11,12 +11,15 @@ import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.PrintingOrderMapper;
 import com.hyd.financial.entity.PrintingOrder;
 import com.hyd.financial.service.IPrintingOrderService;
+import com.hyd.financial.service.IPrintingOrderTicketService;
 import com.hyd.financial.web.dto.PrintingOrderDTO;
+import com.hyd.financial.web.dto.PrintingOrderTicketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +38,8 @@ public class PrintingOrderService implements IPrintingOrderService {
     private IUnitService unitService;
     @Autowired
     private IWarehouseService warehouseService;
+    @Autowired
+    private IPrintingOrderTicketService printingOrderTicketService;
     @Caching(evict = {@CacheEvict(value = "PrintingOrderService::commonQuery",allEntries = true)})
     @Override
     public Long save(PrintingOrder printingOrder) {
@@ -48,12 +53,17 @@ public class PrintingOrderService implements IPrintingOrderService {
         printingOrderMapper.insertSelective(printingOrder);
         return id;
     }
+    @Transactional
     @Caching(evict = {@CacheEvict(value = "PrintingOrderService::commonQuery",allEntries = true),
             @CacheEvict(value = {"PrintingOrderService::getById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
+        }
+        List<PrintingOrderTicketDTO> printingOrderTicketDTOList = printingOrderTicketService.listByPrintingOrderId(id);
+        for (PrintingOrderTicketDTO printingOrderTicketDTO : printingOrderTicketDTOList) {
+            printingOrderTicketService.remove(printingOrderTicketDTO.getId());
         }
         return printingOrderMapper.deleteByPrimaryKey(id) == 1;
     }
