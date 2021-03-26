@@ -60,7 +60,7 @@ public class RoleRelateController {
      */
     @ApiLog
     @GetMapping("/list/{parentRoleId}")
-    List<RoleRelateVO> listByParentRoleId(Long parentRoleId) {
+    List<RoleRelateVO> listByParentRoleId(@PathVariable("parentRoleId") Long parentRoleId) {
         List<RoleRelate> roleRelateList = roleRelateService.listByParentRoleId(parentRoleId);
         return BeanUtil.copyList(roleRelateList, RoleRelateVO.class);
     }

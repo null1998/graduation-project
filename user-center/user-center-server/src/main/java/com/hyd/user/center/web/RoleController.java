@@ -78,4 +78,10 @@ public class RoleController {
         List<Role> roleList = roleService.listRole(role);
         return BeanUtil.copyList(roleList, RoleVO.class);
     }
+    @ApiLog
+    @GetMapping("/{id}")
+    public RoleVO getById(@PathVariable("id") Long id) {
+        Role role = roleService.getBydId(id);
+        return BeanUtil.copy(role, RoleVO.class);
+    }
 }

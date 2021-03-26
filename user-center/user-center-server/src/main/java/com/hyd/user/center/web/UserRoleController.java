@@ -5,6 +5,7 @@ import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
 import com.hyd.user.center.entity.User;
 import com.hyd.user.center.entity.UserRole;
+import com.hyd.user.center.entity.vo.UserRoleVO;
 import com.hyd.user.center.entity.vo.UserVO;
 import com.hyd.user.center.service.IUserRoleService;
 import com.hyd.user.center.web.dto.UserRoleDTO;
@@ -58,5 +59,11 @@ public class UserRoleController {
     @DeleteMapping("/{id}")
     public void removeById(@PathVariable("id") Long id) {
         userRoleService.removeById(id);
+    }
+    @ApiLog
+    @GetMapping("/list/{userId}")
+    public List<UserRoleVO> listByUserId(@PathVariable("userId") Long userId) {
+        List<UserRole> userRoleList = userRoleService.listByUserId(userId);
+        return BeanUtil.copyList(userRoleList, UserRoleVO.class);
     }
 }
