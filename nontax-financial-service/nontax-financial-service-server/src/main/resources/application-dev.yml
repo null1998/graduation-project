@@ -24,4 +24,6 @@ swagger:
   description: api for nontax-financial
   version: 0.0.1
   apiBasePackage: com.hyd.financial.web
-
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
