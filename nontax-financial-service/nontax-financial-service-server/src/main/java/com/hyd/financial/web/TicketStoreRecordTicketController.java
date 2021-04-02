@@ -5,6 +5,7 @@ import com.hyd.common.util.BeanUtil;
 import com.hyd.financial.entity.TicketStoreRecordTicket;
 import com.hyd.financial.entity.vo.TicketStoreRecordTicketVO;
 import com.hyd.financial.service.ITicketStoreRecordTicketService;
+import com.hyd.financial.web.dto.RecordDTO;
 import com.hyd.financial.web.dto.TicketStoreRecordTicketDTO;
 import com.hyd.financial.web.qo.TicketStoreRecordTicketQO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,12 @@ public class TicketStoreRecordTicketController {
         TicketStoreRecordTicket ticketStoreRecordTicket = BeanUtil.copy(ticketStoreRecordTicketQO, TicketStoreRecordTicket.class);
         List<TicketStoreRecordTicketDTO> ticketStoreRecordTicketDTOList = ticketStoreRecordTicketService.commonQuery(ticketStoreRecordTicket);
         return BeanUtil.copyList(ticketStoreRecordTicketDTOList, TicketStoreRecordTicketVO.class);
+    }
+
+    @ApiLog
+    @GetMapping("/number/{unitId}")
+    public List<RecordDTO> numberPerMonth(@PathVariable("unitId") Long unitId) {
+        return ticketStoreRecordTicketService.getByUnitId(unitId);
     }
 
 }

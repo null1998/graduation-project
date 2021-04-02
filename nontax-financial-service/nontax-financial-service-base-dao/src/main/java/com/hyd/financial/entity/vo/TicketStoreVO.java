@@ -9,7 +9,7 @@ public class TicketStoreVO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long ticketId;
-
+    private String ticketName;
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
 
@@ -33,6 +33,14 @@ public class TicketStoreVO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+
+    public String getTicketName() {
+        return ticketName;
+    }
+
+    public void setTicketName(String ticketName) {
+        this.ticketName = ticketName;
+    }
 
     public Long getNumber() {
         return number;
@@ -137,6 +145,7 @@ public class TicketStoreVO implements Serializable {
         return "TicketStoreVO{" +
                 "id=" + id +
                 ", ticketId=" + ticketId +
+                ", ticketName='" + ticketName + '\'' +
                 ", unitId=" + unitId +
                 ", warehouseId=" + warehouseId +
                 ", startNumber='" + startNumber + '\'' +

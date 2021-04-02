@@ -2,6 +2,8 @@ package com.hyd.financial.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.hyd.basedata.entity.Ticket;
+import com.hyd.basedata.service.ITicketService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.BeanUtil;
@@ -31,12 +33,15 @@ public class TicketStoreService implements ITicketStoreService {
     @Autowired
     private TicketStoreMapper ticketStoreMapper;
 
+    @Autowired
+    private ITicketService ticketService;
+
 	/**
      * 保存票据库存
      * @param ticketStore 票据库存
      * @return id
      */
-    @Caching(evict = {@CacheEvict(value = {"TicketStoreService::commonQuery"},allEntries = true)})
+    @Caching(evict = {@CacheEvict(value = {"TicketStoreService::commonQuery","TicketStoreService::getUnitStorage"},allEntries = true)})
     @Override
     public Long save(TicketStore ticketStore) {
         if (ticketStore == null) {
@@ -60,7 +65,7 @@ public class TicketStoreService implements ITicketStoreService {
      * @param id
      * @return 是否删除成功
      */
-    @Caching(evict = {@CacheEvict(value = {"TicketStoreService::commonQuery"},allEntries = true),
+    @Caching(evict = {@CacheEvict(value = {"TicketStoreService::commonQuery","TicketStoreService::getUnitStorage"},allEntries = true),
             @CacheEvict(value = {"TicketStoreService::commonQuery"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
@@ -75,7 +80,7 @@ public class TicketStoreService implements ITicketStoreService {
      * @param ticketStore 票据库存
      * @return 更新的行数
      */
-    @Caching(evict = {@CacheEvict(value = {"TicketStoreService::commonQuery"},allEntries = true),
+    @Caching(evict = {@CacheEvict(value = {"TicketStoreService::commonQuery","TicketStoreService::getUnitStorage"},allEntries = true),
     @CacheEvict(value = {"TicketStoreService::commonQuery"},key = "#ticketStore.id")})
     @Override
     public Integer update(TicketStore ticketStore) {
@@ -131,12 +136,30 @@ public class TicketStoreService implements ITicketStoreService {
 		}
 		return ticketStoreDTOList;
     }
-	/**
+    /**
+     * 查询单位票据库存
+     * @param unitId 单位id
+     * @return 票据库存列表
+     */
+    @Cacheable(value = "TicketStoreService::getUnitStorage",key = "#unitId")
+    @Override
+    public List<TicketStoreDTO> getUnitStorage(Long unitId) {
+        if (unitId == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位ID为空"));
+        }
+        return null;
+    }
+
+    /**
 	 * 补充一些字段的值
 	 * @param ticketStoreDTO 票据库存
 	 */
 	private void setProperties(TicketStoreDTO ticketStoreDTO) {
 		if (ticketStoreDTO!=null){
-		}
+            Ticket ticket = ticketService.getTicketById(ticketStoreDTO.getTicketId());
+            if (ticket != null) {
+                ticketStoreDTO.setTicketName(ticket.getName());
+            }
+        }
 	}
 }

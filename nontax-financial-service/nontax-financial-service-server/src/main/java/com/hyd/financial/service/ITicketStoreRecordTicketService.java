@@ -1,6 +1,7 @@
 package com.hyd.financial.service;
 
 import com.hyd.financial.entity.TicketStoreRecordTicket;
+import com.hyd.financial.web.dto.RecordDTO;
 import com.hyd.financial.web.dto.TicketStoreRecordTicketDTO;
 
 import java.util.List;
@@ -46,4 +47,10 @@ public interface ITicketStoreRecordTicketService {
      */
     List<TicketStoreRecordTicketDTO> commonQuery(TicketStoreRecordTicket ticketStoreRecordTicket);
 
+    /**
+     * 根据单位id查询该单位每种票据的入库汇总数，按月统计
+     * @param unitId 单位id
+     * @return 票据记录
+     */
+    List<RecordDTO> getByUnitId(Long unitId);
 }

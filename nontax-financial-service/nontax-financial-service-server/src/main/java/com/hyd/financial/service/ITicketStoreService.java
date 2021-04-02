@@ -44,4 +44,10 @@ public interface ITicketStoreService {
      */
     List<TicketStoreDTO> commonQuery(TicketStore ticketStore);
 
+    /**
+     * 查询单位票据库存
+     * @param unitId 单位id
+     * @return 票据库存列表
+     */
+    List<TicketStoreDTO> getUnitStorage(Long unitId);
 }

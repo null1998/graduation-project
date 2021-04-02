@@ -43,6 +43,8 @@ public class TicketClaimService implements ITicketClaimService {
         }
         long id = idGenerator.snowflakeId();
         ticketClaim.setId(id);
+        long orderNumber = idGenerator.snowflakeId();
+        ticketClaim.setOrderNumber(orderNumber);
         ticketClaimMapper.insertSelective(ticketClaim);
         return id;
     }
