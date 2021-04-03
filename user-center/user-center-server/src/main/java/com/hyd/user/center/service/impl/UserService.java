@@ -203,6 +203,10 @@ public class UserService implements IUserService {
                     }
                 }
             }
+            if (unit.getCode() != null) {
+                // 设置单位级别
+                userDTO.setUnitLevel(unit.getCode().length() / 2);
+            }
         }
         return userDTO;
     }

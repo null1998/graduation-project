@@ -2,6 +2,10 @@ package com.hyd.financial.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.hyd.basedata.entity.Unit;
+import com.hyd.basedata.entity.Warehouse;
+import com.hyd.basedata.service.IUnitService;
+import com.hyd.basedata.service.IWarehouseService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.BeanUtil;
@@ -29,6 +33,12 @@ public class TicketClaimService implements ITicketClaimService {
 
     @Autowired
     private TicketClaimMapper ticketClaimMapper;
+
+    @Autowired
+    private IUnitService unitService;
+
+    @Autowired
+    private IWarehouseService warehouseService;
 
 	/**
      * 保存票据申领
@@ -70,7 +80,7 @@ public class TicketClaimService implements ITicketClaimService {
      * @return 更新的行数
      */
     @Caching(evict = {@CacheEvict(value = {"TicketClaimService::commonQuery"},allEntries = true),
-    @CacheEvict(value = {"TicketClaimService::commonQuery"},key = "#ticketClaim.id")})
+    @CacheEvict(value = {"TicketClaimService::getById"},key = "#ticketClaim.id")})
     @Override
     public Integer update(TicketClaim ticketClaim) {
         if (ticketClaim == null) {
@@ -123,7 +133,15 @@ public class TicketClaimService implements ITicketClaimService {
 	 * @param ticketClaimDTO 票据申领
 	 */
 	private void setProperties(TicketClaimDTO ticketClaimDTO) {
-		if (ticketClaimDTO!=null){
+		if (ticketClaimDTO != null){
+		    if (ticketClaimDTO.getTargetUnitId() != null) {
+                Unit targetUnit = unitService.getUnitById(ticketClaimDTO.getTargetUnitId());
+                ticketClaimDTO.setTargetUnitName(targetUnit.getName());
+            }
+            if (ticketClaimDTO.getWarehouseId() != null) {
+                Warehouse warehouse = warehouseService.getWarehouseById(ticketClaimDTO.getWarehouseId());
+                ticketClaimDTO.setWarehouseName(warehouse.getName());
+            }
 		}
 	}
 }

@@ -40,6 +40,24 @@ public class TicketClaimVO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+    private String targetUnitName;
+    private String warehouseName;
+
+    public String getTargetUnitName() {
+        return targetUnitName;
+    }
+
+    public void setTargetUnitName(String targetUnitName) {
+        this.targetUnitName = targetUnitName;
+    }
+
+    public String getWarehouseName() {
+        return warehouseName;
+    }
+
+    public void setWarehouseName(String warehouseName) {
+        this.warehouseName = warehouseName;
+    }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -163,6 +181,8 @@ public class TicketClaimVO implements Serializable {
                 ", opinion='" + opinion + '\'' +
                 ", status=" + status +
                 ", version=" + version +
+                ", targetUnitName='" + targetUnitName + '\'' +
+                ", warehouseName='" + warehouseName + '\'' +
                 '}';
     }
 }

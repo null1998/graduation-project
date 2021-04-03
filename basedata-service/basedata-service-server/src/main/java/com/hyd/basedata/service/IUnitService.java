@@ -70,4 +70,11 @@ public interface IUnitService {
      * @return
      */
     List<Unit> commonQuery(Unit unit);
+
+    /**
+     * 获取该单位的所有上级单位（包括上级的上级）
+     * @param id
+     * @return
+     */
+    List<Unit> getSuperiorUnitList(Long id);
 }

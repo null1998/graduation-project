@@ -22,7 +22,8 @@ public class TicketClaimDTO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long targetUnitId;
-
+    private String targetUnitName;
+    private String warehouseName;
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String date;
 
@@ -39,6 +40,22 @@ public class TicketClaimDTO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+
+    public String getTargetUnitName() {
+        return targetUnitName;
+    }
+
+    public void setTargetUnitName(String targetUnitName) {
+        this.targetUnitName = targetUnitName;
+    }
+
+    public String getWarehouseName() {
+        return warehouseName;
+    }
+
+    public void setWarehouseName(String warehouseName) {
+        this.warehouseName = warehouseName;
+    }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -157,6 +174,8 @@ public class TicketClaimDTO implements Serializable {
                 ", unitId=" + unitId +
                 ", warehouseId=" + warehouseId +
                 ", targetUnitId=" + targetUnitId +
+                ", targetUnitName='" + targetUnitName + '\'' +
+                ", warehouseName='" + warehouseName + '\'' +
                 ", date='" + date + '\'' +
                 ", totalPrice=" + totalPrice +
                 ", opinion='" + opinion + '\'' +

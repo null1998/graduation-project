@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -115,6 +116,21 @@ public class UnitService implements IUnitService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位为空"));
         }
         return unitMapper.commonQuery(unit);
+    }
+
+    @Override
+    public List<Unit> getSuperiorUnitList(Long id) {
+        if (id == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
+        }
+        Unit unit = unitService.getUnitById(id);
+        ArrayList<Unit> superiorUnitList = new ArrayList<>();
+        // 递归查询
+        if (unit.getParentId() != null) {
+            superiorUnitList.add(unitService.getUnitById(unit.getParentId()));
+            superiorUnitList.addAll(getSuperiorUnitList(unit.getParentId()));
+        }
+        return superiorUnitList;
     }
 
 }

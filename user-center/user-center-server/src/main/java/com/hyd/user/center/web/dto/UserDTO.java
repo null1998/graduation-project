@@ -49,6 +49,15 @@ public class UserDTO implements Serializable {
 
     private String confirmPassword;
     private String unitName;
+    private Integer unitLevel;
+
+    public Integer getUnitLevel() {
+        return unitLevel;
+    }
+
+    public void setUnitLevel(Integer unitLevel) {
+        this.unitLevel = unitLevel;
+    }
 
     public Long getProvinceZoneId() {
         return provinceZoneId;
@@ -229,6 +238,7 @@ public class UserDTO implements Serializable {
                 ", roleNameList=" + roleNameList +
                 ", confirmPassword='" + confirmPassword + '\'' +
                 ", unitName='" + unitName + '\'' +
+                ", unitLevel=" + unitLevel +
                 '}';
     }
 }

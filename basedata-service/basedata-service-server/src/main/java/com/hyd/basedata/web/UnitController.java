@@ -99,4 +99,11 @@ public class UnitController {
         Unit unit = BeanUtil.copy(unitDTO, Unit.class);
         return unitService.update(unit);
     }
+
+    @ApiLog
+    @GetMapping("/superior/{id}")
+    public List<UnitVO> getSuperiorUnitList(@PathVariable("id") Long id) {
+        List<Unit> superiorUnitList = unitService.getSuperiorUnitList(id);
+        return BeanUtil.copyList(superiorUnitList, UnitVO.class);
+    }
 }
