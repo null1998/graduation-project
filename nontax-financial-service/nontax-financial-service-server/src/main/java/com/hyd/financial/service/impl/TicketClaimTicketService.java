@@ -2,6 +2,9 @@ package com.hyd.financial.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.hyd.basedata.entity.Ticket;
+import com.hyd.basedata.service.ITicketService;
+import com.hyd.basedata.service.IUnitService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.BeanUtil;
@@ -29,6 +32,9 @@ public class TicketClaimTicketService implements ITicketClaimTicketService {
 
     @Autowired
     private TicketClaimTicketMapper ticketClaimTicketMapper;
+
+    @Autowired
+    private ITicketService ticketService;
 
 	/**
      * 保存票据申领票据
@@ -121,7 +127,11 @@ public class TicketClaimTicketService implements ITicketClaimTicketService {
 	 * @param ticketClaimTicketDTO 票据申领票据
 	 */
 	private void setProperties(TicketClaimTicketDTO ticketClaimTicketDTO) {
-		if (ticketClaimTicketDTO!=null){
+		if (ticketClaimTicketDTO != null){
+            if (ticketClaimTicketDTO.getTicketId() != null) {
+                Ticket ticket = ticketService.getTicketById(ticketClaimTicketDTO.getTicketId());
+                ticketClaimTicketDTO.setTicketName(ticket.getName());
+            }
 		}
 	}
 }

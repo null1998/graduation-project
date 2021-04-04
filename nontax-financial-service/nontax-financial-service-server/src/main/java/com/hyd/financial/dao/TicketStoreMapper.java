@@ -11,13 +11,14 @@ import org.mybatis.dynamic.sql.select.aggregate.Sum;
  */
 public interface TicketStoreMapper extends TicketStoreBaseMapper {
     /**
-     * 通用查询，支持字段id，unitId
+     * 通用查询，支持字段id，unitId，ticketId
      * @param ticketStore 票据库存
      * @return 票据库存列表
      */
     default List<TicketStore> commonQuery(TicketStore ticketStore) {
         return this.select(c->c.where(TicketStoreDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(ticketStore.getId()))
-                .and(TicketStoreDynamicSqlSupport.unitId,SqlBuilder.isEqualToWhenPresent(ticketStore.getUnitId())));
+                .and(TicketStoreDynamicSqlSupport.unitId,SqlBuilder.isEqualToWhenPresent(ticketStore.getUnitId()))
+                .and(TicketStoreDynamicSqlSupport.ticketId,SqlBuilder.isEqualToWhenPresent(ticketStore.getTicketId())));
     }
     /**
      * 查询单位票据库存

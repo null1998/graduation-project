@@ -72,7 +72,7 @@ public class TicketClaimController {
     }
 
     /**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,unitId,targetUnitId，status
      * @param ticketClaimQO 票据申领
      * @return 票据申领列表
      */

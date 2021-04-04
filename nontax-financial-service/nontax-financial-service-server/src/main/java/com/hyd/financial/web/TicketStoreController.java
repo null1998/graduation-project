@@ -72,7 +72,7 @@ public class TicketStoreController {
     }
 
     /**
-     * 通用查询，支持字段id，unitId
+     * 通用查询，支持字段id，unitId，ticketId
      * @param ticketStoreQO 票据库存
      * @return 票据库存列表
      */

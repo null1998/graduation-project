@@ -42,6 +42,15 @@ public class TicketClaimVO implements Serializable {
     private static final long serialVersionUID = 1L;
     private String targetUnitName;
     private String warehouseName;
+    private String unitName;
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
 
     public String getTargetUnitName() {
         return targetUnitName;
@@ -183,6 +192,7 @@ public class TicketClaimVO implements Serializable {
                 ", version=" + version +
                 ", targetUnitName='" + targetUnitName + '\'' +
                 ", warehouseName='" + warehouseName + '\'' +
+                ", unitName='" + unitName + '\'' +
                 '}';
     }
 }

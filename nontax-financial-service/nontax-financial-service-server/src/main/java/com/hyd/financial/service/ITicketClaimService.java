@@ -38,7 +38,7 @@ public interface ITicketClaimService {
     TicketClaimDTO getById(Long id);
 
     /**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,unitId,targetUnitId，status
      * @param ticketClaim 票据申领
      * @return 票据申领列表
      */

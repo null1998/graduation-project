@@ -111,7 +111,7 @@ public class TicketClaimService implements ITicketClaimService {
     }
 
 	/**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,unitId,targetUnitId，status
      * @param ticketClaim 票据申领
      * @return 票据申领列表
      */
@@ -141,6 +141,10 @@ public class TicketClaimService implements ITicketClaimService {
             if (ticketClaimDTO.getWarehouseId() != null) {
                 Warehouse warehouse = warehouseService.getWarehouseById(ticketClaimDTO.getWarehouseId());
                 ticketClaimDTO.setWarehouseName(warehouse.getName());
+            }
+            if (ticketClaimDTO.getUnitId() != null) {
+                Unit unit = unitService.getUnitById(ticketClaimDTO.getUnitId());
+                ticketClaimDTO.setUnitName(unit.getName());
             }
 		}
 	}
