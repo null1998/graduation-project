@@ -40,10 +40,10 @@ public class CodeGenerator {
     public static final String SERVICE_IMPL_TEMPLATE_PATH="C:\\Users\\test\\Desktop\\template\\ENTITY_NAMEService.java";
     public static final String CONTROLLER_TEMPLATE_PATH="C:\\Users\\test\\Desktop\\template\\ENTITY_NAMEController.java";
 
-    public static final String CONTROLLER_URL="/payment";
-    public static final String ENTITY_NAME="Payment";
-    public static final String ENTITY_NAME_CAMEL_CASE="payment";
-    public static final String ENTITY_NAME_CHINESE="票据结算";
+    public static final String CONTROLLER_URL="/ticket/out/record";
+    public static final String ENTITY_NAME="TicketOutRecord";
+    public static final String ENTITY_NAME_CAMEL_CASE="ticketOutRecord";
+    public static final String ENTITY_NAME_CHINESE="票据出库记录";
 
     public static void generate() throws IOException {
         File entityFile = new File(ENTITY_PATH + "\\" + ENTITY_NAME + ".java");
