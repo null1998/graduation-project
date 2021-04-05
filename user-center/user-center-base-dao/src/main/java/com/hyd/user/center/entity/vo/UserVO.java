@@ -30,6 +30,15 @@ public class UserVO {
     private ArrayList<Long> roleIdList;
     private ArrayList<String> roleNameList;
     private String unitName;
+    private Integer unitLevel;
+
+    public Integer getUnitLevel() {
+        return unitLevel;
+    }
+
+    public void setUnitLevel(Integer unitLevel) {
+        this.unitLevel = unitLevel;
+    }
 
     public Long getProvinceZoneId() {
         return provinceZoneId;
@@ -169,6 +178,7 @@ public class UserVO {
                 ", roleIdList=" + roleIdList +
                 ", roleNameList=" + roleNameList +
                 ", unitName='" + unitName + '\'' +
+                ", unitLevel=" + unitLevel +
                 '}';
     }
 }

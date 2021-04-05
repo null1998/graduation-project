@@ -39,6 +39,9 @@ public class TicketClaim implements Serializable {
     private Long version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Integer payStatus;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -151,6 +154,16 @@ public class TicketClaim implements Serializable {
         this.version = version;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Integer getPayStatus() {
+        return payStatus;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setPayStatus(Integer payStatus) {
+        this.payStatus = payStatus;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
@@ -174,7 +187,8 @@ public class TicketClaim implements Serializable {
             && (this.getTotalPrice() == null ? other.getTotalPrice() == null : this.getTotalPrice().equals(other.getTotalPrice()))
             && (this.getOpinion() == null ? other.getOpinion() == null : this.getOpinion().equals(other.getOpinion()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
+            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
+            && (this.getPayStatus() == null ? other.getPayStatus() == null : this.getPayStatus().equals(other.getPayStatus()));
     }
 
     @Override
@@ -193,6 +207,7 @@ public class TicketClaim implements Serializable {
         result = prime * result + ((getOpinion() == null) ? 0 : getOpinion().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
+        result = prime * result + ((getPayStatus() == null) ? 0 : getPayStatus().hashCode());
         return result;
     }
 
@@ -214,6 +229,7 @@ public class TicketClaim implements Serializable {
         sb.append(", opinion=").append(opinion);
         sb.append(", status=").append(status);
         sb.append(", version=").append(version);
+        sb.append(", payStatus=").append(payStatus);
         sb.append("]");
         return sb.toString();
     }

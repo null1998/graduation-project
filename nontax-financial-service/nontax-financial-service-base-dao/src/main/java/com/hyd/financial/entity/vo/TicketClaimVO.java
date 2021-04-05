@@ -43,6 +43,15 @@ public class TicketClaimVO implements Serializable {
     private String targetUnitName;
     private String warehouseName;
     private String unitName;
+    private Integer payStatus;
+
+    public Integer getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(Integer payStatus) {
+        this.payStatus = payStatus;
+    }
 
     public String getUnitName() {
         return unitName;
@@ -193,6 +202,7 @@ public class TicketClaimVO implements Serializable {
                 ", targetUnitName='" + targetUnitName + '\'' +
                 ", warehouseName='" + warehouseName + '\'' +
                 ", unitName='" + unitName + '\'' +
+                ", payStatus=" + payStatus +
                 '}';
     }
 }

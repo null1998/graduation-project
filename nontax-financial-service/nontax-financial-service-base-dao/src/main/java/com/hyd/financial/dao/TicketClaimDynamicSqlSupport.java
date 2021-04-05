@@ -44,6 +44,9 @@ public final class TicketClaimDynamicSqlSupport {
     public static final SqlColumn<Long> version = ticketClaim.version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> payStatus = ticketClaim.payStatus;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class TicketClaim extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -66,6 +69,8 @@ public final class TicketClaimDynamicSqlSupport {
         public final SqlColumn<Integer> status = column("status", JDBCType.INTEGER);
 
         public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
+
+        public final SqlColumn<Integer> payStatus = column("pay_status", JDBCType.INTEGER);
 
         public TicketClaim() {
             super("financial_ticket_claim");

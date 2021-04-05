@@ -36,6 +36,15 @@ public class PrintingOrderVO implements Serializable {
     private String tel;
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+    private Integer payStatus;
+
+    public Integer getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(Integer payStatus) {
+        this.payStatus = payStatus;
+    }
 
     public String getPrintUnitName() {
         return printUnitName;
@@ -173,6 +182,7 @@ public class PrintingOrderVO implements Serializable {
                 ", status=" + status +
                 ", person='" + person + '\'' +
                 ", tel='" + tel + '\'' +
+                ", payStatus=" + payStatus +
                 '}';
     }
 }

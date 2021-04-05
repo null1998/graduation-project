@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface TicketClaimBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, userId, unitId, warehouseId, targetUnitId, date, totalPrice, opinion, status, version);
+    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, userId, unitId, warehouseId, targetUnitId, date, totalPrice, opinion, status, version, payStatus);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -66,7 +66,8 @@ public interface TicketClaimBaseMapper {
         @Result(column="total_price", property="totalPrice", jdbcType=JdbcType.DECIMAL),
         @Result(column="opinion", property="opinion", jdbcType=JdbcType.VARCHAR),
         @Result(column="status", property="status", jdbcType=JdbcType.INTEGER),
-        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
+        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT),
+        @Result(column="pay_status", property="payStatus", jdbcType=JdbcType.INTEGER)
     })
     List<TicketClaim> selectMany(SelectStatementProvider selectStatement);
 
@@ -110,6 +111,7 @@ public interface TicketClaimBaseMapper {
             .map(opinion).toProperty("opinion")
             .map(status).toProperty("status")
             .map(version).toProperty("version")
+            .map(payStatus).toProperty("payStatus")
         );
     }
 
@@ -127,6 +129,7 @@ public interface TicketClaimBaseMapper {
             .map(opinion).toProperty("opinion")
             .map(status).toProperty("status")
             .map(version).toProperty("version")
+            .map(payStatus).toProperty("payStatus")
         );
     }
 
@@ -144,6 +147,7 @@ public interface TicketClaimBaseMapper {
             .map(opinion).toPropertyWhenPresent("opinion", record::getOpinion)
             .map(status).toPropertyWhenPresent("status", record::getStatus)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
+            .map(payStatus).toPropertyWhenPresent("payStatus", record::getPayStatus)
         );
     }
 
@@ -186,7 +190,8 @@ public interface TicketClaimBaseMapper {
                 .set(totalPrice).equalTo(record::getTotalPrice)
                 .set(opinion).equalTo(record::getOpinion)
                 .set(status).equalTo(record::getStatus)
-                .set(version).equalTo(record::getVersion);
+                .set(version).equalTo(record::getVersion)
+                .set(payStatus).equalTo(record::getPayStatus);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -201,7 +206,8 @@ public interface TicketClaimBaseMapper {
                 .set(totalPrice).equalToWhenPresent(record::getTotalPrice)
                 .set(opinion).equalToWhenPresent(record::getOpinion)
                 .set(status).equalToWhenPresent(record::getStatus)
-                .set(version).equalToWhenPresent(record::getVersion);
+                .set(version).equalToWhenPresent(record::getVersion)
+                .set(payStatus).equalToWhenPresent(record::getPayStatus);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -217,6 +223,7 @@ public interface TicketClaimBaseMapper {
             .set(opinion).equalTo(record::getOpinion)
             .set(status).equalTo(record::getStatus)
             .set(version).equalTo(record::getVersion)
+            .set(payStatus).equalTo(record::getPayStatus)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -234,6 +241,7 @@ public interface TicketClaimBaseMapper {
             .set(opinion).equalToWhenPresent(record::getOpinion)
             .set(status).equalToWhenPresent(record::getStatus)
             .set(version).equalToWhenPresent(record::getVersion)
+            .set(payStatus).equalToWhenPresent(record::getPayStatus)
             .where(id, isEqualTo(record::getId))
         );
     }

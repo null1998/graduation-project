@@ -46,6 +46,9 @@ public final class PrintingOrderDynamicSqlSupport {
     public static final SqlColumn<Long> version = printingOrder.version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Integer> payStatus = printingOrder.payStatus;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class PrintingOrder extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -70,6 +73,8 @@ public final class PrintingOrderDynamicSqlSupport {
         public final SqlColumn<Integer> status = column("status", JDBCType.INTEGER);
 
         public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
+
+        public final SqlColumn<Integer> payStatus = column("pay_status", JDBCType.INTEGER);
 
         public PrintingOrder() {
             super("financial_printing_order");

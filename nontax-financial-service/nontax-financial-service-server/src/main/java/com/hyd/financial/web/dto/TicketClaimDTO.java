@@ -41,6 +41,15 @@ public class TicketClaimDTO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+    private Integer payStatus;
+
+    public Integer getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(Integer payStatus) {
+        this.payStatus = payStatus;
+    }
 
     public String getUnitName() {
         return unitName;
@@ -191,6 +200,7 @@ public class TicketClaimDTO implements Serializable {
                 ", opinion='" + opinion + '\'' +
                 ", status=" + status +
                 ", version=" + version +
+                ", payStatus=" + payStatus +
                 '}';
     }
 }
