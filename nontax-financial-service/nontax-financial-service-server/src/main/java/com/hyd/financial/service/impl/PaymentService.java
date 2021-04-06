@@ -2,6 +2,8 @@ package com.hyd.financial.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.hyd.basedata.entity.Unit;
+import com.hyd.basedata.service.IUnitService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.BeanUtil;
@@ -30,6 +32,9 @@ public class PaymentService implements IPaymentService {
     @Autowired
     private PaymentMapper paymentMapper;
 
+    @Autowired
+    private IUnitService unitService;
+
 	/**
      * 保存票据结算
      * @param payment 票据结算
@@ -43,6 +48,8 @@ public class PaymentService implements IPaymentService {
         }
         long id = idGenerator.snowflakeId();
         payment.setId(id);
+        long orderNumber = idGenerator.snowflakeId();
+        payment.setOrderNumber(orderNumber);
         paymentMapper.insertSelective(payment);
         return id;
     }
@@ -53,7 +60,7 @@ public class PaymentService implements IPaymentService {
      * @return 是否删除成功
      */
     @Caching(evict = {@CacheEvict(value = {"PaymentService::commonQuery"},allEntries = true),
-            @CacheEvict(value = {"PaymentService::commonQuery"},key = "#id")})
+            @CacheEvict(value = {"PaymentService::getById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -68,7 +75,7 @@ public class PaymentService implements IPaymentService {
      * @return 更新的行数
      */
     @Caching(evict = {@CacheEvict(value = {"PaymentService::commonQuery"},allEntries = true),
-    @CacheEvict(value = {"PaymentService::commonQuery"},key = "#payment.id")})
+    @CacheEvict(value = {"PaymentService::getById"},key = "#payment.id")})
     @Override
     public Integer update(Payment payment) {
         if (payment == null) {
@@ -121,7 +128,15 @@ public class PaymentService implements IPaymentService {
 	 * @param paymentDTO 票据结算
 	 */
 	private void setProperties(PaymentDTO paymentDTO) {
-		if (paymentDTO!=null){
+		if (paymentDTO != null){
+            if (paymentDTO.getSrcUnitId() != null) {
+                Unit unit = unitService.getUnitById(paymentDTO.getSrcUnitId());
+                paymentDTO.setSrcUnitName(unit.getName());
+            }
+            if (paymentDTO.getDesUnitId() != null) {
+                Unit unit = unitService.getUnitById(paymentDTO.getDesUnitId());
+                paymentDTO.setDesUnitName(unit.getName());
+            }
 		}
 	}
 }

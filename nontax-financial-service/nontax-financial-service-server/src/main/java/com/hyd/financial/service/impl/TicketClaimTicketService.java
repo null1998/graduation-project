@@ -59,7 +59,7 @@ public class TicketClaimTicketService implements ITicketClaimTicketService {
      * @return 是否删除成功
      */
     @Caching(evict = {@CacheEvict(value = {"TicketClaimTicketService::commonQuery"},allEntries = true),
-            @CacheEvict(value = {"TicketClaimTicketService::commonQuery"},key = "#id")})
+            @CacheEvict(value = {"TicketClaimTicketService::getById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -74,7 +74,7 @@ public class TicketClaimTicketService implements ITicketClaimTicketService {
      * @return 更新的行数
      */
     @Caching(evict = {@CacheEvict(value = {"TicketClaimTicketService::commonQuery"},allEntries = true),
-    @CacheEvict(value = {"TicketClaimTicketService::commonQuery"},key = "#ticketClaimTicket.id")})
+    @CacheEvict(value = {"TicketClaimTicketService::getById"},key = "#ticketClaimTicket.id")})
     @Override
     public Integer update(TicketClaimTicket ticketClaimTicket) {
         if (ticketClaimTicket == null) {

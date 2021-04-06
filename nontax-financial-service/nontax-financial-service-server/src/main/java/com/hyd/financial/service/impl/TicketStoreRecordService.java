@@ -79,7 +79,7 @@ public class TicketStoreRecordService implements ITicketStoreRecordService {
      */
     @Transactional(rollbackFor=Exception.class)
     @Caching(evict = {@CacheEvict(value = {"TicketStoreRecordService::commonQuery"},allEntries = true),
-            @CacheEvict(value = {"TicketStoreRecordService::commonQuery"},key = "#id")})
+            @CacheEvict(value = {"TicketStoreRecordService::getById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -100,7 +100,7 @@ public class TicketStoreRecordService implements ITicketStoreRecordService {
      * @return 更新的行数
      */
     @Caching(evict = {@CacheEvict(value = {"TicketStoreRecordService::commonQuery"},allEntries = true),
-    @CacheEvict(value = {"TicketStoreRecordService::commonQuery"},key = "#ticketStoreRecord.id")})
+    @CacheEvict(value = {"TicketStoreRecordService::getById"},key = "#ticketStoreRecord.id")})
     @Override
     public Integer update(TicketStoreRecord ticketStoreRecord) {
         if (ticketStoreRecord == null) {

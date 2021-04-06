@@ -76,7 +76,7 @@ public class TicketProductRecordService implements ITicketProductRecordService {
 
     }
     @Caching(evict = {@CacheEvict(value = {"TicketProductRecordService::commonQuery"},allEntries = true),
-            @CacheEvict(value = {"TicketProductRecordService::commonQuery"},key = "#id")})
+            @CacheEvict(value = {"TicketProductRecordService::getById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -86,7 +86,7 @@ public class TicketProductRecordService implements ITicketProductRecordService {
     }
     @Transactional(rollbackFor=Exception.class)
     @Caching(evict = {@CacheEvict(value = {"TicketProductRecordService::commonQuery"},allEntries = true),
-    @CacheEvict(value = {"TicketProductRecordService::commonQuery"},key = "#ticketProductRecord.id")})
+    @CacheEvict(value = {"TicketProductRecordService::getById"},key = "#ticketProductRecord.id")})
     @Override
     public Integer update(TicketProductRecord ticketProductRecord) {
         if (ticketProductRecord == null) {

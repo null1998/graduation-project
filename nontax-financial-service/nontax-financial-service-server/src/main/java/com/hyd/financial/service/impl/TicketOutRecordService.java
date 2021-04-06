@@ -2,6 +2,8 @@ package com.hyd.financial.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.hyd.basedata.entity.Unit;
+import com.hyd.basedata.service.IUnitService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.BeanUtil;
@@ -30,6 +32,9 @@ public class TicketOutRecordService implements ITicketOutRecordService {
     @Autowired
     private TicketOutRecordMapper ticketOutRecordMapper;
 
+    @Autowired
+    private IUnitService unitService;
+
 	/**
      * 保存票据出库记录
      * @param ticketOutRecord 票据出库记录
@@ -43,6 +48,8 @@ public class TicketOutRecordService implements ITicketOutRecordService {
         }
         long id = idGenerator.snowflakeId();
         ticketOutRecord.setId(id);
+        long orderNumber = idGenerator.snowflakeId();
+        ticketOutRecord.setOrderNumber(orderNumber);
         ticketOutRecordMapper.insertSelective(ticketOutRecord);
         return id;
     }
@@ -53,7 +60,7 @@ public class TicketOutRecordService implements ITicketOutRecordService {
      * @return 是否删除成功
      */
     @Caching(evict = {@CacheEvict(value = {"TicketOutRecordService::commonQuery"},allEntries = true),
-            @CacheEvict(value = {"TicketOutRecordService::commonQuery"},key = "#id")})
+            @CacheEvict(value = {"TicketOutRecordService::getById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -68,7 +75,7 @@ public class TicketOutRecordService implements ITicketOutRecordService {
      * @return 更新的行数
      */
     @Caching(evict = {@CacheEvict(value = {"TicketOutRecordService::commonQuery"},allEntries = true),
-    @CacheEvict(value = {"TicketOutRecordService::commonQuery"},key = "#ticketOutRecord.id")})
+    @CacheEvict(value = {"TicketOutRecordService::getById"},key = "#ticketOutRecord.id")})
     @Override
     public Integer update(TicketOutRecord ticketOutRecord) {
         if (ticketOutRecord == null) {
@@ -122,6 +129,10 @@ public class TicketOutRecordService implements ITicketOutRecordService {
 	 */
 	private void setProperties(TicketOutRecordDTO ticketOutRecordDTO) {
 		if (ticketOutRecordDTO != null){
+            if (ticketOutRecordDTO.getTargetUnitId() != null) {
+                Unit unit = unitService.getUnitById(ticketOutRecordDTO.getTargetUnitId());
+                ticketOutRecordDTO.setTargetUnitName(unit.getName());
+            }
 		}
 	}
 }

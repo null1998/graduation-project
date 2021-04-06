@@ -66,7 +66,7 @@ public class TicketStoreService implements ITicketStoreService {
      * @return 是否删除成功
      */
     @Caching(evict = {@CacheEvict(value = {"TicketStoreService::commonQuery","TicketStoreService::getUnitStorage"},allEntries = true),
-            @CacheEvict(value = {"TicketStoreService::commonQuery"},key = "#id")})
+            @CacheEvict(value = {"TicketStoreService::getById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -81,7 +81,7 @@ public class TicketStoreService implements ITicketStoreService {
      * @return 更新的行数
      */
     @Caching(evict = {@CacheEvict(value = {"TicketStoreService::commonQuery","TicketStoreService::getUnitStorage"},allEntries = true),
-    @CacheEvict(value = {"TicketStoreService::commonQuery"},key = "#ticketStore.id")})
+    @CacheEvict(value = {"TicketStoreService::getById"},key = "#ticketStore.id")})
     @Override
     public Integer update(TicketStore ticketStore) {
         if (ticketStore == null) {

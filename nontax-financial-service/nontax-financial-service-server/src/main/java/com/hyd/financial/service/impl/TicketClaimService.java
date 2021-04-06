@@ -65,7 +65,7 @@ public class TicketClaimService implements ITicketClaimService {
      * @return 是否删除成功
      */
     @Caching(evict = {@CacheEvict(value = {"TicketClaimService::commonQuery"},allEntries = true),
-            @CacheEvict(value = {"TicketClaimService::commonQuery"},key = "#id")})
+            @CacheEvict(value = {"TicketClaimService::getById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {

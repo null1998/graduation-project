@@ -53,7 +53,7 @@ public class TicketOutRecordTicketService implements ITicketOutRecordTicketServi
      * @return 是否删除成功
      */
     @Caching(evict = {@CacheEvict(value = {"TicketOutRecordTicketService::commonQuery"},allEntries = true),
-            @CacheEvict(value = {"TicketOutRecordTicketService::commonQuery"},key = "#id")})
+            @CacheEvict(value = {"TicketOutRecordTicketService::getById"},key = "#id")})
     @Override
     public Boolean remove(Long id) {
         if (id == null) {
@@ -68,7 +68,7 @@ public class TicketOutRecordTicketService implements ITicketOutRecordTicketServi
      * @return 更新的行数
      */
     @Caching(evict = {@CacheEvict(value = {"TicketOutRecordTicketService::commonQuery"},allEntries = true),
-    @CacheEvict(value = {"TicketOutRecordTicketService::commonQuery"},key = "#ticketOutRecordTicket.id")})
+    @CacheEvict(value = {"TicketOutRecordTicketService::getById"},key = "#ticketOutRecordTicket.id")})
     @Override
     public Integer update(TicketOutRecordTicket ticketOutRecordTicket) {
         if (ticketOutRecordTicket == null) {
