@@ -22,7 +22,7 @@ public class PaymentDTO implements Serializable {
     private String desUnitName;
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private BigDecimal totalPrice;
-
+    private String payType;
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String orderType;
 
@@ -55,6 +55,14 @@ public class PaymentDTO implements Serializable {
 
     public void setDesUnitName(String desUnitName) {
         this.desUnitName = desUnitName;
+    }
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -178,6 +186,7 @@ public class PaymentDTO implements Serializable {
                 ", desUnitId=" + desUnitId +
                 ", desUnitName='" + desUnitName + '\'' +
                 ", totalPrice=" + totalPrice +
+                ", payType='" + payType + '\'' +
                 ", orderType='" + orderType + '\'' +
                 ", date='" + date + '\'' +
                 ", payDate='" + payDate + '\'' +

@@ -133,7 +133,11 @@ public class TicketStoreRecordTicketService implements ITicketStoreRecordTicketS
         }
         return ticketStoreRecordTicketDTOList;
     }
-
+    /**
+     * 根据单位id查询该单位每种票据的入库汇总数，按月统计
+     * @param unitId 单位id
+     * @return 票据记录
+     */
     @Override
     public List<RecordDTO> getByUnitId(Long unitId) {
         if (unitId == null) {

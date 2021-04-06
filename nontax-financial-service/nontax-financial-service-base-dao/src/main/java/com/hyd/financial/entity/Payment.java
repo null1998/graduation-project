@@ -39,6 +39,9 @@ public class Payment implements Serializable {
     private Long version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String paytype;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -151,6 +154,16 @@ public class Payment implements Serializable {
         this.version = version;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getPaytype() {
+        return paytype;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setPaytype(String paytype) {
+        this.paytype = paytype;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
@@ -174,7 +187,8 @@ public class Payment implements Serializable {
             && (this.getDate() == null ? other.getDate() == null : this.getDate().equals(other.getDate()))
             && (this.getPayDate() == null ? other.getPayDate() == null : this.getPayDate().equals(other.getPayDate()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
+            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
+            && (this.getPaytype() == null ? other.getPaytype() == null : this.getPaytype().equals(other.getPaytype()));
     }
 
     @Override
@@ -193,6 +207,7 @@ public class Payment implements Serializable {
         result = prime * result + ((getPayDate() == null) ? 0 : getPayDate().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
+        result = prime * result + ((getPaytype() == null) ? 0 : getPaytype().hashCode());
         return result;
     }
 
@@ -214,6 +229,7 @@ public class Payment implements Serializable {
         sb.append(", payDate=").append(payDate);
         sb.append(", status=").append(status);
         sb.append(", version=").append(version);
+        sb.append(", paytype=").append(paytype);
         sb.append("]");
         return sb.toString();
     }

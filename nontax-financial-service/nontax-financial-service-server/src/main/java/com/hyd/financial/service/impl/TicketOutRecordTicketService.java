@@ -8,7 +8,9 @@ import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.TicketOutRecordTicketMapper;
 import com.hyd.financial.entity.TicketOutRecordTicket;
+import com.hyd.financial.entity.TicketStoreRecordTicket;
 import com.hyd.financial.service.ITicketOutRecordTicketService;
+import com.hyd.financial.util.TicketCodeConvertUtil;
 import com.hyd.financial.web.dto.TicketOutRecordTicketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -43,6 +45,7 @@ public class TicketOutRecordTicketService implements ITicketOutRecordTicketServi
         }
         long id = idGenerator.snowflakeId();
         ticketOutRecordTicket.setId(id);
+        calculateNumber(ticketOutRecordTicket);
         ticketOutRecordTicketMapper.insertSelective(ticketOutRecordTicket);
         return id;
     }
@@ -74,6 +77,7 @@ public class TicketOutRecordTicketService implements ITicketOutRecordTicketServi
         if (ticketOutRecordTicket == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("票据出库记录票据为空"));
         }
+        calculateNumber(ticketOutRecordTicket);
         return ticketOutRecordTicketMapper.updateByPrimaryKeySelective(ticketOutRecordTicket);
     }
 
@@ -99,7 +103,7 @@ public class TicketOutRecordTicketService implements ITicketOutRecordTicketServi
     }
 
 	/**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,ticketOutRecordId
      * @param ticketOutRecordTicket 票据出库记录票据
      * @return 票据出库记录票据列表
      */
@@ -124,4 +128,21 @@ public class TicketOutRecordTicketService implements ITicketOutRecordTicketServi
 		if (ticketOutRecordTicketDTO != null){
 		}
 	}
+    /**
+     * 计算number
+     * @param ticketOutRecordTicket
+     */
+    private void calculateNumber(TicketOutRecordTicket ticketOutRecordTicket) {
+        if (ticketOutRecordTicket != null) {
+            String startNumber = ticketOutRecordTicket.getStartNumber();
+            String endNumber = ticketOutRecordTicket.getEndNumber();
+            if (startNumber != null && endNumber != null) {
+                Long s = TicketCodeConvertUtil.stringConvertLong(startNumber);
+                Long e = TicketCodeConvertUtil.stringConvertLong(endNumber);
+                if (e >= s) {
+                    ticketOutRecordTicket.setNumber(e-s+1);
+                }
+            }
+        }
+    }
 }

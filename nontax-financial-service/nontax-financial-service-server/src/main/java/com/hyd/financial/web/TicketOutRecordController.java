@@ -72,7 +72,7 @@ public class TicketOutRecordController {
     }
 
     /**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,ticketOutRecordId
      * @param ticketOutRecordQO 票据出库记录
      * @return 票据出库记录列表
      */

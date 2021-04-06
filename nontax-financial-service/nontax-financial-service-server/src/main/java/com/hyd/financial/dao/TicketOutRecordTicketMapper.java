@@ -9,11 +9,12 @@ import com.hyd.financial.entity.TicketOutRecordTicket;
  */
 public interface TicketOutRecordTicketMapper extends TicketOutRecordTicketBaseMapper {
     /**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,ticketOutRecordId
      * @param ticketOutRecordTicket 票据出库记录票据
      * @return 票据出库记录票据列表
      */
     default List<TicketOutRecordTicket> commonQuery(TicketOutRecordTicket ticketOutRecordTicket) {
-        return this.select(c->c.where(TicketOutRecordTicketDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(ticketOutRecordTicket.getId())));
+        return this.select(c->c.where(TicketOutRecordTicketDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(ticketOutRecordTicket.getId()))
+                .and(TicketOutRecordTicketDynamicSqlSupport.ticketOutRecordId, SqlBuilder.isEqualToWhenPresent(ticketOutRecordTicket.getTicketOutRecordId())));
     }
 }

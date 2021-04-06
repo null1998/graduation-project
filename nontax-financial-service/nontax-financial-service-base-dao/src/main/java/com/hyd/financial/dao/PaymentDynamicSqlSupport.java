@@ -44,6 +44,9 @@ public final class PaymentDynamicSqlSupport {
     public static final SqlColumn<Long> version = payment.version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> paytype = payment.paytype;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class Payment extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -66,6 +69,8 @@ public final class PaymentDynamicSqlSupport {
         public final SqlColumn<Integer> status = column("status", JDBCType.INTEGER);
 
         public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
+
+        public final SqlColumn<String> paytype = column("payType", JDBCType.VARCHAR);
 
         public Payment() {
             super("financial_payment");

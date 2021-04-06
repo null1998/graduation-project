@@ -10,8 +10,11 @@ import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.TicketOutRecordMapper;
 import com.hyd.financial.entity.TicketOutRecord;
+import com.hyd.financial.entity.TicketOutRecordTicket;
 import com.hyd.financial.service.ITicketOutRecordService;
+import com.hyd.financial.service.ITicketOutRecordTicketService;
 import com.hyd.financial.web.dto.TicketOutRecordDTO;
+import com.hyd.financial.web.dto.TicketOutRecordTicketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -34,6 +37,9 @@ public class TicketOutRecordService implements ITicketOutRecordService {
 
     @Autowired
     private IUnitService unitService;
+
+    @Autowired
+    private ITicketOutRecordTicketService ticketOutRecordTicketService;
 
 	/**
      * 保存票据出库记录
@@ -65,6 +71,12 @@ public class TicketOutRecordService implements ITicketOutRecordService {
     public Boolean remove(Long id) {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
+        }
+        TicketOutRecordTicket query = new TicketOutRecordTicket();
+        query.setTicketOutRecordId(id);
+        List<TicketOutRecordTicketDTO> ticketOutRecordTicketDTOList = ticketOutRecordTicketService.commonQuery(query);
+        for (TicketOutRecordTicketDTO ticketOutRecordTicketDTO : ticketOutRecordTicketDTOList) {
+            ticketOutRecordTicketService.remove(ticketOutRecordTicketDTO.getId());
         }
         return ticketOutRecordMapper.deleteByPrimaryKey(id) == 1;
     }

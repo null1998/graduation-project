@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PaymentBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, sourceOrderNumber, srcUnitId, desUnitId, totalPrice, orderType, date, payDate, status, version);
+    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, sourceOrderNumber, srcUnitId, desUnitId, totalPrice, orderType, date, payDate, status, version, paytype);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -66,7 +66,8 @@ public interface PaymentBaseMapper {
         @Result(column="date", property="date", jdbcType=JdbcType.VARCHAR),
         @Result(column="pay_date", property="payDate", jdbcType=JdbcType.VARCHAR),
         @Result(column="status", property="status", jdbcType=JdbcType.INTEGER),
-        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
+        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT),
+        @Result(column="payType", property="paytype", jdbcType=JdbcType.VARCHAR)
     })
     List<Payment> selectMany(SelectStatementProvider selectStatement);
 
@@ -110,6 +111,7 @@ public interface PaymentBaseMapper {
             .map(payDate).toProperty("payDate")
             .map(status).toProperty("status")
             .map(version).toProperty("version")
+            .map(paytype).toProperty("paytype")
         );
     }
 
@@ -127,6 +129,7 @@ public interface PaymentBaseMapper {
             .map(payDate).toProperty("payDate")
             .map(status).toProperty("status")
             .map(version).toProperty("version")
+            .map(paytype).toProperty("paytype")
         );
     }
 
@@ -144,6 +147,7 @@ public interface PaymentBaseMapper {
             .map(payDate).toPropertyWhenPresent("payDate", record::getPayDate)
             .map(status).toPropertyWhenPresent("status", record::getStatus)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
+            .map(paytype).toPropertyWhenPresent("paytype", record::getPaytype)
         );
     }
 
@@ -186,7 +190,8 @@ public interface PaymentBaseMapper {
                 .set(date).equalTo(record::getDate)
                 .set(payDate).equalTo(record::getPayDate)
                 .set(status).equalTo(record::getStatus)
-                .set(version).equalTo(record::getVersion);
+                .set(version).equalTo(record::getVersion)
+                .set(paytype).equalTo(record::getPaytype);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -201,7 +206,8 @@ public interface PaymentBaseMapper {
                 .set(date).equalToWhenPresent(record::getDate)
                 .set(payDate).equalToWhenPresent(record::getPayDate)
                 .set(status).equalToWhenPresent(record::getStatus)
-                .set(version).equalToWhenPresent(record::getVersion);
+                .set(version).equalToWhenPresent(record::getVersion)
+                .set(paytype).equalToWhenPresent(record::getPaytype);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -217,6 +223,7 @@ public interface PaymentBaseMapper {
             .set(payDate).equalTo(record::getPayDate)
             .set(status).equalTo(record::getStatus)
             .set(version).equalTo(record::getVersion)
+            .set(paytype).equalTo(record::getPaytype)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -234,6 +241,7 @@ public interface PaymentBaseMapper {
             .set(payDate).equalToWhenPresent(record::getPayDate)
             .set(status).equalToWhenPresent(record::getStatus)
             .set(version).equalToWhenPresent(record::getVersion)
+            .set(paytype).equalToWhenPresent(record::getPaytype)
             .where(id, isEqualTo(record::getId))
         );
     }

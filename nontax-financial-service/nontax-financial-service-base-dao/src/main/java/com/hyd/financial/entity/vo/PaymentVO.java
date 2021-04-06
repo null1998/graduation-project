@@ -38,8 +38,18 @@ public class PaymentVO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
+    private String payType;
+
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
 
     public String getSrcUnitName() {
         return srcUnitName;
@@ -183,6 +193,7 @@ public class PaymentVO implements Serializable {
                 ", payDate='" + payDate + '\'' +
                 ", status=" + status +
                 ", version=" + version +
+                ", payType='" + payType + '\'' +
                 '}';
     }
 }
