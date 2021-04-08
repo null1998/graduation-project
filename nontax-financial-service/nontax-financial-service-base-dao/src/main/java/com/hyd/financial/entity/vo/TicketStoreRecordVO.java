@@ -30,6 +30,15 @@ public class TicketStoreRecordVO implements Serializable {
     private Long dictionaryId;
     private String storeDate;
     private String theWay;
+    private String storeType;
+
+    public String getStoreType() {
+        return storeType;
+    }
+
+    public void setStoreType(String storeType) {
+        this.storeType = storeType;
+    }
 
     public String getTheWay() {
         return theWay;
@@ -155,6 +164,7 @@ public class TicketStoreRecordVO implements Serializable {
                 ", dictionaryId=" + dictionaryId +
                 ", storeDate='" + storeDate + '\'' +
                 ", theWay='" + theWay + '\'' +
+                ", storeType='" + storeType + '\'' +
                 '}';
     }
 }

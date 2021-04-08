@@ -38,7 +38,7 @@ public interface IPaymentService {
     PaymentDTO getById(Long id);
 
     /**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,srcUnitId
      * @param payment 票据结算
      * @return 票据结算列表
      */

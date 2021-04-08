@@ -32,6 +32,9 @@ public class TicketStoreRecord implements Serializable {
     private String storeDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String storeType;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -124,6 +127,16 @@ public class TicketStoreRecord implements Serializable {
         this.storeDate = storeDate;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getStoreType() {
+        return storeType;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setStoreType(String storeType) {
+        this.storeType = storeType;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
@@ -145,7 +158,8 @@ public class TicketStoreRecord implements Serializable {
             && (this.getSourceWarehouseId() == null ? other.getSourceWarehouseId() == null : this.getSourceWarehouseId().equals(other.getSourceWarehouseId()))
             && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
             && (this.getDictionaryId() == null ? other.getDictionaryId() == null : this.getDictionaryId().equals(other.getDictionaryId()))
-            && (this.getStoreDate() == null ? other.getStoreDate() == null : this.getStoreDate().equals(other.getStoreDate()));
+            && (this.getStoreDate() == null ? other.getStoreDate() == null : this.getStoreDate().equals(other.getStoreDate()))
+            && (this.getStoreType() == null ? other.getStoreType() == null : this.getStoreType().equals(other.getStoreType()));
     }
 
     @Override
@@ -162,6 +176,7 @@ public class TicketStoreRecord implements Serializable {
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         result = prime * result + ((getDictionaryId() == null) ? 0 : getDictionaryId().hashCode());
         result = prime * result + ((getStoreDate() == null) ? 0 : getStoreDate().hashCode());
+        result = prime * result + ((getStoreType() == null) ? 0 : getStoreType().hashCode());
         return result;
     }
 
@@ -181,6 +196,7 @@ public class TicketStoreRecord implements Serializable {
         sb.append(", version=").append(version);
         sb.append(", dictionaryId=").append(dictionaryId);
         sb.append(", storeDate=").append(storeDate);
+        sb.append(", storeType=").append(storeType);
         sb.append("]");
         return sb.toString();
     }

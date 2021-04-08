@@ -9,11 +9,12 @@ import com.hyd.financial.entity.Payment;
  */
 public interface PaymentMapper extends PaymentBaseMapper {
     /**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,srcUnitId
      * @param payment 票据结算
      * @return 票据结算列表
      */
     default List<Payment> commonQuery(Payment payment) {
-        return this.select(c->c.where(PaymentDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(payment.getId())));
+        return this.select(c->c.where(PaymentDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(payment.getId()))
+                .and(PaymentDynamicSqlSupport.srcUnitId, SqlBuilder.isEqualToWhenPresent(payment.getSrcUnitId())));
     }
 }

@@ -46,9 +46,9 @@
 <!--        <table tableName="financial_ticket_product_record" mapperName="TicketProductRecordBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
 <!--        </table>-->
-<!--        <table tableName="financial_ticket_store_record" mapperName="TicketStoreRecordBaseMapper">-->
-<!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
-<!--        </table>-->
+        <table tableName="financial_ticket_store_record" mapperName="TicketStoreRecordBaseMapper">
+            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
+        </table>
 <!--        <table tableName="financial_ticket_store" mapperName="TicketStoreBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
 <!--        </table>-->
@@ -58,9 +58,9 @@
 <!--        <table tableName="financial_ticket_claim_ticket" mapperName="TicketClaimTicketBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
 <!--        </table>-->
-        <table tableName="financial_payment" mapperName="PaymentBaseMapper">
-            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>
-        </table>
+<!--        <table tableName="financial_payment" mapperName="PaymentBaseMapper">-->
+<!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
+<!--        </table>-->
 <!--        <table tableName="financial_ticket_store_record_ticket" mapperName="TicketStoreRecordTicketBaseMapper">-->
 <!--            <domainObjectRenamingRule searchString="^Financial" replaceString=""/>-->
 <!--        </table>-->

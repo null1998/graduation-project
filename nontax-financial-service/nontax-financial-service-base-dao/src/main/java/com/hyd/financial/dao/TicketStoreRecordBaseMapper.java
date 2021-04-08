@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface TicketStoreRecordBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, sourceOrderNumber, unitId, sourceUnitId, sourceWarehouseId, version, dictionaryId, storeDate);
+    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, sourceOrderNumber, unitId, sourceUnitId, sourceWarehouseId, version, dictionaryId, storeDate, storeType);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -64,7 +64,8 @@ public interface TicketStoreRecordBaseMapper {
         @Result(column="source_warehouse_id", property="sourceWarehouseId", jdbcType=JdbcType.BIGINT),
         @Result(column="version", property="version", jdbcType=JdbcType.BIGINT),
         @Result(column="dictionary_id", property="dictionaryId", jdbcType=JdbcType.BIGINT),
-        @Result(column="store_date", property="storeDate", jdbcType=JdbcType.VARCHAR)
+        @Result(column="store_date", property="storeDate", jdbcType=JdbcType.VARCHAR),
+        @Result(column="store_type", property="storeType", jdbcType=JdbcType.VARCHAR)
     })
     List<TicketStoreRecord> selectMany(SelectStatementProvider selectStatement);
 
@@ -106,6 +107,7 @@ public interface TicketStoreRecordBaseMapper {
             .map(version).toProperty("version")
             .map(dictionaryId).toProperty("dictionaryId")
             .map(storeDate).toProperty("storeDate")
+            .map(storeType).toProperty("storeType")
         );
     }
 
@@ -121,6 +123,7 @@ public interface TicketStoreRecordBaseMapper {
             .map(version).toProperty("version")
             .map(dictionaryId).toProperty("dictionaryId")
             .map(storeDate).toProperty("storeDate")
+            .map(storeType).toProperty("storeType")
         );
     }
 
@@ -136,6 +139,7 @@ public interface TicketStoreRecordBaseMapper {
             .map(version).toPropertyWhenPresent("version", record::getVersion)
             .map(dictionaryId).toPropertyWhenPresent("dictionaryId", record::getDictionaryId)
             .map(storeDate).toPropertyWhenPresent("storeDate", record::getStoreDate)
+            .map(storeType).toPropertyWhenPresent("storeType", record::getStoreType)
         );
     }
 
@@ -176,7 +180,8 @@ public interface TicketStoreRecordBaseMapper {
                 .set(sourceWarehouseId).equalTo(record::getSourceWarehouseId)
                 .set(version).equalTo(record::getVersion)
                 .set(dictionaryId).equalTo(record::getDictionaryId)
-                .set(storeDate).equalTo(record::getStoreDate);
+                .set(storeDate).equalTo(record::getStoreDate)
+                .set(storeType).equalTo(record::getStoreType);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -189,7 +194,8 @@ public interface TicketStoreRecordBaseMapper {
                 .set(sourceWarehouseId).equalToWhenPresent(record::getSourceWarehouseId)
                 .set(version).equalToWhenPresent(record::getVersion)
                 .set(dictionaryId).equalToWhenPresent(record::getDictionaryId)
-                .set(storeDate).equalToWhenPresent(record::getStoreDate);
+                .set(storeDate).equalToWhenPresent(record::getStoreDate)
+                .set(storeType).equalToWhenPresent(record::getStoreType);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -203,6 +209,7 @@ public interface TicketStoreRecordBaseMapper {
             .set(version).equalTo(record::getVersion)
             .set(dictionaryId).equalTo(record::getDictionaryId)
             .set(storeDate).equalTo(record::getStoreDate)
+            .set(storeType).equalTo(record::getStoreType)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -218,6 +225,7 @@ public interface TicketStoreRecordBaseMapper {
             .set(version).equalToWhenPresent(record::getVersion)
             .set(dictionaryId).equalToWhenPresent(record::getDictionaryId)
             .set(storeDate).equalToWhenPresent(record::getStoreDate)
+            .set(storeType).equalToWhenPresent(record::getStoreType)
             .where(id, isEqualTo(record::getId))
         );
     }

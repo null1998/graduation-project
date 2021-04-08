@@ -113,6 +113,10 @@ public class PrintingOrderService implements IPrintingOrderService {
                 Unit printUnit = unitService.getUnitById(printingOrderDTO.getPrintUnitId());
                 printingOrderDTO.setPrintUnitName(printUnit.getName());
             }
+            if (printingOrderDTO.getUnitId() != null) {
+                Unit unit = unitService.getUnitById(printingOrderDTO.getUnitId());
+                printingOrderDTO.setUnitName(unit.getName());
+            }
         }
         return printingOrderDTOList;
     }

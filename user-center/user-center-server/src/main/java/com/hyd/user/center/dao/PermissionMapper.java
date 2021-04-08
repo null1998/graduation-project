@@ -1,9 +1,11 @@
 package com.hyd.user.center.dao;
 
 import com.hyd.user.center.entity.Permission;
+import net.sf.jsqlparser.statement.create.view.ForceOption;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.select.join.EqualTo;
+import org.mybatis.dynamic.sql.select.join.JoinCriterion;
 
 import java.util.List;
 
@@ -39,7 +41,7 @@ public interface PermissionMapper extends PermissionBaseMapper{
      * @return 权限列表
      */
     default List<Permission> listByBaseRoleIdList(List<Long> baseRoleIdList) {
-        return this.select(c->c.leftJoin(RolePermissionDynamicSqlSupport.rolePermission)
+        return this.select(c->c.join(RolePermissionDynamicSqlSupport.rolePermission)
                 .on(RolePermissionDynamicSqlSupport.permissionId,new EqualTo(PermissionDynamicSqlSupport.id))
                 .where(RolePermissionDynamicSqlSupport.roleId,SqlBuilder.isInWhenPresent(baseRoleIdList)));
     }
