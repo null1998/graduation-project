@@ -13,6 +13,10 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 10
+      max-lifetime: 28740000
   cloud:
     nacos:
       discovery:

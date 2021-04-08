@@ -2,7 +2,9 @@ package com.hyd.user.center.web;
 
 import com.hyd.common.core.annotation.ApiLog;
 import com.hyd.common.util.BeanUtil;
+import com.hyd.user.center.entity.Permission;
 import com.hyd.user.center.entity.RolePermission;
+import com.hyd.user.center.entity.vo.PermissionVO;
 import com.hyd.user.center.entity.vo.RolePermissionVO;
 import com.hyd.user.center.service.IRolePermissionService;
 import com.hyd.user.center.web.dto.RolePermissionDTO;
@@ -60,19 +62,19 @@ public class RolePermissionController {
      */
     @ApiLog
     @GetMapping("/list/{roleId}")
-    List<RolePermissionVO> listByRoleId(@PathVariable("roleId") Long roleId) {
+    public List<RolePermissionVO> listByRoleId(@PathVariable("roleId") Long roleId) {
         List<RolePermission> rolePermissionList = rolePermissionService.listByRoleId(roleId);
         return BeanUtil.copyList(rolePermissionList, RolePermissionVO.class);
     }
     /**
-     * 根据角色ID列表查询
+     * 根据角色ID列表查询权限列表
      * @param roleIdList 角色ID列表
-     * @return 角色权限列表
+     * @return 权限列表
      */
     @ApiLog
     @PostMapping("/query/role/id/list")
-    List<RolePermissionVO> listByRoleIdList(@RequestBody List<Long> roleIdList) {
-        List<RolePermission> rolePermissionList = rolePermissionService.listByRoleIdList(roleIdList);
-        return BeanUtil.copyList(rolePermissionList, RolePermissionVO.class);
+    public List<PermissionVO> listByRoleIdList(@RequestBody List<Long> roleIdList) {
+        List<Permission> permissionList = rolePermissionService.listByRoleIdList(roleIdList);
+        return BeanUtil.copyList(permissionList, PermissionVO.class);
     }
 }

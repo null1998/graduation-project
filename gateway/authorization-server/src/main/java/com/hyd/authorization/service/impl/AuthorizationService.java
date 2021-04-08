@@ -39,7 +39,10 @@ public class AuthorizationService implements IAuthorizationService {
             return CommonResponseUtils.failed("Internal Server Error");
         }
         log.info(String.format("\n===>请求接口%s %s",method,url)+"\n===>待校验token"+token);
+        long time00 = System.currentTimeMillis();
         if (TokenUtil.tokenValid(token)) {
+            long time01 = System.currentTimeMillis();
+            log.info("["+method+"]"+url+"验证token合法性"+(time01-time00)+"ms");
             // token合法
             // 分解token为header，playLoad，signature
             String[] split = token.split("\\.");
@@ -67,12 +70,19 @@ public class AuthorizationService implements IAuthorizationService {
             }
             // 取出该用户角色列表
             JSONArray roleIdsJson = playLoad.getJSONArray("roleIdList");
+            long time2 = System.currentTimeMillis();
             // 查找出该用户的所有角色的所有权限
             List<Permission> permissionList = listPermission(roleIdsJson);
+            long time3 = System.currentTimeMillis();
+            log.info("["+method+"]"+url+"查找出该用户的所有角色的所有权限"+(time3-time2)+"ms");
             // 一一判断直到判断出是否有对应权限
             boolean authorizationResult = authorizationResult(permissionList, url, method);
+            long time4 = System.currentTimeMillis();
+            log.info("["+method+"]"+url+"一一判断直到判断出是否有对应权限"+(time4-time3)+"ms");
             log.info(String.format("\n===>请求接口%s %s",method,url)+"\n===>鉴权结果"+authorizationResult);
             // 每次鉴权后把token放在head中，方便前端更新
+            long time5 = System.currentTimeMillis();
+            log.info("["+method+"]"+url+"鉴权时长"+(time5-time00)+"ms");
             return authorizationResult ? CommonResponseUtils.successWithToken(token) : CommonResponseUtils.failedWithMsg("50000","没有权限");
         }
         log.info("\n===>重新登录[token不合法]"+"\n===>尝试解析不合法token"+TokenUtil.parseToken(token).toJSONString());
@@ -80,7 +90,7 @@ public class AuthorizationService implements IAuthorizationService {
         return CommonResponseUtils.failedWithMsg("50008","重新登录[token不合法]");
 
     }
-    private static class Permission {
+    public static class Permission {
 
         private String url;
 
@@ -114,31 +124,18 @@ public class AuthorizationService implements IAuthorizationService {
      * @return 权限列表
      */
     private List<Permission> listPermission(JSONArray roleIdList) {
-        ArrayList<Permission> permissions = new ArrayList<>();
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<List<Long>> requestEntity = new HttpEntity(roleIdList,requestHeaders);
+        long time1 = System.currentTimeMillis();
         JSONObject resp = restTemplate.postForObject(URL,requestEntity,JSONObject.class);
-        if (resp != null) {
-            JSONObject body = resp.getJSONObject("body");
-            if (body != null) {
-                // 查询与角色关联的权限
-                JSONArray rolePermissionList = body.getJSONArray("data");
-                for (int i = 0; i < rolePermissionList.size(); i++) {
-                    JSONObject rolePermission = rolePermissionList.getJSONObject(i);
-                    Long permissionId = rolePermission.getLong("permissionId");
-                    // 查询该权限详细信息
-                    JSONObject respPermission = restTemplate.getForObject(String.format(URL_PERMISSION, permissionId), JSONObject.class);
-                    if (respPermission != null && respPermission.getJSONObject("body") != null) {
-                        String method = respPermission.getJSONObject("body").getJSONObject("data").getString("method");
-                        String url = respPermission.getJSONObject("body").getJSONObject("data").getString("url");
-                        Permission permission = new Permission(url,method);
-                        permissions.add(permission);
-                    }
-                }
-            }
+        long time2 = System.currentTimeMillis();
+        log.info("查找用户的用户权限列表花费"+(time2-time1)+"ms");
+        if (resp != null && resp.getJSONObject("body") != null) {
+            JSONArray permissionList = resp.getJSONObject("body").getJSONArray("data");
+            return permissionList.toJavaList(Permission.class);
         }
-        return permissions;
+        return new ArrayList<>();
     }
     private boolean authorizationResult(List<Permission> permissionList, String url, String method) {
         if (!whiteList(url,method)) {

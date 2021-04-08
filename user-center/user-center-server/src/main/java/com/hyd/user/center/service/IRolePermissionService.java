@@ -1,8 +1,10 @@
 package com.hyd.user.center.service;
 
+import com.hyd.user.center.entity.Permission;
 import com.hyd.user.center.entity.RolePermission;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author yanduohuang
@@ -39,9 +41,9 @@ public interface IRolePermissionService {
     /**
      * 根据角色ID列表查询
      * @param roleIdList 角色ID列表
-     * @return 角色权限列表
+     * @return 权限列表
      */
-    List<RolePermission> listByRoleIdList(List<Long> roleIdList);
+    List<Permission> listByRoleIdList(List<Long> roleIdList);
 
     /**
      * 根据角色ID删除
@@ -56,4 +58,11 @@ public interface IRolePermissionService {
      * @return 删除行数
      */
     Integer removeByPermissionId(Long permissionId);
+
+    /**
+     * 查询该角色id下的所有子角色id
+     * @param roleId
+     * @return
+     */
+    Set<Long> listBaseRoleId(Long roleId);
 }

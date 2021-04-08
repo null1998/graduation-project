@@ -105,7 +105,7 @@ public class TicketClaimTicketService implements ITicketClaimTicketService {
     }
 
 	/**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,ticketClaimId
      * @param ticketClaimTicket 票据申领票据
      * @return 票据申领票据列表
      */

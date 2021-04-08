@@ -12,8 +12,11 @@ import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.TicketClaimMapper;
 import com.hyd.financial.entity.TicketClaim;
+import com.hyd.financial.entity.TicketClaimTicket;
 import com.hyd.financial.service.ITicketClaimService;
+import com.hyd.financial.service.ITicketClaimTicketService;
 import com.hyd.financial.web.dto.TicketClaimDTO;
+import com.hyd.financial.web.dto.TicketClaimTicketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -39,6 +42,9 @@ public class TicketClaimService implements ITicketClaimService {
 
     @Autowired
     private IWarehouseService warehouseService;
+
+    @Autowired
+    private ITicketClaimTicketService ticketClaimTicketService;
 
 	/**
      * 保存票据申领
@@ -70,6 +76,12 @@ public class TicketClaimService implements ITicketClaimService {
     public Boolean remove(Long id) {
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
+        }
+        TicketClaimTicket query = new TicketClaimTicket();
+        query.setTicketClaimId(id);
+        List<TicketClaimTicketDTO> ticketClaimTicketDTOList = ticketClaimTicketService.commonQuery(query);
+        for (TicketClaimTicketDTO ticketClaimTicketDTO : ticketClaimTicketDTOList) {
+            ticketClaimTicketService.remove(ticketClaimTicketDTO.getId());
         }
         return ticketClaimMapper.deleteByPrimaryKey(id) == 1;
     }

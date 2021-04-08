@@ -3,10 +3,13 @@ package com.hyd.user.center.service.impl;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.IdGenerator;
+import com.hyd.user.center.dao.PermissionMapper;
 import com.hyd.user.center.dao.RolePermissionMapper;
+import com.hyd.user.center.entity.Permission;
 import com.hyd.user.center.entity.Role;
 import com.hyd.user.center.entity.RolePermission;
 import com.hyd.user.center.entity.RoleRelate;
+import com.hyd.user.center.service.IPermissionService;
 import com.hyd.user.center.service.IRolePermissionService;
 import com.hyd.user.center.service.IRoleRelateService;
 import com.hyd.user.center.service.IRoleService;
@@ -18,7 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author yanduohuang
@@ -35,7 +40,7 @@ public class RolePermissionService implements IRolePermissionService {
     @Autowired
     private IRoleRelateService roleRelateService;
     @Autowired
-    private IRolePermissionService rolePermissionService;
+    private PermissionMapper permissionMapper;
 
     @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId","RolePermissionService::listByRoleIdList"},allEntries = true)})
     @Override
@@ -78,40 +83,6 @@ public class RolePermissionService implements IRolePermissionService {
         }
         return rolePermissionMapper.listByRoleId(roleId);
     }
-    // 这个缓存有问题
-    //@Cacheable(value = {"RolePermissionService::listByRoleIdList"},key = "#roleIdList.toString()")
-    @Override
-    public List<RolePermission> listByRoleIdList(List<Long> roleIdList) {
-        if (roleIdList == null) {
-            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("角色ID列表为空"));
-        }
-        // 基础角色ID列表
-        ArrayList<Long> baseRoleIds = new ArrayList<>();
-        // 高级角色ID列表
-        ArrayList<Long> advancedRoleIds = new ArrayList<>();
-        for (Long roleId : roleIdList) {
-            Role role = roleService.getBydId(roleId);
-            if (role.getType().equals("高级角色")) {
-                // 把高级角色的下属角色找出来
-                List<RoleRelate> roleRelateList = roleRelateService.listByParentRoleId(roleId);
-                for (RoleRelate roleRelate : roleRelateList) {
-                    advancedRoleIds.add(roleRelate.getChildRoleId());
-                }
-            } else if (role.getType().equals("基础角色")) {
-                baseRoleIds.add(roleId);
-            }
-        }
-        List<RolePermission> rolePermissions = new ArrayList<>();
-        if (!baseRoleIds.isEmpty()) {
-            // 基础角色可以直接查询出拥有的权限
-            rolePermissions  = rolePermissionMapper.listByRoleIdList(baseRoleIds);
-        }
-        if (!advancedRoleIds.isEmpty()) {
-            // 高级角色递归查询
-            rolePermissions.addAll(rolePermissionService.listByRoleIdList(advancedRoleIds));
-        }
-        return rolePermissions;
-    }
 
     @Caching(evict = {@CacheEvict(value = {"RolePermissionService::listByRoleId"},key = "#roleId"),
             @CacheEvict(value = {"RolePermissionService::listByRoleIdList"},allEntries = true)})
@@ -129,5 +100,34 @@ public class RolePermissionService implements IRolePermissionService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("权限ID为空"));
         }
         return rolePermissionMapper.removeByPermissionId(permissionId);
+    }
+    @Override
+    public List<Permission> listByRoleIdList(List<Long> roleIdList) {
+        if (roleIdList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("角色ID列表为空"));
+        }
+        Set<Long> set = new HashSet<>();
+        for (Long roleId : roleIdList) {
+            set.addAll(listBaseRoleId(roleId));
+        }
+        return permissionMapper.listByBaseRoleIdList(new ArrayList<>(set));
+    }
+    @Override
+    public Set<Long> listBaseRoleId(Long roleId) {
+        if (roleId == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("角色ID为空"));
+        }
+        Set<Long> set = new HashSet<>();
+        Role role = roleService.getBydId(roleId);
+        if (role.getType().equals("高级角色")) {
+            // 把高级角色的下属角色找出来
+            List<RoleRelate> roleRelateList = roleRelateService.listByParentRoleId(roleId);
+            for (RoleRelate roleRelate : roleRelateList) {
+                set.addAll(listBaseRoleId(roleRelate.getChildRoleId()));
+            }
+        } else {
+            set.add(role.getId());
+        }
+        return set;
     }
 }

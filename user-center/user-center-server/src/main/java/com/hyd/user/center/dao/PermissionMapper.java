@@ -3,6 +3,7 @@ package com.hyd.user.center.dao;
 import com.hyd.user.center.entity.Permission;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.dynamic.sql.SqlBuilder;
+import org.mybatis.dynamic.sql.select.join.EqualTo;
 
 import java.util.List;
 
@@ -30,5 +31,16 @@ public interface PermissionMapper extends PermissionBaseMapper{
         String action = StringUtils.isEmpty(permission.getAction()) ? null : permission.getAction();
         return this.select(c -> c.where(PermissionDynamicSqlSupport.name, SqlBuilder.isLikeWhenPresent(wrap))
                 .and(PermissionDynamicSqlSupport.action, SqlBuilder.isEqualToWhenPresent(action)));
+    }
+
+    /**
+     * 根据基础角色id列表查询出所有的权限
+     * @param baseRoleIdList
+     * @return 权限列表
+     */
+    default List<Permission> listByBaseRoleIdList(List<Long> baseRoleIdList) {
+        return this.select(c->c.leftJoin(RolePermissionDynamicSqlSupport.rolePermission)
+                .on(RolePermissionDynamicSqlSupport.permissionId,new EqualTo(PermissionDynamicSqlSupport.id))
+                .where(RolePermissionDynamicSqlSupport.roleId,SqlBuilder.isInWhenPresent(baseRoleIdList)));
     }
 }

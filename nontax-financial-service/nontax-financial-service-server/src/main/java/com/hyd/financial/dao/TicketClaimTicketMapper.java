@@ -10,11 +10,12 @@ import org.mybatis.dynamic.sql.SqlBuilder;
  */
 public interface TicketClaimTicketMapper extends TicketClaimTicketBaseMapper {
     /**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,ticketClaimId
      * @param ticketClaimTicket 票据申领票据
      * @return 票据申领票据列表
      */
     default List<TicketClaimTicket> commonQuery(TicketClaimTicket ticketClaimTicket) {
-        return this.select(c->c.where(TicketClaimTicketDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(ticketClaimTicket.getId())));
+        return this.select(c->c.where(TicketClaimTicketDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(ticketClaimTicket.getId()))
+                .and(TicketClaimTicketDynamicSqlSupport.ticketClaimId, SqlBuilder.isEqualToWhenPresent(ticketClaimTicket.getTicketClaimId())));
     }
 }

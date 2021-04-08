@@ -30,6 +30,7 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
     private RestTemplate restTemplate;
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        long time0 = System.currentTimeMillis();
         //获取请求路径
         String url = exchange.getRequest().getURI().toString();
         url = url.split("\\?")[0];
@@ -41,8 +42,11 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
         }
         //获取token
         Object token = exchange.getRequest().getHeaders().get("accessToken") == null ? null : exchange.getRequest().getHeaders().get("accessToken").get(0);
+        long time1 = System.currentTimeMillis();
         // 鉴权结果
         JSONObject resp = restTemplate.getForObject(String.format(AUTHORIZATION_URL,token,url,method), JSONObject.class);
+        long time2 = System.currentTimeMillis();
+        //log.info("["+method+"]"+url+"鉴权时长"+(time2-time1)+"ms");
         if (resp != null && resp.getJSONObject("head") != null) {
             log.info("\n===>鉴权结果"+resp.toJSONString());
             JSONObject head = resp.getJSONObject("head");
@@ -61,6 +65,8 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
                     exchange.getResponse().getHeaders().setAccessControlExposeHeaders(list);
                     exchange.getResponse().getHeaders().add("accessToken",head.getString("accessToken"));
                 }
+                long time3 = System.currentTimeMillis();
+                log.info("["+method+"]"+url+"网关时长"+(time3-time0)+"ms");
                 return chain.filter(exchange);
             }
         }
@@ -69,6 +75,8 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
         // 设置头
         exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
         // 鉴权不通过，设置响应体为resp并返回
+        long time4 = System.currentTimeMillis();
+        log.info("["+method+"]"+url+"网关时长"+(time4-time0)+"ms");
         return exchange.getResponse().writeWith(Flux.just(exchange.getResponse().bufferFactory().wrap(resp.toJSONString().getBytes(StandardCharsets.UTF_8))));
     }
 
