@@ -24,6 +24,12 @@ public class TicketClaimTicket implements Serializable {
     private Long version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String startNumber;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String endNumber;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -86,6 +92,26 @@ public class TicketClaimTicket implements Serializable {
         this.version = version;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getStartNumber() {
+        return startNumber;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setStartNumber(String startNumber) {
+        this.startNumber = startNumber;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getEndNumber() {
+        return endNumber;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setEndNumber(String endNumber) {
+        this.endNumber = endNumber;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
@@ -104,7 +130,9 @@ public class TicketClaimTicket implements Serializable {
             && (this.getTicketId() == null ? other.getTicketId() == null : this.getTicketId().equals(other.getTicketId()))
             && (this.getNumber() == null ? other.getNumber() == null : this.getNumber().equals(other.getNumber()))
             && (this.getPrice() == null ? other.getPrice() == null : this.getPrice().equals(other.getPrice()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
+            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
+            && (this.getStartNumber() == null ? other.getStartNumber() == null : this.getStartNumber().equals(other.getStartNumber()))
+            && (this.getEndNumber() == null ? other.getEndNumber() == null : this.getEndNumber().equals(other.getEndNumber()));
     }
 
     @Override
@@ -118,6 +146,8 @@ public class TicketClaimTicket implements Serializable {
         result = prime * result + ((getNumber() == null) ? 0 : getNumber().hashCode());
         result = prime * result + ((getPrice() == null) ? 0 : getPrice().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
+        result = prime * result + ((getStartNumber() == null) ? 0 : getStartNumber().hashCode());
+        result = prime * result + ((getEndNumber() == null) ? 0 : getEndNumber().hashCode());
         return result;
     }
 
@@ -134,6 +164,8 @@ public class TicketClaimTicket implements Serializable {
         sb.append(", number=").append(number);
         sb.append(", price=").append(price);
         sb.append(", version=").append(version);
+        sb.append(", startNumber=").append(startNumber);
+        sb.append(", endNumber=").append(endNumber);
         sb.append("]");
         return sb.toString();
     }

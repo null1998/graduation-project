@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PrintingOrderTicketBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, printingOrderId, ticketId, number, version);
+    BasicColumn[] selectList = BasicColumn.columnList(id, printingOrderId, ticketId, number, version, startNumber, endNumber);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -60,7 +60,9 @@ public interface PrintingOrderTicketBaseMapper {
         @Result(column="printing_order_id", property="printingOrderId", jdbcType=JdbcType.BIGINT),
         @Result(column="ticket_id", property="ticketId", jdbcType=JdbcType.BIGINT),
         @Result(column="number", property="number", jdbcType=JdbcType.BIGINT),
-        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
+        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT),
+        @Result(column="start_number", property="startNumber", jdbcType=JdbcType.VARCHAR),
+        @Result(column="end_number", property="endNumber", jdbcType=JdbcType.VARCHAR)
     })
     List<PrintingOrderTicket> selectMany(SelectStatementProvider selectStatement);
 
@@ -98,6 +100,8 @@ public interface PrintingOrderTicketBaseMapper {
             .map(ticketId).toProperty("ticketId")
             .map(number).toProperty("number")
             .map(version).toProperty("version")
+            .map(startNumber).toProperty("startNumber")
+            .map(endNumber).toProperty("endNumber")
         );
     }
 
@@ -109,6 +113,8 @@ public interface PrintingOrderTicketBaseMapper {
             .map(ticketId).toProperty("ticketId")
             .map(number).toProperty("number")
             .map(version).toProperty("version")
+            .map(startNumber).toProperty("startNumber")
+            .map(endNumber).toProperty("endNumber")
         );
     }
 
@@ -120,6 +126,8 @@ public interface PrintingOrderTicketBaseMapper {
             .map(ticketId).toPropertyWhenPresent("ticketId", record::getTicketId)
             .map(number).toPropertyWhenPresent("number", record::getNumber)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
+            .map(startNumber).toPropertyWhenPresent("startNumber", record::getStartNumber)
+            .map(endNumber).toPropertyWhenPresent("endNumber", record::getEndNumber)
         );
     }
 
@@ -156,7 +164,9 @@ public interface PrintingOrderTicketBaseMapper {
                 .set(printingOrderId).equalTo(record::getPrintingOrderId)
                 .set(ticketId).equalTo(record::getTicketId)
                 .set(number).equalTo(record::getNumber)
-                .set(version).equalTo(record::getVersion);
+                .set(version).equalTo(record::getVersion)
+                .set(startNumber).equalTo(record::getStartNumber)
+                .set(endNumber).equalTo(record::getEndNumber);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -165,7 +175,9 @@ public interface PrintingOrderTicketBaseMapper {
                 .set(printingOrderId).equalToWhenPresent(record::getPrintingOrderId)
                 .set(ticketId).equalToWhenPresent(record::getTicketId)
                 .set(number).equalToWhenPresent(record::getNumber)
-                .set(version).equalToWhenPresent(record::getVersion);
+                .set(version).equalToWhenPresent(record::getVersion)
+                .set(startNumber).equalToWhenPresent(record::getStartNumber)
+                .set(endNumber).equalToWhenPresent(record::getEndNumber);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -175,6 +187,8 @@ public interface PrintingOrderTicketBaseMapper {
             .set(ticketId).equalTo(record::getTicketId)
             .set(number).equalTo(record::getNumber)
             .set(version).equalTo(record::getVersion)
+            .set(startNumber).equalTo(record::getStartNumber)
+            .set(endNumber).equalTo(record::getEndNumber)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -186,6 +200,8 @@ public interface PrintingOrderTicketBaseMapper {
             .set(ticketId).equalToWhenPresent(record::getTicketId)
             .set(number).equalToWhenPresent(record::getNumber)
             .set(version).equalToWhenPresent(record::getVersion)
+            .set(startNumber).equalToWhenPresent(record::getStartNumber)
+            .set(endNumber).equalToWhenPresent(record::getEndNumber)
             .where(id, isEqualTo(record::getId))
         );
     }

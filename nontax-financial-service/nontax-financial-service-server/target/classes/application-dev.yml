@@ -16,7 +16,7 @@ spring:
     hikari:
       minimum-idle: 10
       maximum-pool-size: 10
-      max-lifetime: 28740000
+      max-lifetime: 2874000
   cloud:
     nacos:
       discovery:

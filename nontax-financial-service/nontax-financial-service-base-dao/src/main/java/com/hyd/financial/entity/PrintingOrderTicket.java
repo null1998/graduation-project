@@ -20,6 +20,12 @@ public class PrintingOrderTicket implements Serializable {
     private Long version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String startNumber;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String endNumber;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -72,6 +78,26 @@ public class PrintingOrderTicket implements Serializable {
         this.version = version;
     }
 
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getStartNumber() {
+        return startNumber;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setStartNumber(String startNumber) {
+        this.startNumber = startNumber;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String getEndNumber() {
+        return endNumber;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setEndNumber(String endNumber) {
+        this.endNumber = endNumber;
+    }
+
     @Override
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
@@ -89,7 +115,9 @@ public class PrintingOrderTicket implements Serializable {
             && (this.getPrintingOrderId() == null ? other.getPrintingOrderId() == null : this.getPrintingOrderId().equals(other.getPrintingOrderId()))
             && (this.getTicketId() == null ? other.getTicketId() == null : this.getTicketId().equals(other.getTicketId()))
             && (this.getNumber() == null ? other.getNumber() == null : this.getNumber().equals(other.getNumber()))
-            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
+            && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
+            && (this.getStartNumber() == null ? other.getStartNumber() == null : this.getStartNumber().equals(other.getStartNumber()))
+            && (this.getEndNumber() == null ? other.getEndNumber() == null : this.getEndNumber().equals(other.getEndNumber()));
     }
 
     @Override
@@ -102,6 +130,26 @@ public class PrintingOrderTicket implements Serializable {
         result = prime * result + ((getTicketId() == null) ? 0 : getTicketId().hashCode());
         result = prime * result + ((getNumber() == null) ? 0 : getNumber().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
+        result = prime * result + ((getStartNumber() == null) ? 0 : getStartNumber().hashCode());
+        result = prime * result + ((getEndNumber() == null) ? 0 : getEndNumber().hashCode());
         return result;
+    }
+
+    @Override
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", printingOrderId=").append(printingOrderId);
+        sb.append(", ticketId=").append(ticketId);
+        sb.append(", number=").append(number);
+        sb.append(", version=").append(version);
+        sb.append(", startNumber=").append(startNumber);
+        sb.append(", endNumber=").append(endNumber);
+        sb.append("]");
+        return sb.toString();
     }
 }

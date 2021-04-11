@@ -29,6 +29,12 @@ public final class TicketClaimTicketDynamicSqlSupport {
     public static final SqlColumn<Long> version = ticketClaimTicket.version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> startNumber = ticketClaimTicket.startNumber;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> endNumber = ticketClaimTicket.endNumber;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class TicketClaimTicket extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -41,6 +47,10 @@ public final class TicketClaimTicketDynamicSqlSupport {
         public final SqlColumn<BigDecimal> price = column("price", JDBCType.DECIMAL);
 
         public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
+
+        public final SqlColumn<String> startNumber = column("start_number", JDBCType.VARCHAR);
+
+        public final SqlColumn<String> endNumber = column("end_number", JDBCType.VARCHAR);
 
         public TicketClaimTicket() {
             super("financial_ticket_claim_ticket");

@@ -25,6 +25,12 @@ public final class PrintingOrderTicketDynamicSqlSupport {
     public static final SqlColumn<Long> version = printingOrderTicket.version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> startNumber = printingOrderTicket.startNumber;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<String> endNumber = printingOrderTicket.endNumber;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class PrintingOrderTicket extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -35,6 +41,10 @@ public final class PrintingOrderTicketDynamicSqlSupport {
         public final SqlColumn<Long> number = column("number", JDBCType.BIGINT);
 
         public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
+
+        public final SqlColumn<String> startNumber = column("start_number", JDBCType.VARCHAR);
+
+        public final SqlColumn<String> endNumber = column("end_number", JDBCType.VARCHAR);
 
         public PrintingOrderTicket() {
             super("financial_printing_order_ticket");

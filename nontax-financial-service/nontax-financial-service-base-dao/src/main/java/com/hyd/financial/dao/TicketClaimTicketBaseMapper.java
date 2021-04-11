@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface TicketClaimTicketBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, ticketClaimId, ticketId, number, price, version);
+    BasicColumn[] selectList = BasicColumn.columnList(id, ticketClaimId, ticketId, number, price, version, startNumber, endNumber);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -61,7 +61,9 @@ public interface TicketClaimTicketBaseMapper {
         @Result(column="ticket_id", property="ticketId", jdbcType=JdbcType.BIGINT),
         @Result(column="number", property="number", jdbcType=JdbcType.BIGINT),
         @Result(column="price", property="price", jdbcType=JdbcType.DECIMAL),
-        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
+        @Result(column="version", property="version", jdbcType=JdbcType.BIGINT),
+        @Result(column="start_number", property="startNumber", jdbcType=JdbcType.VARCHAR),
+        @Result(column="end_number", property="endNumber", jdbcType=JdbcType.VARCHAR)
     })
     List<TicketClaimTicket> selectMany(SelectStatementProvider selectStatement);
 
@@ -100,6 +102,8 @@ public interface TicketClaimTicketBaseMapper {
             .map(number).toProperty("number")
             .map(price).toProperty("price")
             .map(version).toProperty("version")
+            .map(startNumber).toProperty("startNumber")
+            .map(endNumber).toProperty("endNumber")
         );
     }
 
@@ -112,6 +116,8 @@ public interface TicketClaimTicketBaseMapper {
             .map(number).toProperty("number")
             .map(price).toProperty("price")
             .map(version).toProperty("version")
+            .map(startNumber).toProperty("startNumber")
+            .map(endNumber).toProperty("endNumber")
         );
     }
 
@@ -124,6 +130,8 @@ public interface TicketClaimTicketBaseMapper {
             .map(number).toPropertyWhenPresent("number", record::getNumber)
             .map(price).toPropertyWhenPresent("price", record::getPrice)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
+            .map(startNumber).toPropertyWhenPresent("startNumber", record::getStartNumber)
+            .map(endNumber).toPropertyWhenPresent("endNumber", record::getEndNumber)
         );
     }
 
@@ -161,7 +169,9 @@ public interface TicketClaimTicketBaseMapper {
                 .set(ticketId).equalTo(record::getTicketId)
                 .set(number).equalTo(record::getNumber)
                 .set(price).equalTo(record::getPrice)
-                .set(version).equalTo(record::getVersion);
+                .set(version).equalTo(record::getVersion)
+                .set(startNumber).equalTo(record::getStartNumber)
+                .set(endNumber).equalTo(record::getEndNumber);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -171,7 +181,9 @@ public interface TicketClaimTicketBaseMapper {
                 .set(ticketId).equalToWhenPresent(record::getTicketId)
                 .set(number).equalToWhenPresent(record::getNumber)
                 .set(price).equalToWhenPresent(record::getPrice)
-                .set(version).equalToWhenPresent(record::getVersion);
+                .set(version).equalToWhenPresent(record::getVersion)
+                .set(startNumber).equalToWhenPresent(record::getStartNumber)
+                .set(endNumber).equalToWhenPresent(record::getEndNumber);
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -182,6 +194,8 @@ public interface TicketClaimTicketBaseMapper {
             .set(number).equalTo(record::getNumber)
             .set(price).equalTo(record::getPrice)
             .set(version).equalTo(record::getVersion)
+            .set(startNumber).equalTo(record::getStartNumber)
+            .set(endNumber).equalTo(record::getEndNumber)
             .where(id, isEqualTo(record::getId))
         );
     }
@@ -194,6 +208,8 @@ public interface TicketClaimTicketBaseMapper {
             .set(number).equalToWhenPresent(record::getNumber)
             .set(price).equalToWhenPresent(record::getPrice)
             .set(version).equalToWhenPresent(record::getVersion)
+            .set(startNumber).equalToWhenPresent(record::getStartNumber)
+            .set(endNumber).equalToWhenPresent(record::getEndNumber)
             .where(id, isEqualTo(record::getId))
         );
     }

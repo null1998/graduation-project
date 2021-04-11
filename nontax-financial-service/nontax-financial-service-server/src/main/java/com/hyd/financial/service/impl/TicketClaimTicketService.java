@@ -131,6 +131,7 @@ public class TicketClaimTicketService implements ITicketClaimTicketService {
             if (ticketClaimTicketDTO.getTicketId() != null) {
                 Ticket ticket = ticketService.getTicketById(ticketClaimTicketDTO.getTicketId());
                 ticketClaimTicketDTO.setTicketName(ticket.getName());
+                ticketClaimTicketDTO.setPrice(ticket.getPrice());
             }
 		}
 	}

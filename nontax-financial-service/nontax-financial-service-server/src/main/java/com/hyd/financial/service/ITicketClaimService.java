@@ -1,6 +1,7 @@
 package com.hyd.financial.service;
 import java.util.List;
 import com.hyd.financial.entity.TicketClaim;
+import com.hyd.financial.web.dto.AutoStoreAndOutDTO;
 import com.hyd.financial.web.dto.TicketClaimDTO;
 
 /**
@@ -44,4 +45,14 @@ public interface ITicketClaimService {
      */
     List<TicketClaimDTO> commonQuery(TicketClaim ticketClaim);
 
+    /**
+     * 自动减库存，生成出库记录，更新申领单
+     * @param autoStoreAndOutDTOList
+     */
+    void autoOut(List<AutoStoreAndOutDTO> autoStoreAndOutDTOList);
+    /**
+     * 自动增库存，生成入库记录号段
+     * @param autoStoreAndOutDTOList
+     */
+    void autoStore(List<AutoStoreAndOutDTO> autoStoreAndOutDTOList);
 }

@@ -23,6 +23,27 @@ public class PrintingOrderTicketVO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String startNumber;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private String endNumber;
+
+    public String getStartNumber() {
+        return startNumber;
+    }
+
+    public void setStartNumber(String startNumber) {
+        this.startNumber = startNumber;
+    }
+
+    public String getEndNumber() {
+        return endNumber;
+    }
+
+    public void setEndNumber(String endNumber) {
+        this.endNumber = endNumber;
+    }
 
     public String getTicketName() {
         return ticketName;
@@ -100,6 +121,8 @@ public class PrintingOrderTicketVO implements Serializable {
                 ", ticketName='" + ticketName + '\'' +
                 ", number=" + number +
                 ", version=" + version +
+                ", startNumber='" + startNumber + '\'' +
+                ", endNumber='" + endNumber + '\'' +
                 '}';
     }
 }

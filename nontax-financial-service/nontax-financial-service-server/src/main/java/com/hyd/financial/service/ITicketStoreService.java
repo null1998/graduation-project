@@ -38,7 +38,7 @@ public interface ITicketStoreService {
     TicketStoreDTO getById(Long id);
 
     /**
-     * 通用查询，支持字段id，unitId，ticketId
+     * 通用查询，支持字段id，unitId，ticketId，根据数量升序排列
      * @param ticketStore 票据库存
      * @return 票据库存列表
      */

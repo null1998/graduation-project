@@ -11,17 +11,19 @@ import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.TicketClaimMapper;
-import com.hyd.financial.entity.TicketClaim;
-import com.hyd.financial.entity.TicketClaimTicket;
-import com.hyd.financial.service.ITicketClaimService;
-import com.hyd.financial.service.ITicketClaimTicketService;
+import com.hyd.financial.entity.*;
+import com.hyd.financial.service.*;
+import com.hyd.financial.util.TicketCodeConvertUtil;
+import com.hyd.financial.web.dto.AutoStoreAndOutDTO;
 import com.hyd.financial.web.dto.TicketClaimDTO;
 import com.hyd.financial.web.dto.TicketClaimTicketDTO;
+import com.hyd.financial.web.dto.TicketStoreDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 票据申领
@@ -46,6 +48,20 @@ public class TicketClaimService implements ITicketClaimService {
     @Autowired
     private ITicketClaimTicketService ticketClaimTicketService;
 
+    @Autowired
+    private ITicketStoreService ticketStoreService;
+
+    @Autowired
+    private ITicketOutRecordTicketService ticketOutRecordTicketService;
+
+    @Autowired
+    private ITicketStoreRecordTicketService ticketStoreRecordTicketService;
+
+    @Autowired
+    private ITicketStoreRecordService ticketStoreRecordService;
+
+    @Autowired
+    private ITicketOutRecordService ticketOutRecordService;
 	/**
      * 保存票据申领
      * @param ticketClaim 票据申领
@@ -140,7 +156,75 @@ public class TicketClaimService implements ITicketClaimService {
 		}
 		return ticketClaimDTOList;
     }
-	/**
+    /**
+     * 自动减库存，生成出库记录，更新申领单
+     * @param autoStoreAndOutDTOList
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Caching(evict = {@CacheEvict(value = {"TicketClaimService::commonQuery","TicketClaimService::getById"},allEntries = true)})
+    @Override
+    public void autoOut(List<AutoStoreAndOutDTO> autoStoreAndOutDTOList) {
+        if (autoStoreAndOutDTOList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
+        }
+        TicketOutRecord record = BeanUtil.copy(autoStoreAndOutDTOList.get(0), TicketOutRecord.class);
+        Long recordId = ticketOutRecordService.save(record);
+        for (AutoStoreAndOutDTO autoStoreAndOutDTO : autoStoreAndOutDTOList) {
+            TicketStoreDTO store = ticketStoreService.getById(autoStoreAndOutDTO.getStoreId());
+            if (store.getNumber() < autoStoreAndOutDTO.getNeedNumber()) {
+                throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("库存不足"));
+            }
+            String startNumber = store.getStartNumber();
+            Long endNumber = TicketCodeConvertUtil.stringConvertLong(startNumber) + autoStoreAndOutDTO.getNeedNumber();
+            // 更新库存
+            TicketStore ticketStore = new TicketStore();
+            ticketStore.setId(autoStoreAndOutDTO.getStoreId());
+            ticketStore.setNumber(store.getNumber() - autoStoreAndOutDTO.getNeedNumber());
+            ticketStore.setStartNumber(TicketCodeConvertUtil.longConvertString(endNumber));
+            ticketStoreService.update(ticketStore);
+            // 添加出库记录号段
+            TicketOutRecordTicket ticketOutRecordTicket = new TicketOutRecordTicket();
+            ticketOutRecordTicket.setTicketOutRecordId(recordId);
+            ticketOutRecordTicket.setTicketId(autoStoreAndOutDTO.getTicketId());
+            ticketOutRecordTicket.setNumber(autoStoreAndOutDTO.getNeedNumber());
+            ticketOutRecordTicket.setStartNumber(startNumber);
+            ticketOutRecordTicket.setEndNumber(TicketCodeConvertUtil.longConvertString(endNumber - 1));
+            ticketOutRecordTicketService.save(ticketOutRecordTicket);
+            // 更新票据申领单上的号段
+            TicketClaimTicket ticketClaimTicket = new TicketClaimTicket();
+            ticketClaimTicket.setId(autoStoreAndOutDTO.getTicketClaimTicketId());
+            ticketClaimTicket.setStartNumber(startNumber);
+            ticketClaimTicket.setEndNumber(TicketCodeConvertUtil.longConvertString(endNumber - 1));
+            ticketClaimTicketService.update(ticketClaimTicket);
+        }
+    }
+    /**
+     * 自动增库存，生成入库记录号段
+     * @param autoStoreAndOutDTOList
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Caching(evict = {@CacheEvict(value = {"TicketClaimService::commonQuery","TicketClaimService::getById"},allEntries = true)})
+    @Override
+    public void autoStore(List<AutoStoreAndOutDTO> autoStoreAndOutDTOList) {
+        if (autoStoreAndOutDTOList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
+        }
+        TicketStoreRecord record = BeanUtil.copy(autoStoreAndOutDTOList.get(0), TicketStoreRecord.class);
+        Long recordId = ticketStoreRecordService.save(record);
+        for (AutoStoreAndOutDTO autoStoreAndOutDTO : autoStoreAndOutDTOList) {
+            // 添加库存
+            TicketStore ticketStore = BeanUtil.copy(autoStoreAndOutDTO, TicketStore.class);
+            ticketStore.setNumber(autoStoreAndOutDTO.getNeedNumber());
+            ticketStoreService.save(ticketStore);
+            // 添加票据入库记录号段
+            TicketStoreRecordTicket ticketStoreRecordTicket = BeanUtil.copy(autoStoreAndOutDTO, TicketStoreRecordTicket.class);
+            ticketStoreRecordTicket.setTicketStoreRecordId(recordId);
+            ticketStoreRecordTicket.setNumber(autoStoreAndOutDTO.getNeedNumber());
+            ticketStoreRecordTicketService.save(ticketStoreRecordTicket);
+        }
+    }
+
+    /**
 	 * 补充一些字段的值
 	 * @param ticketClaimDTO 票据申领
 	 */
