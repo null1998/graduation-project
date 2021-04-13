@@ -91,4 +91,10 @@ public class PermissionController{
         Permission permission = permissionService.getById(id);
         return BeanUtil.copy(permission, PermissionVO.class);
     }
+    @ApiLog
+    @PostMapping("/list")
+    public List<PermissionVO> listByPermissionIdList(@RequestBody List<Long> permissionIdList) {
+        List<Permission> permissionList = permissionService.listByPermissionIdList(permissionIdList);
+        return BeanUtil.copyList(permissionList, PermissionVO.class);
+    }
 }

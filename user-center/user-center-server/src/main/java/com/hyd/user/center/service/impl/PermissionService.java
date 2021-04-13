@@ -18,6 +18,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,8 @@ public class PermissionService implements IPermissionService {
     private IRolePermissionService rolePermissionService;
     @Autowired
     private IdGenerator idGenerator;
+    @Autowired
+    private IPermissionService permissionService;
     @Caching(evict = {@CacheEvict(value = {"PermissionService::listByName","PermissionService::listPermission"},allEntries = true)})
     @Override
     public Long save(Permission permission) {
@@ -95,5 +98,17 @@ public class PermissionService implements IPermissionService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("查询结果为空"));
         }
         return optional.get();
+    }
+
+    @Override
+    public List<Permission> listByPermissionIdList(List<Long> permissionIdList) {
+        if (permissionIdList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
+        }
+        List<Permission> permissionList = new ArrayList<>();
+        for (Long id : permissionIdList) {
+            permissionList.add(permissionService.getById(id));
+        }
+        return permissionList;
     }
 }

@@ -1,9 +1,13 @@
 package com.hyd.user.center.web.dto;
 
+import com.hyd.user.center.entity.Permission;
+import com.hyd.user.center.entity.SimplePermission;
+
 import javax.annotation.Generated;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class UserDTO implements Serializable {
@@ -47,9 +51,27 @@ public class UserDTO implements Serializable {
 
     private ArrayList<String> roleNameList;
 
+    private List<SimplePermission> permissionList;
+    List<Long> permissionIdList;
     private String confirmPassword;
     private String unitName;
     private Integer unitLevel;
+
+    public List<Long> getPermissionIdList() {
+        return permissionIdList;
+    }
+
+    public void setPermissionIdList(List<Long> permissionIdList) {
+        this.permissionIdList = permissionIdList;
+    }
+
+    public List<SimplePermission> getPermissionList() {
+        return permissionList;
+    }
+
+    public void setPermissionList(List<SimplePermission> permissionList) {
+        this.permissionList = permissionList;
+    }
 
     public Integer getUnitLevel() {
         return unitLevel;
@@ -236,6 +258,8 @@ public class UserDTO implements Serializable {
                 ", version=" + version +
                 ", roleIdList=" + roleIdList +
                 ", roleNameList=" + roleNameList +
+                ", permissionList=" + permissionList +
+                ", permissionIdList=" + permissionIdList +
                 ", confirmPassword='" + confirmPassword + '\'' +
                 ", unitName='" + unitName + '\'' +
                 ", unitLevel=" + unitLevel +

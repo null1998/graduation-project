@@ -1,7 +1,11 @@
 package com.hyd.user.center.entity.vo;
 
+import com.hyd.user.center.entity.Permission;
+import com.hyd.user.center.entity.SimplePermission;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author yanduohuang
@@ -29,8 +33,26 @@ public class UserVO {
     private Long version;
     private ArrayList<Long> roleIdList;
     private ArrayList<String> roleNameList;
+    private List<SimplePermission> permissionList;
+    List<Long> permissionIdList;
     private String unitName;
     private Integer unitLevel;
+
+    public List<Long> getPermissionIdList() {
+        return permissionIdList;
+    }
+
+    public void setPermissionIdList(List<Long> permissionIdList) {
+        this.permissionIdList = permissionIdList;
+    }
+
+    public List<SimplePermission> getPermissionList() {
+        return permissionList;
+    }
+
+    public void setPermissionList(List<SimplePermission> permissionList) {
+        this.permissionList = permissionList;
+    }
 
     public Integer getUnitLevel() {
         return unitLevel;
@@ -177,6 +199,8 @@ public class UserVO {
                 ", version=" + version +
                 ", roleIdList=" + roleIdList +
                 ", roleNameList=" + roleNameList +
+                ", permissionList=" + permissionList +
+                ", permissionIdList=" + permissionIdList +
                 ", unitName='" + unitName + '\'' +
                 ", unitLevel=" + unitLevel +
                 '}';

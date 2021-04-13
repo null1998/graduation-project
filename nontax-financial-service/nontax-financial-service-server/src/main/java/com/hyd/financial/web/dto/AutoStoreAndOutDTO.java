@@ -19,7 +19,7 @@ public class AutoStoreAndOutDTO {
      * 生成票据出库记录,目标单号，目标单位，出库方式,出库日期
      */
     private Long targetOrderNumber;
-    private Long targetUitId;
+    private Long targetUnitId;
     private String outType;
     private String outDate;
     /**
@@ -29,7 +29,9 @@ public class AutoStoreAndOutDTO {
     private Long sourceUnitId;
     private String storeType;
     private String storeDate;
-
+    /**
+     * 新增库存信息
+     */
     private Long unitId;
     private Long ticketId;
     private String startNumber;
@@ -111,12 +113,12 @@ public class AutoStoreAndOutDTO {
         this.targetOrderNumber = targetOrderNumber;
     }
 
-    public Long getTargetUitId() {
-        return targetUitId;
+    public Long getTargetUnitId() {
+        return targetUnitId;
     }
 
-    public void setTargetUitId(Long targetUitId) {
-        this.targetUitId = targetUitId;
+    public void setTargetUnitId(Long targetUnitId) {
+        this.targetUnitId = targetUnitId;
     }
 
     public String getOutType() {
@@ -190,7 +192,7 @@ public class AutoStoreAndOutDTO {
                 ", needNumber=" + needNumber +
                 ", storeId=" + storeId +
                 ", targetOrderNumber=" + targetOrderNumber +
-                ", targetUitId=" + targetUitId +
+                ", targetUnitId=" + targetUnitId +
                 ", outType='" + outType + '\'' +
                 ", outDate='" + outDate + '\'' +
                 ", sourceOrderNumber=" + sourceOrderNumber +

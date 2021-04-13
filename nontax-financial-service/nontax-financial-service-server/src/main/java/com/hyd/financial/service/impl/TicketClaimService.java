@@ -168,8 +168,10 @@ public class TicketClaimService implements ITicketClaimService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
         }
         TicketOutRecord record = BeanUtil.copy(autoStoreAndOutDTOList.get(0), TicketOutRecord.class);
+        // 生成票据出库单
         Long recordId = ticketOutRecordService.save(record);
         for (AutoStoreAndOutDTO autoStoreAndOutDTO : autoStoreAndOutDTOList) {
+            // 检查库存是否足够
             TicketStoreDTO store = ticketStoreService.getById(autoStoreAndOutDTO.getStoreId());
             if (store.getNumber() < autoStoreAndOutDTO.getNeedNumber()) {
                 throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("库存不足"));
@@ -181,6 +183,8 @@ public class TicketClaimService implements ITicketClaimService {
             ticketStore.setId(autoStoreAndOutDTO.getStoreId());
             ticketStore.setNumber(store.getNumber() - autoStoreAndOutDTO.getNeedNumber());
             ticketStore.setStartNumber(TicketCodeConvertUtil.longConvertString(endNumber));
+            ticketStore.setOperateDate(autoStoreAndOutDTO.getOperateDate());
+            ticketStore.setUserId(autoStoreAndOutDTO.getUserId());
             ticketStoreService.update(ticketStore);
             // 添加出库记录号段
             TicketOutRecordTicket ticketOutRecordTicket = new TicketOutRecordTicket();
@@ -209,6 +213,7 @@ public class TicketClaimService implements ITicketClaimService {
         if (autoStoreAndOutDTOList == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
         }
+        // 生成票据入库单
         TicketStoreRecord record = BeanUtil.copy(autoStoreAndOutDTOList.get(0), TicketStoreRecord.class);
         Long recordId = ticketStoreRecordService.save(record);
         for (AutoStoreAndOutDTO autoStoreAndOutDTO : autoStoreAndOutDTOList) {

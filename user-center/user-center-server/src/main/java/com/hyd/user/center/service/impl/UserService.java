@@ -12,10 +12,9 @@ import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.common.util.TokenUtil;
 import com.hyd.user.center.dao.UserMapper;
-import com.hyd.user.center.entity.Role;
-import com.hyd.user.center.entity.User;
-import com.hyd.user.center.entity.UserRole;
+import com.hyd.user.center.entity.*;
 import com.hyd.user.center.entity.vo.UserVO;
+import com.hyd.user.center.service.IRolePermissionService;
 import com.hyd.user.center.service.IRoleService;
 import com.hyd.user.center.service.IUserRoleService;
 import com.hyd.user.center.service.IUserService;
@@ -56,6 +55,9 @@ public class UserService implements IUserService {
     private IUserService userService;
     @Autowired
     private IZoneService zoneService;
+
+    @Autowired
+    private IRolePermissionService rolePermissionService;
     @Caching(evict = {@CacheEvict(value = {"UserService::listAll"}, allEntries = true)})
     @Override
     public Long save(UserDTO userDTO) throws InvalidKeySpecException, NoSuchAlgorithmException {
@@ -163,6 +165,12 @@ public class UserService implements IUserService {
             UserDTO userDTO = BeanUtil.copy(user, UserDTO.class);
             userDTO.setRoleIdList(roleIdList);
             userDTO.setRoleNameList(roleNameList);
+            List<Long> permissionIdList = new ArrayList<>();
+            List<Permission> permissionList = rolePermissionService.listByRoleIdList(roleIdList);
+            for (Permission permission : permissionList) {
+                permissionIdList.add(permission.getId());
+            }
+            userDTO.setPermissionIdList(permissionIdList);
             return userDTO;
         }
         return new UserDTO();
@@ -170,6 +178,9 @@ public class UserService implements IUserService {
     @Cacheable(value = {"UserService::getUserInfo"}, key = "#token")
     @Override
     public UserDTO getUserInfo(String token) {
+        if (!TokenUtil.tokenValid(token)) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("token不合法"));
+        }
         Long id = getIdFromToken(token);
         if (id == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("ID为空"));
@@ -178,15 +189,17 @@ public class UserService implements IUserService {
         if (user == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("未查询到相应的用户记录"));
         }
-        // 获取用户角色列表（没有递归查询所有基础角色）
-        List<UserRole> userRoleList = userRoleService.listByUserId(id);
-        ArrayList<String> roleNameList = new ArrayList<>();
-        for (UserRole userRole : userRoleList) {
-            Role role = roleService.getBydId(userRole.getRoleId());
-            roleNameList.add(role.getName());
-        }
         UserDTO userDTO = BeanUtil.copy(user, UserDTO.class);
-        userDTO.setRoleNameList(roleNameList);
+        // 获取用户角色列表（基础角色与高级角色混合）
+        List<Long> roleIdList = getRoleIdListFromToken(token);
+        ArrayList<String> roleNameList = new ArrayList<>();
+        if (roleIdList != null) {
+            for (Long roleId : roleIdList) {
+                Role role = roleService.getBydId(roleId);
+                roleNameList.add(role.getName());
+            }
+            userDTO.setRoleNameList(roleNameList);
+        }
 
         if (user.getUnitId()!=null){
             // 查询单位信息
@@ -239,4 +252,19 @@ public class UserService implements IUserService {
         }
         return null;
     }
+    private List<Long> getRoleIdListFromToken(String token) {
+        if (token == null || !TokenUtil.tokenValid(token)) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("token不合法"));
+        }
+        List<String> list = TokenUtil.decryptToken(token);
+        if (list != null && list.size() == 3) {
+            String payload = list.get(1);
+            JSONObject jsonObject = JSON.parseObject(payload);
+            if (jsonObject.getJSONArray("roleIdList") != null) {
+                return jsonObject.getJSONArray("roleIdList").toJavaList(Long.class);
+            }
+        }
+        return null;
+    }
+
 }

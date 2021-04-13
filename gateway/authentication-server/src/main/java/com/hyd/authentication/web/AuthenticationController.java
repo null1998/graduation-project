@@ -43,7 +43,7 @@ public class AuthenticationController {
      * @return
      */
     @DeleteMapping("/disable")
-    public CommonResponse<Object> disableToken(@RequestParam String token) {
+    public CommonResponse<Object> disableToken(@RequestHeader(name="accessToken") String token) {
         return authenticationService.disableToken(token);
     }
 

@@ -51,4 +51,6 @@ public interface IPermissionService {
      * @return 权限
      */
     Permission getById(Long id);
+
+    List<Permission> listByPermissionIdList(List<Long> permissionIdList);
 }

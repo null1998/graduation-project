@@ -1,6 +1,7 @@
 package com.hyd.authentication.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hyd.authentication.service.IAuthenticationService;
 
@@ -16,7 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.security.Permission;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -35,6 +39,31 @@ public class AuthenticationService implements IAuthenticationService {
     private static Long ACCESS_TOKEN_LIFE_CYCLE_MILLI = 60*60*1000L;
     private static Long REFRESH_TOKEN_LIFE_CYCLE_MILLI = 24*60*60*1000L;
     public static final String URL = "http://user-center-server/user/center/user/login?username=%s&password=%s";
+    class Permission{
+        private String url;
+        private String method;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getMethod() {
+            return method;
+        }
+
+        public void setMethod(String method) {
+            this.method = method;
+        }
+
+        public Permission(String url, String method) {
+            this.url = url;
+            this.method = method;
+        }
+    }
     @Override
     public CommonResponse<Object> authenticate(String username, String password) {
         if (username == null || password == null) {
@@ -59,6 +88,7 @@ public class AuthenticationService implements IAuthenticationService {
                     payload.put("userId", data.getLong("id"));
                     payload.put("unitId", data.getLong("unitId"));
                     payload.put("roleIdList",data.getJSONArray("roleIdList"));
+                    payload.put("permissionIdList",data.getJSONArray("permissionIdList"));
                     // 使用账户为键，将refresh token存储在redis中
                     redisTemplate.opsForValue().set(username, TokenUtil.encoderToken(header.toJSONString(),payload.toJSONString()),REFRESH_TOKEN_LIFE_CYCLE_MILLI,TimeUnit.MILLISECONDS);
 
