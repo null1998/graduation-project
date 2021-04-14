@@ -55,4 +55,10 @@ public interface ITicketService {
      * @return
      */
     List<Ticket> commonQuery(Ticket ticket);
+    /**
+     * 根据数组查询
+     * @param ticketIdList
+     * @return
+     */
+    List<Ticket> listByTicketIdList(List<Long> ticketIdList);
 }

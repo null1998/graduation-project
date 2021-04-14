@@ -1,6 +1,8 @@
 package com.hyd.financial.service.impl;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.hyd.basedata.entity.Ticket;
 import com.hyd.basedata.service.ITicketService;
@@ -162,4 +164,13 @@ public class TicketStoreService implements ITicketStoreService {
             }
         }
 	}
+	private void batchSetProperties(List<TicketStoreDTO> ticketStoreDTOList) {
+        if (ticketStoreDTOList != null) {
+            List<Long> ticketIdList = ticketStoreDTOList.stream().map(TicketStoreDTO::getTicketId).collect(Collectors.toList());
+            Map<Long, String> ticketNameMap = ticketService.listByTicketIdList(ticketIdList).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+            ticketStoreDTOList.forEach(e->{
+                e.setTicketName(ticketNameMap.get(e.getTicketId()));
+            });
+        }
+    }
 }

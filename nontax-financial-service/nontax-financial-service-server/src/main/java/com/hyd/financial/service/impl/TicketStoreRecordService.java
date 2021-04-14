@@ -25,8 +25,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 票据入库记录
@@ -137,25 +139,16 @@ public class TicketStoreRecordService implements ITicketStoreRecordService {
         }
         List<TicketStoreRecord> ticketStoreRecordList = ticketStoreRecordMapper.commonQuery(ticketStoreRecord);
         List<TicketStoreRecordDTO> ticketStoreRecordDTOList = BeanUtil.copyList(ticketStoreRecordList, TicketStoreRecordDTO.class);
-        for (TicketStoreRecordDTO ticketStoreRecordDTO : ticketStoreRecordDTOList) {
-            if (ticketStoreRecordDTO.getSourceUnitId()!=null) {
-                Unit unit = unitService.getUnitById(ticketStoreRecordDTO.getSourceUnitId());
-                ticketStoreRecordDTO.setSourceUnitName(unit.getName());
-            }
-            if (ticketStoreRecordDTO.getSourceWarehouseId() != null) {
-                Warehouse warehouse = warehouseService.getWarehouseById(ticketStoreRecordDTO.getSourceWarehouseId());
-                ticketStoreRecordDTO.setSourceWarehouseName(warehouse.getName());
-            }
-            if (ticketStoreRecordDTO.getDictionaryId() != null) {
-                List<Dictionary> dictionaryList = dictionaryService.listByCategoryName("票据入库方式分类");
-                for (Dictionary dictionary : dictionaryList) {
-                    if (Objects.equals(dictionary.getId(),ticketStoreRecordDTO.getDictionaryId())) {
-                        ticketStoreRecordDTO.setTheWay(dictionary.getRemark());
-                        break;
-                    }
-                }
-            }
-        }
+        List<Long> sourceUnitIdList = ticketStoreRecordDTOList.stream().map(TicketStoreRecordDTO::getSourceUnitId).collect(Collectors.toList());
+        List<Long> sourceWarehouseIdList = ticketStoreRecordDTOList.stream().map(TicketStoreRecordDTO::getSourceWarehouseId).collect(Collectors.toList());
+        Map<Long, String> sourceUnitNameMap = unitService.listByUnitIdList(sourceUnitIdList).stream().collect(Collectors.toMap(Unit::getId, Unit::getName));
+        Map<Long, String> sourceWarehouseNameMap = warehouseService.listByWarehouseIdList(sourceWarehouseIdList).stream().collect(Collectors.toMap(Warehouse::getId, Warehouse::getName));
+        Map<Long, String> dictionaryRemarkMap = dictionaryService.listByCategoryName("票据入库方式分类").stream().collect(Collectors.toMap(Dictionary::getId, Dictionary::getRemark));
+        ticketStoreRecordDTOList.forEach(e->{
+            e.setSourceUnitName(sourceUnitNameMap.get(e.getSourceUnitId()));
+            e.setSourceWarehouseName(sourceWarehouseNameMap.get(e.getSourceWarehouseId()));
+            e.setTheWay(dictionaryRemarkMap.get(e.getDictionaryId()));
+        });
         return ticketStoreRecordDTOList;
     }
 }

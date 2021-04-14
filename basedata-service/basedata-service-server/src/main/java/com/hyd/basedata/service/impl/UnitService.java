@@ -133,4 +133,12 @@ public class UnitService implements IUnitService {
         return superiorUnitList;
     }
 
+    @Override
+    public List<Unit> listByUnitIdList(List<Long> unitIdList) {
+        if (unitIdList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
+        }
+        return unitMapper.listByUnitIdList(unitIdList);
+    }
+
 }

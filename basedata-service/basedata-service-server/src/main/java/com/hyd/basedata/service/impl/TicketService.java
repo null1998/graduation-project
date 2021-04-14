@@ -92,4 +92,12 @@ public class TicketService implements ITicketService {
         }
         return ticketMapper.commonQuery(ticket);
     }
+
+    @Override
+    public List<Ticket> listByTicketIdList(List<Long> ticketIdList) {
+        if (ticketIdList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
+        }
+        return ticketMapper.listByTicketIdList(ticketIdList);
+    }
 }

@@ -17,7 +17,10 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author yanduohuang
@@ -81,11 +84,18 @@ public class PrintingOrderTicketService implements IPrintingOrderTicketService {
         }
         List<PrintingOrderTicket> printingOrderTicketList = printingOrderTicketMapper.listByPrintingOrderId(printingOrderId);
         List<PrintingOrderTicketDTO> printingOrderTicketDTOList = BeanUtil.copyList(printingOrderTicketList, PrintingOrderTicketDTO.class);
-        for (PrintingOrderTicketDTO printingOrderTicketDTO : printingOrderTicketDTOList) {
-            Ticket ticket = ticketService.getTicketById(printingOrderTicketDTO.getTicketId());
-            printingOrderTicketDTO.setPrice(ticket.getPrice());
-            printingOrderTicketDTO.setTicketName(ticket.getName());
-        }
+        batchSetProperties(printingOrderTicketDTOList);
         return printingOrderTicketDTOList;
+    }
+    private void batchSetProperties(List<PrintingOrderTicketDTO> printingOrderTicketDTOList) {
+        if (printingOrderTicketDTOList != null) {
+            List<Long> ticketIdList = printingOrderTicketDTOList.stream().map(PrintingOrderTicketDTO::getTicketId).collect(Collectors.toList());
+            Map<Long, String> ticketMap = ticketService.listByTicketIdList(ticketIdList).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+            Map<Long, BigDecimal> ticketPriceMap = ticketService.listByTicketIdList(ticketIdList).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getPrice));
+            printingOrderTicketDTOList.forEach(e->{
+                e.setTicketName(ticketMap.get(e.getTicketId()));
+                e.setPrice(ticketPriceMap.get(e.getTicketId()));
+            });
+        }
     }
 }

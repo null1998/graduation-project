@@ -1,5 +1,6 @@
 package com.hyd.basedata.dao;
 
+import com.hyd.basedata.entity.Ticket;
 import com.hyd.basedata.entity.Unit;
 import org.mybatis.dynamic.sql.SqlBuilder;
 
@@ -37,6 +38,14 @@ public interface UnitMapper extends UnitBaseMapper {
         return this.select(c->c.where(UnitDynamicSqlSupport.id,SqlBuilder.isEqualToWhenPresent(unit.getId()))
                 .and(UnitDynamicSqlSupport.zoneId,SqlBuilder.isEqualToWhenPresent(unit.getZoneId()))
                 .and(UnitDynamicSqlSupport.dictionaryId,SqlBuilder.isEqualToWhenPresent(unit.getDictionaryId())));
+    }
+    /**
+     * 根据数组查询
+     * @param unitIdList
+     * @return
+     */
+    default List<Unit> listByUnitIdList(List<Long> unitIdList) {
+        return this.select(c -> c.where(UnitDynamicSqlSupport.id, SqlBuilder.isInWhenPresent(unitIdList)));
     }
 
 }

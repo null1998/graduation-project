@@ -1,6 +1,8 @@
 package com.hyd.financial.service.impl;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.entity.Warehouse;
@@ -151,9 +153,7 @@ public class TicketClaimService implements ITicketClaimService {
         }
         List<TicketClaim> ticketClaimList = ticketClaimMapper.commonQuery(ticketClaim);
 		List<TicketClaimDTO> ticketClaimDTOList = BeanUtil.copyList(ticketClaimList, TicketClaimDTO.class);
-		for (TicketClaimDTO ticketClaimDTO : ticketClaimDTOList) {
-			setProperties(ticketClaimDTO);
-		}
+		batchSetProperties(ticketClaimDTOList);
 		return ticketClaimDTOList;
     }
     /**
@@ -249,4 +249,19 @@ public class TicketClaimService implements ITicketClaimService {
             }
 		}
 	}
+	private void batchSetProperties(List<TicketClaimDTO> ticketClaimDTOList) {
+        if (ticketClaimDTOList != null) {
+            List<Long> targetUnitIdList = ticketClaimDTOList.stream().map(TicketClaimDTO::getTargetUnitId).collect(Collectors.toList());
+            List<Long> warehouseIdList = ticketClaimDTOList.stream().map(TicketClaimDTO::getWarehouseId).collect(Collectors.toList());
+            List<Long> unitIdList = ticketClaimDTOList.stream().map(TicketClaimDTO::getUnitId).collect(Collectors.toList());
+            Map<Long, String> targetUnitNameMap = unitService.listByUnitIdList(targetUnitIdList).stream().collect(Collectors.toMap(Unit::getId, Unit::getName));
+            Map<Long, String> unitNameMap = unitService.listByUnitIdList(unitIdList).stream().collect(Collectors.toMap(Unit::getId, Unit::getName));
+            Map<Long, String> warehouseNameMap = warehouseService.listByWarehouseIdList(warehouseIdList).stream().collect(Collectors.toMap(Warehouse::getId, Warehouse::getName));
+            ticketClaimDTOList.forEach(e->{
+                e.setTargetUnitName(targetUnitNameMap.get(e.getTargetUnitId()));
+                e.setUnitName(unitNameMap.get(e.getUnitId()));
+                e.setWarehouseName(warehouseNameMap.get(e.getWarehouseId()));
+            });
+        }
+    }
 }

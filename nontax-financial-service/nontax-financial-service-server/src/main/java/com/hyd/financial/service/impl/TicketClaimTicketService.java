@@ -1,6 +1,8 @@
 package com.hyd.financial.service.impl;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.hyd.basedata.entity.Ticket;
 import com.hyd.basedata.service.ITicketService;
@@ -117,9 +119,7 @@ public class TicketClaimTicketService implements ITicketClaimTicketService {
         }
         List<TicketClaimTicket> ticketClaimTicketList = ticketClaimTicketMapper.commonQuery(ticketClaimTicket);
 		List<TicketClaimTicketDTO> ticketClaimTicketDTOList = BeanUtil.copyList(ticketClaimTicketList, TicketClaimTicketDTO.class);
-		for (TicketClaimTicketDTO ticketClaimTicketDTO : ticketClaimTicketDTOList) {
-			setProperties(ticketClaimTicketDTO);
-		}
+		batchSetProperties(ticketClaimTicketDTOList);
 		return ticketClaimTicketDTOList;
     }
 	/**
@@ -135,4 +135,13 @@ public class TicketClaimTicketService implements ITicketClaimTicketService {
             }
 		}
 	}
+	private void batchSetProperties(List<TicketClaimTicketDTO> ticketClaimTicketDTOList) {
+        if (ticketClaimTicketDTOList != null) {
+            List<Long> ticketIdList = ticketClaimTicketDTOList.stream().map(TicketClaimTicketDTO::getTicketId).collect(Collectors.toList());
+            Map<Long, String> ticketNameMap = ticketService.listByTicketIdList(ticketIdList).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+            ticketClaimTicketDTOList.forEach(e->{
+                e.setTicketName(ticketNameMap.get(e.getTicketId()));
+            });
+        }
+    }
 }

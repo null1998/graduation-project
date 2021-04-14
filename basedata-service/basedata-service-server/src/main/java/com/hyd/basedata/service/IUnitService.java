@@ -77,4 +77,10 @@ public interface IUnitService {
      * @return
      */
     List<Unit> getSuperiorUnitList(Long id);
+    /**
+     * 根据数组查询
+     * @param unitIdList
+     * @return
+     */
+    List<Unit> listByUnitIdList(List<Long> unitIdList);
 }

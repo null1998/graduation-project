@@ -27,6 +27,7 @@ import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 票据入库记录票据
@@ -125,12 +126,11 @@ public class TicketStoreRecordTicketService implements ITicketStoreRecordTicketS
         }
         List<TicketStoreRecordTicket> ticketStoreRecordTicketList = ticketStoreRecordTicketMapper.commonQuery(ticketStoreRecordTicket);
         List<TicketStoreRecordTicketDTO> ticketStoreRecordTicketDTOList = BeanUtil.copyList(ticketStoreRecordTicketList, TicketStoreRecordTicketDTO.class);
-        for (TicketStoreRecordTicketDTO ticketStoreRecordTicketDTO : ticketStoreRecordTicketDTOList) {
-            if (ticketStoreRecordTicketDTO.getTicketId()!=null) {
-                Ticket ticket = ticketService.getTicketById(ticketStoreRecordTicketDTO.getTicketId());
-                ticketStoreRecordTicketDTO.setTicketName(ticket.getName());
-            }
-        }
+        List<Long> ticketIdList = ticketStoreRecordTicketDTOList.stream().map(TicketStoreRecordTicketDTO::getTicketId).collect(Collectors.toList());
+        Map<Long, String> ticketNameMap = ticketService.listByTicketIdList(ticketIdList).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+        ticketStoreRecordTicketDTOList.forEach(e->{
+            e.setTicketName(ticketNameMap.get(e.getTicketId()));
+        });
         return ticketStoreRecordTicketDTOList;
     }
     /**

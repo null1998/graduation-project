@@ -44,5 +44,11 @@ public interface IWarehouseService {
     List<Warehouse> commonQuery(Warehouse warehouse);
 
     List<Warehouse> listByUnitId(Long unitId);
+    /**
+     * 根据数组查询
+     * @param warehouseIdList
+     * @return
+     */
+    List<Warehouse> listByWarehouseIdList(List<Long> warehouseIdList);
     void init();
 }

@@ -1,6 +1,9 @@
 package com.hyd.financial.service.impl;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.service.IUnitService;
@@ -118,9 +121,7 @@ public class PaymentService implements IPaymentService {
         }
         List<Payment> paymentList = paymentMapper.commonQuery(payment);
 		List<PaymentDTO> paymentDTOList = BeanUtil.copyList(paymentList, PaymentDTO.class);
-		for (PaymentDTO paymentDTO : paymentDTOList) {
-			setProperties(paymentDTO);
-		}
+		batchSetProperties(paymentDTOList);
 		return paymentDTOList;
     }
 	/**
@@ -139,4 +140,21 @@ public class PaymentService implements IPaymentService {
             }
 		}
 	}
+
+    /**
+     * 批量设置字段
+     * @param paymentDTOList
+     */
+	private void batchSetProperties(List<PaymentDTO> paymentDTOList) {
+        if (paymentDTOList != null) {
+            List<Long> srcUnitIdList = paymentDTOList.stream().map(PaymentDTO::getSrcUnitId).collect(Collectors.toList());
+            List<Long> desUnitIdList = paymentDTOList.stream().map(PaymentDTO::getDesUnitId).collect(Collectors.toList());
+            Map<Long, String> srcUnitMap = unitService.listByUnitIdList(srcUnitIdList).stream().collect(Collectors.toMap(Unit::getId,Unit::getName));
+            Map<Long, String> desUnitMap = unitService.listByUnitIdList(desUnitIdList).stream().collect(Collectors.toMap(Unit::getId,Unit::getName));
+            paymentDTOList.forEach(e->{
+                e.setSrcUnitName(srcUnitMap.get(e.getSrcUnitId()));
+                e.setDesUnitName(desUnitMap.get(e.getDesUnitId()));
+            });
+        }
+    }
 }

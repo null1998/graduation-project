@@ -24,4 +24,13 @@ public interface TicketMapper extends TicketBaseMapper {
                 .and(TicketDynamicSqlSupport.year,SqlBuilder.isEqualToWhenPresent(ticket.getYear()))
                 .and(TicketDynamicSqlSupport.name,SqlBuilder.isEqualToWhenPresent(ticket.getName())));
     }
+
+    /**
+     * 根据数组查询
+     * @param ticketIdList
+     * @return
+     */
+    default List<Ticket> listByTicketIdList(List<Long> ticketIdList) {
+        return this.select(c -> c.where(TicketDynamicSqlSupport.id, SqlBuilder.isInWhenPresent(ticketIdList)));
+    }
 }

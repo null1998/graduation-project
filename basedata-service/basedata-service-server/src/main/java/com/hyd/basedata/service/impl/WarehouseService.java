@@ -94,6 +94,14 @@ public class WarehouseService implements IWarehouseService {
     }
 
     @Override
+    public List<Warehouse> listByWarehouseIdList(List<Long> warehouseIdList) {
+        if (warehouseIdList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
+        }
+        return warehouseMapper.listByWarehouseIdList(warehouseIdList);
+    }
+
+    @Override
     public void init() {
         List<Unit> unitList = unitBaseMapper.select(QueryExpressionDSL::where);
         for (Unit unit : unitList) {

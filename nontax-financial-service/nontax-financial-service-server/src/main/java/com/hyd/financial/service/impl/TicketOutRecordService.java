@@ -1,6 +1,8 @@
 package com.hyd.financial.service.impl;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.service.IUnitService;
@@ -130,9 +132,7 @@ public class TicketOutRecordService implements ITicketOutRecordService {
         }
         List<TicketOutRecord> ticketOutRecordList = ticketOutRecordMapper.commonQuery(ticketOutRecord);
 		List<TicketOutRecordDTO> ticketOutRecordDTOList = BeanUtil.copyList(ticketOutRecordList, TicketOutRecordDTO.class);
-		for (TicketOutRecordDTO ticketOutRecordDTO : ticketOutRecordDTOList) {
-			setProperties(ticketOutRecordDTO);
-		}
+        batchSetProperties(ticketOutRecordDTOList);
 		return ticketOutRecordDTOList;
     }
 	/**
@@ -147,4 +147,13 @@ public class TicketOutRecordService implements ITicketOutRecordService {
             }
 		}
 	}
+    private void batchSetProperties(List<TicketOutRecordDTO> ticketOutRecordDTOList) {
+        if (ticketOutRecordDTOList != null) {
+            List<Long> targetUnitIdList = ticketOutRecordDTOList.stream().map(TicketOutRecordDTO::getTargetUnitId).collect(Collectors.toList());
+            Map<Long, String> targetUnitNameMap = unitService.listByUnitIdList(targetUnitIdList).stream().collect(Collectors.toMap(Unit::getId, Unit::getName));
+            ticketOutRecordDTOList.forEach(e->{
+                e.setTargetUnitName(targetUnitNameMap.get(e.getTargetUnitId()));
+            });
+        }
+    }
 }

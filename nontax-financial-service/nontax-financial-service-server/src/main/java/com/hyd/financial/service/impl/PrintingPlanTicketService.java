@@ -1,5 +1,6 @@
 package com.hyd.financial.service.impl;
 
+import com.hyd.basedata.entity.Ticket;
 import com.hyd.basedata.service.ITicketService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
@@ -117,7 +118,9 @@ public class PrintingPlanTicketService implements IPrintingPlanTicketService {
         }
         List<PrintingPlanTicket> printingPlanTicketList = printingPlanTicketMapper.listByPrintingPlanId(printingPlanId);
         List<PrintingPlanTicketDTO> printingPlanTicketDTOList = BeanUtil.copyList(printingPlanTicketList, PrintingPlanTicketDTO.class);
-        printingPlanTicketDTOList.forEach(e->e.setTicketName(ticketService.getTicketById(e.getTicketId()).getName()));
+        List<Long> ticketIdList = printingPlanTicketDTOList.stream().map(PrintingPlanTicketDTO::getTicketId).collect(Collectors.toList());
+        Map<Long, String> ticketNameMap = ticketService.listByTicketIdList(ticketIdList).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+        printingPlanTicketDTOList.forEach(e->e.setTicketName(ticketNameMap.get(e.getTicketId())));
         return printingPlanTicketDTOList;
     }
 }

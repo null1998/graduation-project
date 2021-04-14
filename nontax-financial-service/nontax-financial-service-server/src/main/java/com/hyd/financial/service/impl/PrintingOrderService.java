@@ -21,8 +21,11 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author yanduohuang
@@ -104,20 +107,22 @@ public class PrintingOrderService implements IPrintingOrderService {
         }
         List<PrintingOrder> printingOrderList = printingOrderMapper.commonQuery(printingOrder);
         List<PrintingOrderDTO> printingOrderDTOList = BeanUtil.copyList(printingOrderList, PrintingOrderDTO.class);
-        for (PrintingOrderDTO printingOrderDTO : printingOrderDTOList) {
-            if (printingOrderDTO.getWarehouseId()!=null) {
-                Warehouse warehouse = warehouseService.getWarehouseById(printingOrderDTO.getWarehouseId());
-                printingOrderDTO.setWarehouseName(warehouse.getName());
-            }
-            if (printingOrderDTO.getPrintUnitId()!=null) {
-                Unit printUnit = unitService.getUnitById(printingOrderDTO.getPrintUnitId());
-                printingOrderDTO.setPrintUnitName(printUnit.getName());
-            }
-            if (printingOrderDTO.getUnitId() != null) {
-                Unit unit = unitService.getUnitById(printingOrderDTO.getUnitId());
-                printingOrderDTO.setUnitName(unit.getName());
-            }
-        }
+        batchSetProperties(printingOrderDTOList);
         return printingOrderDTOList;
+    }
+    private void batchSetProperties(List<PrintingOrderDTO> printingOrderDTOList) {
+        if (printingOrderDTOList != null) {
+            List<Long> warehouseIdList = printingOrderDTOList.stream().map(PrintingOrderDTO::getWarehouseId).collect(Collectors.toList());
+            List<Long> printUnitIdList = printingOrderDTOList.stream().map(PrintingOrderDTO::getPrintUnitId).collect(Collectors.toList());
+            List<Long> unitIdList = printingOrderDTOList.stream().map(PrintingOrderDTO::getUnitId).collect(Collectors.toList());
+            Map<Long, String> warehouseMap = warehouseService.listByWarehouseIdList(warehouseIdList).stream().collect(Collectors.toMap(Warehouse::getId, Warehouse::getName));
+            Map<Long, String> printUnitMap = unitService.listByUnitIdList(printUnitIdList).stream().collect(Collectors.toMap(Unit::getId, Unit::getName));
+            Map<Long, String> unitMap = unitService.listByUnitIdList(unitIdList).stream().collect(Collectors.toMap(Unit::getId, Unit::getName));
+            printingOrderDTOList.forEach(e->{
+                e.setWarehouseName(warehouseMap.get(e.getWarehouseId()));
+                e.setPrintUnitName(printUnitMap.get(e.getPrintUnitId()));
+                e.setUnitName(unitMap.get(e.getUnitId()));
+            });
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.hyd.financial.service.impl;
 
+import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.service.IUnitService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
@@ -100,7 +101,9 @@ public class PrintingPlanService implements IPrintingPlanService {
         }
         List<PrintingPlan> printingPlanList = printingPlanMapper.listByParentUnitIdAndStatus(parentUnitId, printingPlanStatus, year);
         List<PrintingPlanDTO> printingPlanDTOList = BeanUtil.copyList(printingPlanList, PrintingPlanDTO.class);
-        printingPlanDTOList.forEach(e->e.setUnitName(unitService.getUnitById(e.getUnitId()).getName()));
+        List<Long> unitIdList = printingPlanDTOList.stream().map(PrintingPlanDTO::getUnitId).collect(Collectors.toList());
+        Map<Long, String> unitNameMap = unitService.listByUnitIdList(unitIdList).stream().collect(Collectors.toMap(Unit::getId, Unit::getName));
+        printingPlanDTOList.forEach(e->e.setUnitName(unitNameMap.get(e.getUnitId())));
         return printingPlanDTOList;
     }
     @Cacheable(value = {"PrintingPlanService::listByUnitId"},key = "#unitId")
