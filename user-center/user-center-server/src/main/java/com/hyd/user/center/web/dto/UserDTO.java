@@ -47,9 +47,9 @@ public class UserDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
-    private ArrayList<Long> roleIdList;
+    private List<Long> roleIdList;
 
-    private ArrayList<String> roleNameList;
+    private List<String> roleNameList;
 
     private List<SimplePermission> permissionList;
     List<Long> permissionIdList;
@@ -121,19 +121,19 @@ public class UserDTO implements Serializable {
         this.confirmPassword = confirmPassword;
     }
 
-    public ArrayList<String> getRoleNameList() {
+    public List<String> getRoleNameList() {
         return roleNameList;
     }
 
-    public void setRoleNameList(ArrayList<String> roleNameList) {
+    public void setRoleNameList(List<String> roleNameList) {
         this.roleNameList = roleNameList;
     }
 
-    public ArrayList<Long> getRoleIdList() {
+    public List<Long> getRoleIdList() {
         return roleIdList;
     }
 
-    public void setRoleIdList(ArrayList<Long> roleIdList) {
+    public void setRoleIdList(List<Long> roleIdList) {
         this.roleIdList = roleIdList;
     }
 

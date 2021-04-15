@@ -51,4 +51,6 @@ public interface IRoleService {
      */
     Role getBydId(Long id);
 
+    List<Role> listByRoleIdList(List<Long> roleIdList);
+
 }

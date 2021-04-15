@@ -30,7 +30,7 @@ import static java.util.regex.Pattern.*;
 public class AuthorizationService implements IAuthorizationService {
     @Autowired
     private RestTemplate restTemplate;
-    private static final String URL = "http://user-center-server/user/center/permission/list/";
+    private static final String URL = "http://user-center-server/user/center/role/permission/query/role/id/list";
     private static final String URL_REFRESH_TOKEN = "http://authentication-server/authenticate/refresh?expiredToken=%s";
     @Override
     public CommonResponse<Object> authorization(String token, String url, String method) {
@@ -73,16 +73,15 @@ public class AuthorizationService implements IAuthorizationService {
             } else {
                 // 如果不在白名单中，则开始鉴权
                 if (payLoad.getJSONArray("roleIdList") != null) {
-                    List<Long> roleIdList = payLoad.getJSONArray("roleIdList").toJavaList(Long.class);
-                    for (Long roleId : roleIdList) {
-                        // 因为roleId数量有限，所以使用循环查询
-                        JSONObject res = restTemplate.getForObject(URL + roleId, JSONObject.class);
-                        authorizationResult = authorizationResult(res.getJSONObject("body").getJSONArray("data").toJavaList(Permission.class), url, method);
+                    JSONArray roleIdList = payLoad.getJSONArray("roleIdList");
+                    HttpHeaders requestHeaders = new HttpHeaders();
+                    requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                    HttpEntity<List<Long>> requestEntity = new HttpEntity(roleIdList,requestHeaders);
+                    JSONObject res = restTemplate.postForObject(URL,requestEntity,JSONObject.class);
+
+                    authorizationResult = authorizationResult(res.getJSONObject("body").getJSONArray("data").toJavaList(Permission.class), url, method);
                         // 查询到有权限后可以马上停止查询
-                        if (authorizationResult) {
-                            break;
-                        }
-                    }
+
                 }
 
             }

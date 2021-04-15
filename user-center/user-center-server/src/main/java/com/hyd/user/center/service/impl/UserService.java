@@ -30,10 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author yanduohuang
@@ -68,7 +66,7 @@ public class UserService implements IUserService {
         if (!optional.isPresent()) {
             // 用户名必须唯一
             long id = idGenerator.snowflakeId();
-            ArrayList<Long> roleIdList = userDTO.getRoleIdList();
+            List<Long> roleIdList = userDTO.getRoleIdList();
             User user = BeanUtil.copy(userDTO, User.class);
             user.setId(id);
             // 使用pbkdf2加密
@@ -155,16 +153,13 @@ public class UserService implements IUserService {
         if (Boolean.TRUE.equals(PBKDF2Util.authenticate(password, user.getPassword()))) {
             // 校验通过，获取用户角色列表
             List<UserRole> userRoleList = userRoleService.listByUserId(user.getId());
-            ArrayList<Long> roleIdList = new ArrayList<>();
-            ArrayList<String> roleNameList = new ArrayList<>();
+            // 基础角色id列表
+            Set<Long> set = new HashSet<>();
             for (UserRole userRole : userRoleList) {
-                roleIdList.add(userRole.getRoleId());
-                Role role = roleService.getBydId(userRole.getRoleId());
-                roleNameList.add(role.getName());
+                set.addAll(rolePermissionService.listBaseRoleId(userRole.getRoleId()));
             }
             UserDTO userDTO = BeanUtil.copy(user, UserDTO.class);
-            userDTO.setRoleIdList(roleIdList);
-            userDTO.setRoleNameList(roleNameList);
+            userDTO.setRoleIdList(new ArrayList<>(set));
             return userDTO;
         }
         return new UserDTO();
@@ -184,16 +179,11 @@ public class UserService implements IUserService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("未查询到相应的用户记录"));
         }
         UserDTO userDTO = BeanUtil.copy(user, UserDTO.class);
-        // 获取用户角色列表（基础角色与高级角色混合）
-        List<Long> roleIdList = getRoleIdListFromToken(token);
-        ArrayList<String> roleNameList = new ArrayList<>();
-        if (roleIdList != null) {
-            for (Long roleId : roleIdList) {
-                Role role = roleService.getBydId(roleId);
-                roleNameList.add(role.getName());
-            }
-            userDTO.setRoleNameList(roleNameList);
-        }
+        // 获取用户角色列表
+        List<UserRole> userRoleList = userRoleService.listByUserId(user.getId());
+        List<Long> roleIdList = userRoleList.stream().map(UserRole::getRoleId).collect(Collectors.toList());
+        List<String> roleNameList = roleService.listByRoleIdList(roleIdList).stream().map(Role::getName).collect(Collectors.toList());
+        userDTO.setRoleNameList(roleNameList);
 
         if (user.getUnitId()!=null){
             // 查询单位信息

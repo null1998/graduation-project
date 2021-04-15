@@ -108,14 +108,8 @@ public class RolePermissionService implements IRolePermissionService {
         if (roleIdList == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("角色ID列表为空"));
         }
-        Set<Long> set = new HashSet<>();
-        long time0 = System.currentTimeMillis();
-        for (Long roleId : roleIdList) {
-            set.addAll(listBaseRoleId(roleId));
-        }
         long time1 = System.currentTimeMillis();
-        log.info("递归查询"+roleIdList.size()+"个高级角色的所有下属角色"+"耗时"+(time1-time0)+"ms");
-        List<Permission> permissionList = permissionMapper.listByBaseRoleIdList(new ArrayList<>(set));
+        List<Permission> permissionList = permissionMapper.listByBaseRoleIdList(roleIdList);
         long time2 = System.currentTimeMillis();
         log.info("根据角色ID列表IN查询权限耗时"+(time2-time1)+"ms");
         return permissionList;

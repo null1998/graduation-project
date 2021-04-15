@@ -3,8 +3,12 @@ package com.hyd.user.center.dao;
 import com.hyd.user.center.entity.Role;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.dynamic.sql.SqlBuilder;
+import org.mybatis.dynamic.sql.where.condition.IsIn;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.mybatis.dynamic.sql.SqlBuilder.isIn;
 
 /**
  * @author yanduohuang
@@ -30,5 +34,17 @@ public interface RoleMapper extends RoleBaseMapper{
         String type = StringUtils.isEmpty(role.getType()) ? null : role.getType();
         return this.select(c -> c.where(RoleDynamicSqlSupport.name, SqlBuilder.isLikeWhenPresent(wrap))
                 .and(RoleDynamicSqlSupport.type, SqlBuilder.isEqualToWhenPresent(type)));
+    }
+
+    /**
+     * 根据数组查询
+     * @param roleIdList
+     * @return
+     */
+    default List<Role> listByRoleIdList(List<Long> roleIdList) {
+        if (roleIdList == null || roleIdList.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return this.select(c->c.where(RoleDynamicSqlSupport.id, isIn(roleIdList)));
     }
 }

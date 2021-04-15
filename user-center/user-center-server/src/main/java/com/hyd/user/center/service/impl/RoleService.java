@@ -102,4 +102,12 @@ public class RoleService implements IRoleService {
 
         return optional.get();
     }
+
+    @Override
+    public List<Role> listByRoleIdList(List<Long> roleIdList) {
+        if (roleIdList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
+        }
+        return roleMapper.listByRoleIdList(roleIdList);
+    }
 }
