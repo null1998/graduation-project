@@ -37,11 +37,11 @@ public class AuthorizationService implements IAuthorizationService {
         if (token == null || StringUtils.equals(token,"null") || url == null) {
             return CommonResponseUtils.failed("Internal Server Error");
         }
-        log.info(String.format("\n===>请求接口%s %s",method,url)+"\n===>待校验token"+token);
+        //log.info(String.format("\n===>请求接口%s %s",method,url)+"\n===>待校验token"+token);
         long time00 = System.currentTimeMillis();
         if (TokenUtil.tokenValid(token)) {
             long time01 = System.currentTimeMillis();
-            log.info("["+method+"]"+url+"验证token合法性"+(time01-time00)+"ms");
+            //log.info("["+method+"]"+url+"验证token合法性"+(time01-time00)+"ms");
             // token合法
             // 分解token为header，playLoad，signature
             String[] split = token.split("\\.");
@@ -62,25 +62,27 @@ public class AuthorizationService implements IAuthorizationService {
                         // 负载更新
                         payLoad = JSON.parseObject(TokenUtil.decryptToken(token.split("\\.")[1]).get(0));
                     } else {
-                        log.info("\n===>重新登录[刷新token失败]");
+                        //log.info("\n===>重新登录[刷新token失败]");
                         return CommonResponseUtils.failedWithMsg("50008","重新登录[刷新token失败]");
                     }
                 }
             }
-            HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<List<Long>> requestEntity = new HttpEntity(payLoad.getJSONArray("permissionIdList"),requestHeaders);
-            JSONObject resp = restTemplate.postForObject(URL,requestEntity,JSONObject.class);
-
-            boolean authorizationResult = authorizationResult(resp.getJSONObject("body").getJSONArray("data").toJavaList(Permission.class), url, method);
-
-            log.info(String.format("\n===>请求接口%s %s",method,url)+"\n===>鉴权结果"+authorizationResult);
-            // 每次鉴权后把token放在head中，方便前端更新
+            boolean authorizationResult = true;
+            if (!whiteList(url,method)) {
+                // 如果不在白名单中，则开始鉴权
+                HttpHeaders requestHeaders = new HttpHeaders();
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                HttpEntity<List<Long>> requestEntity = new HttpEntity(payLoad.getJSONArray("permissionIdList"),requestHeaders);
+                JSONObject resp = restTemplate.postForObject(URL,requestEntity,JSONObject.class);
+                authorizationResult = authorizationResult(resp.getJSONObject("body").getJSONArray("data").toJavaList(Permission.class), url, method);
+            }
+            //log.info(String.format("\n===>请求接口%s %s",method,url)+"\n===>鉴权结果"+authorizationResult);
             long time5 = System.currentTimeMillis();
-            log.info("["+method+"]"+url+"鉴权时长"+(time5-time00)+"ms");
+            log.info("["+method+"]"+url+"鉴权耗时"+(time5-time00)+"ms");
+            // 每次鉴权后把token放在head中，方便前端更新
             return authorizationResult ? CommonResponseUtils.successWithToken(token) : CommonResponseUtils.failedWithMsg("50000","没有权限");
         }
-        log.info("\n===>重新登录[token不合法]"+"\n===>尝试解析不合法token"+TokenUtil.parseToken(token).toJSONString());
+        //log.info("\n===>重新登录[token不合法]"+"\n===>尝试解析不合法token"+TokenUtil.parseToken(token).toJSONString());
         // 不合法
         return CommonResponseUtils.failedWithMsg("50008","重新登录[token不合法]");
 
@@ -115,8 +117,7 @@ public class AuthorizationService implements IAuthorizationService {
 
 
     private boolean authorizationResult(List<Permission> permissionList, String url, String method) {
-        if (!whiteList(url,method)) {
-            // 如果不在白名单中，则开始鉴权
+
             for (Permission permission : permissionList) {
                 if (Objects.equals(permission.getMethod(), method)) {
                     final Pattern compile = compile("^https?:\\/\\/(?:[a-zA-Z0-9\\.:]*)([a-zA-Z\\/]*)(?:\\??[0-9]*)");
@@ -127,9 +128,9 @@ public class AuthorizationService implements IAuthorizationService {
                 }
             }
             return false;
-        }
 
-        return true;
+
+
     }
 
     /**

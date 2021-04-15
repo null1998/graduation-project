@@ -26,6 +26,6 @@ public interface WarehouseMapper extends WarehouseBaseMapper {
      * @return
      */
     default List<Warehouse> listByWarehouseIdList(List<Long> warehouseIdList) {
-        return this.select(c -> c.where(WarehouseDynamicSqlSupport.id, SqlBuilder.isInWhenPresent(warehouseIdList)));
+        return this.select(c -> c.where(WarehouseDynamicSqlSupport.id, SqlBuilder.isIn(warehouseIdList)));
     }
 }

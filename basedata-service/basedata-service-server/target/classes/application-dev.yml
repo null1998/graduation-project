@@ -5,6 +5,8 @@ server:
   servlet:
     context-path: /nontax/basedata
 spring:
+  cache:
+    type: none
   redis:
     host: 127.0.0.1
     port: 6379
@@ -13,6 +15,10 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 10
+      max-lifetime: 2874000
   cloud:
     nacos:
       discovery:

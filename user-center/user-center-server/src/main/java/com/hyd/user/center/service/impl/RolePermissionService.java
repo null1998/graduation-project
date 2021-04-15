@@ -13,6 +13,7 @@ import com.hyd.user.center.service.IPermissionService;
 import com.hyd.user.center.service.IRolePermissionService;
 import com.hyd.user.center.service.IRoleRelateService;
 import com.hyd.user.center.service.IRoleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -29,6 +30,7 @@ import java.util.Set;
  * @author yanduohuang
  * @date 2021/2/4 14:03
  */
+@Slf4j
 @Service
 public class RolePermissionService implements IRolePermissionService {
     @Autowired
@@ -107,10 +109,16 @@ public class RolePermissionService implements IRolePermissionService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("角色ID列表为空"));
         }
         Set<Long> set = new HashSet<>();
+        long time0 = System.currentTimeMillis();
         for (Long roleId : roleIdList) {
             set.addAll(listBaseRoleId(roleId));
         }
-        return permissionMapper.listByBaseRoleIdList(new ArrayList<>(set));
+        long time1 = System.currentTimeMillis();
+        log.info("递归查询"+roleIdList.size()+"个高级角色的所有下属角色"+"耗时"+(time1-time0)+"ms");
+        List<Permission> permissionList = permissionMapper.listByBaseRoleIdList(new ArrayList<>(set));
+        long time2 = System.currentTimeMillis();
+        log.info("根据角色ID列表IN查询权限耗时"+(time2-time1)+"ms");
+        return permissionList;
     }
     @Override
     public Set<Long> listBaseRoleId(Long roleId) {

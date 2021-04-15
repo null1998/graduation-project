@@ -37,7 +37,7 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
         String method = exchange.getRequest().getMethod().name();
         //跳过鉴权
         if (url.contains("user/login")||url.contains("/user/op/logout")) {
-            log.info(String.format("\n===>跳过鉴权%s %s",method,url));
+            //log.info(String.format("\n===>跳过鉴权%s %s",method,url));
             return chain.filter(exchange);
         }
         //获取token
@@ -48,7 +48,7 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
         long time2 = System.currentTimeMillis();
         //log.info("["+method+"]"+url+"鉴权时长"+(time2-time1)+"ms");
         if (resp != null && resp.getJSONObject("head") != null) {
-            log.info("\n===>鉴权结果"+resp.toJSONString());
+            //log.info("\n===>鉴权结果"+resp.toJSONString());
             JSONObject head = resp.getJSONObject("head");
             Integer code = head.getInteger("code");
             // 鉴权通过
@@ -56,9 +56,9 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
                 // 可能有刷新的token，放在响应头中方便前端刷新token
                 if (head.getString("accessToken") != null) {
                     JSONObject parseToken = TokenUtil.parseToken(head.getString("accessToken"));
-                    log.info("\n===>token置于HTTP响应头中"
-                            +"\n===>有效期至"+ TimeUtil.getDateTimeOfTimestamp(parseToken.getJSONObject("payload").getLong("exp"))
-                            +"\n===>解析的token"+ parseToken.toJSONString());
+//                    log.info("\n===>token置于HTTP响应头中"
+//                            +"\n===>有效期至"+ TimeUtil.getDateTimeOfTimestamp(parseToken.getJSONObject("payload").getLong("exp"))
+//                            +"\n===>解析的token"+ parseToken.toJSONString());
                     ArrayList<String> list = new ArrayList<>();
                     list.add("accessToken");
                     // 服务端设置该字段，浏览器才能获取额外的头字段
@@ -66,7 +66,7 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
                     exchange.getResponse().getHeaders().add("accessToken",head.getString("accessToken"));
                 }
                 long time3 = System.currentTimeMillis();
-                log.info("["+method+"]"+url+"网关时长"+(time3-time0)+"ms");
+                log.info("["+method+"]"+url+"网关耗时"+(time3-time0)+"ms");
                 return chain.filter(exchange);
             }
         }
@@ -76,7 +76,7 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
         exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
         // 鉴权不通过，设置响应体为resp并返回
         long time4 = System.currentTimeMillis();
-        log.info("["+method+"]"+url+"网关时长"+(time4-time0)+"ms");
+        log.info("["+method+"]"+url+"网关耗时"+(time4-time0)+"ms");
         return exchange.getResponse().writeWith(Flux.just(exchange.getResponse().bufferFactory().wrap(resp.toJSONString().getBytes(StandardCharsets.UTF_8))));
     }
 

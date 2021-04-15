@@ -5,6 +5,8 @@ server:
   servlet:
     context-path: /nontax/financial
 spring:
+  cache:
+    type: none
   redis:
     host: 127.0.0.1
     port: 6379
