@@ -3,6 +3,7 @@ package com.hyd.basedata.dao;
 import com.hyd.basedata.entity.Ticket;
 import org.mybatis.dynamic.sql.SqlBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,9 @@ public interface TicketMapper extends TicketBaseMapper {
      * @return
      */
     default List<Ticket> listByTicketIdList(List<Long> ticketIdList) {
+        if (ticketIdList == null || ticketIdList.isEmpty()) {
+            return new ArrayList<>();
+        }
         return this.select(c -> c.where(TicketDynamicSqlSupport.id, SqlBuilder.isInWhenPresent(ticketIdList)));
     }
 }

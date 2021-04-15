@@ -4,6 +4,7 @@ import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.entity.Warehouse;
 import org.mybatis.dynamic.sql.SqlBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +27,9 @@ public interface WarehouseMapper extends WarehouseBaseMapper {
      * @return
      */
     default List<Warehouse> listByWarehouseIdList(List<Long> warehouseIdList) {
+        if (warehouseIdList == null || warehouseIdList.isEmpty()) {
+            return new ArrayList<>();
+        }
         return this.select(c -> c.where(WarehouseDynamicSqlSupport.id, SqlBuilder.isIn(warehouseIdList)));
     }
 }

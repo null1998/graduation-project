@@ -53,4 +53,10 @@ public interface IPermissionService {
     Permission getById(Long id);
 
     List<Permission> listByPermissionIdList(List<Long> permissionIdList);
+    /**
+     * 根据roleId查询角色权限
+     * @param roleId
+     * @return
+     */
+    List<Permission> listByRoleId(Long roleId);
 }

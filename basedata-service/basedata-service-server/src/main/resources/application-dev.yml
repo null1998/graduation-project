@@ -16,9 +16,12 @@ spring:
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
     hikari:
-      minimum-idle: 10
+      connection-timeout: 10000
+      minimum-idle: 2
       maximum-pool-size: 10
-      max-lifetime: 2874000
+      idle-timeout: 1200000
+      max-lifetime: 1800000
+      pool-name: base_data_pool
   cloud:
     nacos:
       discovery:

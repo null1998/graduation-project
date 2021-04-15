@@ -165,12 +165,6 @@ public class UserService implements IUserService {
             UserDTO userDTO = BeanUtil.copy(user, UserDTO.class);
             userDTO.setRoleIdList(roleIdList);
             userDTO.setRoleNameList(roleNameList);
-            List<Long> permissionIdList = new ArrayList<>();
-            List<Permission> permissionList = rolePermissionService.listByRoleIdList(roleIdList);
-            for (Permission permission : permissionList) {
-                permissionIdList.add(permission.getId());
-            }
-            userDTO.setPermissionIdList(permissionIdList);
             return userDTO;
         }
         return new UserDTO();

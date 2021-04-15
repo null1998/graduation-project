@@ -4,6 +4,7 @@ import com.hyd.basedata.entity.Ticket;
 import com.hyd.basedata.entity.Unit;
 import org.mybatis.dynamic.sql.SqlBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +46,10 @@ public interface UnitMapper extends UnitBaseMapper {
      * @return
      */
     default List<Unit> listByUnitIdList(List<Long> unitIdList) {
-        return this.select(c -> c.where(UnitDynamicSqlSupport.id, SqlBuilder.isInWhenPresent(unitIdList)));
+        if (unitIdList == null || unitIdList.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return this.select(c -> c.where(UnitDynamicSqlSupport.id, SqlBuilder.isIn(unitIdList)));
     }
 
 }

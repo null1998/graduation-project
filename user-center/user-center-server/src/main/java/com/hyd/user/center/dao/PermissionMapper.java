@@ -7,6 +7,7 @@ import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.select.join.EqualTo;
 import org.mybatis.dynamic.sql.select.join.JoinCriterion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,6 +42,9 @@ public interface PermissionMapper extends PermissionBaseMapper{
      * @return 权限列表
      */
     default List<Permission> listByBaseRoleIdList(List<Long> baseRoleIdList) {
+        if (baseRoleIdList == null || baseRoleIdList.isEmpty()) {
+            return new ArrayList<>();
+        }
         return this.select(c->c.join(RolePermissionDynamicSqlSupport.rolePermission)
                 .on(RolePermissionDynamicSqlSupport.permissionId,new EqualTo(PermissionDynamicSqlSupport.id))
                 .where(RolePermissionDynamicSqlSupport.roleId,SqlBuilder.isInWhenPresent(baseRoleIdList)));

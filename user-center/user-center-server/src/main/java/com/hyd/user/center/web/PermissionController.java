@@ -97,4 +97,16 @@ public class PermissionController{
         List<Permission> permissionList = permissionService.listByPermissionIdList(permissionIdList);
         return BeanUtil.copyList(permissionList, PermissionVO.class);
     }
+
+    /**
+     * 根据roleId查询角色权限
+     * @param roleId
+     * @return
+     */
+    @ApiLog
+    @GetMapping("/list/{roleId}")
+    public List<PermissionVO> listByRoleId(@PathVariable("roleId") Long roleId) {
+        List<Permission> permissionList = permissionService.listByRoleId(roleId);
+        return BeanUtil.copyList(permissionList, PermissionVO.class);
+    }
 }

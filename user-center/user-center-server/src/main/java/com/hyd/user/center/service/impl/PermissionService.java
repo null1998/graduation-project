@@ -10,6 +10,7 @@ import com.hyd.user.center.dao.PermissionMapper;
 import com.hyd.user.center.entity.Permission;
 import com.hyd.user.center.service.IPermissionService;
 import com.hyd.user.center.service.IRolePermissionService;
+import com.hyd.user.center.service.IRoleRelateService;
 import com.hyd.user.center.web.qo.PermissionQO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author yanduohuang
@@ -110,5 +112,14 @@ public class PermissionService implements IPermissionService {
             permissionList.add(permissionService.getById(id));
         }
         return permissionList;
+    }
+
+    @Override
+    public List<Permission> listByRoleId(Long roleId) {
+        if (roleId == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("角色ID为空"));
+        }
+        Set<Long> baseRoleIdList = rolePermissionService.listBaseRoleId(roleId);
+        return permissionMapper.listByBaseRoleIdList(new ArrayList<>(baseRoleIdList));
     }
 }

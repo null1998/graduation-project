@@ -30,7 +30,7 @@ import static java.util.regex.Pattern.*;
 public class AuthorizationService implements IAuthorizationService {
     @Autowired
     private RestTemplate restTemplate;
-    private static final String URL = "http://user-center-server/user/center/permission/list";
+    private static final String URL = "http://user-center-server/user/center/permission/list/";
     private static final String URL_REFRESH_TOKEN = "http://authentication-server/authenticate/refresh?expiredToken=%s";
     @Override
     public CommonResponse<Object> authorization(String token, String url, String method) {
@@ -67,14 +67,24 @@ public class AuthorizationService implements IAuthorizationService {
                     }
                 }
             }
-            boolean authorizationResult = true;
-            if (!whiteList(url,method)) {
+            boolean authorizationResult = false;
+            if (whiteList(url,method)) {
+                authorizationResult = true;
+            } else {
                 // 如果不在白名单中，则开始鉴权
-                HttpHeaders requestHeaders = new HttpHeaders();
-                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-                HttpEntity<List<Long>> requestEntity = new HttpEntity(payLoad.getJSONArray("permissionIdList"),requestHeaders);
-                JSONObject resp = restTemplate.postForObject(URL,requestEntity,JSONObject.class);
-                authorizationResult = authorizationResult(resp.getJSONObject("body").getJSONArray("data").toJavaList(Permission.class), url, method);
+                if (payLoad.getJSONArray("roleIdList") != null) {
+                    List<Long> roleIdList = payLoad.getJSONArray("roleIdList").toJavaList(Long.class);
+                    for (Long roleId : roleIdList) {
+                        // 因为roleId数量有限，所以使用循环查询
+                        JSONObject res = restTemplate.getForObject(URL + roleId, JSONObject.class);
+                        authorizationResult = authorizationResult(res.getJSONObject("body").getJSONArray("data").toJavaList(Permission.class), url, method);
+                        // 查询到有权限后可以马上停止查询
+                        if (authorizationResult) {
+                            break;
+                        }
+                    }
+                }
+
             }
             //log.info(String.format("\n===>请求接口%s %s",method,url)+"\n===>鉴权结果"+authorizationResult);
             long time5 = System.currentTimeMillis();
@@ -118,16 +128,16 @@ public class AuthorizationService implements IAuthorizationService {
 
     private boolean authorizationResult(List<Permission> permissionList, String url, String method) {
 
-            for (Permission permission : permissionList) {
-                if (Objects.equals(permission.getMethod(), method)) {
-                    final Pattern compile = compile("^https?:\\/\\/(?:[a-zA-Z0-9\\.:]*)([a-zA-Z\\/]*)(?:\\??[0-9]*)");
-                    Matcher matcher = compile.matcher(url);
-                    if (matcher.find() && Objects.equals(permission.getUrl(), matcher.group(1))) {
-                        return true;
-                    }
+        for (Permission permission : permissionList) {
+            if (Objects.equals(permission.getMethod(), method)) {
+                final Pattern compile = compile("^https?:\\/\\/(?:[a-zA-Z0-9\\.:]*)([a-zA-Z\\/]*)(?:\\??[0-9]*)");
+                Matcher matcher = compile.matcher(url);
+                if (matcher.find() && Objects.equals(permission.getUrl(), matcher.group(1))) {
+                    return true;
                 }
             }
-            return false;
+        }
+        return false;
 
 
 
