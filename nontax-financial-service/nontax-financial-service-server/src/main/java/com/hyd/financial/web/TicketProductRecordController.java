@@ -50,13 +50,20 @@ public class TicketProductRecordController {
     @GetMapping("/common/query")
     public List<TicketProductRecordVO> commonQuery(TicketProductRecordQO ticketProductRecordQO) {
         TicketProductRecord ticketProductRecord = BeanUtil.copy(ticketProductRecordQO, TicketProductRecord.class);
-        List<TicketProductRecord> ticketProductRecordList = ticketProductRecordService.commonQuery(ticketProductRecord);
-        return BeanUtil.copyList(ticketProductRecordList, TicketProductRecordVO.class);
+        List<TicketProductRecordDTO> ticketProductRecordDTOList = ticketProductRecordService.commonQuery(ticketProductRecord);
+        return BeanUtil.copyList(ticketProductRecordDTOList, TicketProductRecordVO.class);
     }
     @ApiLog
     @GetMapping("/{id}")
     public TicketProductRecordVO getById(@PathVariable("id") Long id) {
         TicketProductRecord ticketProductRecord = ticketProductRecordService.getById(id);
         return BeanUtil.copy(ticketProductRecord, TicketProductRecordVO.class);
+    }
+    @ApiLog
+    @GetMapping("/sum")
+    public List<TicketProductRecordVO> sum(TicketProductRecordQO ticketProductRecordQO) {
+        TicketProductRecord ticketProductRecord = BeanUtil.copy(ticketProductRecordQO, TicketProductRecord.class);
+        List<TicketProductRecordDTO> ticketProductRecordDTOList = ticketProductRecordService.sum(ticketProductRecord);
+        return BeanUtil.copyList(ticketProductRecordDTOList, TicketProductRecordVO.class);
     }
 }

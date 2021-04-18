@@ -1,4 +1,5 @@
 package com.hyd.financial.service.impl;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -138,9 +139,12 @@ public class TicketClaimTicketService implements ITicketClaimTicketService {
 	private void batchSetProperties(List<TicketClaimTicketDTO> ticketClaimTicketDTOList) {
         if (ticketClaimTicketDTOList != null) {
             List<Long> ticketIdList = ticketClaimTicketDTOList.stream().map(TicketClaimTicketDTO::getTicketId).collect(Collectors.toList());
-            Map<Long, String> ticketNameMap = ticketService.listByTicketIdList(ticketIdList).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+            List<Ticket> ticketList = ticketService.listByTicketIdList(ticketIdList);
+            Map<Long, String> ticketNameMap = ticketList.stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+            Map<Long, BigDecimal> ticketPriceMap = ticketList.stream().collect(Collectors.toMap(Ticket::getId, Ticket::getPrice));
             ticketClaimTicketDTOList.forEach(e->{
                 e.setTicketName(ticketNameMap.get(e.getTicketId()));
+                e.setPrice(ticketPriceMap.get(e.getTicketId()));
             });
         }
     }

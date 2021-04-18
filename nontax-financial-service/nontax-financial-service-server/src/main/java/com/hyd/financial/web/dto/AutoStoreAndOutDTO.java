@@ -11,6 +11,8 @@ public class AutoStoreAndOutDTO {
      */
     private Long ticketClaimTicketId;
     private Long needNumber;
+    private Long ticketClaimId;
+    private Long printOrderId;
     /**
      * 库存id
      */
@@ -39,6 +41,22 @@ public class AutoStoreAndOutDTO {
     private Long warehouseId;
     private Long userId;
     private String operateDate;
+
+    public Long getTicketClaimId() {
+        return ticketClaimId;
+    }
+
+    public void setTicketClaimId(Long ticketClaimId) {
+        this.ticketClaimId = ticketClaimId;
+    }
+
+    public Long getPrintOrderId() {
+        return printOrderId;
+    }
+
+    public void setPrintOrderId(Long printOrderId) {
+        this.printOrderId = printOrderId;
+    }
 
     public Long getWarehouseId() {
         return warehouseId;
@@ -190,6 +208,8 @@ public class AutoStoreAndOutDTO {
         return "AutoStoreAndOutDTO{" +
                 "ticketClaimTicketId=" + ticketClaimTicketId +
                 ", needNumber=" + needNumber +
+                ", ticketClaimId=" + ticketClaimId +
+                ", printOrderId=" + printOrderId +
                 ", storeId=" + storeId +
                 ", targetOrderNumber=" + targetOrderNumber +
                 ", targetUnitId=" + targetUnitId +

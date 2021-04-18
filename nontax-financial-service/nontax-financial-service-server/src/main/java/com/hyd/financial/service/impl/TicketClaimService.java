@@ -64,6 +64,8 @@ public class TicketClaimService implements ITicketClaimService {
 
     @Autowired
     private ITicketOutRecordService ticketOutRecordService;
+    @Autowired
+    private ITicketClaimService ticketClaimService;
 	/**
      * 保存票据申领
      * @param ticketClaim 票据申领
@@ -210,8 +212,15 @@ public class TicketClaimService implements ITicketClaimService {
     @Caching(evict = {@CacheEvict(value = {"TicketClaimService::commonQuery","TicketClaimService::getById"},allEntries = true)})
     @Override
     public void autoStore(List<AutoStoreAndOutDTO> autoStoreAndOutDTOList) {
-        if (autoStoreAndOutDTOList == null) {
+        if (autoStoreAndOutDTOList == null || autoStoreAndOutDTOList.isEmpty()) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
+        }
+        TicketClaim ticketClaim = new TicketClaim();
+        ticketClaim.setId(autoStoreAndOutDTOList.get(0).getTicketClaimId());
+        ticketClaim.setStatus(4);
+        Integer update = ticketClaimService.update(ticketClaim);
+        if (update != 1) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("更新申领订单失败"));
         }
         // 生成票据入库单
         TicketStoreRecord record = BeanUtil.copy(autoStoreAndOutDTOList.get(0), TicketStoreRecord.class);

@@ -1,12 +1,17 @@
 package com.hyd.financial.service.impl;
 
+import com.hyd.basedata.entity.Ticket;
+import com.hyd.basedata.service.ITicketService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
+import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.TicketProductRecordMapper;
 import com.hyd.financial.entity.TicketProductRecord;
 import com.hyd.financial.service.ITicketProductRecordService;
 import com.hyd.financial.util.TicketCodeConvertUtil;
+import com.hyd.financial.web.dto.TicketProductRecordDTO;
+import com.hyd.financial.web.dto.TicketStoreRecordDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,10 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -34,6 +36,8 @@ public class TicketProductRecordService implements ITicketProductRecordService {
     private TicketProductRecordMapper ticketProductRecordMapper;
     @Autowired
     private ITicketProductRecordService ticketProductRecordService;
+    @Autowired
+    private ITicketService ticketService;
     @Caching(evict = {@CacheEvict(value = {"TicketProductRecordService::commonQuery"},allEntries = true)})
     @Override
     public Long save(TicketProductRecord ticketProductRecord) {
@@ -52,16 +56,16 @@ public class TicketProductRecordService implements ITicketProductRecordService {
             TicketProductRecord query = new TicketProductRecord();
             query.setTicketId(ticketId);
             // 查询该票据过去的生产记录
-            List<TicketProductRecord> ticketProductRecordList = ticketProductRecordService.commonQuery(query);
+            List<TicketProductRecordDTO> ticketProductRecordDTOList = ticketProductRecordService.commonQuery(query);
             // 按终止号倒序
-            ticketProductRecordList = ticketProductRecordList.stream().sorted(Comparator.comparing(TicketProductRecord::getEndNumber).reversed()).collect(Collectors.toList());
-            if (ticketProductRecordList == null || ticketProductRecordList.isEmpty()) {
+            ticketProductRecordDTOList = ticketProductRecordDTOList.stream().sorted(Comparator.comparing(TicketProductRecordDTO::getEndNumber).reversed()).collect(Collectors.toList());
+            if (ticketProductRecordDTOList == null || ticketProductRecordDTOList.isEmpty()) {
                 // 没有生产记录则初始化票号
                 ticketProductRecord.setStartNumber(TicketCodeConvertUtil.longConvertString(0L));
                 ticketProductRecord.setEndNumber(TicketCodeConvertUtil.longConvertString(Long.parseLong(number.toString())-1));
             } else {
                 // 有生产记录则记录新的票号
-                TicketProductRecord lastRecord = ticketProductRecordList.get(0);
+                TicketProductRecordDTO lastRecord = ticketProductRecordDTOList.get(0);
                 Long lastEndNumber = TicketCodeConvertUtil.stringConvertLong(lastRecord.getEndNumber());
                 ticketProductRecord.setStartNumber(TicketCodeConvertUtil.longConvertString(lastEndNumber+1));
                 ticketProductRecord.setEndNumber(TicketCodeConvertUtil.longConvertString(lastEndNumber+number));
@@ -102,12 +106,45 @@ public class TicketProductRecordService implements ITicketProductRecordService {
     }
     @Cacheable(value = "TicketProductRecordService::commonQuery",key = "#ticketProductRecord.toString()")
     @Override
-    public List<TicketProductRecord> commonQuery(TicketProductRecord ticketProductRecord) {
+    public List<TicketProductRecordDTO> commonQuery(TicketProductRecord ticketProductRecord) {
         if (ticketProductRecord == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("票据生产记录为空"));
         }
-        return ticketProductRecordMapper.commonQuery(ticketProductRecord);
+        List<TicketProductRecord> ticketProductRecordList = ticketProductRecordMapper.commonQuery(ticketProductRecord);
+        List<TicketProductRecordDTO> ticketProductRecordDTOList = BeanUtil.copyList(ticketProductRecordList, TicketProductRecordDTO.class);
+        List<Long> ticketIdList = ticketProductRecordDTOList.stream().map(TicketProductRecordDTO::getTicketId).collect(Collectors.toList());
+        Map<Long, String> ticketNameMap = ticketService.listByTicketIdList(ticketIdList).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+        ticketProductRecordDTOList.forEach(e->{
+            e.setTicketName(ticketNameMap.get(e.getTicketId()));
+        });
+        return ticketProductRecordDTOList;
     }
+
+    @Override
+    public List<TicketProductRecordDTO> sum(TicketProductRecord ticketProductRecord) {
+        if (ticketProductRecord == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("票据生产记录为空"));
+        }
+        List<TicketProductRecordDTO> ticketProductRecordDTOList = ticketProductRecordService.commonQuery(ticketProductRecord);
+        // 给票据名赋值
+        List<Long> ticketIdList = ticketProductRecordDTOList.stream().map(TicketProductRecordDTO::getTicketId).collect(Collectors.toList());
+        Map<Long, String> ticketNameMap = ticketService.listByTicketIdList(ticketIdList).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+        ticketProductRecordDTOList.forEach(e->{
+            e.setTicketName(ticketNameMap.get(e.getTicketId()));
+        });
+        // 根据票据名对数量进行分组求和
+        Map<String, Integer> map = ticketProductRecordDTOList.stream().collect(Collectors.groupingBy(TicketProductRecordDTO::getTicketName, Collectors.summingInt(TicketProductRecordDTO::getNumber)));
+        // 将结果封装返回
+        List<TicketProductRecordDTO> result = new ArrayList<>();
+        map.forEach((k,v)->{
+            TicketProductRecordDTO ticketProductRecordDTO = new TicketProductRecordDTO();
+            ticketProductRecordDTO.setTicketName(k);
+            ticketProductRecordDTO.setNumber(v);
+            result.add(ticketProductRecordDTO);
+        });
+        return result;
+    }
+
     @Cacheable(value = "TicketProductRecordService::getById",key = "#id")
     @Override
     public TicketProductRecord getById(Long id) {

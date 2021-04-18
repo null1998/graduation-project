@@ -1,6 +1,7 @@
 package com.hyd.financial.service;
 
 import com.hyd.financial.entity.TicketProductRecord;
+import com.hyd.financial.web.dto.TicketProductRecordDTO;
 
 import java.util.List;
 
@@ -41,6 +42,13 @@ public interface ITicketProductRecordService {
      * @param ticketProductRecord
      * @return
      */
-    List<TicketProductRecord> commonQuery(TicketProductRecord ticketProductRecord);
+    List<TicketProductRecordDTO> commonQuery(TicketProductRecord ticketProductRecord);
+
+    /**
+     * 按照票据，对数量分组求和
+     * @param ticketProductRecord
+     * @return
+     */
+    List<TicketProductRecordDTO> sum(TicketProductRecord ticketProductRecord);
 
 }

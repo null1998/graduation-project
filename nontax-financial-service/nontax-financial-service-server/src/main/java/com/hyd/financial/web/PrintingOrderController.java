@@ -5,6 +5,7 @@ import com.hyd.common.util.BeanUtil;
 import com.hyd.financial.entity.PrintingOrder;
 import com.hyd.financial.entity.vo.PrintingOrderVO;
 import com.hyd.financial.service.IPrintingOrderService;
+import com.hyd.financial.web.dto.AutoStoreAndOutDTO;
 import com.hyd.financial.web.dto.PrintingOrderDTO;
 import com.hyd.financial.web.qo.PrintingOrderQO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,15 @@ public class PrintingOrderController {
         PrintingOrder printingOrder = BeanUtil.copy(printingOrderQO, PrintingOrder.class);
         List<PrintingOrderDTO> printingOrderDTOList = printingOrderService.commonQuery(printingOrder);
         return BeanUtil.copyList(printingOrderDTOList, PrintingOrderVO.class);
+    }
+    /**
+     * 自动增库存，生成入库记录号段
+     * @param autoStoreAndOutDTOList
+     */
+    @ApiLog
+    @PostMapping("/auto/store")
+    public void autoStore(@RequestBody List<AutoStoreAndOutDTO> autoStoreAndOutDTOList) {
+        printingOrderService.autoStore(autoStoreAndOutDTOList);
     }
 
 }

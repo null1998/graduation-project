@@ -3,6 +3,11 @@ package com.hyd.financial.dao;
 import com.hyd.financial.entity.TicketProductRecord;
 import org.apache.ibatis.jdbc.SQL;
 import org.mybatis.dynamic.sql.SqlBuilder;
+import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
+import org.mybatis.dynamic.sql.select.SelectDSLCompleter;
+import org.mybatis.dynamic.sql.select.SelectModel;
+import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
+import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 
 import java.util.List;
 
@@ -23,4 +28,5 @@ public interface TicketProductRecordMapper extends TicketProductRecordBaseMapper
                 .and(TicketProductRecordDynamicSqlSupport.printUnitId, SqlBuilder.isEqualToWhenPresent(ticketProductRecord.getPrintUnitId()))
                 .orderBy(TicketProductRecordDynamicSqlSupport.createdDate.descending()));
     }
+
 }

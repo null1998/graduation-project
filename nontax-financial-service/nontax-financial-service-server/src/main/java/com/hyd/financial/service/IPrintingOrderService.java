@@ -1,6 +1,7 @@
 package com.hyd.financial.service;
 
 import com.hyd.financial.entity.PrintingOrder;
+import com.hyd.financial.web.dto.AutoStoreAndOutDTO;
 import com.hyd.financial.web.dto.PrintingOrderDTO;
 
 import java.util.List;
@@ -43,4 +44,10 @@ public interface IPrintingOrderService {
      * @return
      */
     List<PrintingOrderDTO> commonQuery(PrintingOrder printingOrder);
+
+    /**
+     * 自动生成入库单，增加库存
+     * @param autoStoreAndOutDTOList
+     */
+    void autoStore(List<AutoStoreAndOutDTO> autoStoreAndOutDTOList);
 }

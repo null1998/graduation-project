@@ -12,6 +12,7 @@ public class TicketProductRecordDTO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long ticketId;
+    private String ticketName;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String startNumber;
@@ -31,6 +32,14 @@ public class TicketProductRecordDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
     private Integer number;
+
+    public String getTicketName() {
+        return ticketName;
+    }
+
+    public void setTicketName(String ticketName) {
+        this.ticketName = ticketName;
+    }
 
     public Integer getNumber() {
         return number;
@@ -133,6 +142,7 @@ public class TicketProductRecordDTO implements Serializable {
                 "id=" + id +
                 ", orderNumber=" + orderNumber +
                 ", ticketId=" + ticketId +
+                ", ticketName='" + ticketName + '\'' +
                 ", startNumber='" + startNumber + '\'' +
                 ", endNumber='" + endNumber + '\'' +
                 ", printOrderNumber=" + printOrderNumber +

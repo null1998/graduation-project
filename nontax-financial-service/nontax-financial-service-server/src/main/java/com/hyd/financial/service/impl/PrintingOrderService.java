@@ -10,8 +10,11 @@ import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.PrintingOrderMapper;
 import com.hyd.financial.entity.PrintingOrder;
-import com.hyd.financial.service.IPrintingOrderService;
-import com.hyd.financial.service.IPrintingOrderTicketService;
+import com.hyd.financial.entity.TicketStore;
+import com.hyd.financial.entity.TicketStoreRecord;
+import com.hyd.financial.entity.TicketStoreRecordTicket;
+import com.hyd.financial.service.*;
+import com.hyd.financial.web.dto.AutoStoreAndOutDTO;
 import com.hyd.financial.web.dto.PrintingOrderDTO;
 import com.hyd.financial.web.dto.PrintingOrderTicketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +46,14 @@ public class PrintingOrderService implements IPrintingOrderService {
     private IWarehouseService warehouseService;
     @Autowired
     private IPrintingOrderTicketService printingOrderTicketService;
+    @Autowired
+    private ITicketStoreRecordService ticketStoreRecordService;
+    @Autowired
+    private ITicketStoreRecordTicketService ticketStoreRecordTicketService;
+    @Autowired
+    private ITicketStoreService ticketStoreService;
+    @Autowired
+    private IPrintingOrderService printingOrderService;
     @Caching(evict = {@CacheEvict(value = "PrintingOrderService::commonQuery",allEntries = true)})
     @Override
     public Long save(PrintingOrder printingOrder) {
@@ -110,6 +121,37 @@ public class PrintingOrderService implements IPrintingOrderService {
         batchSetProperties(printingOrderDTOList);
         return printingOrderDTOList;
     }
+
+    @Override
+    public void autoStore(List<AutoStoreAndOutDTO> autoStoreAndOutDTOList) {
+        if (autoStoreAndOutDTOList == null || autoStoreAndOutDTOList.isEmpty()) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
+        }
+        // 更新印制订单状态为已入库
+        PrintingOrder printingOrder = new PrintingOrder();
+        printingOrder.setId(autoStoreAndOutDTOList.get(0).getPrintOrderId());
+        printingOrder.setStatus(3);
+        Integer update = printingOrderService.update(printingOrder);
+        if (update != 1) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_OTHER_EXCEPTION, new Exception("更新印制订单失败"));
+        }
+        // 生成票据入库单
+        TicketStoreRecord record = BeanUtil.copy(autoStoreAndOutDTOList.get(0), TicketStoreRecord.class);
+        Long recordId = ticketStoreRecordService.save(record);
+        for (AutoStoreAndOutDTO autoStoreAndOutDTO : autoStoreAndOutDTOList) {
+            // 添加库存
+            TicketStore ticketStore = BeanUtil.copy(autoStoreAndOutDTO, TicketStore.class);
+            ticketStore.setNumber(autoStoreAndOutDTO.getNeedNumber());
+            ticketStoreService.save(ticketStore);
+            // 添加票据入库记录号段
+            TicketStoreRecordTicket ticketStoreRecordTicket = BeanUtil.copy(autoStoreAndOutDTO, TicketStoreRecordTicket.class);
+            ticketStoreRecordTicket.setTicketStoreRecordId(recordId);
+            ticketStoreRecordTicket.setNumber(autoStoreAndOutDTO.getNeedNumber());
+            ticketStoreRecordTicketService.save(ticketStoreRecordTicket);
+        }
+
+    }
+
     private void batchSetProperties(List<PrintingOrderDTO> printingOrderDTOList) {
         if (printingOrderDTOList != null) {
             List<Long> warehouseIdList = printingOrderDTOList.stream().map(PrintingOrderDTO::getWarehouseId).collect(Collectors.toList());
@@ -125,4 +167,5 @@ public class PrintingOrderService implements IPrintingOrderService {
             });
         }
     }
+
 }
