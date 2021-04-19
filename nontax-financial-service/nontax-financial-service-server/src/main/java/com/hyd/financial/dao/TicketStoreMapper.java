@@ -29,4 +29,15 @@ public interface TicketStoreMapper extends TicketStoreBaseMapper {
     default List<TicketStore> getUnitStore(Long unitId) {
        return null;
     }
+    /**
+     * 批量删除
+     * @param list
+     * @return
+     */
+    default Integer deleteAll(List<Long> list) {
+        if (list == null || list.isEmpty()) {
+            return 0;
+        }
+        return this.delete(c->c.where(TicketStoreDynamicSqlSupport.id, SqlBuilder.isIn(list)));
+    }
 }

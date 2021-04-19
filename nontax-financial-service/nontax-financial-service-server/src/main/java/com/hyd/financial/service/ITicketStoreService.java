@@ -1,5 +1,7 @@
 package com.hyd.financial.service;
 import java.util.List;
+
+import com.hyd.financial.entity.Payment;
 import com.hyd.financial.entity.TicketStore;
 import com.hyd.financial.web.dto.TicketStoreDTO;
 
@@ -22,6 +24,12 @@ public interface ITicketStoreService {
      * @return 是否删除成功
      */
     Boolean remove(Long id);
+    /**
+     * 批量删除
+     * @param idList
+     * @return
+     */
+    Integer removeAll(List<Long> idList);
 
     /**
      * 更新票据库存

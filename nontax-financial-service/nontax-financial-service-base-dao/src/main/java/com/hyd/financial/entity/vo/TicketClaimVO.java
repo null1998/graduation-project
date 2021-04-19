@@ -2,6 +2,7 @@ package com.hyd.financial.entity.vo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 
 public class TicketClaimVO implements Serializable {
@@ -23,8 +24,7 @@ public class TicketClaimVO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long targetUnitId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String date;
+    private LocalDate claimDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private BigDecimal totalPrice;
@@ -137,14 +137,12 @@ public class TicketClaimVO implements Serializable {
         this.targetUnitId = targetUnitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getDate() {
-        return date;
+    public LocalDate getClaimDate() {
+        return claimDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setDate(String date) {
-        this.date = date;
+    public void setClaimDate(LocalDate claimDate) {
+        this.claimDate = claimDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -194,7 +192,7 @@ public class TicketClaimVO implements Serializable {
                 ", unitId=" + unitId +
                 ", warehouseId=" + warehouseId +
                 ", targetUnitId=" + targetUnitId +
-                ", date='" + date + '\'' +
+                ", claimDate=" + claimDate +
                 ", totalPrice=" + totalPrice +
                 ", opinion='" + opinion + '\'' +
                 ", status=" + status +

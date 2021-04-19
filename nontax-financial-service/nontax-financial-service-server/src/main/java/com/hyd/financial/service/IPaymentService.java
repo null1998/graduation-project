@@ -24,6 +24,12 @@ public interface IPaymentService {
     Boolean remove(Long id);
 
     /**
+     * 批量删除
+     * @param idList
+     * @return
+     */
+    Integer removeAll(List<Long> idList);
+    /**
      * 更新票据结算
      * @param payment 票据结算
      * @return 更新的行数

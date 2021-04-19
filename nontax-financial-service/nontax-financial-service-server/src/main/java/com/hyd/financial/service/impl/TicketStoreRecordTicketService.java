@@ -152,11 +152,9 @@ public class TicketStoreRecordTicketService implements ITicketStoreRecordTicketS
             if (ticketStoreRecordDTO.getStoreDate() == null) {
                 continue;
             }
-            String storeDate = ticketStoreRecordDTO.getStoreDate();
-            storeDate = storeDate.replace("年","-").replace("月","-").replace("日","");
-            LocalDate date = LocalDate.parse(storeDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDate storeDate = ticketStoreRecordDTO.getStoreDate();
             // 必须是当年的记录
-            if (date.getYear() == LocalDate.now().getYear()) {
+            if (storeDate.getYear() == LocalDate.now().getYear()) {
                 TicketStoreRecordTicket query2 = new TicketStoreRecordTicket();
                 query2.setTicketStoreRecordId(ticketStoreRecordDTO.getId());
                 // 查找入库记录对应的票据
@@ -165,14 +163,14 @@ public class TicketStoreRecordTicketService implements ITicketStoreRecordTicketS
                     if (map.get(ticketStoreRecordTicket.getTicketId()) == null) {
                         RecordDTO recordDTO = new RecordDTO();
                         Map<Integer, Long> number = new HashMap<>();
-                        number.put(date.getMonthValue(),ticketStoreRecordTicket.getNumber());
+                        number.put(storeDate.getMonthValue(),ticketStoreRecordTicket.getNumber());
                         recordDTO.setNumber(number);
                         map.put(ticketStoreRecordTicket.getTicketId(), recordDTO);
                     } else {
                         RecordDTO recordDTO = map.get(ticketStoreRecordTicket.getTicketId());
                         Map<Integer, Long> number = recordDTO.getNumber();
-                        Long n = number.getOrDefault(date.getMonthValue(), 0L);
-                        number.put(date.getMonthValue(), n + ticketStoreRecordTicket.getNumber());
+                        Long n = number.getOrDefault(storeDate.getMonthValue(), 0L);
+                        number.put(storeDate.getMonthValue(), n + ticketStoreRecordTicket.getNumber());
                     }
                 }
             }

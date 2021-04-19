@@ -1,6 +1,7 @@
 package com.hyd.financial.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 
 public class TicketOutRecord implements Serializable {
@@ -23,7 +24,7 @@ public class TicketOutRecord implements Serializable {
     private String outType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String outDate;
+    private LocalDate outDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
@@ -92,12 +93,12 @@ public class TicketOutRecord implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getOutDate() {
+    public LocalDate getOutDate() {
         return outDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setOutDate(String outDate) {
+    public void setOutDate(LocalDate outDate) {
         this.outDate = outDate;
     }
 

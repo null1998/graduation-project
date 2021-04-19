@@ -2,6 +2,7 @@ package com.hyd.financial.dao;
 
 import java.math.BigDecimal;
 import java.sql.JDBCType;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 import org.mybatis.dynamic.sql.SqlColumn;
 import org.mybatis.dynamic.sql.SqlTable;
@@ -32,10 +33,10 @@ public final class PaymentDynamicSqlSupport {
     public static final SqlColumn<String> orderType = payment.orderType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> date = payment.date;
+    public static final SqlColumn<LocalDate> orderDate = payment.orderDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> payDate = payment.payDate;
+    public static final SqlColumn<LocalDate> payDate = payment.payDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Integer> status = payment.status;
@@ -62,9 +63,9 @@ public final class PaymentDynamicSqlSupport {
 
         public final SqlColumn<String> orderType = column("order_type", JDBCType.VARCHAR);
 
-        public final SqlColumn<String> date = column("date", JDBCType.VARCHAR);
+        public final SqlColumn<LocalDate> orderDate = column("order_date", JDBCType.DATE);
 
-        public final SqlColumn<String> payDate = column("pay_date", JDBCType.VARCHAR);
+        public final SqlColumn<LocalDate> payDate = column("pay_date", JDBCType.DATE);
 
         public final SqlColumn<Integer> status = column("status", JDBCType.INTEGER);
 

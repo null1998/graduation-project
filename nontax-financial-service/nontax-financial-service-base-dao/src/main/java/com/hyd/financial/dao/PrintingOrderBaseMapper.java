@@ -58,8 +58,8 @@ public interface PrintingOrderBaseMapper {
     @Results(id="PrintingOrderResult", value = {
         @Result(column="id", property="id", jdbcType=JdbcType.BIGINT, id=true),
         @Result(column="order_number", property="orderNumber", jdbcType=JdbcType.BIGINT),
-        @Result(column="start", property="start", jdbcType=JdbcType.VARCHAR),
-        @Result(column="end", property="end", jdbcType=JdbcType.VARCHAR),
+        @Result(column="start", property="start", jdbcType=JdbcType.DATE),
+        @Result(column="end", property="end", jdbcType=JdbcType.DATE),
         @Result(column="unit_id", property="unitId", jdbcType=JdbcType.BIGINT),
         @Result(column="print_unit_id", property="printUnitId", jdbcType=JdbcType.BIGINT),
         @Result(column="warehouse_id", property="warehouseId", jdbcType=JdbcType.BIGINT),

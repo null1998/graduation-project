@@ -1,6 +1,7 @@
 package com.hyd.financial.dao;
 
 import java.sql.JDBCType;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 import org.mybatis.dynamic.sql.SqlColumn;
 import org.mybatis.dynamic.sql.SqlTable;
@@ -34,7 +35,7 @@ public final class TicketStoreRecordDynamicSqlSupport {
     public static final SqlColumn<Long> dictionaryId = ticketStoreRecord.dictionaryId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> storeDate = ticketStoreRecord.storeDate;
+    public static final SqlColumn<LocalDate> storeDate = ticketStoreRecord.storeDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<String> storeType = ticketStoreRecord.storeType;
@@ -57,7 +58,7 @@ public final class TicketStoreRecordDynamicSqlSupport {
 
         public final SqlColumn<Long> dictionaryId = column("dictionary_id", JDBCType.BIGINT);
 
-        public final SqlColumn<String> storeDate = column("store_date", JDBCType.VARCHAR);
+        public final SqlColumn<LocalDate> storeDate = column("store_date", JDBCType.DATE);
 
         public final SqlColumn<String> storeType = column("store_type", JDBCType.VARCHAR);
 

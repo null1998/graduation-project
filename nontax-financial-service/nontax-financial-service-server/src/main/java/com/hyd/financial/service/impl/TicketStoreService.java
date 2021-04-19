@@ -81,8 +81,24 @@ public class TicketStoreService implements ITicketStoreService {
         }
         return ticketStoreMapper.deleteByPrimaryKey(id) == 1;
     }
+    /**
+     * 批量删除
+     * @param idList
+     * @return
+     */
+    @Override
+    public Integer removeAll(List<Long> idList) {
+        if (idList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
+        }
+        Integer deleteAll = ticketStoreMapper.deleteAll(idList);
+        if (deleteAll != idList.size()) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_DB_OTHER_EXCEPTION, new Exception("删除失败"));
+        }
+        return deleteAll;
+    }
 
-	/**
+    /**
      * 更新票据库存
      * @param ticketStore 票据库存
      * @return 更新的行数

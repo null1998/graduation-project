@@ -2,6 +2,7 @@ package com.hyd.financial.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 
 public class Payment implements Serializable {
@@ -27,10 +28,10 @@ public class Payment implements Serializable {
     private String orderType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String date;
+    private LocalDate orderDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String payDate;
+    private LocalDate payDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer status;
@@ -115,22 +116,22 @@ public class Payment implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getDate() {
-        return date;
+    public LocalDate getOrderDate() {
+        return orderDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setDate(String date) {
-        this.date = date;
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getPayDate() {
+    public LocalDate getPayDate() {
         return payDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPayDate(String payDate) {
+    public void setPayDate(LocalDate payDate) {
         this.payDate = payDate;
     }
 
@@ -184,7 +185,7 @@ public class Payment implements Serializable {
             && (this.getDesUnitId() == null ? other.getDesUnitId() == null : this.getDesUnitId().equals(other.getDesUnitId()))
             && (this.getTotalPrice() == null ? other.getTotalPrice() == null : this.getTotalPrice().equals(other.getTotalPrice()))
             && (this.getOrderType() == null ? other.getOrderType() == null : this.getOrderType().equals(other.getOrderType()))
-            && (this.getDate() == null ? other.getDate() == null : this.getDate().equals(other.getDate()))
+            && (this.getOrderDate() == null ? other.getOrderDate() == null : this.getOrderDate().equals(other.getOrderDate()))
             && (this.getPayDate() == null ? other.getPayDate() == null : this.getPayDate().equals(other.getPayDate()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()))
@@ -203,7 +204,7 @@ public class Payment implements Serializable {
         result = prime * result + ((getDesUnitId() == null) ? 0 : getDesUnitId().hashCode());
         result = prime * result + ((getTotalPrice() == null) ? 0 : getTotalPrice().hashCode());
         result = prime * result + ((getOrderType() == null) ? 0 : getOrderType().hashCode());
-        result = prime * result + ((getDate() == null) ? 0 : getDate().hashCode());
+        result = prime * result + ((getOrderDate() == null) ? 0 : getOrderDate().hashCode());
         result = prime * result + ((getPayDate() == null) ? 0 : getPayDate().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
@@ -225,7 +226,7 @@ public class Payment implements Serializable {
         sb.append(", desUnitId=").append(desUnitId);
         sb.append(", totalPrice=").append(totalPrice);
         sb.append(", orderType=").append(orderType);
-        sb.append(", date=").append(date);
+        sb.append(", orderDate=").append(orderDate);
         sb.append(", payDate=").append(payDate);
         sb.append(", status=").append(status);
         sb.append(", version=").append(version);

@@ -70,7 +70,7 @@ public class TicketProductRecordService implements ITicketProductRecordService {
                 ticketProductRecord.setStartNumber(TicketCodeConvertUtil.longConvertString(lastEndNumber+1));
                 ticketProductRecord.setEndNumber(TicketCodeConvertUtil.longConvertString(lastEndNumber+number));
             }
-            ticketProductRecord.setCreatedDate(LocalDate.now().format(DateTimeFormatter.ISO_DATE));
+            ticketProductRecord.setCreatedDate(LocalDate.now());
             ticketProductRecordMapper.insertSelective(ticketProductRecord);
             return id;
         }

@@ -47,6 +47,17 @@ public class PaymentController {
         return paymentService.remove(id);
     }
 
+    /**
+     * 批量删除
+     * @param idList
+     * @return
+     */
+    @ApiLog
+    @DeleteMapping("/all")
+    public Integer remove(@RequestBody List<Long> idList) {
+
+        return paymentService.removeAll(idList);
+    }
 	/**
      * 更新票据结算
      * @param paymentDTO 票据结算
@@ -81,7 +92,9 @@ public class PaymentController {
     public List<PaymentVO> commonQuery(PaymentQO paymentQO) {
         Payment payment = BeanUtil.copy(paymentQO, Payment.class);
         List<PaymentDTO> paymentDTOList = paymentService.commonQuery(payment);
-        return BeanUtil.copyList(paymentDTOList, PaymentVO.class);
+        List<PaymentVO> paymentVOList = BeanUtil.copyList(paymentDTOList, PaymentVO.class);
+        return paymentVOList;
     }
+
 
 }

@@ -2,6 +2,7 @@ package com.hyd.financial.entity.vo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 
 public class PaymentVO implements Serializable {
@@ -27,10 +28,10 @@ public class PaymentVO implements Serializable {
     private String orderType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String date;
+    private LocalDate orderDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String payDate;
+    private LocalDate payDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer status;
@@ -65,6 +66,22 @@ public class PaymentVO implements Serializable {
 
     public void setDesUnitName(String desUnitName) {
         this.desUnitName = desUnitName;
+    }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public LocalDate getPayDate() {
+        return payDate;
+    }
+
+    public void setPayDate(LocalDate payDate) {
+        this.payDate = payDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -137,25 +154,7 @@ public class PaymentVO implements Serializable {
         this.orderType = orderType;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getDate() {
-        return date;
-    }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getPayDate() {
-        return payDate;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPayDate(String payDate) {
-        this.payDate = payDate;
-    }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getStatus() {
@@ -189,8 +188,8 @@ public class PaymentVO implements Serializable {
                 ", desUnitName='" + desUnitName + '\'' +
                 ", totalPrice=" + totalPrice +
                 ", orderType='" + orderType + '\'' +
-                ", date='" + date + '\'' +
-                ", payDate='" + payDate + '\'' +
+                ", orderDate=" + orderDate +
+                ", payDate=" + payDate +
                 ", status=" + status +
                 ", version=" + version +
                 ", payType='" + payType + '\'' +

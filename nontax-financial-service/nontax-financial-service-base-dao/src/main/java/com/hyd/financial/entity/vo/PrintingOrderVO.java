@@ -2,6 +2,7 @@ package com.hyd.financial.entity.vo;
 
 import javax.annotation.Generated;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class PrintingOrderVO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -11,10 +12,10 @@ public class PrintingOrderVO implements Serializable {
     private Long orderNumber;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String start;
+    private LocalDate start;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String end;
+    private LocalDate end;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
@@ -104,23 +105,19 @@ public class PrintingOrderVO implements Serializable {
         this.orderNumber = orderNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getStart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setStart(String start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setEnd(String end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 

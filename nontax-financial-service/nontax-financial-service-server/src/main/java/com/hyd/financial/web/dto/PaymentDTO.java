@@ -1,7 +1,11 @@
 package com.hyd.financial.web.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 
 public class PaymentDTO implements Serializable {
@@ -27,10 +31,12 @@ public class PaymentDTO implements Serializable {
     private String orderType;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String date;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate orderDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String payDate;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate payDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer status;
@@ -135,23 +141,19 @@ public class PaymentDTO implements Serializable {
         this.orderType = orderType;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getDate() {
-        return date;
+    public LocalDate getOrderDate() {
+        return orderDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setDate(String date) {
-        this.date = date;
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getPayDate() {
+    public LocalDate getPayDate() {
         return payDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setPayDate(String payDate) {
+    public void setPayDate(LocalDate payDate) {
         this.payDate = payDate;
     }
 
@@ -188,8 +190,8 @@ public class PaymentDTO implements Serializable {
                 ", totalPrice=" + totalPrice +
                 ", payType='" + payType + '\'' +
                 ", orderType='" + orderType + '\'' +
-                ", date='" + date + '\'' +
-                ", payDate='" + payDate + '\'' +
+                ", orderDate=" + orderDate +
+                ", payDate=" + payDate +
                 ", status=" + status +
                 ", version=" + version +
                 '}';

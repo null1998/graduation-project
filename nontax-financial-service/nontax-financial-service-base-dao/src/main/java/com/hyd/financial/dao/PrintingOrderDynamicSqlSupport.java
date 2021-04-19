@@ -1,6 +1,7 @@
 package com.hyd.financial.dao;
 
 import java.sql.JDBCType;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 import org.mybatis.dynamic.sql.SqlColumn;
 import org.mybatis.dynamic.sql.SqlTable;
@@ -16,10 +17,10 @@ public final class PrintingOrderDynamicSqlSupport {
     public static final SqlColumn<Long> orderNumber = printingOrder.orderNumber;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> start = printingOrder.start;
+    public static final SqlColumn<LocalDate> start = printingOrder.start;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> end = printingOrder.end;
+    public static final SqlColumn<LocalDate> end = printingOrder.end;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<Long> unitId = printingOrder.unitId;
@@ -54,9 +55,9 @@ public final class PrintingOrderDynamicSqlSupport {
 
         public final SqlColumn<Long> orderNumber = column("order_number", JDBCType.BIGINT);
 
-        public final SqlColumn<String> start = column("start", JDBCType.VARCHAR);
+        public final SqlColumn<LocalDate> start = column("start", JDBCType.DATE);
 
-        public final SqlColumn<String> end = column("end", JDBCType.VARCHAR);
+        public final SqlColumn<LocalDate> end = column("end", JDBCType.DATE);
 
         public final SqlColumn<Long> unitId = column("unit_id", JDBCType.BIGINT);
 

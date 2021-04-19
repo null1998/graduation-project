@@ -17,4 +17,16 @@ public interface PaymentMapper extends PaymentBaseMapper {
         return this.select(c->c.where(PaymentDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(payment.getId()))
                 .and(PaymentDynamicSqlSupport.srcUnitId, SqlBuilder.isEqualToWhenPresent(payment.getSrcUnitId())));
     }
+
+    /**
+     * 批量删除
+     * @param list
+     * @return
+     */
+    default Integer deleteAll(List<Long> list) {
+        if (list == null || list.isEmpty()) {
+            return 0;
+        }
+        return this.delete(c->c.where(PaymentDynamicSqlSupport.id, SqlBuilder.isIn(list)));
+    }
 }

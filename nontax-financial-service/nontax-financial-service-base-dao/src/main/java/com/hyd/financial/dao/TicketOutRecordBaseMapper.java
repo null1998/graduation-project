@@ -62,7 +62,7 @@ public interface TicketOutRecordBaseMapper {
         @Result(column="unit_id", property="unitId", jdbcType=JdbcType.BIGINT),
         @Result(column="target_unit_id", property="targetUnitId", jdbcType=JdbcType.BIGINT),
         @Result(column="out_type", property="outType", jdbcType=JdbcType.VARCHAR),
-        @Result(column="out_date", property="outDate", jdbcType=JdbcType.VARCHAR),
+        @Result(column="out_date", property="outDate", jdbcType=JdbcType.DATE),
         @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
     })
     List<TicketOutRecord> selectMany(SelectStatementProvider selectStatement);

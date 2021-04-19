@@ -1,5 +1,10 @@
 package com.hyd.financial.web.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
+import java.time.LocalDate;
+
 /**
  * 自动加/减库存，生成入/出库记录，更新申领单
  * @author yanduohuang
@@ -23,14 +28,16 @@ public class AutoStoreAndOutDTO {
     private Long targetOrderNumber;
     private Long targetUnitId;
     private String outType;
-    private String outDate;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate outDate;
     /**
      * 生成票据入库记录,来源单号，来源单位，入库方式,入库日期
      */
     private Long sourceOrderNumber;
     private Long sourceUnitId;
     private String storeType;
-    private String storeDate;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate storeDate;
     /**
      * 新增库存信息
      */
@@ -40,7 +47,8 @@ public class AutoStoreAndOutDTO {
     private String endNumber;
     private Long warehouseId;
     private Long userId;
-    private String operateDate;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate operateDate;
 
     public Long getTicketClaimId() {
         return ticketClaimId;
@@ -74,13 +82,7 @@ public class AutoStoreAndOutDTO {
         this.userId = userId;
     }
 
-    public String getOperateDate() {
-        return operateDate;
-    }
 
-    public void setOperateDate(String operateDate) {
-        this.operateDate = operateDate;
-    }
 
     public String getStartNumber() {
         return startNumber;
@@ -147,13 +149,7 @@ public class AutoStoreAndOutDTO {
         this.outType = outType;
     }
 
-    public String getOutDate() {
-        return outDate;
-    }
 
-    public void setOutDate(String outDate) {
-        this.outDate = outDate;
-    }
 
     public Long getSourceOrderNumber() {
         return sourceOrderNumber;
@@ -179,13 +175,7 @@ public class AutoStoreAndOutDTO {
         this.storeType = storeType;
     }
 
-    public String getStoreDate() {
-        return storeDate;
-    }
 
-    public void setStoreDate(String storeDate) {
-        this.storeDate = storeDate;
-    }
 
     public Long getUnitId() {
         return unitId;
@@ -201,6 +191,30 @@ public class AutoStoreAndOutDTO {
 
     public void setTicketId(Long ticketId) {
         this.ticketId = ticketId;
+    }
+
+    public LocalDate getOutDate() {
+        return outDate;
+    }
+
+    public void setOutDate(LocalDate outDate) {
+        this.outDate = outDate;
+    }
+
+    public LocalDate getStoreDate() {
+        return storeDate;
+    }
+
+    public void setStoreDate(LocalDate storeDate) {
+        this.storeDate = storeDate;
+    }
+
+    public LocalDate getOperateDate() {
+        return operateDate;
+    }
+
+    public void setOperateDate(LocalDate operateDate) {
+        this.operateDate = operateDate;
     }
 
     @Override

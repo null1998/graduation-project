@@ -65,7 +65,7 @@ public interface TicketProductRecordBaseMapper {
         @Result(column="end_number", property="endNumber", jdbcType=JdbcType.VARCHAR),
         @Result(column="print_order_number", property="printOrderNumber", jdbcType=JdbcType.BIGINT),
         @Result(column="version", property="version", jdbcType=JdbcType.BIGINT),
-        @Result(column="created_date", property="createdDate", jdbcType=JdbcType.VARCHAR)
+        @Result(column="created_date", property="createdDate", jdbcType=JdbcType.DATE)
     })
     List<TicketProductRecord> selectMany(SelectStatementProvider selectStatement);
 

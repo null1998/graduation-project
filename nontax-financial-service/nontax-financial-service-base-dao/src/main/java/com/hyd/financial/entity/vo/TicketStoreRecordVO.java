@@ -1,6 +1,7 @@
 package com.hyd.financial.entity.vo;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 
 public class TicketStoreRecordVO implements Serializable {
@@ -28,7 +29,7 @@ public class TicketStoreRecordVO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
     private Long dictionaryId;
-    private String storeDate;
+    private LocalDate storeDate;
     private String theWay;
     private String storeType;
 
@@ -64,11 +65,11 @@ public class TicketStoreRecordVO implements Serializable {
         this.sourceWarehouseName = sourceWarehouseName;
     }
 
-    public String getStoreDate() {
+    public LocalDate getStoreDate() {
         return storeDate;
     }
 
-    public void setStoreDate(String storeDate) {
+    public void setStoreDate(LocalDate storeDate) {
         this.storeDate = storeDate;
     }
 

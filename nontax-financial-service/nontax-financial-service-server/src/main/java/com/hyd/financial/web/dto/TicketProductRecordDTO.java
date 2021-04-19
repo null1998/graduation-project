@@ -1,7 +1,11 @@
 package com.hyd.financial.web.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
 import javax.annotation.Generated;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class TicketProductRecordDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -28,7 +32,8 @@ public class TicketProductRecordDTO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long printUnitId;
-    private String createdDate;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate createdDate;
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
     private Integer number;
@@ -48,11 +53,12 @@ public class TicketProductRecordDTO implements Serializable {
     public void setNumber(Integer number) {
         this.number = number;
     }
-    public String getCreatedDate() {
+
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 

@@ -1,6 +1,7 @@
 package com.hyd.financial.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 
 public class TicketProductRecord implements Serializable {
@@ -32,7 +33,7 @@ public class TicketProductRecord implements Serializable {
     private Long version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String createdDate;
+    private LocalDate createdDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
@@ -128,12 +129,12 @@ public class TicketProductRecord implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -178,5 +179,26 @@ public class TicketProductRecord implements Serializable {
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         result = prime * result + ((getCreatedDate() == null) ? 0 : getCreatedDate().hashCode());
         return result;
+    }
+
+    @Override
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", orderNumber=").append(orderNumber);
+        sb.append(", printUnitId=").append(printUnitId);
+        sb.append(", ticketId=").append(ticketId);
+        sb.append(", number=").append(number);
+        sb.append(", startNumber=").append(startNumber);
+        sb.append(", endNumber=").append(endNumber);
+        sb.append(", printOrderNumber=").append(printOrderNumber);
+        sb.append(", version=").append(version);
+        sb.append(", createdDate=").append(createdDate);
+        sb.append("]");
+        return sb.toString();
     }
 }

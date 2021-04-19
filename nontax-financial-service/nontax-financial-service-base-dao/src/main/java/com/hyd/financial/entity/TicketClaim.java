@@ -2,6 +2,7 @@ package com.hyd.financial.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 
 public class TicketClaim implements Serializable {
@@ -24,7 +25,7 @@ public class TicketClaim implements Serializable {
     private Long targetUnitId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String date;
+    private LocalDate claimDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private BigDecimal totalPrice;
@@ -105,13 +106,13 @@ public class TicketClaim implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getDate() {
-        return date;
+    public LocalDate getClaimDate() {
+        return claimDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setDate(String date) {
-        this.date = date;
+    public void setClaimDate(LocalDate claimDate) {
+        this.claimDate = claimDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -183,7 +184,7 @@ public class TicketClaim implements Serializable {
             && (this.getUnitId() == null ? other.getUnitId() == null : this.getUnitId().equals(other.getUnitId()))
             && (this.getWarehouseId() == null ? other.getWarehouseId() == null : this.getWarehouseId().equals(other.getWarehouseId()))
             && (this.getTargetUnitId() == null ? other.getTargetUnitId() == null : this.getTargetUnitId().equals(other.getTargetUnitId()))
-            && (this.getDate() == null ? other.getDate() == null : this.getDate().equals(other.getDate()))
+            && (this.getClaimDate() == null ? other.getClaimDate() == null : this.getClaimDate().equals(other.getClaimDate()))
             && (this.getTotalPrice() == null ? other.getTotalPrice() == null : this.getTotalPrice().equals(other.getTotalPrice()))
             && (this.getOpinion() == null ? other.getOpinion() == null : this.getOpinion().equals(other.getOpinion()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
@@ -202,7 +203,7 @@ public class TicketClaim implements Serializable {
         result = prime * result + ((getUnitId() == null) ? 0 : getUnitId().hashCode());
         result = prime * result + ((getWarehouseId() == null) ? 0 : getWarehouseId().hashCode());
         result = prime * result + ((getTargetUnitId() == null) ? 0 : getTargetUnitId().hashCode());
-        result = prime * result + ((getDate() == null) ? 0 : getDate().hashCode());
+        result = prime * result + ((getClaimDate() == null) ? 0 : getClaimDate().hashCode());
         result = prime * result + ((getTotalPrice() == null) ? 0 : getTotalPrice().hashCode());
         result = prime * result + ((getOpinion() == null) ? 0 : getOpinion().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
@@ -224,7 +225,7 @@ public class TicketClaim implements Serializable {
         sb.append(", unitId=").append(unitId);
         sb.append(", warehouseId=").append(warehouseId);
         sb.append(", targetUnitId=").append(targetUnitId);
-        sb.append(", date=").append(date);
+        sb.append(", claimDate=").append(claimDate);
         sb.append(", totalPrice=").append(totalPrice);
         sb.append(", opinion=").append(opinion);
         sb.append(", status=").append(status);

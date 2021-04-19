@@ -1,4 +1,5 @@
 package com.hyd.financial.service.impl;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,7 @@ public class PaymentService implements IPaymentService {
         payment.setId(id);
         long orderNumber = idGenerator.snowflakeId();
         payment.setOrderNumber(orderNumber);
+        payment.setOrderDate(LocalDate.now());
         paymentMapper.insertSelective(payment);
         return id;
     }
@@ -71,6 +73,18 @@ public class PaymentService implements IPaymentService {
         }
         return paymentMapper.deleteByPrimaryKey(id) == 1;
     }
+    @Override
+    public Integer removeAll(List<Long> idList) {
+        if (idList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
+        }
+
+        Integer deleteAll = paymentMapper.deleteAll(idList);
+        if (deleteAll != idList.size()) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_DB_OTHER_EXCEPTION, new Exception("删除失败"));
+        }
+        return deleteAll;
+    }
 
 	/**
      * 更新票据结算
@@ -84,6 +98,7 @@ public class PaymentService implements IPaymentService {
         if (payment == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("票据结算为空"));
         }
+        payment.setPayDate(LocalDate.now());
         return paymentMapper.updateByPrimaryKeySelective(payment);
     }
 

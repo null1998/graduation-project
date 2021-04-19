@@ -64,7 +64,7 @@ public interface TicketStoreBaseMapper {
         @Result(column="end_number", property="endNumber", jdbcType=JdbcType.VARCHAR),
         @Result(column="number", property="number", jdbcType=JdbcType.BIGINT),
         @Result(column="user_id", property="userId", jdbcType=JdbcType.BIGINT),
-        @Result(column="operate_date", property="operateDate", jdbcType=JdbcType.VARCHAR),
+        @Result(column="operate_date", property="operateDate", jdbcType=JdbcType.DATE),
         @Result(column="version", property="version", jdbcType=JdbcType.BIGINT)
     })
     List<TicketStore> selectMany(SelectStatementProvider selectStatement);

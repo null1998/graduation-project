@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface PaymentBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, sourceOrderNumber, srcUnitId, desUnitId, totalPrice, orderType, date, payDate, status, version, paytype);
+    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, sourceOrderNumber, srcUnitId, desUnitId, totalPrice, orderType, orderDate, payDate, status, version, paytype);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -63,8 +63,8 @@ public interface PaymentBaseMapper {
         @Result(column="des_unit_id", property="desUnitId", jdbcType=JdbcType.BIGINT),
         @Result(column="total_price", property="totalPrice", jdbcType=JdbcType.DECIMAL),
         @Result(column="order_type", property="orderType", jdbcType=JdbcType.VARCHAR),
-        @Result(column="date", property="date", jdbcType=JdbcType.VARCHAR),
-        @Result(column="pay_date", property="payDate", jdbcType=JdbcType.VARCHAR),
+        @Result(column="order_date", property="orderDate", jdbcType=JdbcType.DATE),
+        @Result(column="pay_date", property="payDate", jdbcType=JdbcType.DATE),
         @Result(column="status", property="status", jdbcType=JdbcType.INTEGER),
         @Result(column="version", property="version", jdbcType=JdbcType.BIGINT),
         @Result(column="payType", property="paytype", jdbcType=JdbcType.VARCHAR)
@@ -107,7 +107,7 @@ public interface PaymentBaseMapper {
             .map(desUnitId).toProperty("desUnitId")
             .map(totalPrice).toProperty("totalPrice")
             .map(orderType).toProperty("orderType")
-            .map(date).toProperty("date")
+            .map(orderDate).toProperty("orderDate")
             .map(payDate).toProperty("payDate")
             .map(status).toProperty("status")
             .map(version).toProperty("version")
@@ -125,7 +125,7 @@ public interface PaymentBaseMapper {
             .map(desUnitId).toProperty("desUnitId")
             .map(totalPrice).toProperty("totalPrice")
             .map(orderType).toProperty("orderType")
-            .map(date).toProperty("date")
+            .map(orderDate).toProperty("orderDate")
             .map(payDate).toProperty("payDate")
             .map(status).toProperty("status")
             .map(version).toProperty("version")
@@ -143,7 +143,7 @@ public interface PaymentBaseMapper {
             .map(desUnitId).toPropertyWhenPresent("desUnitId", record::getDesUnitId)
             .map(totalPrice).toPropertyWhenPresent("totalPrice", record::getTotalPrice)
             .map(orderType).toPropertyWhenPresent("orderType", record::getOrderType)
-            .map(date).toPropertyWhenPresent("date", record::getDate)
+            .map(orderDate).toPropertyWhenPresent("orderDate", record::getOrderDate)
             .map(payDate).toPropertyWhenPresent("payDate", record::getPayDate)
             .map(status).toPropertyWhenPresent("status", record::getStatus)
             .map(version).toPropertyWhenPresent("version", record::getVersion)
@@ -187,7 +187,7 @@ public interface PaymentBaseMapper {
                 .set(desUnitId).equalTo(record::getDesUnitId)
                 .set(totalPrice).equalTo(record::getTotalPrice)
                 .set(orderType).equalTo(record::getOrderType)
-                .set(date).equalTo(record::getDate)
+                .set(orderDate).equalTo(record::getOrderDate)
                 .set(payDate).equalTo(record::getPayDate)
                 .set(status).equalTo(record::getStatus)
                 .set(version).equalTo(record::getVersion)
@@ -203,7 +203,7 @@ public interface PaymentBaseMapper {
                 .set(desUnitId).equalToWhenPresent(record::getDesUnitId)
                 .set(totalPrice).equalToWhenPresent(record::getTotalPrice)
                 .set(orderType).equalToWhenPresent(record::getOrderType)
-                .set(date).equalToWhenPresent(record::getDate)
+                .set(orderDate).equalToWhenPresent(record::getOrderDate)
                 .set(payDate).equalToWhenPresent(record::getPayDate)
                 .set(status).equalToWhenPresent(record::getStatus)
                 .set(version).equalToWhenPresent(record::getVersion)
@@ -219,7 +219,7 @@ public interface PaymentBaseMapper {
             .set(desUnitId).equalTo(record::getDesUnitId)
             .set(totalPrice).equalTo(record::getTotalPrice)
             .set(orderType).equalTo(record::getOrderType)
-            .set(date).equalTo(record::getDate)
+            .set(orderDate).equalTo(record::getOrderDate)
             .set(payDate).equalTo(record::getPayDate)
             .set(status).equalTo(record::getStatus)
             .set(version).equalTo(record::getVersion)
@@ -237,7 +237,7 @@ public interface PaymentBaseMapper {
             .set(desUnitId).equalToWhenPresent(record::getDesUnitId)
             .set(totalPrice).equalToWhenPresent(record::getTotalPrice)
             .set(orderType).equalToWhenPresent(record::getOrderType)
-            .set(date).equalToWhenPresent(record::getDate)
+            .set(orderDate).equalToWhenPresent(record::getOrderDate)
             .set(payDate).equalToWhenPresent(record::getPayDate)
             .set(status).equalToWhenPresent(record::getStatus)
             .set(version).equalToWhenPresent(record::getVersion)

@@ -1,6 +1,7 @@
 package com.hyd.financial.dao;
 
 import java.sql.JDBCType;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 import org.mybatis.dynamic.sql.SqlColumn;
 import org.mybatis.dynamic.sql.SqlTable;
@@ -37,7 +38,7 @@ public final class TicketProductRecordDynamicSqlSupport {
     public static final SqlColumn<Long> version = ticketProductRecord.version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> createdDate = ticketProductRecord.createdDate;
+    public static final SqlColumn<LocalDate> createdDate = ticketProductRecord.createdDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class TicketProductRecord extends SqlTable {
@@ -59,7 +60,7 @@ public final class TicketProductRecordDynamicSqlSupport {
 
         public final SqlColumn<Long> version = column("version", JDBCType.BIGINT);
 
-        public final SqlColumn<String> createdDate = column("created_date", JDBCType.VARCHAR);
+        public final SqlColumn<LocalDate> createdDate = column("created_date", JDBCType.DATE);
 
         public TicketProductRecord() {
             super("financial_ticket_product_record");

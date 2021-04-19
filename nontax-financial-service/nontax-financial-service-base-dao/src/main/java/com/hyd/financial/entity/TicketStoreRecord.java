@@ -1,6 +1,7 @@
 package com.hyd.financial.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 
 public class TicketStoreRecord implements Serializable {
@@ -29,7 +30,7 @@ public class TicketStoreRecord implements Serializable {
     private Long dictionaryId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String storeDate;
+    private LocalDate storeDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String storeType;
@@ -118,12 +119,12 @@ public class TicketStoreRecord implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getStoreDate() {
+    public LocalDate getStoreDate() {
         return storeDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setStoreDate(String storeDate) {
+    public void setStoreDate(LocalDate storeDate) {
         this.storeDate = storeDate;
     }
 

@@ -2,6 +2,7 @@ package com.hyd.financial.dao;
 
 import java.math.BigDecimal;
 import java.sql.JDBCType;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 import org.mybatis.dynamic.sql.SqlColumn;
 import org.mybatis.dynamic.sql.SqlTable;
@@ -29,7 +30,7 @@ public final class TicketClaimDynamicSqlSupport {
     public static final SqlColumn<Long> targetUnitId = ticketClaim.targetUnitId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public static final SqlColumn<String> date = ticketClaim.date;
+    public static final SqlColumn<LocalDate> claimDate = ticketClaim.claimDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final SqlColumn<BigDecimal> totalPrice = ticketClaim.totalPrice;
@@ -60,7 +61,7 @@ public final class TicketClaimDynamicSqlSupport {
 
         public final SqlColumn<Long> targetUnitId = column("target_unit_id", JDBCType.BIGINT);
 
-        public final SqlColumn<String> date = column("date", JDBCType.VARCHAR);
+        public final SqlColumn<LocalDate> claimDate = column("claim_date", JDBCType.DATE);
 
         public final SqlColumn<BigDecimal> totalPrice = column("total_price", JDBCType.DECIMAL);
 

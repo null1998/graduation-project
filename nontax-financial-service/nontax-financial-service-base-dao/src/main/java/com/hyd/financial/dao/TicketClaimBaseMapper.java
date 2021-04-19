@@ -35,7 +35,7 @@ import org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils;
 @Mapper
 public interface TicketClaimBaseMapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, userId, unitId, warehouseId, targetUnitId, date, totalPrice, opinion, status, version, payStatus);
+    BasicColumn[] selectList = BasicColumn.columnList(id, orderNumber, userId, unitId, warehouseId, targetUnitId, claimDate, totalPrice, opinion, status, version, payStatus);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -62,7 +62,7 @@ public interface TicketClaimBaseMapper {
         @Result(column="unit_id", property="unitId", jdbcType=JdbcType.BIGINT),
         @Result(column="warehouse_id", property="warehouseId", jdbcType=JdbcType.BIGINT),
         @Result(column="target_unit_id", property="targetUnitId", jdbcType=JdbcType.BIGINT),
-        @Result(column="date", property="date", jdbcType=JdbcType.VARCHAR),
+        @Result(column="claim_date", property="claimDate", jdbcType=JdbcType.DATE),
         @Result(column="total_price", property="totalPrice", jdbcType=JdbcType.DECIMAL),
         @Result(column="opinion", property="opinion", jdbcType=JdbcType.VARCHAR),
         @Result(column="status", property="status", jdbcType=JdbcType.INTEGER),
@@ -106,7 +106,7 @@ public interface TicketClaimBaseMapper {
             .map(unitId).toProperty("unitId")
             .map(warehouseId).toProperty("warehouseId")
             .map(targetUnitId).toProperty("targetUnitId")
-            .map(date).toProperty("date")
+            .map(claimDate).toProperty("claimDate")
             .map(totalPrice).toProperty("totalPrice")
             .map(opinion).toProperty("opinion")
             .map(status).toProperty("status")
@@ -124,7 +124,7 @@ public interface TicketClaimBaseMapper {
             .map(unitId).toProperty("unitId")
             .map(warehouseId).toProperty("warehouseId")
             .map(targetUnitId).toProperty("targetUnitId")
-            .map(date).toProperty("date")
+            .map(claimDate).toProperty("claimDate")
             .map(totalPrice).toProperty("totalPrice")
             .map(opinion).toProperty("opinion")
             .map(status).toProperty("status")
@@ -142,7 +142,7 @@ public interface TicketClaimBaseMapper {
             .map(unitId).toPropertyWhenPresent("unitId", record::getUnitId)
             .map(warehouseId).toPropertyWhenPresent("warehouseId", record::getWarehouseId)
             .map(targetUnitId).toPropertyWhenPresent("targetUnitId", record::getTargetUnitId)
-            .map(date).toPropertyWhenPresent("date", record::getDate)
+            .map(claimDate).toPropertyWhenPresent("claimDate", record::getClaimDate)
             .map(totalPrice).toPropertyWhenPresent("totalPrice", record::getTotalPrice)
             .map(opinion).toPropertyWhenPresent("opinion", record::getOpinion)
             .map(status).toPropertyWhenPresent("status", record::getStatus)
@@ -186,7 +186,7 @@ public interface TicketClaimBaseMapper {
                 .set(unitId).equalTo(record::getUnitId)
                 .set(warehouseId).equalTo(record::getWarehouseId)
                 .set(targetUnitId).equalTo(record::getTargetUnitId)
-                .set(date).equalTo(record::getDate)
+                .set(claimDate).equalTo(record::getClaimDate)
                 .set(totalPrice).equalTo(record::getTotalPrice)
                 .set(opinion).equalTo(record::getOpinion)
                 .set(status).equalTo(record::getStatus)
@@ -202,7 +202,7 @@ public interface TicketClaimBaseMapper {
                 .set(unitId).equalToWhenPresent(record::getUnitId)
                 .set(warehouseId).equalToWhenPresent(record::getWarehouseId)
                 .set(targetUnitId).equalToWhenPresent(record::getTargetUnitId)
-                .set(date).equalToWhenPresent(record::getDate)
+                .set(claimDate).equalToWhenPresent(record::getClaimDate)
                 .set(totalPrice).equalToWhenPresent(record::getTotalPrice)
                 .set(opinion).equalToWhenPresent(record::getOpinion)
                 .set(status).equalToWhenPresent(record::getStatus)
@@ -218,7 +218,7 @@ public interface TicketClaimBaseMapper {
             .set(unitId).equalTo(record::getUnitId)
             .set(warehouseId).equalTo(record::getWarehouseId)
             .set(targetUnitId).equalTo(record::getTargetUnitId)
-            .set(date).equalTo(record::getDate)
+            .set(claimDate).equalTo(record::getClaimDate)
             .set(totalPrice).equalTo(record::getTotalPrice)
             .set(opinion).equalTo(record::getOpinion)
             .set(status).equalTo(record::getStatus)
@@ -236,7 +236,7 @@ public interface TicketClaimBaseMapper {
             .set(unitId).equalToWhenPresent(record::getUnitId)
             .set(warehouseId).equalToWhenPresent(record::getWarehouseId)
             .set(targetUnitId).equalToWhenPresent(record::getTargetUnitId)
-            .set(date).equalToWhenPresent(record::getDate)
+            .set(claimDate).equalToWhenPresent(record::getClaimDate)
             .set(totalPrice).equalToWhenPresent(record::getTotalPrice)
             .set(opinion).equalToWhenPresent(record::getOpinion)
             .set(status).equalToWhenPresent(record::getStatus)

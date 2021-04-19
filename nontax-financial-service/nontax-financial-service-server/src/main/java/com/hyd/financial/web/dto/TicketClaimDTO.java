@@ -1,7 +1,11 @@
 package com.hyd.financial.web.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.annotation.Generated;
 
 public class TicketClaimDTO implements Serializable {
@@ -25,8 +29,8 @@ public class TicketClaimDTO implements Serializable {
     private String targetUnitName;
     private String warehouseName;
     private String unitName;
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String date;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate claimDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private BigDecimal totalPrice;
@@ -135,14 +139,12 @@ public class TicketClaimDTO implements Serializable {
         this.targetUnitId = targetUnitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getDate() {
-        return date;
+    public LocalDate getClaimDate() {
+        return claimDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setDate(String date) {
-        this.date = date;
+    public void setClaimDate(LocalDate claimDate) {
+        this.claimDate = claimDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -195,7 +197,7 @@ public class TicketClaimDTO implements Serializable {
                 ", targetUnitName='" + targetUnitName + '\'' +
                 ", warehouseName='" + warehouseName + '\'' +
                 ", unitName='" + unitName + '\'' +
-                ", date='" + date + '\'' +
+                ", claimDate=" + claimDate +
                 ", totalPrice=" + totalPrice +
                 ", opinion='" + opinion + '\'' +
                 ", status=" + status +

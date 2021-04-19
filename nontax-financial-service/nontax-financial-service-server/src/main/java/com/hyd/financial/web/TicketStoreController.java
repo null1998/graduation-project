@@ -47,6 +47,17 @@ public class TicketStoreController {
         return ticketStoreService.remove(id);
     }
 
+    /**
+     * 批量删除
+     * @param idList
+     * @return
+     */
+    @ApiLog
+    @DeleteMapping("/all")
+    public Integer remove(@RequestBody List<Long> idList) {
+        return ticketStoreService.removeAll(idList);
+    }
+
 	/**
      * 更新票据库存
      * @param ticketStoreDTO 票据库存

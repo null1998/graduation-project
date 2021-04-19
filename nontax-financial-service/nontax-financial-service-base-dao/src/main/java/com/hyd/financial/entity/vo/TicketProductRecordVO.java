@@ -2,6 +2,7 @@ package com.hyd.financial.entity.vo;
 
 import javax.annotation.Generated;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class TicketProductRecordVO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -30,7 +31,7 @@ public class TicketProductRecordVO implements Serializable {
     private Long version;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String createdDate;
+    private LocalDate createdDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
@@ -130,13 +131,11 @@ public class TicketProductRecordVO implements Serializable {
         this.version = version;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
