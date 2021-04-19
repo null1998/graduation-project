@@ -5,7 +5,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.hyd.basedata.entity.Ticket;
+import com.hyd.basedata.entity.Warehouse;
 import com.hyd.basedata.service.ITicketService;
+import com.hyd.basedata.service.IWarehouseService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.BeanUtil;
@@ -37,6 +39,9 @@ public class TicketStoreService implements ITicketStoreService {
 
     @Autowired
     private ITicketService ticketService;
+
+    @Autowired
+    private IWarehouseService warehouseService;
 
 	/**
      * 保存票据库存
@@ -133,9 +138,7 @@ public class TicketStoreService implements ITicketStoreService {
         }
         List<TicketStore> ticketStoreList = ticketStoreMapper.commonQuery(ticketStore);
 		List<TicketStoreDTO> ticketStoreDTOList = BeanUtil.copyList(ticketStoreList, TicketStoreDTO.class);
-		for (TicketStoreDTO ticketStoreDTO : ticketStoreDTOList) {
-			setProperties(ticketStoreDTO);
-		}
+        batchSetProperties(ticketStoreDTOList);
 		return ticketStoreDTOList;
     }
     /**
@@ -167,9 +170,12 @@ public class TicketStoreService implements ITicketStoreService {
 	private void batchSetProperties(List<TicketStoreDTO> ticketStoreDTOList) {
         if (ticketStoreDTOList != null) {
             List<Long> ticketIdList = ticketStoreDTOList.stream().map(TicketStoreDTO::getTicketId).collect(Collectors.toList());
+            List<Long> warehouseIdList = ticketStoreDTOList.stream().map(TicketStoreDTO::getWarehouseId).collect(Collectors.toList());
             Map<Long, String> ticketNameMap = ticketService.listByTicketIdList(ticketIdList).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+            Map<Long, String> warehouseNameMap = warehouseService.listByWarehouseIdList(warehouseIdList).stream().collect(Collectors.toMap(Warehouse::getId, Warehouse::getName));
             ticketStoreDTOList.forEach(e->{
                 e.setTicketName(ticketNameMap.get(e.getTicketId()));
+                e.setWarehouseName(warehouseNameMap.get(e.getWarehouseId()));
             });
         }
     }
