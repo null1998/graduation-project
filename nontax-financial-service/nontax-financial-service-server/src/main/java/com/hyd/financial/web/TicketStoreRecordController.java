@@ -5,6 +5,7 @@ import com.hyd.common.util.BeanUtil;
 import com.hyd.financial.entity.TicketStoreRecord;
 import com.hyd.financial.entity.vo.TicketStoreRecordVO;
 import com.hyd.financial.service.ITicketStoreRecordService;
+import com.hyd.financial.web.dto.LineChartDTO;
 import com.hyd.financial.web.dto.TicketStoreRecordDTO;
 import com.hyd.financial.web.qo.TicketStoreRecordQO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,16 @@ public class TicketStoreRecordController {
         TicketStoreRecord ticketStoreRecord = BeanUtil.copy(ticketStoreRecordQO, TicketStoreRecord.class);
         List<TicketStoreRecordDTO> ticketStoreRecordDTOList = ticketStoreRecordService.commonQuery(ticketStoreRecord);
         return BeanUtil.copyList(ticketStoreRecordDTOList, TicketStoreRecordVO.class);
+    }
+    /**
+     * 某单位最近一周入库记录折线图
+     * @param unitId
+     * @return
+     */
+    @ApiLog
+    @GetMapping("/recent/{unitId}")
+    public LineChartDTO recent(@PathVariable("unitId") Long unitId) {
+        return ticketStoreRecordService.recent(unitId);
     }
 
 }

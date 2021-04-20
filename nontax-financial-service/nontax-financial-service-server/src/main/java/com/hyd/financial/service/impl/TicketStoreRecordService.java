@@ -15,6 +15,7 @@ import com.hyd.financial.entity.TicketStoreRecord;
 import com.hyd.financial.entity.TicketStoreRecordTicket;
 import com.hyd.financial.service.ITicketStoreRecordService;
 import com.hyd.financial.service.ITicketStoreRecordTicketService;
+import com.hyd.financial.web.dto.LineChartDTO;
 import com.hyd.financial.web.dto.TicketStoreRecordDTO;
 import com.hyd.financial.web.dto.TicketStoreRecordTicketDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,10 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.security.Key;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -150,5 +151,27 @@ public class TicketStoreRecordService implements ITicketStoreRecordService {
             e.setTheWay(dictionaryRemarkMap.get(e.getDictionaryId()));
         });
         return ticketStoreRecordDTOList;
+    }
+
+    @Override
+    public LineChartDTO recent(Long unitId) {
+        if (unitId == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位ID为空"));
+        }
+        LocalDate end = LocalDate.now();
+        LocalDate start = end.minusWeeks(1).plusDays(1);
+        List<TicketStoreRecord> ticketStoreRecordList = ticketStoreRecordMapper.recent(start, end, unitId);
+        Map<LocalDate, Long> map = ticketStoreRecordList.stream().collect(Collectors.groupingBy(TicketStoreRecord::getStoreDate, Collectors.counting()));
+        LineChartDTO lineChartDTO = new LineChartDTO();
+        List<String> duration = new ArrayList<>();
+        List<Long> numbers = new ArrayList<>();
+        lineChartDTO.setDuration(duration);
+        lineChartDTO.setNumbers(numbers);
+        while (start.isBefore(end) || start.isEqual(end)) {
+            duration.add(start.format(DateTimeFormatter.ofPattern("MM-dd")));
+            numbers.add(map.getOrDefault(start, 0L));
+            start = start.plusDays(1);
+        }
+        return lineChartDTO;
     }
 }

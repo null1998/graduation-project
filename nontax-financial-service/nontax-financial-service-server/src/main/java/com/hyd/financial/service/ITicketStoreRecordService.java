@@ -1,6 +1,7 @@
 package com.hyd.financial.service;
 
 import com.hyd.financial.entity.TicketStoreRecord;
+import com.hyd.financial.web.dto.LineChartDTO;
 import com.hyd.financial.web.dto.TicketStoreRecordDTO;
 
 import java.util.List;
@@ -45,5 +46,12 @@ public interface ITicketStoreRecordService {
      * @return 票据入库记录列表
      */
     List<TicketStoreRecordDTO> commonQuery(TicketStoreRecord ticketStoreRecord);
+
+    /**
+     * 某单位最近一周入库记录折线图
+     * @param unitId
+     * @return
+     */
+    LineChartDTO recent(Long unitId);
 
 }

@@ -1,4 +1,5 @@
 package com.hyd.financial.service.impl;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import com.hyd.financial.dao.TicketStoreMapper;
 import com.hyd.financial.entity.TicketStore;
 import com.hyd.financial.service.ITicketStoreService;
 import com.hyd.financial.util.TicketCodeConvertUtil;
+import com.hyd.financial.web.dto.TicketProductRecordDTO;
 import com.hyd.financial.web.dto.TicketStoreDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -42,6 +44,9 @@ public class TicketStoreService implements ITicketStoreService {
 
     @Autowired
     private IWarehouseService warehouseService;
+
+    @Autowired
+    private ITicketStoreService ticketStoreService;
 
 	/**
      * 保存票据库存
@@ -169,6 +174,33 @@ public class TicketStoreService implements ITicketStoreService {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位ID为空"));
         }
         return null;
+    }
+
+    @Override
+    public List<TicketStoreDTO> sum(Long unitId) {
+        if (unitId == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位ID为空"));
+        }
+        TicketStore query = new TicketStore();
+        query.setUnitId(unitId);
+        List<TicketStoreDTO> ticketStoreDTOList = ticketStoreService.commonQuery(query);
+        // 给票据名赋值
+        List<Long> ticketIdList = ticketStoreDTOList.stream().map(TicketStoreDTO::getTicketId).collect(Collectors.toList());
+        Map<Long, String> ticketNameMap = ticketService.listByTicketIdList(ticketIdList).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+        ticketStoreDTOList.forEach(e->{
+            e.setTicketName(ticketNameMap.get(e.getTicketId()));
+        });
+        // 根据票据名对数量进行分组求和
+        Map<String, Long> map = ticketStoreDTOList.stream().collect(Collectors.groupingBy(TicketStoreDTO::getTicketName, Collectors.summingLong(TicketStoreDTO::getNumber)));
+        // 将结果封装返回
+        List<TicketStoreDTO> result = new ArrayList<>();
+        map.forEach((k,v)->{
+            TicketStoreDTO ticketStoreDTO = new TicketStoreDTO();
+            ticketStoreDTO.setTicketName(k);
+            ticketStoreDTO.setNumber(v);
+            result.add(ticketStoreDTO);
+        });
+        return result;
     }
 
     /**

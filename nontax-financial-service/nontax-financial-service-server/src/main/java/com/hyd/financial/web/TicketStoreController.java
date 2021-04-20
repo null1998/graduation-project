@@ -106,4 +106,10 @@ public class TicketStoreController {
         List<TicketStoreDTO> unitStorage = ticketStoreService.getUnitStorage(unitId);
         return BeanUtil.copyList(unitStorage, TicketStoreVO.class);
     }
+    @ApiLog
+    @GetMapping("/sum/{unitId}")
+    public List<TicketStoreVO> sum(@PathVariable("unitId") Long unitId) {
+        List<TicketStoreDTO> ticketStoreDTOList = ticketStoreService.sum(unitId);
+        return BeanUtil.copyList(ticketStoreDTOList, TicketStoreVO.class);
+    }
 }

@@ -6,6 +6,7 @@ import com.hyd.common.util.BeanUtil;
 import com.hyd.financial.entity.TicketOutRecord;
 import com.hyd.financial.entity.vo.TicketOutRecordVO;
 import com.hyd.financial.service.ITicketOutRecordService;
+import com.hyd.financial.web.dto.LineChartDTO;
 import com.hyd.financial.web.dto.TicketOutRecordDTO;
 import com.hyd.financial.web.qo.TicketOutRecordQO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,16 @@ public class TicketOutRecordController {
         TicketOutRecord ticketOutRecord = BeanUtil.copy(ticketOutRecordQO, TicketOutRecord.class);
         List<TicketOutRecordDTO> ticketOutRecordDTOList = ticketOutRecordService.commonQuery(ticketOutRecord);
         return BeanUtil.copyList(ticketOutRecordDTOList, TicketOutRecordVO.class);
+    }
+    /**
+     * 某单位最近一周出库记录折线图
+     * @param unitId
+     * @return
+     */
+    @ApiLog
+    @GetMapping("/recent/{unitId}")
+    public LineChartDTO recent(@PathVariable("unitId") Long unitId) {
+        return ticketOutRecordService.recent(unitId);
     }
 
 }

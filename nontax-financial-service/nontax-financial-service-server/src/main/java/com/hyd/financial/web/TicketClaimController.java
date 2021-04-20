@@ -7,6 +7,7 @@ import com.hyd.financial.entity.TicketClaim;
 import com.hyd.financial.entity.vo.TicketClaimVO;
 import com.hyd.financial.service.ITicketClaimService;
 import com.hyd.financial.web.dto.AutoStoreAndOutDTO;
+import com.hyd.financial.web.dto.LineChartDTO;
 import com.hyd.financial.web.dto.TicketClaimDTO;
 import com.hyd.financial.web.qo.TicketClaimQO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,7 @@ public class TicketClaimController {
         List<TicketClaimDTO> ticketClaimDTOList = ticketClaimService.commonQuery(ticketClaim);
         return BeanUtil.copyList(ticketClaimDTOList, TicketClaimVO.class);
     }
+
 
     /**
      * 自动减库存，生成出库记录号段，更新申领单

@@ -2,7 +2,9 @@ package com.hyd.financial.service;
 import java.util.List;
 
 import com.hyd.financial.entity.Payment;
+import com.hyd.financial.entity.TicketProductRecord;
 import com.hyd.financial.entity.TicketStore;
+import com.hyd.financial.web.dto.TicketProductRecordDTO;
 import com.hyd.financial.web.dto.TicketStoreDTO;
 
 /**
@@ -58,4 +60,11 @@ public interface ITicketStoreService {
      * @return 票据库存列表
      */
     List<TicketStoreDTO> getUnitStorage(Long unitId);
+
+    /**
+     * 按照票据，对数量分组求和
+     * @param unitId
+     * @return
+     */
+    List<TicketStoreDTO> sum(Long unitId);
 }
