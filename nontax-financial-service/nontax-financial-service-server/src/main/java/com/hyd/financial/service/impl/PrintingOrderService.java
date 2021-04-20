@@ -129,7 +129,7 @@ public class PrintingOrderService implements IPrintingOrderService {
         }
         // 更新印制订单状态为已入库
         PrintingOrder printingOrder = new PrintingOrder();
-        printingOrder.setId(autoStoreAndOutDTOList.get(0).getPrintOrderId());
+        printingOrder.setId(autoStoreAndOutDTOList.get(0).getPrintingOrderId());
         printingOrder.setStatus(3);
         Integer update = printingOrderService.update(printingOrder);
         if (update != 1) {

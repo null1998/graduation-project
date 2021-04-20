@@ -17,7 +17,7 @@ public class AutoStoreAndOutDTO {
     private Long ticketClaimTicketId;
     private Long needNumber;
     private Long ticketClaimId;
-    private Long printOrderId;
+    private Long printingOrderId;
     /**
      * 库存id
      */
@@ -58,12 +58,12 @@ public class AutoStoreAndOutDTO {
         this.ticketClaimId = ticketClaimId;
     }
 
-    public Long getPrintOrderId() {
-        return printOrderId;
+    public Long getPrintingOrderId() {
+        return printingOrderId;
     }
 
-    public void setPrintOrderId(Long printOrderId) {
-        this.printOrderId = printOrderId;
+    public void setPrintingOrderId(Long printingOrderId) {
+        this.printingOrderId = printingOrderId;
     }
 
     public Long getWarehouseId() {
@@ -223,23 +223,23 @@ public class AutoStoreAndOutDTO {
                 "ticketClaimTicketId=" + ticketClaimTicketId +
                 ", needNumber=" + needNumber +
                 ", ticketClaimId=" + ticketClaimId +
-                ", printOrderId=" + printOrderId +
+                ", printingOrderId=" + printingOrderId +
                 ", storeId=" + storeId +
                 ", targetOrderNumber=" + targetOrderNumber +
                 ", targetUnitId=" + targetUnitId +
                 ", outType='" + outType + '\'' +
-                ", outDate='" + outDate + '\'' +
+                ", outDate=" + outDate +
                 ", sourceOrderNumber=" + sourceOrderNumber +
                 ", sourceUnitId=" + sourceUnitId +
                 ", storeType='" + storeType + '\'' +
-                ", storeDate='" + storeDate + '\'' +
+                ", storeDate=" + storeDate +
                 ", unitId=" + unitId +
                 ", ticketId=" + ticketId +
                 ", startNumber='" + startNumber + '\'' +
                 ", endNumber='" + endNumber + '\'' +
                 ", warehouseId=" + warehouseId +
                 ", userId=" + userId +
-                ", operateDate='" + operateDate + '\'' +
+                ", operateDate=" + operateDate +
                 '}';
     }
 }
