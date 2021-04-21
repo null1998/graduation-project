@@ -147,7 +147,7 @@ public class TicketStoreRecordTicketService implements ITicketStoreRecordTicketS
         TicketStoreRecordQO query = new TicketStoreRecordQO();
         query.setUnitId(unitId);
         // 查询该单位的所有入库记录
-        List<TicketStoreRecordDTO> ticketStoreRecordDTOList = ticketStoreRecordService.commonQuery(BeanUtil.copy(query, TicketStoreRecord.class));
+        List<TicketStoreRecordDTO> ticketStoreRecordDTOList = ticketStoreRecordService.commonQuery(query);
         for (TicketStoreRecordDTO ticketStoreRecordDTO : ticketStoreRecordDTOList) {
             if (ticketStoreRecordDTO.getStoreDate() == null) {
                 continue;

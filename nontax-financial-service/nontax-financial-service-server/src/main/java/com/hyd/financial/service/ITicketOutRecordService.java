@@ -3,6 +3,7 @@ import java.util.List;
 import com.hyd.financial.entity.TicketOutRecord;
 import com.hyd.financial.web.dto.LineChartDTO;
 import com.hyd.financial.web.dto.TicketOutRecordDTO;
+import com.hyd.financial.web.qo.TicketOutRecordQO;
 
 /**
  * 票据出库记录
@@ -39,11 +40,11 @@ public interface ITicketOutRecordService {
     TicketOutRecordDTO getById(Long id);
 
     /**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,ticketOutRecordQO
      * @param ticketOutRecord 票据出库记录
      * @return 票据出库记录列表
      */
-    List<TicketOutRecordDTO> commonQuery(TicketOutRecord ticketOutRecord);
+    List<TicketOutRecordDTO> commonQuery(TicketOutRecordQO ticketOutRecord);
     /**
      * 某单位最近一周出库记录折线图
      * @param unitId

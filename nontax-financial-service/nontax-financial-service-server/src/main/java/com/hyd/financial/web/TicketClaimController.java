@@ -2,6 +2,7 @@ package com.hyd.financial.web;
 import java.util.List;
 
 import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
 import com.hyd.financial.entity.TicketClaim;
 import com.hyd.financial.entity.vo.TicketClaimVO;
@@ -74,15 +75,15 @@ public class TicketClaimController {
     }
 
     /**
-     * 通用查询，支持字段id,unitId,targetUnitId，status
+     * 通用查询，支持字段id,unitId,targetUnitId，status,targetUnitName
      * @param ticketClaimQO 票据申领
      * @return 票据申领列表
      */
+    @PageHelper
     @ApiLog
     @GetMapping("/common/query")
     public List<TicketClaimVO> commonQuery(TicketClaimQO ticketClaimQO) {
-        TicketClaim ticketClaim = BeanUtil.copy(ticketClaimQO, TicketClaim.class);
-        List<TicketClaimDTO> ticketClaimDTOList = ticketClaimService.commonQuery(ticketClaim);
+        List<TicketClaimDTO> ticketClaimDTOList = ticketClaimService.commonQuery(ticketClaimQO);
         return BeanUtil.copyList(ticketClaimDTOList, TicketClaimVO.class);
     }
 

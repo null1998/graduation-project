@@ -1,9 +1,11 @@
 package com.hyd.financial.web.qo;
 
+import com.hyd.common.core.pojo.qo.BaseQO;
+
 import java.io.Serializable;
 import javax.annotation.Generated;
 
-public class TicketStoreRecordQO implements Serializable {
+public class TicketStoreRecordQO extends BaseQO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
@@ -18,6 +20,7 @@ public class TicketStoreRecordQO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long sourceUnitId;
+    private String sourceUnitName;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long sourceWarehouseId;
@@ -29,6 +32,14 @@ public class TicketStoreRecordQO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long dictionaryId;
     private String storeDate;
+
+    public String getSourceUnitName() {
+        return sourceUnitName;
+    }
+
+    public void setSourceUnitName(String sourceUnitName) {
+        this.sourceUnitName = sourceUnitName;
+    }
 
     public String getStoreDate() {
         return storeDate;
@@ -124,10 +135,11 @@ public class TicketStoreRecordQO implements Serializable {
                 ", sourceOrderNumber=" + sourceOrderNumber +
                 ", unitId=" + unitId +
                 ", sourceUnitId=" + sourceUnitId +
+                ", sourceUnitName='" + sourceUnitName + '\'' +
                 ", sourceWarehouseId=" + sourceWarehouseId +
                 ", version=" + version +
                 ", dictionaryId=" + dictionaryId +
                 ", storeDate='" + storeDate + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

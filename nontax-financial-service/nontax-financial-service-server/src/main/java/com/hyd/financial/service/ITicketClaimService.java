@@ -3,6 +3,7 @@ import java.util.List;
 import com.hyd.financial.entity.TicketClaim;
 import com.hyd.financial.web.dto.AutoStoreAndOutDTO;
 import com.hyd.financial.web.dto.TicketClaimDTO;
+import com.hyd.financial.web.qo.TicketClaimQO;
 
 /**
  * 票据申领
@@ -39,11 +40,11 @@ public interface ITicketClaimService {
     TicketClaimDTO getById(Long id);
 
     /**
-     * 通用查询，支持字段id,unitId,targetUnitId，status
+     * 通用查询，支持字段id,unitId,targetUnitId，status,targetUnitName
      * @param ticketClaim 票据申领
      * @return 票据申领列表
      */
-    List<TicketClaimDTO> commonQuery(TicketClaim ticketClaim);
+    List<TicketClaimDTO> commonQuery(TicketClaimQO ticketClaim);
 
     /**
      * 自动减库存，生成出库记录，更新申领单

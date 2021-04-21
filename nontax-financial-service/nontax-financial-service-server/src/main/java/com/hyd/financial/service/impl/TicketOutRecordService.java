@@ -22,6 +22,7 @@ import com.hyd.financial.service.ITicketOutRecordTicketService;
 import com.hyd.financial.web.dto.LineChartDTO;
 import com.hyd.financial.web.dto.TicketOutRecordDTO;
 import com.hyd.financial.web.dto.TicketOutRecordTicketDTO;
+import com.hyd.financial.web.qo.TicketOutRecordQO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -125,13 +126,13 @@ public class TicketOutRecordService implements ITicketOutRecordService {
     }
 
 	/**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,ticketOutRecordQO
      * @param ticketOutRecord 票据出库记录
      * @return 票据出库记录列表
      */
 	@Cacheable(value = "TicketOutRecordService::commonQuery",key = "#ticketOutRecord.toString()")
     @Override
-    public List<TicketOutRecordDTO> commonQuery(TicketOutRecord ticketOutRecord) {
+    public List<TicketOutRecordDTO> commonQuery(TicketOutRecordQO ticketOutRecord) {
         if (ticketOutRecord == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("票据出库记录为空"));
         }

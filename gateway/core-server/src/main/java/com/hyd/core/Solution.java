@@ -1,21 +1,66 @@
 package com.hyd.core;
 
+import java.util.*;
 
 
+ class ListNode {
+      int val;
+      ListNode next;
+      ListNode(int x) {
+          val = x;
+          next = null;
+      }
+  }
 public class Solution {
-    /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     *
-     * 找缺失数字
-     * @param a int整型一维数组 给定的数字串
-     * @return int整型
-     */
-    public int solve (int[] a) {
-        // write code here
-        int sum = (a.length + 1) * a.length / 2;
-        for (int i : a) {
-            sum -= i;
+    public static void main(String[] args) {
+        int[] array = new int[]{10,40,20,30};
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        for (int i : array) {
+            cur.next = new ListNode(i);
+            cur = cur.next;
         }
-        return sum;
+        ListNode next = dummy.next;
+        dummy.next = null;
+        new Solution().reorderList(next);
+    }
+    public void reorderList(ListNode head) {
+        if (head == null || head.next == null) {
+            return;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next;
+            if (fast != null && fast.next != null){
+                fast = fast.next;
+                slow = slow.next;
+            }
+        }
+        ListNode secondHead = slow.next;
+        slow.next = null;
+        ListNode newHead = reverse(secondHead);
+        while (newHead != null) {
+            ListNode tmp = newHead.next;
+            newHead.next = head.next;
+            head.next = newHead;
+            head = newHead.next;
+            newHead = tmp;
+        }
+    }
+    public ListNode reverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode pre = head;
+        ListNode cur = head.next;
+        while (cur != null) {
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        head.next = null;
+        return pre;
     }
 }

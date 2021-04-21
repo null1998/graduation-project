@@ -18,6 +18,7 @@ import com.hyd.financial.service.ITicketStoreRecordTicketService;
 import com.hyd.financial.web.dto.LineChartDTO;
 import com.hyd.financial.web.dto.TicketStoreRecordDTO;
 import com.hyd.financial.web.dto.TicketStoreRecordTicketDTO;
+import com.hyd.financial.web.qo.TicketStoreRecordQO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -128,13 +129,13 @@ public class TicketStoreRecordService implements ITicketStoreRecordService {
     }
 
 	/**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,unitId,sourceUnitName
      * @param ticketStoreRecord 票据入库记录
      * @return 票据入库记录列表
      */
 	@Cacheable(value = "TicketStoreRecordService::commonQuery",key = "#ticketStoreRecord.toString()")
     @Override
-    public List<TicketStoreRecordDTO> commonQuery(TicketStoreRecord ticketStoreRecord) {
+    public List<TicketStoreRecordDTO> commonQuery(TicketStoreRecordQO ticketStoreRecord) {
         if (ticketStoreRecord == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("票据入库记录为空"));
         }

@@ -1,7 +1,12 @@
 package com.hyd.financial.dao;
 
+import com.hyd.basedata.dao.UnitDynamicSqlSupport;
 import com.hyd.financial.entity.TicketStoreRecord;
+import com.hyd.financial.web.qo.TicketStoreRecordQO;
+import org.apache.commons.lang3.StringUtils;
 import org.mybatis.dynamic.sql.SqlBuilder;
+import org.mybatis.dynamic.sql.select.join.EqualTo;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +18,18 @@ import java.util.List;
  */
 public interface TicketStoreRecordMapper extends TicketStoreRecordBaseMapper {
     /**
-     * 通用查询，支持字段id，unitId
+     * 通用查询，支持字段id，unitId,sourceUnitName
      * @param ticketStoreRecord
      * @return 票据入库记录列表
      */
-    default List<TicketStoreRecord> commonQuery(TicketStoreRecord ticketStoreRecord) {
-        return this.select(c->c.where(TicketStoreRecordDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(ticketStoreRecord.getId()))
-                .and(TicketStoreRecordDynamicSqlSupport.unitId, SqlBuilder.isEqualToWhenPresent(ticketStoreRecord.getUnitId())));
+    default List<TicketStoreRecord> commonQuery(TicketStoreRecordQO ticketStoreRecord) {
+        String sourceUnitName = StringUtils.wrap(StringUtils.trimToNull(ticketStoreRecord.getSourceUnitName()), "%");
+
+        return this.select(c->c.leftJoin(UnitDynamicSqlSupport.unit)
+                .on(TicketStoreRecordDynamicSqlSupport.sourceUnitId,new EqualTo(UnitDynamicSqlSupport.id))
+                .where(TicketStoreRecordDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(ticketStoreRecord.getId()))
+                .and(TicketStoreRecordDynamicSqlSupport.unitId, SqlBuilder.isEqualToWhenPresent(ticketStoreRecord.getUnitId()))
+                .and(UnitDynamicSqlSupport.name,SqlBuilder.isLikeWhenPresent(sourceUnitName)));
     }
 
     /**

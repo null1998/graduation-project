@@ -17,6 +17,7 @@ import com.hyd.financial.service.*;
 import com.hyd.financial.web.dto.AutoStoreAndOutDTO;
 import com.hyd.financial.web.dto.PrintingOrderDTO;
 import com.hyd.financial.web.dto.PrintingOrderTicketDTO;
+import com.hyd.financial.web.qo.PrintingOrderQO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -112,7 +113,7 @@ public class PrintingOrderService implements IPrintingOrderService {
 
     @Cacheable(value = {"PrintingOrderService::commonQuery"},key = "#printingOrder.toString()")
     @Override
-    public List<PrintingOrderDTO> commonQuery(PrintingOrder printingOrder) {
+    public List<PrintingOrderDTO> commonQuery(PrintingOrderQO printingOrder) {
         if (printingOrder == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("印制订单为空"));
         }

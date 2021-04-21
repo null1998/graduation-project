@@ -73,15 +73,14 @@ public class TicketOutRecordController {
     }
 
     /**
-     * 通用查询，支持字段id,ticketOutRecordId
+     * 通用查询，支持字段id,ticketOutRecordId,targetUnitName
      * @param ticketOutRecordQO 票据出库记录
      * @return 票据出库记录列表
      */
     @ApiLog
     @GetMapping("/common/query")
     public List<TicketOutRecordVO> commonQuery(TicketOutRecordQO ticketOutRecordQO) {
-        TicketOutRecord ticketOutRecord = BeanUtil.copy(ticketOutRecordQO, TicketOutRecord.class);
-        List<TicketOutRecordDTO> ticketOutRecordDTOList = ticketOutRecordService.commonQuery(ticketOutRecord);
+        List<TicketOutRecordDTO> ticketOutRecordDTOList = ticketOutRecordService.commonQuery(ticketOutRecordQO);
         return BeanUtil.copyList(ticketOutRecordDTOList, TicketOutRecordVO.class);
     }
     /**

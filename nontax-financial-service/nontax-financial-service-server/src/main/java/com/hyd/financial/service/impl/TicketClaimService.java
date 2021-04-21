@@ -20,6 +20,7 @@ import com.hyd.financial.web.dto.AutoStoreAndOutDTO;
 import com.hyd.financial.web.dto.TicketClaimDTO;
 import com.hyd.financial.web.dto.TicketClaimTicketDTO;
 import com.hyd.financial.web.dto.TicketStoreDTO;
+import com.hyd.financial.web.qo.TicketClaimQO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -143,13 +144,13 @@ public class TicketClaimService implements ITicketClaimService {
     }
 
 	/**
-     * 通用查询，支持字段id,unitId,targetUnitId，status
+     * 通用查询，支持字段id,unitId,targetUnitId，status,targetUnitName
      * @param ticketClaim 票据申领
      * @return 票据申领列表
      */
 	@Cacheable(value = "TicketClaimService::commonQuery",key = "#ticketClaim.toString()")
     @Override
-    public List<TicketClaimDTO> commonQuery(TicketClaim ticketClaim) {
+    public List<TicketClaimDTO> commonQuery(TicketClaimQO ticketClaim) {
         if (ticketClaim == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("票据申领为空"));
         }

@@ -12,6 +12,7 @@ public class PrintingOrderQO  extends BaseQO {
     private Long unitId;
 
     private Long printUnitId;
+    private String printUnitName;
     private Integer status;
 
     public Long getId() {
@@ -46,12 +47,21 @@ public class PrintingOrderQO  extends BaseQO {
         this.status = status;
     }
 
+    public String getPrintUnitName() {
+        return printUnitName;
+    }
+
+    public void setPrintUnitName(String printUnitName) {
+        this.printUnitName = printUnitName;
+    }
+
     @Override
     public String toString() {
         return "PrintingOrderQO{" +
                 "id=" + id +
                 ", unitId=" + unitId +
                 ", printUnitId=" + printUnitId +
+                ", printUnitName='" + printUnitName + '\'' +
                 ", status=" + status +
                 "} " + super.toString();
     }

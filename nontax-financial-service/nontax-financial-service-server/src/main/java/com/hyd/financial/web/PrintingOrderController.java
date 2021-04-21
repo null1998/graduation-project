@@ -1,6 +1,7 @@
 package com.hyd.financial.web;
 
 import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
 import com.hyd.financial.entity.PrintingOrder;
 import com.hyd.financial.entity.vo.PrintingOrderVO;
@@ -52,11 +53,11 @@ public class PrintingOrderController {
      * @param printingOrderQO
      * @return
      */
+    @PageHelper
     @ApiLog
     @GetMapping("/common/query")
     public List<PrintingOrderVO> commonQuery(PrintingOrderQO printingOrderQO) {
-        PrintingOrder printingOrder = BeanUtil.copy(printingOrderQO, PrintingOrder.class);
-        List<PrintingOrderDTO> printingOrderDTOList = printingOrderService.commonQuery(printingOrder);
+        List<PrintingOrderDTO> printingOrderDTOList = printingOrderService.commonQuery(printingOrderQO);
         return BeanUtil.copyList(printingOrderDTOList, PrintingOrderVO.class);
     }
     /**

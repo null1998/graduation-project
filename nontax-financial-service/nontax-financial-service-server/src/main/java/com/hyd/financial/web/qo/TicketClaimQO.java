@@ -1,10 +1,12 @@
 package com.hyd.financial.web.qo;
 
+import com.hyd.common.core.pojo.qo.BaseQO;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.annotation.Generated;
 
-public class TicketClaimQO implements Serializable {
+public class TicketClaimQO extends BaseQO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
@@ -36,6 +38,24 @@ public class TicketClaimQO implements Serializable {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
+    private String targetUnitName;
+    private String unitName;
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
+
+    public String getTargetUnitName() {
+        return targetUnitName;
+    }
+
+    public void setTargetUnitName(String targetUnitName) {
+        this.targetUnitName = targetUnitName;
+    }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
@@ -162,6 +182,8 @@ public class TicketClaimQO implements Serializable {
                 ", opinion='" + opinion + '\'' +
                 ", status=" + status +
                 ", version=" + version +
+                ", targetUnitName='" + targetUnitName + '\'' +
+                ", unitName='" + unitName + '\'' +
                 '}';
     }
 }

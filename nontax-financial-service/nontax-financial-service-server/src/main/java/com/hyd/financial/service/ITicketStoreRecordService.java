@@ -3,6 +3,7 @@ package com.hyd.financial.service;
 import com.hyd.financial.entity.TicketStoreRecord;
 import com.hyd.financial.web.dto.LineChartDTO;
 import com.hyd.financial.web.dto.TicketStoreRecordDTO;
+import com.hyd.financial.web.qo.TicketStoreRecordQO;
 
 import java.util.List;
 
@@ -41,11 +42,11 @@ public interface ITicketStoreRecordService {
     TicketStoreRecord getById(Long id);
 
     /**
-     * 通用查询，支持字段id，unitId
+     * 通用查询，支持字段id，unitId,sourceUnitName
      * @param ticketStoreRecord 票据入库记录
      * @return 票据入库记录列表
      */
-    List<TicketStoreRecordDTO> commonQuery(TicketStoreRecord ticketStoreRecord);
+    List<TicketStoreRecordDTO> commonQuery(TicketStoreRecordQO ticketStoreRecord);
 
     /**
      * 某单位最近一周入库记录折线图

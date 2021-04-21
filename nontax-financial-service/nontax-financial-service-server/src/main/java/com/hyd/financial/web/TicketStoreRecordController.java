@@ -1,6 +1,7 @@
 package com.hyd.financial.web;
 
 import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
 import com.hyd.financial.entity.TicketStoreRecord;
 import com.hyd.financial.entity.vo.TicketStoreRecordVO;
@@ -74,15 +75,15 @@ public class TicketStoreRecordController {
     }
 
     /**
-     * 通用查询，支持字段id，unitId
+     * 通用查询，支持字段id，unitId,sourceUnitName
      * @param ticketStoreRecordQO 票据入库记录
      * @return 票据入库记录列表
      */
+    @PageHelper
     @ApiLog
     @GetMapping("/common/query")
     public List<TicketStoreRecordVO> commonQuery(TicketStoreRecordQO ticketStoreRecordQO) {
-        TicketStoreRecord ticketStoreRecord = BeanUtil.copy(ticketStoreRecordQO, TicketStoreRecord.class);
-        List<TicketStoreRecordDTO> ticketStoreRecordDTOList = ticketStoreRecordService.commonQuery(ticketStoreRecord);
+        List<TicketStoreRecordDTO> ticketStoreRecordDTOList = ticketStoreRecordService.commonQuery(ticketStoreRecordQO);
         return BeanUtil.copyList(ticketStoreRecordDTOList, TicketStoreRecordVO.class);
     }
     /**
