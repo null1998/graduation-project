@@ -36,8 +36,8 @@ public class AuthenticationService implements IAuthenticationService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    private static Long ACCESS_TOKEN_LIFE_CYCLE_MILLI = 60*60*1000L;
-    private static Long REFRESH_TOKEN_LIFE_CYCLE_MILLI = 24*60*60*1000L;
+    private static Long ACCESS_TOKEN_LIFE_CYCLE_MILLI = 5*60*1000L;
+    private static Long REFRESH_TOKEN_LIFE_CYCLE_MILLI = 30*60*1000L;
     public static final String URL = "http://user-center-server/user/center/user/login?username=%s&password=%s";
     class Permission{
         private String url;

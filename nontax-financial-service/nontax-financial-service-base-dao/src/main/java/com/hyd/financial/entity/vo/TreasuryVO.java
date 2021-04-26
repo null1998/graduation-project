@@ -1,30 +1,28 @@
-package com.hyd.financial.entity;
+package com.hyd.financial.entity.vo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.annotation.Generated;
 
-public class TicketOutRecord implements Serializable {
+public class TreasuryVO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long orderNumber;
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long targetOrderNumber;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private Long targetUnitId;
+    private Long orderNumber;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private String outType;
+    private Long invoiceOrderNumber;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    private LocalDate outDate;
+    private BigDecimal price;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private LocalDate operateDate;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
@@ -43,26 +41,6 @@ public class TicketOutRecord implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getOrderNumber() {
-        return orderNumber;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setOrderNumber(Long orderNumber) {
-        this.orderNumber = orderNumber;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getTargetOrderNumber() {
-        return targetOrderNumber;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setTargetOrderNumber(Long targetOrderNumber) {
-        this.targetOrderNumber = targetOrderNumber;
-    }
-
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getUnitId() {
         return unitId;
     }
@@ -73,33 +51,43 @@ public class TicketOutRecord implements Serializable {
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public Long getTargetUnitId() {
-        return targetUnitId;
+    public Long getOrderNumber() {
+        return orderNumber;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setTargetUnitId(Long targetUnitId) {
-        this.targetUnitId = targetUnitId;
+    public void setOrderNumber(Long orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public String getOutType() {
-        return outType;
+    public Long getInvoiceOrderNumber() {
+        return invoiceOrderNumber;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setOutType(String outType) {
-        this.outType = outType;
+    public void setInvoiceOrderNumber(Long invoiceOrderNumber) {
+        this.invoiceOrderNumber = invoiceOrderNumber;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public LocalDate getOutDate() {
-        return outDate;
+    public BigDecimal getPrice() {
+        return price;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    public void setOutDate(LocalDate outDate) {
-        this.outDate = outDate;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public LocalDate getOperateDate() {
+        return operateDate;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setOperateDate(LocalDate operateDate) {
+        this.operateDate = operateDate;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -124,14 +112,13 @@ public class TicketOutRecord implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        TicketOutRecord other = (TicketOutRecord) that;
+        TreasuryVO other = (TreasuryVO) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getOrderNumber() == null ? other.getOrderNumber() == null : this.getOrderNumber().equals(other.getOrderNumber()))
-            && (this.getTargetOrderNumber() == null ? other.getTargetOrderNumber() == null : this.getTargetOrderNumber().equals(other.getTargetOrderNumber()))
             && (this.getUnitId() == null ? other.getUnitId() == null : this.getUnitId().equals(other.getUnitId()))
-            && (this.getTargetUnitId() == null ? other.getTargetUnitId() == null : this.getTargetUnitId().equals(other.getTargetUnitId()))
-            && (this.getOutType() == null ? other.getOutType() == null : this.getOutType().equals(other.getOutType()))
-            && (this.getOutDate() == null ? other.getOutDate() == null : this.getOutDate().equals(other.getOutDate()))
+            && (this.getOrderNumber() == null ? other.getOrderNumber() == null : this.getOrderNumber().equals(other.getOrderNumber()))
+            && (this.getInvoiceOrderNumber() == null ? other.getInvoiceOrderNumber() == null : this.getInvoiceOrderNumber().equals(other.getInvoiceOrderNumber()))
+            && (this.getPrice() == null ? other.getPrice() == null : this.getPrice().equals(other.getPrice()))
+            && (this.getOperateDate() == null ? other.getOperateDate() == null : this.getOperateDate().equals(other.getOperateDate()))
             && (this.getVersion() == null ? other.getVersion() == null : this.getVersion().equals(other.getVersion()));
     }
 
@@ -141,12 +128,11 @@ public class TicketOutRecord implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getOrderNumber() == null) ? 0 : getOrderNumber().hashCode());
-        result = prime * result + ((getTargetOrderNumber() == null) ? 0 : getTargetOrderNumber().hashCode());
         result = prime * result + ((getUnitId() == null) ? 0 : getUnitId().hashCode());
-        result = prime * result + ((getTargetUnitId() == null) ? 0 : getTargetUnitId().hashCode());
-        result = prime * result + ((getOutType() == null) ? 0 : getOutType().hashCode());
-        result = prime * result + ((getOutDate() == null) ? 0 : getOutDate().hashCode());
+        result = prime * result + ((getOrderNumber() == null) ? 0 : getOrderNumber().hashCode());
+        result = prime * result + ((getInvoiceOrderNumber() == null) ? 0 : getInvoiceOrderNumber().hashCode());
+        result = prime * result + ((getPrice() == null) ? 0 : getPrice().hashCode());
+        result = prime * result + ((getOperateDate() == null) ? 0 : getOperateDate().hashCode());
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         return result;
     }
@@ -159,12 +145,11 @@ public class TicketOutRecord implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", orderNumber=").append(orderNumber);
-        sb.append(", targetOrderNumber=").append(targetOrderNumber);
         sb.append(", unitId=").append(unitId);
-        sb.append(", targetUnitId=").append(targetUnitId);
-        sb.append(", outType=").append(outType);
-        sb.append(", outDate=").append(outDate);
+        sb.append(", orderNumber=").append(orderNumber);
+        sb.append(", invoiceOrderNumber=").append(invoiceOrderNumber);
+        sb.append(", price=").append(price);
+        sb.append(", operateDate=").append(operateDate);
         sb.append(", version=").append(version);
         sb.append("]");
         return sb.toString();

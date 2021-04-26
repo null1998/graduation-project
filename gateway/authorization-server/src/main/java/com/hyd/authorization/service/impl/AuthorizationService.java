@@ -137,9 +137,6 @@ public class AuthorizationService implements IAuthorizationService {
             }
         }
         return false;
-
-
-
     }
 
     /**

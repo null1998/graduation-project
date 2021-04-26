@@ -2,6 +2,7 @@ package com.hyd.financial.web;
 import java.util.List;
 
 import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
 import com.hyd.financial.entity.TicketOutRecord;
 import com.hyd.financial.entity.vo.TicketOutRecordVO;
@@ -77,6 +78,7 @@ public class TicketOutRecordController {
      * @param ticketOutRecordQO 票据出库记录
      * @return 票据出库记录列表
      */
+    @PageHelper
     @ApiLog
     @GetMapping("/common/query")
     public List<TicketOutRecordVO> commonQuery(TicketOutRecordQO ticketOutRecordQO) {
