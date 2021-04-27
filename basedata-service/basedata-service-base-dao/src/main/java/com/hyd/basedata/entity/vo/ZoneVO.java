@@ -1,10 +1,15 @@
 package com.hyd.basedata.entity.vo;
 
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * @author yanduohuang
  * @date 2021/2/1 14:01
  */
+@Data
+@NoArgsConstructor
 public class ZoneVO {
     private Long id;
 
@@ -14,45 +19,11 @@ public class ZoneVO {
 
     private Long version;
 
-    public Long getId() {
-        return id;
-    }
+    private Long parentId;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String parentZoneName;
 
-    public String getName() {
-        return name;
-    }
+    private String hierarchy;
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-
-    @Override
-    public String toString() {
-        return "ZoneVO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", code='" + code + '\'' +
-                ", version=" + version +
-                '}';
-    }
 }

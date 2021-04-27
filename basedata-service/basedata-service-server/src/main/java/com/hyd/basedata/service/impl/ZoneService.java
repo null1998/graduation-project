@@ -8,10 +8,12 @@ import com.hyd.basedata.dao.ZoneBaseMapper;
 import com.hyd.basedata.dao.ZoneDynamicSqlSupport;
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.entity.Zone;
+import com.hyd.basedata.entity.vo.ZoneVO;
 import com.hyd.basedata.service.IZoneService;
 import com.hyd.basedata.util.MnemonicUtil;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
+import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.dynamic.sql.SqlBuilder;
@@ -24,8 +26,11 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author yanduohuang
@@ -40,6 +45,8 @@ public class ZoneService implements IZoneService {
     private UnitBaseMapper unitBaseMapper;
     @Autowired
     private IdGenerator idGenerator;
+    @Autowired
+    private IZoneService zoneService;
     @Cacheable(value = {"ZoneService::getZoneById"},key = "#id")
     @Override
     public Zone getZoneById(Long id) {
@@ -111,6 +118,30 @@ public class ZoneService implements IZoneService {
     @Override
     public List<Zone> listProvinceZone() {
         return zoneBaseMapper.select(c -> c.where(ZoneDynamicSqlSupport.parentId, SqlBuilder.isNull()));
+    }
+
+    @Override
+    public List<ZoneVO> commonQuery(Zone zone) {
+        if (zone == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("行政区划为空"));
+        }
+        List<Zone> zoneList = zoneBaseMapper.select(c -> c.where(ZoneDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(zone.getId())));
+        List<Long> parentZoneIdList = zoneList.stream().map(Zone::getParentId).collect(Collectors.toList());
+        Map<Long, String> zoneNameMap = zoneService.listByIdList(parentZoneIdList).stream().collect(Collectors.toMap(Zone::getId, Zone::getName));
+        List<ZoneVO> zoneVOList = BeanUtil.copyList(zoneList, ZoneVO.class);
+        zoneVOList.forEach(e->e.setParentZoneName(zoneNameMap.get(e.getParentId())));
+        return zoneVOList;
+    }
+
+    @Override
+    public List<Zone> listByIdList(List<Long> zoneIdList) {
+        if (zoneIdList == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("参数为空"));
+        }
+        if (zoneIdList.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return zoneBaseMapper.select(c -> c.where(ZoneDynamicSqlSupport.id, SqlBuilder.isIn(zoneIdList)));
     }
 
     private void recursion(JSONArray jsonArray, Long parentZoneId, Long parentUnitId, Integer level) {

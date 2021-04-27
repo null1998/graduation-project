@@ -6,10 +6,13 @@ import com.hyd.basedata.dao.WarehouseDynamicSqlSupport;
 import com.hyd.basedata.dao.WarehouseMapper;
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.entity.Warehouse;
+import com.hyd.basedata.entity.vo.WarehouseVO;
+import com.hyd.basedata.service.IUnitService;
 import com.hyd.basedata.service.IWarehouseService;
 import com.hyd.basedata.util.MnemonicUtil;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
+import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
@@ -20,7 +23,10 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author yanduohuang
@@ -34,6 +40,8 @@ public class WarehouseService implements IWarehouseService {
     private UnitBaseMapper unitBaseMapper;
     @Autowired
     private IdGenerator idGenerator;
+    @Autowired
+    private IUnitService unitService;
     @Caching(evict = {@CacheEvict(value = {"WarehouseService::listByUnitId","WarehouseService::commonQuery"},allEntries = true)})
     @Override
     public Long save(Warehouse warehouse) {
@@ -78,11 +86,16 @@ public class WarehouseService implements IWarehouseService {
     }
     @Cacheable(value = {"WarehouseService::commonQuery"},key = "#warehouse.toString()")
     @Override
-    public List<Warehouse> commonQuery(Warehouse warehouse) {
+    public List<WarehouseVO> commonQuery(Warehouse warehouse) {
         if (warehouse == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("仓库为空"));
         }
-        return warehouseMapper.commonQuery(warehouse);
+        List<Warehouse> warehouseList = warehouseMapper.commonQuery(warehouse);
+        List<Long> unitIdList = warehouseList.stream().map(Warehouse::getUnitId).collect(Collectors.toList());
+        Map<Long,String> unitNameMap = unitService.listByUnitIdList(unitIdList).stream().collect(Collectors.toMap(Unit::getId, Unit::getName));
+        List<WarehouseVO> warehouseVOList = BeanUtil.copyList(warehouseList, WarehouseVO.class);
+        warehouseVOList.forEach(e->e.setUnitName(unitNameMap.get(e.getUnitId())));
+        return warehouseVOList;
     }
     @Cacheable(value = {"WarehouseService::listByUnitId"},key = "#unitId")
     @Override

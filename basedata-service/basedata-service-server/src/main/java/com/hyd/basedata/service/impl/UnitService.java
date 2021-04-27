@@ -2,10 +2,14 @@ package com.hyd.basedata.service.impl;
 
 import com.hyd.basedata.dao.UnitMapper;
 import com.hyd.basedata.entity.Unit;
+import com.hyd.basedata.entity.Zone;
+import com.hyd.basedata.entity.vo.UnitVO;
 import com.hyd.basedata.service.IUnitService;
+import com.hyd.basedata.service.IZoneService;
 import com.hyd.basedata.util.MnemonicUtil;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
+import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +20,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author yanduohuang
@@ -30,6 +36,8 @@ public class UnitService implements IUnitService {
     private IdGenerator idGenerator;
     @Autowired
     private IUnitService unitService;
+    @Autowired
+    private IZoneService zoneService;
     @Caching(evict = {@CacheEvict(value = {"UnitService::listUnitByParentId","UnitService::listAll","UnitService::getByCode","UnitService::commonQuery"}, allEntries = true)})
     @Override
     public Long save(Unit unit) {
@@ -111,11 +119,20 @@ public class UnitService implements IUnitService {
     }
     @Cacheable(value = {"UnitService::commonQuery"},key = "#unit.toString()")
     @Override
-    public List<Unit> commonQuery(Unit unit) {
+    public List<UnitVO> commonQuery(Unit unit) {
         if (unit == null) {
             throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位为空"));
         }
-        return unitMapper.commonQuery(unit);
+        List<Unit> unitList = unitMapper.commonQuery(unit);
+        List<Long> parentUnitIdList = unitList.stream().map(Unit::getParentId).collect(Collectors.toList());
+        List<Long> zoneIdList = unitList.stream().map(Unit::getZoneId).collect(Collectors.toList());
+        Map<Long, String> unitNameMap = unitService.listByUnitIdList(parentUnitIdList).stream().collect(Collectors.toMap(Unit::getId, Unit::getName));
+        Map<Long, String> zoneNameMap = zoneService.listByIdList(zoneIdList).stream().collect(Collectors.toMap(Zone::getId, Zone::getName));
+        List<UnitVO> unitVOList = BeanUtil.copyList(unitList, UnitVO.class);
+        unitVOList.forEach(e->{
+            e.setParentUnitName(unitNameMap.get(e.getParentId()));
+            e.setZoneName(zoneNameMap.get(e.getZoneId()));});
+        return unitVOList;
     }
 
     @Override

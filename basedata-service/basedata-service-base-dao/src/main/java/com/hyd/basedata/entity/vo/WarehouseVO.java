@@ -1,10 +1,15 @@
 package com.hyd.basedata.entity.vo;
 
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * @author yanduohuang
  * @date 2021/2/1 16:56
  */
+@Data
+@NoArgsConstructor
 public class WarehouseVO {
     private Long id;
 
@@ -18,63 +23,9 @@ public class WarehouseVO {
 
     private Long version;
 
-    public Long getId() {
-        return id;
-    }
+    private Long unitId;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String unitName;
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getMnemonic() {
-        return mnemonic;
-    }
-
-    public void setMnemonic(String mnemonic) {
-        this.mnemonic = mnemonic;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-
-    @Override
-    public String toString() {
-        return "WarehouseVO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", code='" + code + '\'' +
-                ", mnemonic='" + mnemonic + '\'' +
-                ", address='" + address + '\'' +
-                ", version=" + version +
-                '}';
-    }
 }

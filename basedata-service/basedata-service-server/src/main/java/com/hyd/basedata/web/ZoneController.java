@@ -4,7 +4,9 @@ import com.hyd.basedata.entity.Zone;
 import com.hyd.basedata.entity.vo.ZoneVO;
 import com.hyd.basedata.service.IZoneService;
 import com.hyd.basedata.web.dto.ZoneDTO;
+import com.hyd.basedata.web.qo.ZoneQO;
 import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -67,6 +69,13 @@ public class ZoneController {
     public Integer update(ZoneDTO zoneDTO) {
         Zone zone = BeanUtil.copy(zoneDTO, Zone.class);
         return zoneService.update(zone);
+    }
+    @ApiLog
+    @GetMapping("/common/query")
+    @PageHelper
+    public List<ZoneVO> commonQuery(ZoneQO zoneQO) {
+        Zone zone = BeanUtil.copy(zoneQO, Zone.class);
+        return zoneService.commonQuery(zone);
     }
     /**
      * 初始化数据

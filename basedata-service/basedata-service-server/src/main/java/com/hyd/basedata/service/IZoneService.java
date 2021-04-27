@@ -1,6 +1,7 @@
 package com.hyd.basedata.service;
 
 import com.hyd.basedata.entity.Zone;
+import com.hyd.basedata.entity.vo.ZoneVO;
 
 import java.util.List;
 
@@ -53,5 +54,19 @@ public interface IZoneService {
      * @return
      */
     List<Zone> listProvinceZone();
+
+    /**
+     * 通用查询，支持字段id
+     * @param zone
+     * @return
+     */
+    List<ZoneVO> commonQuery(Zone zone);
+
+    /**
+     * 批量查询
+     * @param zoneIdList
+     * @return
+     */
+    List<Zone> listByIdList(List<Long> zoneIdList);
 
 }

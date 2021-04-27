@@ -1,6 +1,7 @@
 package com.hyd.basedata.service;
 
 import com.hyd.basedata.entity.Warehouse;
+import com.hyd.basedata.entity.vo.WarehouseVO;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public interface IWarehouseService {
      * @param warehouse 仓库
      * @return 仓库列表
      */
-    List<Warehouse> commonQuery(Warehouse warehouse);
+    List<WarehouseVO> commonQuery(Warehouse warehouse);
 
     List<Warehouse> listByUnitId(Long unitId);
     /**

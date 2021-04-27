@@ -6,6 +6,7 @@ import com.hyd.basedata.service.ITicketService;
 import com.hyd.basedata.web.dto.TicketDTO;
 import com.hyd.basedata.web.qo.TicketQO;
 import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -86,6 +87,7 @@ public class TicketController {
      * @param ticketQO
      * @return
      */
+    @PageHelper
     @ApiLog
     @GetMapping("/common/query")
     public List<TicketVO> commonQuery(TicketQO ticketQO) {

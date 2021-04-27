@@ -2,6 +2,7 @@ package com.hyd.basedata.service;
 
 
 import com.hyd.basedata.entity.Unit;
+import com.hyd.basedata.entity.vo.UnitVO;
 
 import java.util.List;
 
@@ -69,7 +70,7 @@ public interface IUnitService {
      * @param unit
      * @return
      */
-    List<Unit> commonQuery(Unit unit);
+    List<UnitVO> commonQuery(Unit unit);
 
     /**
      * 获取该单位的所有上级单位（包括上级的上级）

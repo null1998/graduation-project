@@ -6,6 +6,7 @@ import com.hyd.basedata.service.IUnitService;
 import com.hyd.basedata.web.dto.UnitDTO;
 import com.hyd.basedata.web.qo.UnitQO;
 import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -69,12 +70,12 @@ public class UnitController {
      * @param unitQO
      * @return
      */
+    @PageHelper
     @ApiLog
     @GetMapping("/common/query")
     public List<UnitVO> commonQuery(UnitQO unitQO) {
         Unit unit = BeanUtil.copy(unitQO, Unit.class);
-        List<Unit> unitList = unitService.commonQuery(unit);
-        return BeanUtil.copyList(unitList, UnitVO.class);
+        return unitService.commonQuery(unit);
     }
 
     /**

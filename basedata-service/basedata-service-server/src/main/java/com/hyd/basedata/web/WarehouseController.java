@@ -6,6 +6,7 @@ import com.hyd.basedata.service.IWarehouseService;
 import com.hyd.basedata.web.dto.WarehouseDTO;
 import com.hyd.basedata.web.qo.WarehouseQO;
 import com.hyd.common.core.annotation.ApiLog;
+import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -81,12 +82,12 @@ public class WarehouseController {
         List<Warehouse> warehouseList = warehouseService.listByUnitId(unitId);
         return BeanUtil.copyList(warehouseList, WarehouseVO.class);
     }
+    @PageHelper
     @ApiLog
     @GetMapping("/common/query")
     public List<WarehouseVO> commonQuery(WarehouseQO warehouseQO) {
         Warehouse warehouse = BeanUtil.copy(warehouseQO, Warehouse.class);
-        List<Warehouse> warehouseList = warehouseService.commonQuery(warehouse);
-        return BeanUtil.copyList(warehouseList, WarehouseVO.class);
+        return warehouseService.commonQuery(warehouse);
     }
     /**
      * 初始化数据
