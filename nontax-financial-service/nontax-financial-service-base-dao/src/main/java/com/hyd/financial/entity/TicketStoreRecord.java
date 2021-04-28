@@ -9,141 +9,109 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class TicketStoreRecord implements Serializable {
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long orderNumber;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long sourceOrderNumber;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long sourceUnitId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long sourceWarehouseId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long dictionaryId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private LocalDate storeDate;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String storeType;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getOrderNumber() {
         return orderNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setOrderNumber(Long orderNumber) {
         this.orderNumber = orderNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getSourceOrderNumber() {
         return sourceOrderNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setSourceOrderNumber(Long sourceOrderNumber) {
         this.sourceOrderNumber = sourceOrderNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getUnitId() {
         return unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUnitId(Long unitId) {
         this.unitId = unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getSourceUnitId() {
         return sourceUnitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setSourceUnitId(Long sourceUnitId) {
         this.sourceUnitId = sourceUnitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getSourceWarehouseId() {
         return sourceWarehouseId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setSourceWarehouseId(Long sourceWarehouseId) {
         this.sourceWarehouseId = sourceWarehouseId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getVersion() {
         return version;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setVersion(Long version) {
         this.version = version;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getDictionaryId() {
         return dictionaryId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setDictionaryId(Long dictionaryId) {
         this.dictionaryId = dictionaryId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public LocalDate getStoreDate() {
         return storeDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setStoreDate(LocalDate storeDate) {
         this.storeDate = storeDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getStoreType() {
         return storeType;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setStoreType(String storeType) {
         this.storeType = storeType;
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
         if (this == that) {
             return true;
@@ -168,7 +136,6 @@ public class TicketStoreRecord implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -186,7 +153,6 @@ public class TicketStoreRecord implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());

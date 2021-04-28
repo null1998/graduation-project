@@ -9,154 +9,119 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class User implements Serializable {
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String username;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String nickname;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String password;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String avatar;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer sex;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private LocalDate birthday;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String tel;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String email;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getUsername() {
         return username;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUsername(String username) {
         this.username = username;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getNickname() {
         return nickname;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getPassword() {
         return password;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getAvatar() {
         return avatar;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getSex() {
         return sex;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setSex(Integer sex) {
         this.sex = sex;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public LocalDate getBirthday() {
         return birthday;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getTel() {
         return tel;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setTel(String tel) {
         this.tel = tel;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getEmail() {
         return email;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setEmail(String email) {
         this.email = email;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getUnitId() {
         return unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUnitId(Long unitId) {
         this.unitId = unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getVersion() {
         return version;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setVersion(Long version) {
         this.version = version;
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
         if (this == that) {
             return true;
@@ -182,7 +147,6 @@ public class User implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public int hashCode() {
         final int prime = 31;
         int result = 1;

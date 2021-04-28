@@ -3,95 +3,74 @@ package com.hyd.financial.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.annotation.Generated;
 import java.io.Serializable;
 import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class PrintingPlanLimitDate implements Serializable {
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer year;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private LocalDate startDate;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private LocalDate endDate;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getYear() {
         return year;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setYear(Integer year) {
         this.year = year;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public LocalDate getStartDate() {
         return startDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public LocalDate getEndDate() {
         return endDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getUnitId() {
         return unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUnitId(Long unitId) {
         this.unitId = unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getVersion() {
         return version;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setVersion(Long version) {
         this.version = version;
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
         if (this == that) {
             return true;
@@ -112,7 +91,6 @@ public class PrintingPlanLimitDate implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public int hashCode() {
         final int prime = 31;
         int result = 1;

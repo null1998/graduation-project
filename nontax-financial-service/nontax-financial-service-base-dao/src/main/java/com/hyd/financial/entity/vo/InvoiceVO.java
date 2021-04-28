@@ -40,123 +40,99 @@ public class InvoiceVO implements Serializable {
         return id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getOrderNumber() {
         return orderNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setOrderNumber(Long orderNumber) {
         this.orderNumber = orderNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getUnitId() {
         return unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUnitId(Long unitId) {
         this.unitId = unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getTicketId() {
         return ticketId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setTicketId(Long ticketId) {
         this.ticketId = ticketId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getTicketNumber() {
         return ticketNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setTicketNumber(String ticketNumber) {
         this.ticketNumber = ticketNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public BigDecimal getPrice() {
         return price;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getInvoiceVOPeople() {
         return invoicePeople;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setInvoiceVOPeople(String invoicePeople) {
         this.invoicePeople = invoicePeople;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String getIdentityNumber() {
         return identityNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setIdentityNumber(String identityNumber) {
         this.identityNumber = identityNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public LocalDate getInvoiceVODate() {
         return invoiceDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setInvoiceVODate(LocalDate invoiceDate) {
         this.invoiceDate = invoiceDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getUserId() {
         return userId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getStatus() {
         return status;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setStatus(Integer status) {
         this.status = status;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getVersion() {
         return version;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setVersion(Long version) {
         this.version = version;
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
         if (this == that) {
             return true;
@@ -183,7 +159,6 @@ public class InvoiceVO implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -203,7 +178,6 @@ public class InvoiceVO implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());

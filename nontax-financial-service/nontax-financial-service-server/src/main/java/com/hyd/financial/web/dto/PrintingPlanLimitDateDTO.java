@@ -12,45 +12,34 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 public class PrintingPlanLimitDateDTO implements Serializable {
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer year;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate startDate;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getYear() {
         return year;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setYear(Integer year) {
         this.year = year;
     }
@@ -71,22 +60,18 @@ public class PrintingPlanLimitDateDTO implements Serializable {
         this.endDate = endDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getUnitId() {
         return unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUnitId(Long unitId) {
         this.unitId = unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getVersion() {
         return version;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setVersion(Long version) {
         this.version = version;
     }

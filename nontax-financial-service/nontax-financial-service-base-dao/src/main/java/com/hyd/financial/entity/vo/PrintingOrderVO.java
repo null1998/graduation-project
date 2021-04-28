@@ -9,37 +9,27 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class PrintingOrderVO implements Serializable {
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long orderNumber;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private LocalDate start;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private LocalDate end;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
     private String unitName;
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long printUnitId;
     private String printUnitName;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long warehouseId;
     private String warehouseName;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer status;
     private String person;
     private String tel;
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
     private Integer payStatus;
 
@@ -91,12 +81,10 @@ public class PrintingOrderVO implements Serializable {
         this.tel = tel;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setId(Long id) {
         this.id = id;
     }
@@ -125,52 +113,42 @@ public class PrintingOrderVO implements Serializable {
         this.end = end;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getUnitId() {
         return unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUnitId(Long unitId) {
         this.unitId = unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getPrintUnitId() {
         return printUnitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setPrintUnitId(Long printUnitId) {
         this.printUnitId = printUnitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getWarehouseId() {
         return warehouseId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setWarehouseId(Long warehouseId) {
         this.warehouseId = warehouseId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getVersion() {
         return version;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setVersion(Long version) {
         this.version = version;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Integer getStatus() {
         return status;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setStatus(Integer status) {
         this.status = status;
     }

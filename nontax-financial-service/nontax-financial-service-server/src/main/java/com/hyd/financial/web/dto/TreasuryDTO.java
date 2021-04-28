@@ -10,102 +10,79 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class TreasuryDTO implements Serializable {
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long orderNumber;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long invoiceOrderNumber;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private BigDecimal price;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private LocalDate operateDate;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getUnitId() {
         return unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUnitId(Long unitId) {
         this.unitId = unitId;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getOrderNumber() {
         return orderNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setOrderNumber(Long orderNumber) {
         this.orderNumber = orderNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getInvoiceOrderNumber() {
         return invoiceOrderNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setInvoiceOrderNumber(Long invoiceOrderNumber) {
         this.invoiceOrderNumber = invoiceOrderNumber;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public BigDecimal getPrice() {
         return price;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public LocalDate getOperateDate() {
         return operateDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setOperateDate(LocalDate operateDate) {
         this.operateDate = operateDate;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getVersion() {
         return version;
     }
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setVersion(Long version) {
         this.version = version;
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public boolean equals(Object that) {
         if (this == that) {
             return true;
@@ -127,7 +104,6 @@ public class TreasuryDTO implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -142,7 +118,6 @@ public class TreasuryDTO implements Serializable {
     }
 
     @Override
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
