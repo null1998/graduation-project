@@ -1,41 +1,34 @@
 package com.hyd.basedata.web.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.annotation.Generated;
 import java.io.Serializable;
 import java.math.BigDecimal;
-
+@Data
+@NoArgsConstructor
 public class TicketDTO implements Serializable {
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String name;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long zoneId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long dictionaryId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String year;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String code;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String mnemonic;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private BigDecimal price;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String unitOfMeasurement;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")

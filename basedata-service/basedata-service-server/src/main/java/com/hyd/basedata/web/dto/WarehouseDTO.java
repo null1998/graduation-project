@@ -1,31 +1,27 @@
 package com.hyd.basedata.web.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.annotation.Generated;
 import java.io.Serializable;
-
+@Data
+@NoArgsConstructor
 public class WarehouseDTO implements Serializable {
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String name;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String code;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String mnemonic;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String address;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")

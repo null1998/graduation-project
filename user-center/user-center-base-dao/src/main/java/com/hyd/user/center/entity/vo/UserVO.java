@@ -1,16 +1,18 @@
 package com.hyd.user.center.entity.vo;
 
-import com.hyd.user.center.entity.Permission;
 import com.hyd.user.center.entity.SimplePermission;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author yanduohuang
  * @date 2021/2/3 16:14
  */
+@Data
+@NoArgsConstructor
 public class UserVO {
     private Long id;
 

@@ -1,8 +1,12 @@
 package com.hyd.user.center.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import javax.annotation.Generated;
-
+@Data
+@NoArgsConstructor
 public class Permission implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;

@@ -1,12 +1,15 @@
 package com.hyd.user.center.entity.vo;
 
 
-import javax.annotation.Generated;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author yanduohuang
  * @date 2021/2/3 18:06
  */
+@Data
+@NoArgsConstructor
 public class RoleVO {
     private Long id;
 

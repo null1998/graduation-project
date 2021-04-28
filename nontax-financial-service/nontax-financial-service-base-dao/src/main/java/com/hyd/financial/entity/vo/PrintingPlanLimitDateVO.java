@@ -1,10 +1,12 @@
 package com.hyd.financial.entity.vo;
 
-import javax.annotation.Generated;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-
+@Data
+@NoArgsConstructor
 public class PrintingPlanLimitDateVO implements Serializable {
     private Long id;
 

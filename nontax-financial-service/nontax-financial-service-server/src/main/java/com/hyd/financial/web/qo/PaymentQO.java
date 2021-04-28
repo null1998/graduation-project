@@ -1,9 +1,13 @@
 package com.hyd.financial.web.qo;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.annotation.Generated;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.annotation.Generated;
-
+@Data
+@NoArgsConstructor
 public class PaymentQO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;

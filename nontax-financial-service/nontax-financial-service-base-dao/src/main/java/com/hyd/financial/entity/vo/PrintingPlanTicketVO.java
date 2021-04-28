@@ -1,8 +1,12 @@
 package com.hyd.financial.entity.vo;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.annotation.Generated;
 import java.io.Serializable;
-
+@Data
+@NoArgsConstructor
 public class PrintingPlanTicketVO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
@@ -132,7 +136,7 @@ public class PrintingPlanTicketVO implements Serializable {
         this.ticketName = ticketName;
     }
 
-    public PrintingPlanTicketVO(){}
+
     public PrintingPlanTicketVO(Long ticketId, Long theFirstSeason, Long theSecondSeason, Long theThirdSeason, Long theFourthSeason) {
         this.ticketId = ticketId;
         this.theFirstSeason = theFirstSeason;

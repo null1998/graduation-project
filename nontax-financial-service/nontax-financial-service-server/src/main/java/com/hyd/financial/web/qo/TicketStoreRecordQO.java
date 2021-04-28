@@ -1,10 +1,13 @@
 package com.hyd.financial.web.qo;
 
 import com.hyd.common.core.pojo.qo.BaseQO;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import javax.annotation.Generated;
-
+import java.io.Serializable;
+@Data
+@NoArgsConstructor
 public class TicketStoreRecordQO extends BaseQO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;

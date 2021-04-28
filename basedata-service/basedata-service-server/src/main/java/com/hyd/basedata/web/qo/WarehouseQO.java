@@ -1,13 +1,15 @@
 package com.hyd.basedata.web.qo;
 
 import com.hyd.common.core.pojo.qo.BaseQO;
-
-import java.util.PrimitiveIterator;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author yanduohuang
  * @date 2021/3/24 13:40
  */
+@Data
+@NoArgsConstructor
 public class WarehouseQO extends BaseQO {
     private Long id;
     private Long unitId;

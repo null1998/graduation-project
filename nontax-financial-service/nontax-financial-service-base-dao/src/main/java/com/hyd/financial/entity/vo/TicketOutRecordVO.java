@@ -1,9 +1,13 @@
 package com.hyd.financial.entity.vo;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.annotation.Generated;
 import java.io.Serializable;
 import java.time.LocalDate;
-import javax.annotation.Generated;
-
+@Data
+@NoArgsConstructor
 public class TicketOutRecordVO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;

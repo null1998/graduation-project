@@ -1,51 +1,41 @@
 package com.hyd.financial.entity.vo;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.annotation.Generated;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import javax.annotation.Generated;
-
+@Data
+@NoArgsConstructor
 public class InvoiceVO implements Serializable {
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long orderNumber;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long unitId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long ticketId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String ticketNumber;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private BigDecimal price;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String invoicePeople;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String identityNumber;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private LocalDate invoiceDate;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long userId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Integer status;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }

@@ -2,11 +2,15 @@ package com.hyd.user.center.web.qo;
 
 
 import com.hyd.common.core.pojo.qo.BaseQO;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author yanduohuang
  * @date 2021/2/4 17:38
  */
+@Data
+@NoArgsConstructor
 public class PermissionQO extends BaseQO {
     private String name;
     private String action;

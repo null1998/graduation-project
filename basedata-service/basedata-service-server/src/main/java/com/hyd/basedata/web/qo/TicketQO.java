@@ -1,11 +1,15 @@
 package com.hyd.basedata.web.qo;
 
 import com.hyd.common.core.pojo.qo.BaseQO;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author yanduohuang
  * @date 2021/3/21 0:24
  */
+@Data
+@NoArgsConstructor
 public class TicketQO  extends BaseQO {
     private Long id;
     private Long zoneId;

@@ -2,13 +2,15 @@ package com.hyd.financial.web.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.annotation.Generated;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
-
+@Data
+@NoArgsConstructor
 public class PrintingPlanLimitDateDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;

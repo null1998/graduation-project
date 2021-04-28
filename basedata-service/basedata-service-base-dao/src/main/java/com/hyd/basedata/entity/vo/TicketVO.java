@@ -1,12 +1,16 @@
 package com.hyd.basedata.entity.vo;
 
-import javax.annotation.Generated;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
 /**
  * @author yanduohuang
  * @date 2021/2/1 16:02
  */
+@Data
+@NoArgsConstructor
 public class TicketVO {
     private Long id;
 

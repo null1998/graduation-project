@@ -1,15 +1,15 @@
 package com.hyd.user.center.web.dto;
 
-import com.hyd.user.center.entity.Permission;
 import com.hyd.user.center.entity.SimplePermission;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.annotation.Generated;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
+@Data
+@NoArgsConstructor
 public class UserDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;

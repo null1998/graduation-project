@@ -1,11 +1,16 @@
 package com.hyd.financial.web.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 /**
  * @author yanduohuang
  * @date 2021/4/20 17:46
  */
+@Data
+@NoArgsConstructor
 public class LineChartDTO {
     private List<String> duration;
     private List<Long> numbers;

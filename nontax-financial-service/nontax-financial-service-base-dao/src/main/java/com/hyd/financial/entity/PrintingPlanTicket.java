@@ -1,8 +1,12 @@
 package com.hyd.financial.entity;
 
-import java.io.Serializable;
-import javax.annotation.Generated;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.annotation.Generated;
+import java.io.Serializable;
+@Data
+@NoArgsConstructor
 public class PrintingPlanTicket implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
@@ -164,7 +168,7 @@ public class PrintingPlanTicket implements Serializable {
         result = prime * result + ((getVersion() == null) ? 0 : getVersion().hashCode());
         return result;
     }
-    public PrintingPlanTicket(){}
+
     public PrintingPlanTicket(Long ticketId, Long theFirstSeason, Long theSecondSeason, Long theThirdSeason, Long theFourthSeason) {
         this.ticketId = ticketId;
         this.theFirstSeason = theFirstSeason;

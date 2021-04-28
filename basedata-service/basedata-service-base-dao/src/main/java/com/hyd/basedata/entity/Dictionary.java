@@ -1,28 +1,26 @@
 package com.hyd.basedata.entity;
 
-import java.io.Serializable;
-import javax.annotation.Generated;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.annotation.Generated;
+import java.io.Serializable;
+
+@Data
+@NoArgsConstructor
 public class Dictionary implements Serializable {
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String value;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String remark;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long categoryId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
         return id;
     }

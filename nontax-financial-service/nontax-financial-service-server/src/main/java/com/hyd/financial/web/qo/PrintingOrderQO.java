@@ -2,11 +2,15 @@ package com.hyd.financial.web.qo;
 
 
 import com.hyd.common.core.pojo.qo.BaseQO;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author yanduohuang
  * @date 2021/3/18 19:07
  */
+@Data
+@NoArgsConstructor
 public class PrintingOrderQO  extends BaseQO {
     private Long id;
     private Long unitId;

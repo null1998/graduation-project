@@ -1,52 +1,41 @@
 package com.hyd.basedata.web.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.annotation.Generated;
 import java.io.Serializable;
-
+@Data
+@NoArgsConstructor
 public class UnitDTO implements Serializable {
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String name;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String code;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String mnemonic;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String master;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String taxNumber;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String faxNumber;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String telNumber;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String address;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String email;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private String website;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long zoneId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long parentId;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long version;
 
-    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private static final long serialVersionUID = 1L;
 
     private Long dictionaryId;

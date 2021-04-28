@@ -1,10 +1,15 @@
 package com.hyd.user.center.entity.vo;
 
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * @author yanduohuang
  * @date 2021/2/3 18:09
  */
+@Data
+@NoArgsConstructor
 public class RolePermissionVO {
     private Long id;
 

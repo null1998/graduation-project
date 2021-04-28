@@ -1,11 +1,16 @@
 package com.hyd.financial.web.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Map;
 
 /**
  * @author yanduohuang
  * @date 2021/4/2 10:35
  */
+@Data
+@NoArgsConstructor
 public class RecordDTO {
     private Long ticketId;
     private String ticketName;

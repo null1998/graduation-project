@@ -1,11 +1,15 @@
 package com.hyd.financial.web.qo;
 
 import com.hyd.common.core.pojo.qo.BaseQO;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author yanduohuang
  * @date 2021/3/21 22:54
  */
+@Data
+@NoArgsConstructor
 public class TicketProductRecordQO  extends BaseQO {
     private Long id;
     private Long ticketId;

@@ -1,9 +1,13 @@
 package com.hyd.financial.entity.vo;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.annotation.Generated;
 import java.io.Serializable;
 import java.math.BigDecimal;
-
+@Data
+@NoArgsConstructor
 public class PrintingOrderTicketVO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;

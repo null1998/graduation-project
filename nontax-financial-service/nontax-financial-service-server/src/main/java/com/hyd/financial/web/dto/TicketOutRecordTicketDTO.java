@@ -1,8 +1,12 @@
 package com.hyd.financial.web.dto;
 
-import java.io.Serializable;
-import javax.annotation.Generated;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.annotation.Generated;
+import java.io.Serializable;
+@Data
+@NoArgsConstructor
 public class TicketOutRecordTicketDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;

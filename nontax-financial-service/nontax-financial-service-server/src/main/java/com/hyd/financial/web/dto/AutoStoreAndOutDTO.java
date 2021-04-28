@@ -2,6 +2,8 @@ package com.hyd.financial.web.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -10,6 +12,8 @@ import java.time.LocalDate;
  * @author yanduohuang
  * @date 2021/4/11 22:20
  */
+@Data
+@NoArgsConstructor
 public class AutoStoreAndOutDTO {
     /**
      * 更新申领单号段

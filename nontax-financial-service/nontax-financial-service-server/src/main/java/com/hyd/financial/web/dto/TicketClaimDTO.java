@@ -2,12 +2,15 @@ package com.hyd.financial.web.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.annotation.Generated;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import javax.annotation.Generated;
-
+@Data
+@NoArgsConstructor
 public class TicketClaimDTO implements Serializable {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Long id;

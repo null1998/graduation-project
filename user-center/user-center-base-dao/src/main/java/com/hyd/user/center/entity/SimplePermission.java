@@ -1,9 +1,14 @@
 package com.hyd.user.center.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * @author yanduohuang
  * @date 2021/4/13 22:36
  */
+@Data
+@NoArgsConstructor
 public class SimplePermission{
     private String url;
     private String method;
