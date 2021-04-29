@@ -1,7 +1,5 @@
 
 package com.hyd.financial.service.impl;
-import java.util.List;
-import java.util.Optional;
 
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
@@ -9,13 +7,20 @@ import com.hyd.common.util.BeanUtil;
 import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.InvoiceMapper;
 import com.hyd.financial.entity.Invoice;
+import com.hyd.financial.entity.TicketStore;
 import com.hyd.financial.service.IInvoiceService;
+import com.hyd.financial.service.ITicketStoreService;
 import com.hyd.financial.web.dto.InvoiceDTO;
+import com.hyd.financial.web.dto.TicketStoreDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * 开票管理
@@ -31,6 +36,9 @@ public class InvoiceService implements IInvoiceService {
     @Autowired
     private InvoiceMapper invoiceMapper;
 
+    @Autowired
+    private ITicketStoreService ticketStoreService;
+
 	/**
      * 保存开票管理
      * @param invoice 开票管理
@@ -44,6 +52,33 @@ public class InvoiceService implements IInvoiceService {
         }
         long id = idGenerator.snowflakeId();
         invoice.setId(id);
+        long orderNumber = idGenerator.snowflakeId();
+        invoice.setOrderNumber(orderNumber);
+        // 查询本单位对应票据库存
+        TicketStore ticketStore = new TicketStore();
+        ticketStore.setTicketId(invoice.getTicketId());
+        ticketStore.setUnitId(invoice.getUnitId());
+        List<TicketStoreDTO> ticketStoreDTOList = ticketStoreService.commonQuery(ticketStore);
+        for (TicketStoreDTO ticketStoreDTO : ticketStoreDTOList) {
+            if (ticketStoreDTO.getNumber() > 0) {
+                String startNumber = ticketStoreDTO.getStartNumber();
+                ticketStoreDTO.setStartNumber(startNumber+1);
+                ticketStoreDTO.setNumber(ticketStoreDTO.getNumber()-1);
+                ticketStoreDTO.setOperateDate(LocalDate.now());
+                ticketStoreDTO.setUserId(invoice.getUserId());
+                // 更新库存的起始号,数量，时间，操作人员
+                Integer update = ticketStoreService.update(BeanUtil.copy(ticketStoreDTO, TicketStore.class));
+                if (update == 1) {
+                    // 更新成功
+                    invoice.setTicketNumber(startNumber);
+                    break;
+                }
+            }
+        }
+        if (invoice.getTicketNumber() == null) {
+            // 开票失败
+            throw new BusinessException(BusinessErrorCode.SYSTEM_DB_OTHER_EXCEPTION, new Exception("开票失败"));
+        }
         invoiceMapper.insertSelective(invoice);
         return id;
     }

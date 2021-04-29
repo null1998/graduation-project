@@ -12,6 +12,7 @@ spring:
 #        前端登录时，转到认证
         - id: authentication-server-auth
           uri: lb://authentication-server
+          order: 1
           predicates:
             - Path=/user/center/user/login
           filters:
@@ -26,6 +27,7 @@ spring:
 #        转发至用户中心
         - id: user-center-server
           uri: lb://user-center-server
+          order: 2
           predicates:
             - Path=/user/center/**
 #        基础数据

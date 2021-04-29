@@ -1,12 +1,4 @@
 package com.hyd.financial.service.impl;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import com.hyd.basedata.entity.Unit;
 import com.hyd.basedata.service.IUnitService;
 import com.hyd.common.core.exception.BusinessException;
@@ -16,7 +8,6 @@ import com.hyd.common.util.IdGenerator;
 import com.hyd.financial.dao.TicketOutRecordMapper;
 import com.hyd.financial.entity.TicketOutRecord;
 import com.hyd.financial.entity.TicketOutRecordTicket;
-import com.hyd.financial.entity.TicketStoreRecord;
 import com.hyd.financial.service.ITicketOutRecordService;
 import com.hyd.financial.service.ITicketOutRecordTicketService;
 import com.hyd.financial.web.dto.LineChartDTO;
@@ -28,6 +19,14 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 票据出库记录
@@ -126,7 +125,7 @@ public class TicketOutRecordService implements ITicketOutRecordService {
     }
 
 	/**
-     * 通用查询，支持字段id,ticketOutRecordQO
+     * 通用查询，支持字段id,ticketOutRecordQO,unitId
      * @param ticketOutRecord 票据出库记录
      * @return 票据出库记录列表
      */

@@ -1,9 +1,10 @@
 package com.hyd.financial.web.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.annotation.Generated;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,7 +26,7 @@ public class InvoiceDTO implements Serializable {
     private String invoicePeople;
 
     private String identityNumber;
-
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate invoiceDate;
 
     private Long userId;

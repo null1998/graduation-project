@@ -1,15 +1,14 @@
 package com.hyd.financial.dao;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hyd.basedata.dao.UnitDynamicSqlSupport;
-import com.hyd.financial.entity.TicketStoreRecord;
+import com.hyd.financial.entity.TicketOutRecord;
 import com.hyd.financial.web.qo.TicketOutRecordQO;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.dynamic.sql.SqlBuilder;
-import com.hyd.financial.entity.TicketOutRecord;
 import org.mybatis.dynamic.sql.select.join.EqualTo;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 票据出库记录
@@ -18,7 +17,7 @@ import org.mybatis.dynamic.sql.select.join.EqualTo;
  */
 public interface TicketOutRecordMapper extends TicketOutRecordBaseMapper {
     /**
-     * 通用查询，支持字段id,targetUnitName
+     * 通用查询，支持字段id,targetUnitName,unitId
      * @param ticketOutRecord 票据出库记录
      * @return 票据出库记录列表
      */
@@ -28,7 +27,8 @@ public interface TicketOutRecordMapper extends TicketOutRecordBaseMapper {
         return this.select(c->c.leftJoin(UnitDynamicSqlSupport.unit)
                 .on(TicketOutRecordDynamicSqlSupport.targetUnitId,new EqualTo(UnitDynamicSqlSupport.id))
                 .where(TicketOutRecordDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(ticketOutRecord.getId()))
-                .and(UnitDynamicSqlSupport.name,SqlBuilder.isLikeWhenPresent(targetUnitName)));
+                .and(UnitDynamicSqlSupport.name,SqlBuilder.isLikeWhenPresent(targetUnitName))
+                .and(TicketOutRecordDynamicSqlSupport.unitId,SqlBuilder.isEqualToWhenPresent(ticketOutRecord.getUnitId())));
     }
     /**
      * 查询某单位一段时间内的出库记录

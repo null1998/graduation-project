@@ -1,6 +1,4 @@
 package com.hyd.financial.web;
-import java.util.List;
-
 import com.hyd.common.core.annotation.ApiLog;
 import com.hyd.common.core.annotation.PageHelper;
 import com.hyd.common.util.BeanUtil;
@@ -12,6 +10,8 @@ import com.hyd.financial.web.dto.TicketOutRecordDTO;
 import com.hyd.financial.web.qo.TicketOutRecordQO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 票据出库记录
@@ -74,7 +74,7 @@ public class TicketOutRecordController {
     }
 
     /**
-     * 通用查询，支持字段id,ticketOutRecordId,targetUnitName
+     * 通用查询，支持字段id,ticketOutRecordId,targetUnitName,unitId
      * @param ticketOutRecordQO 票据出库记录
      * @return 票据出库记录列表
      */
