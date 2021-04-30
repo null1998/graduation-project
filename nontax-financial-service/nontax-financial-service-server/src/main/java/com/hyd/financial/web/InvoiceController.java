@@ -1,5 +1,4 @@
 package com.hyd.financial.web;
-import java.util.List;
 
 import com.hyd.common.core.annotation.ApiLog;
 import com.hyd.common.util.BeanUtil;
@@ -7,9 +6,12 @@ import com.hyd.financial.entity.Invoice;
 import com.hyd.financial.entity.vo.InvoiceVO;
 import com.hyd.financial.service.IInvoiceService;
 import com.hyd.financial.web.dto.InvoiceDTO;
+import com.hyd.financial.web.dto.InvoicePieDTO;
 import com.hyd.financial.web.qo.InvoiceQO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 开票管理
@@ -72,7 +74,7 @@ public class InvoiceController {
     }
 
     /**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,unitId
      * @param invoiceQO 开票管理
      * @return 开票管理列表
      */
@@ -82,6 +84,26 @@ public class InvoiceController {
         Invoice invoice = BeanUtil.copy(invoiceQO, Invoice.class);
         List<InvoiceDTO> invoiceDTOList = invoiceService.commonQuery(invoice);
         return BeanUtil.copyList(invoiceDTOList, InvoiceVO.class);
+    }
+    /**
+     * 分析某单位每种票据开票数量
+     * @param unitId
+     * @return
+     */
+    @ApiLog
+    @GetMapping("/analysis/number/{unitId}")
+    public List<InvoicePieDTO> analysisTicketNumber(@PathVariable("unitId") Long unitId) {
+        return invoiceService.analysisTicketNumber(unitId);
+    }
+    /**
+     * 分析某单位每种票据开票总金额
+     * @param unitId
+     * @return
+     */
+    @ApiLog
+    @GetMapping("/analysis/price/{unitId}")
+    public List<InvoicePieDTO> analysisTicketPrice(@PathVariable("unitId") Long unitId) {
+        return invoiceService.analysisTicketPrice(unitId);
     }
 
 }

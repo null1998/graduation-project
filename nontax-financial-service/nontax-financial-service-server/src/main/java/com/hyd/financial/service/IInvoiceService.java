@@ -1,7 +1,9 @@
 package com.hyd.financial.service;
-import java.util.List;
 import com.hyd.financial.entity.Invoice;
 import com.hyd.financial.web.dto.InvoiceDTO;
+import com.hyd.financial.web.dto.InvoicePieDTO;
+
+import java.util.List;
 
 /**
  * 开票管理
@@ -44,4 +46,17 @@ public interface IInvoiceService {
      */
     List<InvoiceDTO> commonQuery(Invoice invoice);
 
+    /**
+     * 分析某单位每种票据开票数量
+     * @param unitId
+     * @return
+     */
+    List<InvoicePieDTO> analysisTicketNumber(Long unitId);
+
+    /**
+     * 分析某单位每种票据开票总金额
+     * @param unitId
+     * @return
+     */
+    List<InvoicePieDTO> analysisTicketPrice(Long unitId);
 }

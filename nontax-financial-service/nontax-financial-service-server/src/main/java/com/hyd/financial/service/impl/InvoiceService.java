@@ -1,6 +1,8 @@
 
 package com.hyd.financial.service.impl;
 
+import com.hyd.basedata.entity.Ticket;
+import com.hyd.basedata.service.ITicketService;
 import com.hyd.common.core.exception.BusinessException;
 import com.hyd.common.core.exception.code.BusinessErrorCode;
 import com.hyd.common.util.BeanUtil;
@@ -11,6 +13,7 @@ import com.hyd.financial.entity.TicketStore;
 import com.hyd.financial.service.IInvoiceService;
 import com.hyd.financial.service.ITicketStoreService;
 import com.hyd.financial.web.dto.InvoiceDTO;
+import com.hyd.financial.web.dto.InvoicePieDTO;
 import com.hyd.financial.web.dto.TicketStoreDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,9 +21,11 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 开票管理
@@ -38,6 +43,12 @@ public class InvoiceService implements IInvoiceService {
 
     @Autowired
     private ITicketStoreService ticketStoreService;
+
+    @Resource
+    private IInvoiceService invoiceService;
+
+    @Resource
+    private ITicketService ticketService;
 
 	/**
      * 保存开票管理
@@ -134,8 +145,9 @@ public class InvoiceService implements IInvoiceService {
         return new InvoiceDTO();
     }
 
+
 	/**
-     * 通用查询，支持字段id
+     * 通用查询，支持字段id,unitId
      * @param invoice 开票管理
      * @return 开票管理列表
      */
@@ -150,7 +162,68 @@ public class InvoiceService implements IInvoiceService {
 		batchSetProperties(invoiceDTOList);
 		return invoiceDTOList;
     }
-	/**
+
+    @Override
+    public List<InvoicePieDTO> analysisTicketNumber(Long unitId) {
+        if (unitId == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位ID为空"));
+        }
+        Invoice query = new Invoice();
+        query.setUnitId(unitId);
+        // 查询本单位的开票信息
+        List<InvoiceDTO> invoiceDTOList = invoiceService.commonQuery(query);
+        // 统计每个ticketId对应的number
+        Map<Long, Long> collect = invoiceDTOList.stream().collect(Collectors.groupingBy(InvoiceDTO::getTicketId, Collectors.counting()));
+        // 批量获取票据名
+        Map<Long, String> ticketNameMap = ticketService.listByTicketIdList(new ArrayList<>(collect.keySet())).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+        List<InvoicePieDTO> result = new ArrayList<>();
+        collect.forEach((k,v)->{
+            // 赋值
+            InvoicePieDTO invoicePieDTO = new InvoicePieDTO();
+            invoicePieDTO.setTicketName(ticketNameMap.get(k));
+            invoicePieDTO.setNumber(v);
+            result.add(invoicePieDTO);
+        });
+        return result;
+    }
+
+    @Override
+    public List<InvoicePieDTO> analysisTicketPrice(Long unitId) {
+        if (unitId == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("单位ID为空"));
+        }
+        Invoice query = new Invoice();
+        query.setUnitId(unitId);
+        // 查询本单位的开票信息
+        List<InvoiceDTO> invoiceDTOList = invoiceService.commonQuery(query);
+        // 统计每个ticketId对应的总金额
+        Map<Long, BigDecimal> collect = new HashMap<>();
+        for (InvoiceDTO invoiceDTO : invoiceDTOList) {
+            if (invoiceDTO.getTicketId() != null) {
+                if (collect.get(invoiceDTO.getTicketId()) != null) {
+                    collect.put(invoiceDTO.getTicketId(), collect.get(invoiceDTO.getTicketId()).add(invoiceDTO.getPrice()));
+                } else {
+                    collect.put(invoiceDTO.getTicketId(), invoiceDTO.getPrice());
+
+                }
+            }
+
+        }
+        // 批量获取票据名
+        Map<Long, String> ticketNameMap = ticketService.listByTicketIdList(new ArrayList<>(collect.keySet())).stream().collect(Collectors.toMap(Ticket::getId, Ticket::getName));
+        List<InvoicePieDTO> result = new ArrayList<>();
+        collect.forEach((k,v)->{
+            // 赋值
+            InvoicePieDTO invoicePieDTO = new InvoicePieDTO();
+            invoicePieDTO.setTicketName(ticketNameMap.get(k));
+            invoicePieDTO.setPrice(v);
+            result.add(invoicePieDTO);
+        });
+        return result;
+    }
+
+
+    /**
 	 * 补充一些字段的值
 	 * @param invoiceDTO 开票管理
 	 */
