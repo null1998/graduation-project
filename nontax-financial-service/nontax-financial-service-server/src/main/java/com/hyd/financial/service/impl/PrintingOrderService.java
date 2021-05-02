@@ -15,6 +15,7 @@ import com.hyd.financial.entity.TicketStoreRecord;
 import com.hyd.financial.entity.TicketStoreRecordTicket;
 import com.hyd.financial.service.*;
 import com.hyd.financial.web.dto.AutoStoreAndOutDTO;
+import com.hyd.financial.web.dto.LineChartDTO;
 import com.hyd.financial.web.dto.PrintingOrderDTO;
 import com.hyd.financial.web.dto.PrintingOrderTicketDTO;
 import com.hyd.financial.web.qo.PrintingOrderQO;
@@ -25,6 +26,8 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -151,6 +154,33 @@ public class PrintingOrderService implements IPrintingOrderService {
             ticketStoreRecordTicketService.save(ticketStoreRecordTicket);
         }
 
+    }
+
+    @Override
+    public LineChartDTO analysisOrderNumber(Long printUnitId) {
+        if (printUnitId == null) {
+            throw new BusinessException(BusinessErrorCode.SYSTEM_SERVICE_ARGUMENT_NOT_VALID, new Exception("印制单位id为空"));
+        }
+        // 最近一周的起始和终止日期
+        LocalDate end = LocalDate.now();
+        LocalDate start = end.minusWeeks(1).plusDays(1);
+        List<PrintingOrder> printingOrderList = printingOrderMapper.recent(printUnitId, start, end);
+        // 汇总每日订单数
+        Map<LocalDate, Long> map = printingOrderList.stream().collect(Collectors.groupingBy(PrintingOrder::getStart, Collectors.counting()));
+        LineChartDTO lineChartDTO = new LineChartDTO();
+        // 日期
+        List<String> duration = new ArrayList<>();
+        // 每日订单数
+        List<Long> numbers = new ArrayList<>();
+        lineChartDTO.setDuration(duration);
+        lineChartDTO.setNumbers(numbers);
+        // 从起始日起，逐日为duration和number赋值
+        while (start.isBefore(end) || start.isEqual(end)) {
+            duration.add(start.format(DateTimeFormatter.ofPattern("MM-dd")));
+            numbers.add(map.getOrDefault(start, 0L));
+            start = start.plusDays(1);
+        }
+        return lineChartDTO;
     }
 
     private void batchSetProperties(List<PrintingOrderDTO> printingOrderDTOList) {

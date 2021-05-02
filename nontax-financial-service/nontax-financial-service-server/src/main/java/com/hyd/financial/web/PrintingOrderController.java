@@ -7,6 +7,7 @@ import com.hyd.financial.entity.PrintingOrder;
 import com.hyd.financial.entity.vo.PrintingOrderVO;
 import com.hyd.financial.service.IPrintingOrderService;
 import com.hyd.financial.web.dto.AutoStoreAndOutDTO;
+import com.hyd.financial.web.dto.LineChartDTO;
 import com.hyd.financial.web.dto.PrintingOrderDTO;
 import com.hyd.financial.web.qo.PrintingOrderQO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,17 @@ public class PrintingOrderController {
     @PostMapping("/auto/store")
     public void autoStore(@RequestBody List<AutoStoreAndOutDTO> autoStoreAndOutDTOList) {
         printingOrderService.autoStore(autoStoreAndOutDTOList);
+    }
+
+    /**
+     * 分析某印刷单位最近一周的订单数量
+     * @param printUnitId
+     * @return
+     */
+    @ApiLog
+    @GetMapping("/analysis/{printUnitId}")
+    public LineChartDTO analysisOrderNumber(@PathVariable("printUnitId") Long printUnitId) {
+        return printingOrderService.analysisOrderNumber(printUnitId);
     }
 
 }

@@ -38,3 +38,20 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
 
+# actuator配置
+info: # info下的信息可以自定义
+  app:
+    name: user-center
+    version: 0.0.1
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 打开所有的监控点
+      base-path: /monitor # 启用单独的url地址来监控 Spring Boot 应用
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true # 启用接口关闭 Spring Boot
+

@@ -2,6 +2,7 @@ package com.hyd.financial.service;
 
 import com.hyd.financial.entity.PrintingOrder;
 import com.hyd.financial.web.dto.AutoStoreAndOutDTO;
+import com.hyd.financial.web.dto.LineChartDTO;
 import com.hyd.financial.web.dto.PrintingOrderDTO;
 import com.hyd.financial.web.qo.PrintingOrderQO;
 
@@ -51,4 +52,11 @@ public interface IPrintingOrderService {
      * @param autoStoreAndOutDTOList
      */
     void autoStore(List<AutoStoreAndOutDTO> autoStoreAndOutDTOList);
+
+    /**
+     * 分析某印刷单位最近一周的订单数量
+     * @param printUnitId
+     * @return
+     */
+    LineChartDTO analysisOrderNumber(Long printUnitId);
 }

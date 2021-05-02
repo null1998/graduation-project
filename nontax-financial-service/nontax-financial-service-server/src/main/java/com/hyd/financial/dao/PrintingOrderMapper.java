@@ -1,12 +1,14 @@
 package com.hyd.financial.dao;
+
 import com.hyd.basedata.dao.UnitDynamicSqlSupport;
 import com.hyd.financial.entity.PrintingOrder;
-import com.hyd.financial.web.dto.PrintingOrderDTO;
 import com.hyd.financial.web.qo.PrintingOrderQO;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.select.join.EqualTo;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,5 +31,20 @@ public interface PrintingOrderMapper extends PrintingOrderBaseMapper {
                 .and(PrintingOrderDynamicSqlSupport.status, SqlBuilder.isEqualToWhenPresent(printingOrder.getStatus()))
                 .and(UnitDynamicSqlSupport.name,SqlBuilder.isLikeWhenPresent(printUnitName))
         );
+    }
+
+    /**
+     * 某印刷单位一周内订单量
+     * @param printUnitId
+     * @param start
+     * @param end
+     * @return
+     */
+    default List<PrintingOrder> recent(Long printUnitId, LocalDate start, LocalDate end) {
+        if (start == null || end == null || printUnitId == null) {
+            return new ArrayList<>();
+        }
+        return this.select(c->c.where(PrintingOrderDynamicSqlSupport.printUnitId,SqlBuilder.isEqualTo(printUnitId))
+                .and(PrintingOrderDynamicSqlSupport.start, SqlBuilder.isBetween(start).and(end)));
     }
 }
