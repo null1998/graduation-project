@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface TicketStoreRecordMapper extends TicketStoreRecordBaseMapper {
     /**
-     * 通用查询，支持字段id，unitId,sourceUnitName
+     * 通用查询，支持字段id，unitId,sourceUnitName，并按照入库时间倒序
      * @param ticketStoreRecord
      * @return 票据入库记录列表
      */
@@ -29,7 +29,8 @@ public interface TicketStoreRecordMapper extends TicketStoreRecordBaseMapper {
                 .on(TicketStoreRecordDynamicSqlSupport.sourceUnitId,new EqualTo(UnitDynamicSqlSupport.id))
                 .where(TicketStoreRecordDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(ticketStoreRecord.getId()))
                 .and(TicketStoreRecordDynamicSqlSupport.unitId, SqlBuilder.isEqualToWhenPresent(ticketStoreRecord.getUnitId()))
-                .and(UnitDynamicSqlSupport.name,SqlBuilder.isLikeWhenPresent(sourceUnitName)));
+                .and(UnitDynamicSqlSupport.name,SqlBuilder.isLikeWhenPresent(sourceUnitName))
+                .orderBy(TicketStoreRecordDynamicSqlSupport.storeDate.descending()));
     }
 
     /**

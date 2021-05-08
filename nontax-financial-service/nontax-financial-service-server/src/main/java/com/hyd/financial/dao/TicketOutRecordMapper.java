@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface TicketOutRecordMapper extends TicketOutRecordBaseMapper {
     /**
-     * 通用查询，支持字段id,targetUnitName,unitId
+     * 通用查询，支持字段id,targetUnitName,unitId,并按照出库时间倒序排列
      * @param ticketOutRecord 票据出库记录
      * @return 票据出库记录列表
      */
@@ -28,7 +28,8 @@ public interface TicketOutRecordMapper extends TicketOutRecordBaseMapper {
                 .on(TicketOutRecordDynamicSqlSupport.targetUnitId,new EqualTo(UnitDynamicSqlSupport.id))
                 .where(TicketOutRecordDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(ticketOutRecord.getId()))
                 .and(UnitDynamicSqlSupport.name,SqlBuilder.isLikeWhenPresent(targetUnitName))
-                .and(TicketOutRecordDynamicSqlSupport.unitId,SqlBuilder.isEqualToWhenPresent(ticketOutRecord.getUnitId())));
+                .and(TicketOutRecordDynamicSqlSupport.unitId,SqlBuilder.isEqualToWhenPresent(ticketOutRecord.getUnitId()))
+                .orderBy(TicketOutRecordDynamicSqlSupport.outDate.descending()));
     }
     /**
      * 查询某单位一段时间内的出库记录

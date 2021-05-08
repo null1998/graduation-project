@@ -1,7 +1,8 @@
 package com.hyd.financial.dao;
-import java.util.List;
-import org.mybatis.dynamic.sql.SqlBuilder;
 import com.hyd.financial.entity.Payment;
+import org.mybatis.dynamic.sql.SqlBuilder;
+
+import java.util.List;
 /**
  * 票据结算
  * @author huangyanduo
@@ -9,13 +10,14 @@ import com.hyd.financial.entity.Payment;
  */
 public interface PaymentMapper extends PaymentBaseMapper {
     /**
-     * 通用查询，支持字段id,srcUnitId
+     * 通用查询，支持字段id,srcUnitId,并按下单时间降序排列
      * @param payment 票据结算
      * @return 票据结算列表
      */
     default List<Payment> commonQuery(Payment payment) {
         return this.select(c->c.where(PaymentDynamicSqlSupport.id, SqlBuilder.isEqualToWhenPresent(payment.getId()))
-                .and(PaymentDynamicSqlSupport.srcUnitId, SqlBuilder.isEqualToWhenPresent(payment.getSrcUnitId())));
+                .and(PaymentDynamicSqlSupport.srcUnitId, SqlBuilder.isEqualToWhenPresent(payment.getSrcUnitId()))
+                .orderBy(PaymentDynamicSqlSupport.orderDate.descending()));
     }
 
     /**
