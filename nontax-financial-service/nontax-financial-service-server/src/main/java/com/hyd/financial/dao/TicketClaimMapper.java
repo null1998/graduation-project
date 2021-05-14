@@ -1,12 +1,12 @@
 package com.hyd.financial.dao;
-import java.util.List;
-
 import com.hyd.basedata.dao.UnitDynamicSqlSupport;
 import com.hyd.financial.entity.TicketClaim;
 import com.hyd.financial.web.qo.TicketClaimQO;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.select.join.EqualTo;
+
+import java.util.List;
 
 /**
  * 票据申领
@@ -15,7 +15,7 @@ import org.mybatis.dynamic.sql.select.join.EqualTo;
  */
 public interface TicketClaimMapper extends TicketClaimBaseMapper {
     /**
-     * 通用查询，支持字段id,unitId,targetUnitId，status,targetUnitName
+     * 通用查询，支持字段id,unitId,targetUnitId，status,targetUnitName,并按申领日期倒序
      * @param ticketClaim 票据申领
      * @return 票据申领列表
      */
@@ -27,6 +27,7 @@ public interface TicketClaimMapper extends TicketClaimBaseMapper {
                 .and(TicketClaimDynamicSqlSupport.unitId, SqlBuilder.isEqualToWhenPresent(ticketClaim.getUnitId()))
                 .and(TicketClaimDynamicSqlSupport.targetUnitId, SqlBuilder.isEqualToWhenPresent(ticketClaim.getTargetUnitId()))
                 .and(TicketClaimDynamicSqlSupport.status, SqlBuilder.isEqualToWhenPresent(ticketClaim.getStatus()))
-                .and(UnitDynamicSqlSupport.name,SqlBuilder.isLikeWhenPresent(targetUnitName)));
+                .and(UnitDynamicSqlSupport.name,SqlBuilder.isLikeWhenPresent(targetUnitName))
+                .orderBy(TicketClaimDynamicSqlSupport.claimDate.descending()));
     }
 }

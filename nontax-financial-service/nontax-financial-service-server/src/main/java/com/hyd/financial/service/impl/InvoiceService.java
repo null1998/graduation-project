@@ -12,6 +12,7 @@ import com.hyd.financial.entity.Invoice;
 import com.hyd.financial.entity.TicketStore;
 import com.hyd.financial.service.IInvoiceService;
 import com.hyd.financial.service.ITicketStoreService;
+import com.hyd.financial.util.TicketCodeConvertUtil;
 import com.hyd.financial.web.dto.InvoiceDTO;
 import com.hyd.financial.web.dto.InvoicePieDTO;
 import com.hyd.financial.web.dto.TicketStoreDTO;
@@ -73,7 +74,8 @@ public class InvoiceService implements IInvoiceService {
         for (TicketStoreDTO ticketStoreDTO : ticketStoreDTOList) {
             if (ticketStoreDTO.getNumber() > 0) {
                 String startNumber = ticketStoreDTO.getStartNumber();
-                ticketStoreDTO.setStartNumber(startNumber+1);
+                Long l = TicketCodeConvertUtil.stringConvertLong(startNumber)+1;
+                ticketStoreDTO.setStartNumber(TicketCodeConvertUtil.longConvertString(l));
                 ticketStoreDTO.setNumber(ticketStoreDTO.getNumber()-1);
                 ticketStoreDTO.setOperateDate(LocalDate.now());
                 ticketStoreDTO.setUserId(invoice.getUserId());
